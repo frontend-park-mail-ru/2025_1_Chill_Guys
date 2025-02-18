@@ -1,0 +1,26 @@
+{
+  "name": "2025_1_chill_guys",
+  "version": "1.0.0",
+  "description": "Убийца Ozon от команды Chill Guys",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "handlebars src/components/ -m -f public/templates.precompiled.js -e hbs",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys.git"
+  },
+  "author": "NLMM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "handlebars": "^4.7.8"
+  }
+}
