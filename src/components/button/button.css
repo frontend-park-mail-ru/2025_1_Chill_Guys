@@ -1,7 +1,44 @@
-.button__red {
-    background-color: red;
+.btn {
+    padding: 8px;
+    outline: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    height: 38px;
+    cursor: pointer;
+    color: white;
 }
 
-.button__green {
-    background-color: green;
+.button__success{
+    border: 2px solid #3D8D7A;
+    background-color: #3D8D7A;
+}
+
+.button__success:not(:disabled):hover {
+    border: 2px solid rgb(52, 121, 105)
+}
+
+.button__success:not(:disabled):active {
+    background-color: rgb(52, 121, 105);
+    border: 2px solid rgb(52, 121, 105)
+}
+
+.button__dangerous{
+    background-color: #ff4444;
+    border: 2px solid #ff4444; 
+}
+
+.button__dangerous:not(:disabled):hover {
+    border: 2px solid #cc0000; 
+}
+
+.button__dangerous:not(:disabled):active {
+    border: 2px solid #cc0000; 
+    background-color: #cc0000;
+}
+
+.btn:disabled{
+    opacity: 0.7;
+    cursor: not-allowed;
 }
