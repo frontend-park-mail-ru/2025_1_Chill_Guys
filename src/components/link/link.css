@@ -1,0 +1,18 @@
+.button-link {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.button-link:hover{
+    color: #0056b3;
+}
+
+.button-link:active{
+    color: #004080;
+    transform: scale(0.95);
+}
