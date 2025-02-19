@@ -7,7 +7,9 @@ class BaseComponent {
     render(props){
         console.log(Handlebars.templates)
         const template = Handlebars.templates[`${this.templateName}`]
-        return template(props)
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(template(props), 'text/html')
+        return doc.body
     }
 }
 
