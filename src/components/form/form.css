@@ -1,0 +1,31 @@
+.form {
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-items: center;
+    width: 400px;
+}
+
+.form__element__title {
+    margin-bottom: 8px;
+    margin-right: 8px;
+}
+
+.form__element__input {
+    margin-bottom: 8px;
+}
+
+.form__element__error {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    color: red;
+    font-size: 14px;
+    margin-top: -4px;
+    margin-bottom: 8px;
+}
+
+.form__actions {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: flex;
+    justify-content: space-between;
+}

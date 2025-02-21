@@ -1,5 +1,6 @@
 import { VALID_TYPES } from "../modules/validation.js";
 import Button from "./components/button/button.js";
+import Form from "./components/form/form.js";
 import Link from "./components/link/link.js";
 import TextField from "./components/textField/textField.js";
 
@@ -59,7 +60,7 @@ r.appendChild(btn.render({
 
 tf.markError("Плохая гадость")*/
 
-const root = document.getElementById("root");
+/*const root = document.getElementById("root");
 const tf = new TextField();
 
 root.appendChild(tf.render({
@@ -67,4 +68,64 @@ root.appendChild(tf.render({
     title: "Поле ввода:",
 }));
 
-tf.markError("Какая-то ошибка!");
+tf.markError("Какая-то ошибка!");*/
+
+const root = document.getElementById("root");
+
+// Создаём форму (в конструктор передаём её поля и кнопки)
+const loginForm = new Form([
+    {
+        type: "text",
+        id: "email",
+        name: "Почта",
+        defaultValue: "lenya@leshak.ru",
+        validType: VALID_TYPES.EMAIL_VALID,
+        errorMessage: "Введите действительную почту",
+    },
+    {
+        type: "password",
+        id: "password",
+        name: "Пароль",
+        defaultValue: "SuPeRPaSsWoRd2005",
+        validType: VALID_TYPES.PASSWORD_VALID,
+        errorMessage: "Пароль должен содержать минимум 8 символов, загравную букву и цифру",
+    },
+    {
+        type: "password",
+        id: "repeat_password",
+        name: "Повтор",
+        defaultValue: "SuPeRPaSsWoRd2005",
+        validType: VALID_TYPES.PASSWORD_VALID,
+        errorMessage: "Пароль должен содержать минимум 8 символов, загравную букву и цифру",
+    },
+], [
+    { id: "signup", type: "success", name: "Регистрация" },
+    { id: "signin", type: "success", name: "Войти" }
+]);
+
+let formMode = false;
+
+root.appendChild(loginForm.render((actionId) => {
+    if (actionId === "signup") {
+        loginForm.toogleFields(["repeat_password"]);
+
+        const regButton = loginForm.actionElement("signup");
+        const logButton = loginForm.actionElement("signin");
+        regButton.innerText = formMode ? "Регистрация" : "Вход";
+        logButton.innerText = formMode ? "Войти" : "Зарегистрироваться";
+
+        formMode = !formMode;
+    }
+    if (actionId === "signin") {
+        const value = loginForm.validate();
+        if (value) {
+            if (!formMode) {
+                alert(`Успешный вход!\n\nПочта: ${value.email}\nПароль: ${value.password}`);
+            } else {
+                alert(`Успешная регистрация!\n\nПочта: ${value.email}\nПароль: ${value.password}`);
+            }
+        }
+    }
+}));
+
+loginForm.hideFields(["repeat_password"])
