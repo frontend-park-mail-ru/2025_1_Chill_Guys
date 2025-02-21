@@ -1,0 +1,12 @@
+<div class="form">
+    {{#each form}}
+    <span name="{{{this.id}}}" class="form__element__title">{{{this.name}}}:</span>
+    <input type="{{{this.type}}}" name="{{{this.id}}}" class="tf__input form__element__input">
+    <span name="{{{this.id}}}" class="form__element__error" hidden></span>
+    {{/each}}
+    <div class="form__actions">
+        {{#each actions}}
+        <button class="btn button__{{{this.type}}}" name="{{{this.id}}}">{{{this.name}}}</button>
+        {{/each}}
+    </div>
+</div>
