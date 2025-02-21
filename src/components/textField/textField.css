@@ -1,0 +1,29 @@
+.tf {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+
+.tf__title {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.tf__input {
+    padding: 8px;
+    outline: none;
+    border: 2px solid lightgray;
+    border-radius: 8px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    max-height: 38px;
+    font-family: inherit;
+}
+
+.tf__error {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    margin-top: 4px;
+    color: red;
+    font-size: 14px;
+}
