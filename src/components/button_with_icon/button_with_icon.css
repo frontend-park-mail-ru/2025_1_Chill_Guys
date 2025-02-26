@@ -1,0 +1,27 @@
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-with-icon {
+    align-items: center;
+    padding: 6px 14px;
+    outline: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    color: white;
+    gap: 2px;
+}
+
+.btn-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.btn-with-icon__accent {
+    border: 2px solid #3D8D7A;
+    background-color: #3D8D7A;
+}
