@@ -1,11 +1,11 @@
 import BaseComponent from "../baseComponent.js"
 
 class Button extends BaseComponent {
-    constructor(){
+    constructor() {
         super("button/button");
     }
-    
-    render(props){
+
+    render(props) {
         const element = super.render({
             type: props.type,
             title: props.title,
