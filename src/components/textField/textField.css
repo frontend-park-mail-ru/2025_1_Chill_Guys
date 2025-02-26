@@ -10,14 +10,19 @@
 }
 
 .tf__input {
-    padding: 8px;
+    padding: 12px;
+
     outline: none;
-    border: 2px solid lightgray;
-    border-radius: 8px;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    max-height: 38px;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: #E1E6E8;
+
+    font-size: 17px;
     font-family: inherit;
+}
+
+.tf__input::placeholder {
+    color: #868686;
 }
 
 .tf__error {
