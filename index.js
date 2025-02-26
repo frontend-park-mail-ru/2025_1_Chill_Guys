@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
     res.sendFile(filePath);
 });
 
-app.listen(8001, () => {
-    console.log("server start");
+const port = process.env.npm_config_port || 8001;
+app.listen(port, () => {
+    console.log(`server started at port ${port}`);
 });
