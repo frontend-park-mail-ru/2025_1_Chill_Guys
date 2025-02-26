@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "handlebars src/components/ -m -f public/templates.precompiled.js -e hbs",
+    "prestart": "handlebars src/components/ src/pages -m -f public/templates.precompiled.js -e hbs",
     "start": "node index.js"
   },
   "repository": {
