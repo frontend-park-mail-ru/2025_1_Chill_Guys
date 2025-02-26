@@ -20,10 +20,9 @@ class Form extends BaseComponent {
 
     /**
      * Функция генерации формы
-     * @param {Function} handleAction Функция-обработчик для кнопок формы
      * @returns {HTMLElement}
      */
-    render(handleAction) {
+    render() {
         this.#formElement = super.render({
             form: this.#formTemplate,
             actions: this.#formActions
@@ -36,9 +35,8 @@ class Form extends BaseComponent {
             this.#formValue[id] = defaultValue ?? "";
         });
 
-        // Добавление обработчика изменения полей и нажатий на кнопки
+        // Добавление обработчика изменения полей
         this.#formElement.addEventListener("input", (event) => this.#handleUpdateValue(event));
-        this.#formElement.querySelector(".form__actions").addEventListener("click", (event) => handleAction(event.target.name));
 
         return this.#formElement;
     }
@@ -98,19 +96,6 @@ class Form extends BaseComponent {
             this.#formElement.querySelector(`.form__element__title[name=${fieldId}]`).hidden ^= true;
             this.#formElement.querySelector(`.form__element__input[name=${fieldId}]`).hidden ^= true;
         });
-    }
-
-    /**
-     * Функция для получения элемента кнопки формы по её id
-     * @param {String} actionId 
-     * 
-     * @example
-     * const okButtonElement = form.actionElement("button_ok");
-     * 
-     * @returns {HTMLElement}
-     */
-    actionElement(actionId) {
-        return this.#formElement.querySelector(`.form__actions > [name="${actionId}"]`);
     }
 
     /**
