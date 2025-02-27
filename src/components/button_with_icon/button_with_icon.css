@@ -1,9 +1,5 @@
-.flex-column {
-    display: flex;
-    flex-direction: column;
-}
-
 .btn-with-icon {
+    display: flex;
     align-items: center;
     padding: 6px 14px;
     outline: none;
@@ -24,4 +20,20 @@
 .btn-with-icon__accent {
     border: 2px solid #3D8D7A;
     background-color: #3D8D7A;
+}
+
+.button__orientation__top {
+    flex-direction: column;
+}
+
+.button__orientation__bottom {
+    flex-direction: column-reverse;
+}
+
+.button__orientation__left {
+    flex-direction: row;
+}
+
+.button__orientation__right {
+    flex-direction: row-reverse;
 }

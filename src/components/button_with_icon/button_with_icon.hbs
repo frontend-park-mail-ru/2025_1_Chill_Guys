@@ -1,4 +1,8 @@
-<button {{{ isDisabled }}} type="button" class="btn-with-icon btn-with-icon__{{{ type }}} flex-column">
-    <img alt="{{{ iconAlt }}}" src="{{{ iconSrc }}}" class="btn-icon">
+<button {{{ isDisabled }}}
+        type="button"
+        class="btn-with-icon btn-with-icon__{{{ mainClass }}} {{{ otherClasses }}} {{{ iconPosition }}}">
+    {{#if iconSrc}}
+        <img alt="{{{ iconAlt }}}" src="{{{ iconSrc }}}" class="btn-icon">
+    {{/if}}
     <span>{{{ title }}}</span>
 </button>
