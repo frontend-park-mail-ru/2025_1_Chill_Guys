@@ -15,12 +15,12 @@ main {
 }
 
 .login_page__decoration {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 830px;
-    height: 830px;
+    width: 1300px;
+    height: 1300px;
     z-index: 1;
     display: flex;
     justify-content: center;
@@ -31,8 +31,8 @@ main {
 }
 
 .login_page__decoration::after {
-    width: 650px;
-    height: 650px;
+    width: 1000px;
+    height: 1000px;
 
     background-color: #F5F7FA;
     border-radius: 50%;
