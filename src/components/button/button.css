@@ -1,16 +1,46 @@
 .btn {
-    padding: 8px;
+    padding: 12px;
     outline: none;
-    border-radius: 8px;
+    border-radius: 20px;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 17px;
     letter-spacing: 0.5px;
-    height: 38px;
     cursor: pointer;
-    color: white;
+    color: #D9E8FF;
 }
 
-.button__success{
+.button__default {
+    color: #424242;
+    border: 1px solid #C1C1C1;
+    background-color: #E1E6E8;
+}
+
+.button__default:not(:disabled):hover {
+    border: 1px solid #d7dadb;
+}
+
+.button__default:not(:disabled):active {
+    background-color: #d7dadb;
+    border: 1px solid #d7dadb;
+}
+
+.button__primary {
+    border: 2px solid #085AEB;
+    background-color: #085AEB;
+}
+
+.button__primary:not(:disabled):hover {
+    border: 2px solid #0049c8
+}
+
+.button__primary:not(:disabled):active {
+    background-color: #0049c8;
+    border: 2px solid #0049c8;
+}
+
+
+.button__success {
+    color: white;
     border: 2px solid #3D8D7A;
     background-color: #3D8D7A;
 }
@@ -24,21 +54,22 @@
     border: 2px solid rgb(52, 121, 105)
 }
 
-.button__dangerous{
+.button__dangerous {
+    color: white;
     background-color: #ff4444;
-    border: 2px solid #ff4444; 
+    border: 2px solid #ff4444;
 }
 
 .button__dangerous:not(:disabled):hover {
-    border: 2px solid #cc0000; 
+    border: 2px solid #cc0000;
 }
 
 .button__dangerous:not(:disabled):active {
-    border: 2px solid #cc0000; 
+    border: 2px solid #cc0000;
     background-color: #cc0000;
 }
 
-.btn:disabled{
+.btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }

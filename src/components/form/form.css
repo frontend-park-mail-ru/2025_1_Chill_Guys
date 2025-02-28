@@ -1,8 +1,7 @@
 .form {
-    display: grid;
-    grid-template-columns: max-content auto;
-    align-items: center;
-    width: 400px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
 }
 
 .form__element__title {
@@ -15,17 +14,7 @@
 }
 
 .form__element__error {
-    grid-column-start: 2;
-    grid-column-end: 3;
     color: red;
-    font-size: 14px;
-    margin-top: -4px;
-    margin-bottom: 8px;
-}
-
-.form__actions {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    display: flex;
-    justify-content: space-between;
+    font-size: 12px;
+    margin-top: -16px;
 }
