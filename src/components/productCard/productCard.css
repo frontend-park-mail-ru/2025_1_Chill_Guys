@@ -1,0 +1,62 @@
+.full-wide {
+    width: 100%;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card {
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+}
+
+.prices {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+.sell-price {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--sale-color);
+}
+
+.old-price {
+    font-size: 10px;
+    color: var(--light-gray-color);
+}
+
+.sale-percentage {
+    font-size: 10px;
+    color: var(--sale-color);
+}
+
+.brand {
+    font-size: 16px;
+    color:  var(--black-color);
+}
+
+.product-title {
+    font-size: 16px;
+    color:  var(--black-color);
+}
+
+.reviews {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.reviews__star-block {
+    color: var(--reviews-accent-color);
+    font-size: 16px;
+}
+
+.reviews__count-block {
+    color: var(--light-gray-color);
+    font-size: 10px;
+}
