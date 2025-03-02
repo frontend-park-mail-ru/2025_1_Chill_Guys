@@ -1,12 +1,8 @@
 .tf {
-    display: grid;
-    grid-template-columns: max-content auto;
-    align-items: center;
-}
+    display: flex;
+    flex-direction: column;
 
-.tf__title {
-    margin-right: 8px;
-    font-size: 16px;
+    row-gap: 4px;
 }
 
 .tf__input {

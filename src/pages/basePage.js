@@ -1,13 +1,6 @@
-class BasePage {
-    constructor(templateName) {
-        this.templateName = templateName;
-    }
+import BaseComponent from "../components/baseComponent.js";
 
-    render(props) {
-        const template = Handlebars.templates[this.templateName];
-        return template(props);
-    }
-
+class BasePage extends BaseComponent {
     cleanUp() { }
 }
 

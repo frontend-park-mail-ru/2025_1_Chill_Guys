@@ -1,17 +1,22 @@
 import BaseComponent from "../baseComponent.js"
 
 class Button extends BaseComponent {
-    constructor() {
+    #props = {}
+
+    constructor(props) {
         super("button/button");
+        this.#props = props;
     }
 
-    render(props) {
-        const element = super.render({
-            type: props.type,
-            title: props.title,
-            isDisabled: props.disabled ? "disabled" : ""
-        });
-        element.addEventListener("click", props.onClick);
+    render(context) {
+        const element = super.renderElement(context, {
+            type: this.#props.type,
+            title: this.#props.title,
+            isDisabled: this.#props.disabled ? "disabled" : ""
+        }, {});
+
+        element.addEventListener("click", this.#props.onClick);
+
         return element;
     }
 }
