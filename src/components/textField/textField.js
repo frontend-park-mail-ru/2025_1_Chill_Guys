@@ -5,24 +5,24 @@ class TextField extends BaseComponent {
         inputElement: null,
         errorElement: null
     };
+    #props = {}
 
-    constructor() {
+    constructor(props) {
         super("textField/textField");
+        this.#props = props;
     }
 
-    render(props) {
-        const element = super.render({
-            name: props.name ?? "",
-            dataType: props.type,
-            title: props.title,
-            placeholder: props.placeholder ?? "",
-        });
+    render(context) {
+        const element = super.renderElement(context, {
+            type: this.#props.type,
+            title: this.#props.title ?? "",
+        }, {});
 
         this.#elements.inputElement = element.querySelector(".tf__input");
         this.#elements.errorElement = element.querySelector(".tf__error");
 
-        this.#elements.inputElement.value = props.defaultValue ?? "";
-        this.#elements.inputElement.addEventListener("input", props.onChange);
+        this.#elements.inputElement.value = this.#props.defaultValue ?? "";
+        this.#elements.inputElement.addEventListener("input", this.#props.onChange);
 
         return element;
     }

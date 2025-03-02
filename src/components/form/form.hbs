@@ -1,7 +1,5 @@
-<div class="form">
+<form class="form">
     {{#each form}}
-    <input type="{{{this.type}}}" name="{{{this.id}}}" class="tf__input form__element__input"
-        placeholder="{{{this.name}}}">
-    <span name="{{{this.id}}}" class="form__element__error" hidden></span>
+    <component data-id="f_{{this.id}}"></component>
     {{/each}}
-</div>
+</form>

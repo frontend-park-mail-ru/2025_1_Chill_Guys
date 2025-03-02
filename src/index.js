@@ -1,9 +1,14 @@
 import LoginPage from "./pages/loginPage/loginPage.js";
 import RegPage from "./pages/regPage/regPage.js";
+import TestPage from "./pages/testPage/testPage.js";
 
 const root = document.getElementById("root");
-const pages = {
-    "login": new LoginPage(),
+const page = new TestPage({});
+
+root.appendChild(page.render({ root: true }))
+
+/*const pages = {
+    "login": new TestPage(),
     "register": new RegPage(),
 }
 
@@ -19,5 +24,4 @@ function showPage(pageName) {
     page.render(root, { showPage });
     activePageName = pageName;
 }
-
-showPage("login");
+*/
