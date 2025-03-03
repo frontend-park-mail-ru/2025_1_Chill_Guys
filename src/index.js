@@ -1,4 +1,3 @@
-import ajax from "../modules/ajax.js";
 import LoginPage from "./pages/loginPage/loginPage.js";
 import RegPage from "./pages/regPage/regPage.js";
 import TestPage from "./pages/testPage/testPage.js";
