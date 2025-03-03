@@ -7,12 +7,12 @@ export const ContentTypes = {
  * Запрос GET
  * @param {String} url URL запроса
  * @param {{ origin: String }} options Параметры запроса
- * @returns {{ error: false, result: Response } | { error: true, message: error }}
+ * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const get = async (url, options) => {
     const headers = new Headers();
     return new Promise((resolve, reject) => {
-        fetch(`${window.location.origin ?? options?.origin}/${url}`, {
+        fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "GET",
             headers: headers,
             credentials: "same-origin",
@@ -25,18 +25,19 @@ export const get = async (url, options) => {
 /**
  * Запрос POST
  * @param {String} url URL запроса
+ * @param {object} data Тело запроса
  * @param {{ type: ContentTypes?, origin: String }} options Параметры запроса
- * @returns {{ error: false, result: Response } | { error: true, message: error }}
+ * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const post = async (url, data, options) => {
     const headers = new Headers();
     headers.append("Content-Type", options?.type ?? ContentTypes.JSON);
     return new Promise((resolve, reject) => {
-        fetch(`${window.location.origin}/${url}`, {
+        fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "POST",
             headers: headers,
             credentials: "same-origin",
-            body: JSON.stringify(data),
+            body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
             .catch((err) => resolve({ error: true, message: err }))
@@ -46,18 +47,19 @@ export const post = async (url, data, options) => {
 /**
  * Запрос PUT
  * @param {String} url URL запроса
+ * @param {object} data Тело запроса
  * @param {{ type: ContentTypes?, origin: String }} options Параметры запроса
- * @returns {{ error: false, result: Response } | { error: true, message: error }}
+ * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const put = async (url, data, options) => {
     const headers = new Headers();
     headers.append("Content-Type", options?.type ?? ContentTypes.JSON);
     return new Promise((resolve, reject) => {
-        fetch(`${window.location.origin}/${url}`, {
+        fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "PUT",
             headers: headers,
             credentials: "same-origin",
-            body: JSON.stringify(data),
+            body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
             .catch((err) => resolve({ error: true, message: err }))
@@ -67,18 +69,19 @@ export const put = async (url, data, options) => {
 /**
  * Запрос DELETE
  * @param {String} url URL запроса
+ * @param {object} data Тело запроса
  * @param {{ type: ContentTypes?, origin: String }} options Параметры запроса
- * @returns {{ error: false, result: Response } | { error: true, message: error }}
+ * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const del = async (url, data, options) => {
     const headers = new Headers();
     headers.append("Content-Type", options?.type ?? ContentTypes.JSON);
     return new Promise((resolve, reject) => {
-        fetch(`${window.location.origin}/${url}`, {
+        fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "DELETE",
             headers: headers,
             credentials: "same-origin",
-            body: JSON.stringify(data),
+            body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
             .catch((err) => resolve({ error: true, message: err }))
@@ -88,18 +91,19 @@ export const del = async (url, data, options) => {
 /**
  * Запрос PATCH
  * @param {String} url URL запроса
+ * @param {object} data Тело запроса
  * @param {{ type: ContentTypes?, origin: String }} options Параметры запроса
- * @returns {{ error: false, result: Response } | { error: true, message: error }}
+ * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const patch = async (url, data, options) => {
     const headers = new Headers();
     headers.append("Content-Type", options?.type ?? ContentTypes.JSON);
     return new Promise((resolve, reject) => {
-        fetch(`${window.location.origin}/${url}`, {
+        fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "PATCH",
             headers: headers,
             credentials: "same-origin",
-            body: JSON.stringify(data),
+            body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
             .catch((err) => resolve({ error: true, message: err }))
@@ -107,6 +111,6 @@ export const patch = async (url, data, options) => {
 }
 
 export default {
-    ORIGIN,
+    ContentTypes,
     get, post, put, del
 }
