@@ -23,5 +23,3 @@ function showPage(pageName) {
 }
 
 showPage("register");
-
-ajax.post("test", { a: true }, { origin: "http://localhost:3000" });
