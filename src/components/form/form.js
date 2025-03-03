@@ -5,14 +5,16 @@ import TextField from "../textField/textField.js";
 class Form extends BaseComponent {
     #formTemplate   // Шаблон формы
     #formValue      // Значение полей формы
+    #props
 
     /**
      * @param {Array<{ type: String, id: String, name: String, defaultValue: String?, validType: VALID_TYPES?, errorMessage: String? }>} template Поля формы
      */
-    constructor(template) {
+    constructor(props, template) {
         super("form/form");
         this.#formTemplate = template;
         this.#formValue = {};
+        this.#props = props;
     }
 
     /**
@@ -32,7 +34,8 @@ class Form extends BaseComponent {
         });
 
         return super.renderElement(context, {
-            form: this.#formTemplate
+            form: this.#formTemplate,
+            otherClasses: this.#props.otherClasses,
         }, components);
     }
 

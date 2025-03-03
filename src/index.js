@@ -3,11 +3,7 @@ import RegPage from "./pages/regPage/regPage.js";
 import TestPage from "./pages/testPage/testPage.js";
 
 const root = document.getElementById("root");
-const page = new TestPage({});
-
-root.appendChild(page.render({ root: true }))
-
-/*const pages = {
+const pages = {
     "login": new TestPage(),
     "register": new RegPage(),
 }
@@ -21,7 +17,8 @@ function showPage(pageName) {
     root.innerHTML = "";
 
     const page = pages[pageName];
-    page.render(root, { showPage });
+    root.appendChild(page.render({ showPage, root: true }));
     activePageName = pageName;
 }
-*/
+
+showPage("register");
