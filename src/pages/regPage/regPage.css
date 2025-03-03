@@ -1,3 +1,9 @@
+.reg_page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 header,
 footer {
     flex: 0 1 70px;
@@ -59,12 +65,7 @@ main {
     font-weight: 600;
 }
 
-.reg_page__content__form .form {
+.reg_page__content__form {
     gap: 27px;
-    margin-bottom: 30px;
-}
-
-.reg_page__content__form .form__element__error {
-    margin-top: -27px;
-    font-size: 15px;
+    margin-bottom: 27px;
 }
