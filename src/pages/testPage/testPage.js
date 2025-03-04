@@ -9,33 +9,24 @@ class TestPage extends BasePage {
         super("testPage/testPage", props);
     }
 
+    state = {
+        count: 0,
+    }
+
     render(context) {
-        return super.renderElement(context, {}, {
-            "form": new Form([
-                {
-                    type: "text",
-                    id: "email",
-                    name: "Электронная почта",
-                    defaultValue: "lenya@leshak.r",
-                    validType: VALID_TYPES.EMAIL_VALID,
-                    errorMessage: "Введите реальную почту"
-                },
-                {
-                    type: "password",
-                    id: "password",
-                    name: "Пароль",
-                    defaultValue: "testPasswordSECRET2025",
-                    validType: VALID_TYPES.PASSWORD_VALID,
-                    errorMessage: "Слишком простой пароль"
-                },
-            ]),
-            "signinButton": new Button({
-                type: "primary",
-                title: "Войти",
-                onClick: () => {
-                    this.children["form"].validate();
-                }
-            })
+        return super.renderElement(context, { title: this.state.title }, {
+            "add": new Button({
+                type: "success",
+                title: "Добавить",
+                onClick: () => this.setState({ count: this.state.count + 1 }),
+            }),
+            "remove": new Button({
+                type: "dangerous",
+                title: "Удалить",
+                disabled: this.state.count === 0,
+                onClick: () => this.setState({ count: this.state.count - 1 })
+            }),
+            "list": Array(this.state.count).fill(0).map((E, I) => new Button({ type: "primary", title: `Кнопка_${I}` })),
         })
     }
 }

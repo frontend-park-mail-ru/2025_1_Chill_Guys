@@ -19,6 +19,10 @@ class Button extends BaseComponent {
 
         return element;
     }
+
+    getProps() {
+        return this.#props;
+    }
 }
 
 export default Button

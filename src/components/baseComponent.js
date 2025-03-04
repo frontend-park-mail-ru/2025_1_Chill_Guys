@@ -1,5 +1,18 @@
+function compareObjects(object1, object2) {
+    let keysCount = 0;
+    for (const key of Object.keys(object1)) {
+        keysCount += 1;
+        if (object1[key] != object2[key] && typeof (object1[key]) != 'function') {
+            return false;
+        }
+    }
+    return keysCount == Object.keys(object2).length;
+}
+
 class BaseComponent {
-    children = []
+    children = {}
+    #lastRender = null;
+    state = {}
 
     constructor(templateName) {
         this.templateName = templateName
@@ -13,12 +26,19 @@ class BaseComponent {
      * @returns HTMLElement
      */
     renderElement(context, props, components) {
+        if (this.#lastRender) {
+            this.updateElement(props, components);
+            return;
+        }
+
         this.children = components;
 
         // Генерируем шаблон с props
         const template = Handlebars.templates[this.templateName];
         const parser = new DOMParser();
         const element = parser.parseFromString(template(props), 'text/html').body.firstChild;
+
+        const newChildren = {};
 
         // Вызываем render у детей
         Object.keys(components).map((K) => {
@@ -34,14 +54,16 @@ class BaseComponent {
                     });
                     elements.push(child);
                 });
+                newChildren[K] = elements;
             } else {
                 const child = components[K].render({ id: K, parent: element });
+                newChildren[K] = child;
             }
         });
 
         // Если не установлен флаг root, то ставим себя на нужное место в родителе
         if (!context.root) {
-            const componentElement = context.parent.querySelector(`component[data-id="${context.id}"]`);
+            const componentElement = context.place ?? context.parent.querySelector(`component[data-id="${context.id}"]`);
 
             if (componentElement == null) {
                 console.log("Template error:", "No", context.id, "component!");
@@ -65,7 +87,164 @@ class BaseComponent {
             }
         }
 
+        this.#lastRender = {
+            props,
+            components,
+            element,
+            children: newChildren
+        }
+
         return element;
+    }
+
+    updateElement(props, components) {
+        const lastProps = this.#lastRender.props;
+        const lastComponents = this.#lastRender.components;
+        const lastChildren = this.#lastRender.children;
+        const myElement = this.#lastRender.element;
+
+        let newElement = myElement;
+
+        // Словарь детей после обновления (их HTMLElement)
+        let newChildren = {};
+
+        // Изменились ли props
+        const propsChanged = !compareObjects(props, lastProps);
+
+        // Если изменились props, то перегенерируем страницу
+        if (propsChanged) {
+            const template = Handlebars.templates[this.templateName];
+            const parser = new DOMParser();
+            newElement = parser.parseFromString(template(props), 'text/html').body.firstChild;
+            myElement.replaceWith(newElement);
+        }
+
+        Object.keys(components).forEach((key) => {
+            if (Array.isArray(components[key])) {
+                const lastGroup = lastComponents[key];
+                const lastGroupChildren = lastChildren[key];
+                const nowGroup = components[key];
+                const newGroupChildren = [];
+
+                // Выставляется true, когда найдётся первый элемент, который изменится
+                let elementsChanged = false;
+                for (let i = 0; i < nowGroup.length; i += 1) {
+                    if (lastGroup.length > i) {
+                        // Элемент обновился
+                        if (!compareObjects(nowGroup[i].getProps(), lastGroup[i].getProps())) {
+                            elementsChanged = true;
+                        }
+
+                        if (elementsChanged) {
+                            // Заменяем элемент или ставим его на нужное место
+                            newGroupChildren.push(nowGroup[i].render({
+                                id: key,
+                                parent: myElement,
+                                place: !propsChanged ? lastGroupChildren[i] : undefined,
+                                index: propsChanged ? i : undefined,
+                            }));
+                        } else {
+                            // Элемент не изменился
+                            newGroupChildren.push(lastGroupChildren[i]);
+                        }
+                    } else {
+                        // Добавляем component для указания места следующей вставки
+                        if (lastGroup.length == i && !propsChanged && lastGroup.length != 0) {
+                            const iterComponent = document.createElement("component");
+                            iterComponent.dataset.id = key;
+                            lastGroupChildren[lastGroupChildren.length - 1].after(iterComponent);
+                        }
+
+                        // Вставляем новый элемент
+                        newGroupChildren.push(nowGroup[i].render({
+                            id: key,
+                            parent: myElement,
+                            index: i,
+                            lastChild: i == nowGroup.length - 1,
+                        }));
+                    }
+                }
+
+                // Если количество элементов уменьшилось - удаляем оставшиеся элементы
+                if (lastGroup.length > nowGroup.length) {
+                    for (let i = nowGroup.length; i < lastGroup.length; i += 1) {
+                        // Если в результате остаётся 0 элементов - добавляем component для указания места компоненты
+                        if (i == 0) {
+                            const iterComponent = document.createElement("component");
+                            iterComponent.dataset.id = key;
+                            lastGroupChildren[0].replaceWith(iterComponent);
+                        } else {
+                            lastGroupChildren[i].remove();
+                        }
+                    }
+                }
+
+                newChildren[key] = newGroupChildren;
+                delete lastComponents[key];
+
+                return;
+            }
+
+            if (lastComponents[key] !== undefined) {
+                if (!compareObjects(lastComponents[key].getProps(), components[key].getProps())) {
+                    // Компонента изменилась => перерисовываем
+                    console.log("Component", key, "updated!", myElement);
+                    newChildren[key] = components[key].render({
+                        id: key,
+                        parent: myElement,
+                        place: !propsChanged ? lastChildren[key] : undefined,
+                    });
+                } else if (propsChanged) {
+                    // Компонента не изменилась, но общий шаблон изменился => вставляем старую на место component
+                    const componentElement = newElement.querySelector(`component[data-id="${key}"]`);
+                    componentElement.replaceWith(lastChildren[key]);
+                    newChildren[key] = lastChildren[key];
+                } else {
+                    newChildren[key] = lastChildren[key];
+                }
+                delete lastComponents[key];
+            } else {
+                // Компоненты раньше не было => рендерим её на нужном месте
+                newChildren[key] = components[key].render({
+                    id: key,
+                    parent: myElement,
+                });
+            }
+        });
+
+        // Элементы, которые не нужны
+        Object.keys(lastComponents).forEach((key) => {
+            console.log("Component", key, "removed!");
+            const componentElement = document.createElement("component");
+            componentElement.dataset.id = key;
+            lastChildren[key].replaceWith(componentElement);
+        });
+
+        this.#lastRender = {
+            props,
+            components,
+            children: newChildren,
+            element: newElement,
+        }
+    }
+
+    setState(newState) {
+        let needRender = false;
+        for (const key of Object.keys(newState)) {
+            // Проверяем, изменилось ли состояние
+            if (this.state[key] != newState[key]) {
+                needRender = true;
+                this.state[key] = newState[key];
+            }
+        }
+        if (needRender) {
+            // Вызываем render у компоненты
+            this.render({});
+        }
+    }
+
+    getProps() {
+        return {};
     }
 }
 
