@@ -45,6 +45,10 @@ class TextField extends BaseComponent {
     getValue() {
         return this.#elements.inputElement.value;
     }
+
+    getProps() {
+        return this.#props;
+    }
 }
 
 export default TextField;
