@@ -1,18 +1,15 @@
-import LoginPage from "./pages/loginPage/loginPage.js";
-import RegPage from "./pages/regPage/regPage.js";
 import TestPage from "./pages/testPage/testPage.js";
 
 const root = document.getElementById("root");
 const testPage = new TestPage({});
 root.appendChild(testPage.render({ root: true }));
 
-/*const pages = {
-    "login": new TestPage(),
-    "register": new RegPage(),
+const pages = {
+    "/": new TestPage(),
+    "/test": new TestPage(),
 }
 
 let activePageName = null;
-
 function showPage(pageName) {
     if (activePageName) {
         pages[activePageName].cleanUp();
@@ -21,7 +18,8 @@ function showPage(pageName) {
 
     const page = pages[pageName];
     root.appendChild(page.render({ showPage, root: true }));
+    history.pushState(null, "", pageName)
     activePageName = pageName;
 }
 
-showPage("register");*/
+showPage(window.location.pathname);
