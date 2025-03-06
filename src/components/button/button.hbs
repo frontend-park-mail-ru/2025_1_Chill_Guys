@@ -1,3 +1,7 @@
-<button {{{ isDisabled }}} type="button" class="btn button__{{{ type }}}">
-    {{{ title }}}
+<button {{{ isDisabled }}} type="button"
+    class="btn-icon__{{ size }} {{ variant }} btn {{{ otherClasses }}} {{{ iconPosition }}}">
+    {{#if iconSrc}}
+    <img alt="{{{ iconAlt }}}" src="{{{ iconSrc }}}" class="btn-icon">
+    {{/if}}
+    <span>{{{ title }}}</span>
 </button>
