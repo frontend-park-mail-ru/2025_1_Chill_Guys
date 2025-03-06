@@ -6,7 +6,7 @@ import { VALID_TYPES } from "../../../modules/validation.js";
 
 class TestPage extends BasePage {
     constructor(props) {
-        super("testPage/testPage", props);
+        super("testPage/testPage");
     }
 
     state = {

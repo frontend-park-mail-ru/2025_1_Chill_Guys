@@ -1,9 +1,47 @@
 :root {
-    --background-button-color: #912872;
-    --background-button-hover-color: #B73F93;
-    --background-button-active-color: #AE94A6;
+    /* colors */
+    --background-button-color: #1783FF;
+    --background-button-hover-color: #0059BF;
+    --background-button-active-color: #001E40;
+    --background-button-disabled-color: #737980;
+
+    --input-background-color: #E1E6E8;
+
+    --primary-color: #3D97FF;
+    --secondary-color: #1783FF;
     --sale-color: #E22427;
     --reviews-accent-color: #FFDD00;
     --light-gray-color: #D4D4D4;
     --black-color: #000000;
+    --background: #FFFFFF;
+    --site-background: #F2F2F2;
+    --dark-gray-text-color: #737980;
+
+    /* fonts */
+    --font-min-size: 15px;
+    --font-main-size: 16px;
+
+    /* width */
+    --max-width: 1440px;
+
+    /* header */
+    --header-padding: 7px 14px;
+
+    /* buttons */
+    --button-xs-height: 24px;
+    --button-xs-font-size: 12px;
+
+    --button-s-height: 32px;
+    --button-s-font-size: 14px;
+
+    --button-m-height: 40px;
+    --button-m-font-size: 16px;
+
+    --button-l-height: 48px;
+    --button-l-font-size: 18px;
+
+    --input-m-height: 40px;
+    --input-m-font-size: 16px;
+    --input-m-padding: 14px;
+    --input-m-border-radius: 10px;
 }
