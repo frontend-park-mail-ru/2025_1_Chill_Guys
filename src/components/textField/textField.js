@@ -1,5 +1,16 @@
 import BaseComponent from "../baseComponent.js"
 
+/**
+ * Основные CSS классы для input полей.
+ * @type {{}}
+ */
+export const TextFieldMainClass = {
+    BASE_INPUT: "tf__type__input",
+    CORRECT_INPUT: "tf__type__input__correct",
+    INVALID_INPUT: "tf__type__input__invalid",
+    BASE_SEARCH_INPUT: "tf__search__type__input",
+};
+
 class TextField extends BaseComponent {
     #elements = {
         inputElement: null,
@@ -15,7 +26,8 @@ class TextField extends BaseComponent {
     render(context) {
         const element = super.renderElement(context, {
             type: this.#props.type,
-            title: this.#props.title ?? "",
+            placeholder: this.#props.placeholder ?? "",
+            mainClass: this.#props.mainClass ?? TextFieldMainClass.BASE_INPUT
         }, {});
 
         this.#elements.inputElement = element.querySelector(".tf__input");

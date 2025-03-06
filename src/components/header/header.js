@@ -2,7 +2,7 @@
 
 import BaseComponent from "../baseComponent.js";
 import ButtonWithIcon, {ICON_POSITION} from "../button_with_icon/button_with_icon.js";
-import TextField from "../textField/textField.js";
+import TextField, {TextFieldMainClass} from "../textField/textField.js";
 
 class Header extends BaseComponent {
     #elements
@@ -22,11 +22,13 @@ class Header extends BaseComponent {
                 isDisabled: false,
                 iconAlt: "Иконка каталога",
                 iconSrc: "src/shared/images/catalog-button-ico.svg",
+                size: "m",
                 onClick: () => {console.log('hello, world!')},
             }),
             "main-search-input": new TextField({
-                type: "text",
-                title: "Ищите что угодно на Bazaar",
+                type: "search",
+                placeholder: "Ищите что угодно на Bazaar",
+                mainClass: TextFieldMainClass.BASE_SEARCH_INPUT,
             }),
             "orders-button": new ButtonWithIcon({
                 type: "success",

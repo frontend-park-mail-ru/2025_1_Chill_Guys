@@ -1,24 +1,17 @@
 .tf {
     display: flex;
     flex-direction: column;
-
     row-gap: 4px;
 }
 
 .tf__input {
-    padding: 12px;
-
     outline: none;
-    border: 1px solid white;
-    border-radius: 10px;
-    background-color: #E1E6E8;
-
-    font-size: 17px;
+    border-radius: var(--input-m-border-radius);
     font-family: inherit;
 }
 
 .tf__input::placeholder {
-    color: #868686;
+    color: var(--dark-gray-text-color);
 }
 
 .tf__error {
@@ -27,4 +20,49 @@
     margin-top: 4px;
     color: red;
     font-size: 14px;
+}
+
+/* types of input fields */
+
+.tf__type__input,
+.tf__type__input__correct,
+.tf__type__input__invalid,
+.tf__search__type__input {
+    font-size: var(--input-m-font-size);
+    padding: var(--input-m-padding);
+    height: var(--input-m-height);
+}
+
+.tf__type__input,
+.tf__type__input__correct,
+.tf__type__input__invalid {
+    border: 1px solid var(--input-background-color);
+}
+
+.tf__search__type__input {
+    border: 1px solid var(--secondary-color);
+    color: var(--black-color);
+}
+
+.tf__search__type__input::--webkit-search-cancel-button {
+    position: relative;
+    right: 20px;
+}
+
+.tf__type__input__width__full-wide {
+    width: 100%;
+}
+
+.tf__type__input__width__500 {
+    width: 500px;
+}
+
+.tf__type__input:focus,
+.tf__type__input__correct:focus,
+.tf__type__input__invalid:focus {
+    border: 1px solid var(--secondary-color);
+}
+
+.tf__type__input {
+    background-color: var(--input-background-color);
 }
