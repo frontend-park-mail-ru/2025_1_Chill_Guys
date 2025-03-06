@@ -7,11 +7,24 @@ export const ICON_POSITION = {
     RIGHT: "button__orientation__right",
     BOTTOM: "button__orientation__bottom",
     LEFT: "button__orientation__left",
-}
+};
 
 class ButtonWithIcon extends BaseComponent {
     #props = {}
 
+    /**
+     * Конструктор.
+     *
+     * @param props - параметры рендера кнопки.
+     *  - iconSrc: Путь до иконки для кнопки. Будет установлен в атрибут src.
+     *             Если пустой, то иконки не будет (будет просто текст).
+     *  - iconPosition: Расположение кнопки относительно текста [см. ICON_POSITION].
+     *  - iconAlt: Атрибут alt для иконки.
+     *  - title: Текст на самой кнопке
+     *  - isDisabled: Активна/Не активна.
+     *  - mainClass: Основной окрас кнопки.
+     *  - otherClasses: Строка со стилями, разделенными пробелами.
+     */
     constructor(props) {
         super("button_with_icon/button_with_icon");
         this.#props = props;
@@ -21,7 +34,7 @@ class ButtonWithIcon extends BaseComponent {
      *
      * Кнопка с иконкой или без неё.
      *
-     * @param props
+     * @param contex
      *  - iconSrc: Путь до иконки для кнопки. Будет установлен в атрибут src.
      *             Если пустой, то иконки не будет (будет просто текст).
      *  - iconPosition: Расположение кнопки относительно текста [см. ICON_POSITION].

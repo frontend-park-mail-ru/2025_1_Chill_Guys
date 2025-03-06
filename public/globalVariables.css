@@ -5,6 +5,8 @@
     --background-button-active-color: #001E40;
     --background-button-disabled-color: #737980;
 
+    --input-background-color: #E1E6E8;
+
     --primary-color: #3D97FF;
     --secondary-color: #1783FF;
     --sale-color: #E22427;
@@ -26,15 +28,20 @@
     --header-padding: 7px 14px;
 
     /* buttons */
-    --button-xs-height: 24;
+    --button-xs-height: 24px;
     --button-xs-font-size: 12px;
 
-    --button-s-height: 32;
+    --button-s-height: 32px;
     --button-s-font-size: 14px;
 
-    --button-m-height: 40;
+    --button-m-height: 40px;
     --button-m-font-size: 16px;
 
-    --button-l-height: 48;
+    --button-l-height: 48px;
     --button-l-font-size: 18px;
+
+    --input-m-height: 40px;
+    --input-m-font-size: 16px;
+    --input-m-padding: 14px;
+    --input-m-border-radius: 10px;
 }
