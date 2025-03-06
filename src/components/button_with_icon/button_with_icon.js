@@ -10,8 +10,11 @@ export const ICON_POSITION = {
 }
 
 class ButtonWithIcon extends BaseComponent {
-    constructor() {
+    #props = {}
+
+    constructor(props) {
         super("button_with_icon/button_with_icon");
+        this.#props = props;
     }
 
     /**
@@ -29,17 +32,17 @@ class ButtonWithIcon extends BaseComponent {
      *  - otherClasses: Строка со стилями, разделенными пробелами.
      * @returns {*}
      */
-    render(props) {
-        const element = super.render({
-            isDisabled: props.disabled ? "disabled" : "",
-            mainClass: props.mainClass,
-            otherClasses: props.otherClasses,
-            title: props.title,
-            iconAlt: props.iconAlt,
-            iconSrc: props.iconSrc,
-            iconPosition: props.iconPosition || ICON_POSITION.LEFT,
-        });
-        element.addEventListener("click", props.onClick);
+    render(context) {
+        const element = super.renderElement(context, {
+            isDisabled: this.#props.disabled ? "disabled" : "",
+            size: this.#props.size,
+            otherClasses: this.#props.otherClasses,
+            title: this.#props.title,
+            iconAlt: this.#props.iconAlt,
+            iconSrc: this.#props.iconSrc,
+            iconPosition: this.#props.iconPosition || ICON_POSITION.LEFT,
+        }, {});
+        element.addEventListener("click", this.#props.onClick);
         return element;
     }
 }
