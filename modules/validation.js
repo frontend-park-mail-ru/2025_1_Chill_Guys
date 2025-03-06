@@ -1,7 +1,8 @@
 export const VALID_TYPES = {
     EMAIL_VALID: 0,
     TELEPHONE_VALID: 1,
-    PASSWORD_VALID: 2
+    PASSWORD_VALID: 2,
+    NOT_NULL_VALID: 3,
 };
 
 /**
@@ -24,5 +25,7 @@ export default function validate(validationType, data) {
             return /^\+*[78]*\s*\(*\s*-*\d{,3}\)*\s*-*\d{3}\-*\d{2}\-*\d{2}$/g.exec(data) != null;
         case VALID_TYPES.PASSWORD_VALID:
             return /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/.exec(data) != null;
+        case VALID_TYPES.NOT_NULL_VALID:
+            return data.length > 0;
     }
 }

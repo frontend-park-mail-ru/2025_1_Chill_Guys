@@ -1,3 +1,4 @@
+import RegisterPage from "./pages/regPage/regPage.js";
 import TestPage from "./pages/testPage/testPage.js";
 
 const root = document.getElementById("root");
@@ -6,7 +7,8 @@ root.appendChild(testPage.render({ root: true }));
 
 const pages = {
     "/": new TestPage(),
-    "/test": new TestPage(),
+    "/login": new TestPage(),
+    "/signup": new RegisterPage(),
 }
 
 let activePageName = null;
@@ -21,5 +23,8 @@ function showPage(pageName) {
     history.pushState(null, "", pageName)
     activePageName = pageName;
 }
+
+window.addEventListener("popstate", () => showPage(window.location.pathname));
+window.addEventListener("pushstate", () => showPage(window.location.pathname));
 
 showPage(window.location.pathname);

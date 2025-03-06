@@ -1,11 +1,25 @@
-<div class="reg_page">
+<div class="container">
     <header></header>
-    <main>
-        <div class="reg_page__decoration"></div>
+    <main class="reg_page">
         <div class="reg_page__content">
-            <h1 class="reg_page__content__title">Регистрация</h1>
-            <component data-id="form"></component>
-            <component data-id="signupButton"></component>
+            <div class="reg_page__title">
+                <div>
+                    <img class="reg_page__title__icon" src="/src/shared/images/LogoFull.svg">
+                    <div class="reg_page__title__header">
+                        <h1 class="reg_page__title__header__h1">Регистрация</h1>
+                        <div class="reg_page__title__header__comment">Заполните основную информацию о себе</div>
+                    </div>
+                    <component data-id="comment"></component>
+                </div>
+                <component data-id="redirectMainButton"></component>
+            </div>
+            <div class="reg_page__form">
+                <component data-id="form"></component>
+                <div class="reg_page__form__actions">
+                    <component data-id="signinButton"></component>
+                    <component data-id="signupButton"></component>
+                </div>
+            </div>
         </div>
     </main>
     <footer></footer>

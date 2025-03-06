@@ -2,70 +2,87 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-}
-
-header,
-footer {
-    flex: 0 1 70px;
-    z-index: 2;
     background-color: white;
 }
 
-main {
+.reg_page header,
+.reg_page footer {
+    height: 50px;
+    flex: 0 1 auto;
+}
+
+.reg_page main {
     flex: 1 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background-color: #F5F7FA;
-}
-
-.reg_page__decoration {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1300px;
-    height: 1300px;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #EBF3F9;
-    border-radius: 50%;
-}
-
-.reg_page__decoration::after {
-    width: 1000px;
-    height: 1000px;
-
-    background-color: #F5F7FA;
-    border-radius: 50%;
-    content: "";
-    z-index: 1;
 }
 
 .reg_page__content {
-    width: 650px;
+    padding: 72px 52px 54px 52px;
+    border-radius: 20px;
+
     display: flex;
-    flex-direction: column;
-    padding: 32px 90px;
-    z-index: 2;
 
     border: 1px solid #C1D6E5;
-    border-radius: 16px;
+    background-color: #F5F7FA;
 }
 
-.reg_page__content__title {
-    margin-bottom: 37px;
-    text-align: center;
-
-    font-size: 27px;
-    font-weight: 600;
+.reg_page__title {
+    width: 424px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-.reg_page__content__form {
-    gap: 27px;
-    margin-bottom: 27px;
+.reg_page__title__icon {
+    margin-bottom: 30px;
+}
+
+.reg_page__title__header__h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.reg_page__title__header__comment {
+    color: #737980;
+    font-size: 16px;
+    width: 361px;
+}
+
+.reg_page__title__comment {
+    margin-top: 30px;
+    width: 361px;
+}
+
+.reg_page__title__comment__error {
+    color: #F04346;
+}
+
+.reg_page__title__comment__error ul,
+.reg_page__title__comment__help ul {
+    margin-top: 12px;
+    margin-left: 24px;
+}
+
+.reg_page__title__redirect {
+    margin-top: auto;
+    padding: 0;
+}
+
+.reg_page__form {
+    width: 500px;
+}
+
+.reg_page__form__content {
+    row-gap: 30px;
+}
+
+.reg_page__form__actions {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 30px;
 }

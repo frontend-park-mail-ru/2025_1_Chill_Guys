@@ -16,6 +16,7 @@ export const get = async (url, options) => {
             method: "GET",
             headers: headers,
             credentials: "same-origin",
+            mode: "no-cors",
         })
             .then((res) => resolve({ error: false, result: res }))
             .catch((err) => resolve({ error: true, message: err }))
@@ -37,6 +38,7 @@ export const post = async (url, data, options) => {
             method: "POST",
             headers: headers,
             credentials: "same-origin",
+            mode: "no-cors",
             body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
@@ -59,6 +61,7 @@ export const put = async (url, data, options) => {
             method: "PUT",
             headers: headers,
             credentials: "same-origin",
+            mode: "no-cors",
             body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
@@ -81,6 +84,7 @@ export const del = async (url, data, options) => {
             method: "DELETE",
             headers: headers,
             credentials: "same-origin",
+            mode: "no-cors",
             body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
@@ -103,6 +107,7 @@ export const patch = async (url, data, options) => {
             method: "PATCH",
             headers: headers,
             credentials: "same-origin",
+            mode: "no-cors",
             body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))

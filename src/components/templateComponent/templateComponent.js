@@ -1,4 +1,4 @@
-import BaseComponent from "../baseComponent";
+import BaseComponent from "../baseComponent.js";
 
 class TemplateComponent extends BaseComponent {
     #props = {}
@@ -17,4 +17,4 @@ class TemplateComponent extends BaseComponent {
     }
 }
 
-export default Element;
+export default TemplateComponent;

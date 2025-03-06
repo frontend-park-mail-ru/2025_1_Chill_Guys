@@ -10,12 +10,15 @@ function compareObjects(object1, object2) {
 }
 
 class BaseComponent {
-    children = {}
     #lastRender = null;
-    state = {}
+    children = {};
+    elementChanged = true;
+
+    state = {};
+    showPage = null;
 
     constructor(templateName) {
-        this.templateName = templateName
+        this.templateName = templateName;
     }
 
     /**
@@ -27,10 +30,10 @@ class BaseComponent {
      */
     renderElement(context, props, components) {
         if (this.#lastRender) {
-            this.updateElement(props, components);
-            return;
+            return this.updateElement(props, components);
         }
 
+        this.showPage = context.showPage;
         this.children = components;
 
         // Генерируем шаблон с props
@@ -50,7 +53,8 @@ class BaseComponent {
                         id: K,
                         index: I,
                         lastChild: I == components[K].length - 1,
-                        parent: element
+                        parent: element,
+                        showPage: context.showPage,
                     });
                     elements.push(child);
                 });
@@ -102,6 +106,7 @@ class BaseComponent {
         const lastComponents = this.#lastRender.components;
         const lastChildren = this.#lastRender.children;
         const myElement = this.#lastRender.element;
+        const newComponents = {};
 
         let newElement = myElement;
 
@@ -110,6 +115,7 @@ class BaseComponent {
 
         // Изменились ли props
         const propsChanged = !compareObjects(props, lastProps);
+        this.elementChanged = propsChanged;
 
         // Если изменились props, то перегенерируем страницу
         if (propsChanged) {
@@ -125,6 +131,7 @@ class BaseComponent {
                 const lastGroupChildren = lastChildren[key];
                 const nowGroup = components[key];
                 const newGroupChildren = [];
+                const newComponentsGroup = [];
 
                 // Выставляется true, когда найдётся первый элемент, который изменится
                 let elementsChanged = false;
@@ -142,10 +149,17 @@ class BaseComponent {
                                 parent: myElement,
                                 place: !propsChanged ? lastGroupChildren[i] : undefined,
                                 index: propsChanged ? i : undefined,
+                                showPage: this.showPage,
                             }));
+                            newComponentsGroup.push(nowGroup[i]);
                         } else {
                             // Элемент не изменился
+                            if (propsChanged) {
+                                const componentElement = newElement.querySelector(`component[data-id="${key}"]`);
+                                componentElement.replaceWith(lastGroupChildren[i]);
+                            }
                             newGroupChildren.push(lastGroupChildren[i]);
+                            newComponentsGroup.push(lastGroup[i]);
                         }
                     } else {
                         // Добавляем component для указания места следующей вставки
@@ -161,7 +175,9 @@ class BaseComponent {
                             parent: myElement,
                             index: i,
                             lastChild: i == nowGroup.length - 1,
+                            showPage: this.showPage,
                         }));
+                        newComponentsGroup.push(nowGroup[i]);
                     }
                 }
 
@@ -179,6 +195,8 @@ class BaseComponent {
                     }
                 }
 
+                newComponents[key] = newComponentsGroup;
+
                 newChildren[key] = newGroupChildren;
                 delete lastComponents[key];
 
@@ -188,19 +206,23 @@ class BaseComponent {
             if (lastComponents[key] !== undefined) {
                 if (!compareObjects(lastComponents[key].getProps(), components[key].getProps())) {
                     // Компонента изменилась => перерисовываем
-                    console.log("Component", key, "updated!", myElement);
+                    console.log("Component", key, "updated!");
                     newChildren[key] = components[key].render({
                         id: key,
                         parent: myElement,
                         place: !propsChanged ? lastChildren[key] : undefined,
+                        showPage: this.showPage,
                     });
+                    newComponents[key] = components[key];
                 } else if (propsChanged) {
                     // Компонента не изменилась, но общий шаблон изменился => вставляем старую на место component
                     const componentElement = newElement.querySelector(`component[data-id="${key}"]`);
                     componentElement.replaceWith(lastChildren[key]);
                     newChildren[key] = lastChildren[key];
+                    newComponents[key] = lastComponents[key];
                 } else {
                     newChildren[key] = lastChildren[key];
+                    newComponents[key] = lastComponents[key];
                 }
                 delete lastComponents[key];
             } else {
@@ -208,7 +230,9 @@ class BaseComponent {
                 newChildren[key] = components[key].render({
                     id: key,
                     parent: myElement,
+                    showPage: this.showPage,
                 });
+                newComponents[key] = components[key];
             }
         });
 
@@ -222,10 +246,14 @@ class BaseComponent {
 
         this.#lastRender = {
             props,
-            components,
+            components: newComponents,
             children: newChildren,
             element: newElement,
         }
+
+        this.children = newComponents;
+
+        return newElement;
     }
 
     setState(newState) {

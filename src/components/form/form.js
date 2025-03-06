@@ -30,6 +30,10 @@ class Form extends BaseComponent {
                 placeholder: field.name,
                 defaultValue: field.defaultValue,
                 validType: field.validType,
+                onChange: (event) => {
+                    this.#formValue[field.id] = event.target.value;
+                    this.#props.onChange(field.id, event)
+                },
                 onFinish: (valid) => this.#props.onFinish(field.id, valid)
             });
             this.#formValue[field.id] = field.defaultValue ?? "";
@@ -47,18 +51,26 @@ class Form extends BaseComponent {
      */
     validate() {
         let ok = true;
-        this.#formTemplate.forEach(({ id, validType, errorMessage }) => {
+        this.#formTemplate.forEach(({ id, validType }) => {
             const field = this.children[`f_${id}`];
             // Проверяем, что установлена валидация для данного поля (validType был задан) и поле не скрыто.
             // Тогда если не пройдена валидация, то устанавливаем флаг и выводим ошибку
             if (validType != undefined && !validate(validType, field.getValue())) {
+                field.markError(true);
                 ok = false;
-                field.markError(errorMessage)
             } else {
-                field.markError("");
+                field.markError(false);
             }
         });
         return ok ? this.#formValue : false;
+    }
+
+    markError(fieldId, needShow, ignoreSending) {
+        this.children[`f_${fieldId}`].markError(needShow, ignoreSending);
+    }
+
+    getProps() {
+        return this.#props;
     }
 }
 
