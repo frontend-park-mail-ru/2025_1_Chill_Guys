@@ -1,3 +1,4 @@
+import validate from "../../../modules/validation.js";
 import BaseComponent from "../baseComponent.js"
 
 /**
@@ -14,9 +15,12 @@ export const TextFieldMainClass = {
 class TextField extends BaseComponent {
     #elements = {
         inputElement: null,
-        errorElement: null
     };
     #props = {}
+
+    state = {
+        status: TextFieldMainClass.BASE_INPUT,
+    }
 
     constructor(props) {
         super("textField/textField");
@@ -24,30 +28,40 @@ class TextField extends BaseComponent {
     }
 
     render(context) {
+        const defaultValue = this.#elements.inputElement?.value ?? this.#props.defaultValue ?? "";
+
         const element = super.renderElement(context, {
             type: this.#props.type,
             placeholder: this.#props.placeholder ?? "",
-            mainClass: this.#props.mainClass ?? TextFieldMainClass.BASE_INPUT
+            mainClass: this.state.status,
+            defaultValue: this.#elements.inputElement?.value ?? "",
+            icon: this.state.status == TextFieldMainClass.CORRECT_INPUT
+                ? "/src/shared/images/textfield-success.svg"
+                : "/src/shared/images/textfield-invalid.svg",
+            showIcon: this.state.status != TextFieldMainClass.BASE_INPUT,
         }, {});
 
         this.#elements.inputElement = element.querySelector(".tf__input");
-        this.#elements.errorElement = element.querySelector(".tf__error");
 
-        this.#elements.inputElement.value = this.#props.defaultValue ?? "";
+        this.#elements.inputElement.value = defaultValue;
         this.#elements.inputElement.addEventListener("input", this.#props.onChange);
+        this.#elements.inputElement.addEventListener("change", (ev) => this.handleInputFinish(ev));
 
         return element;
     }
 
-    markError(error) {
-        this.#elements.errorElement.hidden = !error;
-        this.#elements.errorElement.innerText = error;
-
-        if (error) {
-            this.#elements.inputElement.classList.add("tf__input__error");
+    handleInputFinish(ev) {
+        const validData = !this.#props.validType || validate(this.#props.validType, ev.target.value);
+        if (validData) {
+            this.setState({ status: TextFieldMainClass.CORRECT_INPUT });
         } else {
-            this.#elements.inputElement.classList.remove("tf__input__error");
+            this.setState({ status: TextFieldMainClass.INVALID_INPUT });
         }
+        this.#props.onFinish(validData);
+    }
+
+    markError(needShow) {
+        this.setState({ status: needShow ? TextFieldMainClass.INVALID_INPUT : TextFieldMainClass.CORRECT_INPUT });
     }
 
     setValue(value) {
