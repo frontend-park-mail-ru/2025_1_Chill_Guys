@@ -44,11 +44,6 @@
     color: var(--black-color);
 }
 
-.tf__search__type__input::--webkit-search-cancel-button {
-    position: relative;
-    right: 20px;
-}
-
 .tf__type__input__width__full-wide {
     width: 100%;
 }
