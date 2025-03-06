@@ -3,18 +3,3 @@
     flex-direction: column;
     row-gap: 16px;
 }
-
-.form__element__title {
-    margin-bottom: 8px;
-    margin-right: 8px;
-}
-
-.form__element__input {
-    margin-bottom: 8px;
-}
-
-.form__element__error {
-    color: red;
-    font-size: 12px;
-    margin-top: -16px;
-}

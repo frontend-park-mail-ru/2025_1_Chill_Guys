@@ -27,8 +27,10 @@ class Form extends BaseComponent {
         this.#formTemplate.forEach((field) => {
             components[`f_${field.id}`] = new TextField({
                 type: field.type,
-                title: field.name,
-                defaultValue: field.defaultValue
+                placeholder: field.name,
+                defaultValue: field.defaultValue,
+                validType: field.validType,
+                onFinish: (valid) => this.#props.onFinish(field.id, valid)
             });
             this.#formValue[field.id] = field.defaultValue ?? "";
         });
