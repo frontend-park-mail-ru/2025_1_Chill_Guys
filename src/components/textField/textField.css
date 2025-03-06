@@ -11,12 +11,13 @@
     border-radius: 10px;
     width: 100%;
 
-    color: var(--dark-gray-text-color);
     background-color: var(--input-background-color);
     font-size: var(--input-m-font-size);
     border: none;
     outline: none;
     font-weight: 300;
+    caret-color: #1783FF;
+    caret-color: var(--secondary-color);
 }
 
 .tf__input::placeholder {
@@ -70,6 +71,7 @@
 .tf__type__input {
     background-color: var(--input-background-color);
     padding: 13.5px 10px;
+    color: black;
 }
 
 .tf__type__input__correct {

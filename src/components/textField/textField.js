@@ -42,16 +42,17 @@ class TextField extends BaseComponent {
         }, {});
 
         this.#elements.inputElement = element.querySelector(".tf__input");
-
-        this.#elements.inputElement.value = defaultValue;
-        this.#elements.inputElement.addEventListener("input", this.#props.onChange);
-        this.#elements.inputElement.addEventListener("change", (ev) => this.handleInputFinish(ev));
+        if (this.elementChanged) {
+            this.#elements.inputElement.value = defaultValue;
+            this.#elements.inputElement.addEventListener("input", this.#props.onChange);
+            this.#elements.inputElement.addEventListener("change", (ev) => this.handleInputFinish(ev));
+        }
 
         return element;
     }
 
     handleInputFinish(ev) {
-        const validData = !this.#props.validType || validate(this.#props.validType, ev.target.value);
+        const validData = this.#props.validType === undefined || validate(this.#props.validType, ev.target.value);
         if (validData) {
             this.setState({ status: TextFieldMainClass.CORRECT_INPUT });
         } else {
@@ -60,8 +61,11 @@ class TextField extends BaseComponent {
         this.#props.onFinish(validData);
     }
 
-    markError(needShow) {
+    markError(needShow, ignoreSending) {
         this.setState({ status: needShow ? TextFieldMainClass.INVALID_INPUT : TextFieldMainClass.CORRECT_INPUT });
+        if (!ignoreSending) {
+            this.#props.onFinish(!needShow);
+        }
     }
 
     setValue(value) {
