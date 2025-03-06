@@ -1,7 +1,7 @@
 'use strict';
 
 import BaseComponent from "../baseComponent.js";
-import ButtonWithIcon, {ICON_POSITION} from "../button_with_icon/button_with_icon.js";
+import Button, {ICON_POSITION} from "../button/button.js";
 import TextField, {TextFieldMainClass} from "../textField/textField.js";
 
 class Header extends BaseComponent {
@@ -16,7 +16,7 @@ class Header extends BaseComponent {
 
     render(context) {
         const components = {
-            "catalog-button": new ButtonWithIcon({
+            "catalog-button": new Button({
                 type: "success",
                 title: "Каталог",
                 isDisabled: false,
@@ -30,7 +30,7 @@ class Header extends BaseComponent {
                 placeholder: "Ищите что угодно на Bazaar",
                 mainClass: TextFieldMainClass.BASE_SEARCH_INPUT,
             }),
-            "orders-button": new ButtonWithIcon({
+            "orders-button": new Button({
                 type: "success",
                 title: "Заказы",
                 isDisabled: false,
@@ -41,7 +41,7 @@ class Header extends BaseComponent {
                 size: "l",
                 onClick: () => {console.log('orders menu opened!')}
             }),
-            "saved-button": new ButtonWithIcon({
+            "saved-button": new Button({
                 type: "success",
                 title: "Избранное",
                 isDisabled: false,
@@ -52,7 +52,7 @@ class Header extends BaseComponent {
                 size: "l",
                 onClick: () => {console.log('saved menu opened!')}
             }),
-            "cart-button": new ButtonWithIcon({
+            "cart-button": new Button({
                 type: "success",
                 title: "Корзина",
                 isDisabled: false,
@@ -63,7 +63,7 @@ class Header extends BaseComponent {
                 size: "l",
                 onClick: () => {console.log('cart menu opened!')}
             }),
-            "profile-button": new ButtonWithIcon({
+            "profile-button": new Button({
                 type: "success",
                 title: "Профиль",
                 isDisabled: false,

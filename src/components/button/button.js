@@ -14,7 +14,7 @@ export const BUTTON_VARIANT = {
     PRIMARY: "button__variant__primary",
 };
 
-class ButtonWithIcon extends BaseComponent {
+class Button extends BaseComponent {
     #props = {}
 
     /**
@@ -65,6 +65,10 @@ class ButtonWithIcon extends BaseComponent {
         element.addEventListener("click", this.#props.onClick);
         return element;
     }
+
+    getProps() {
+        return this.#props;
+    }
 }
 
-export default ButtonWithIcon
+export default Button

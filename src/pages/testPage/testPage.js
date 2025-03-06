@@ -1,5 +1,7 @@
 import BasePage from "../basePage.js";
 import Button from "../../components/button/button.js";
+import Header from "../../components/header/header.js"
+import Footer from "../../components/footer/footer.js"
 import TextField from "../../components/textField/textField.js";
 import Form from "../../components/form/form.js";
 import { VALID_TYPES } from "../../../modules/validation.js";
@@ -15,6 +17,8 @@ class TestPage extends BasePage {
 
     render(context) {
         return super.renderElement(context, { title: this.state.title }, {
+            "header": new Header({}),
+            "footer": new Footer({}),
             "add": new Button({
                 type: "success",
                 title: "Добавить",
