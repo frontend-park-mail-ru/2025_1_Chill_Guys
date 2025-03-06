@@ -1,5 +1,6 @@
 .btn-with-icon {
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 6px 14px;
     outline: none;
@@ -9,17 +10,47 @@
     letter-spacing: 0.5px;
     cursor: pointer;
     color: white;
-    gap: 2px;
+    gap: 4px;
 }
 
-.btn-icon {
-    width: 22px;
-    height: 22px;
+.btn-icon__xs {
+    font-size: var(--button-xs-font-size);
+    height: var(--button-xs-height);
 }
 
-.btn-with-icon__accent {
-    border: 2px solid #3D8D7A;
-    background-color: #3D8D7A;
+.btn-icon__s {
+    font-size: var(--button-s-font-size);
+    height: var(--button-s-height);
+}
+
+.btn-icon__m {
+    font-size: var(--button-m-font-size);
+    height: var(--button-m-height);
+}
+
+.btn-icon__l {
+    font-size: var(--button-l-font-size);
+    height: var(--button-l-height);
+}
+
+.btn-with-icon {
+    border: 1px solid var(--background-button-color);
+    background-color: var(--background-button-color);
+}
+
+.btn-with-icon:hover {
+    border: 1px solid var(--background-button-hover-color);
+    background-color: var(--background-button-hover-color);
+}
+
+.btn-with-icon:disabled {
+    border: 1px solid var(--background-button-disabled-color);
+    background-color: var(--background-button-disabled-color);
+}
+
+.btn-with-icon:active {
+    border: 1px solid var(--background-button-active-color);
+    background-color: var(--background-button-active-color);
 }
 
 .button__orientation__top {
