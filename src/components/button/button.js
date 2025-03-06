@@ -65,6 +65,10 @@ class ButtonWithIcon extends BaseComponent {
         element.addEventListener("click", this.#props.onClick);
         return element;
     }
+
+    getProps() {
+        return this.#props;
+    }
 }
 
 export default ButtonWithIcon
