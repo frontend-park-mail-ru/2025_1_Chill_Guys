@@ -14,7 +14,7 @@ export const BUTTON_VARIANT = {
     PRIMARY: "button__variant__primary",
 };
 
-class ButtonWithIcon extends BaseComponent {
+class Button extends BaseComponent {
     #props = {}
 
     /**
@@ -71,4 +71,4 @@ class ButtonWithIcon extends BaseComponent {
     }
 }
 
-export default ButtonWithIcon
+export default Button
