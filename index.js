@@ -9,7 +9,7 @@ app.use('/src', express.static('src'));
 app.use('/public', express.static('public'));
 app.use('/modules', express.static('modules'));
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
     const filePath = path.resolve(dirname, 'public', "index.html");
     if (!fs.existsSync(filePath)) {
         res.status(500).send('500. Internal server error');

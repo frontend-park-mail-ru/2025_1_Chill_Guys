@@ -1,6 +1,6 @@
 import BaseComponent from "../baseComponent";
 
-class Element extends BaseComponent {
+class TemplateComponent extends BaseComponent {
     #props = {}
 
     constructor(props) {
