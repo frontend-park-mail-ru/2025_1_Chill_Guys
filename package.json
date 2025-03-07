@@ -21,6 +21,7 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys#readme",
   "dependencies": {
     "express": "^4.21.2",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "serve-favicon": "^2.5.0"
   }
 }

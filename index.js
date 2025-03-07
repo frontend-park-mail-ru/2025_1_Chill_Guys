@@ -1,10 +1,12 @@
 import express from "express"
 import path from "path"
+import favicon from "serve-favicon";
 import fs from "fs"
 
 const app = express();
 const dirname = path.dirname(new URL(import.meta.url).pathname);
 
+app.use(favicon(path.join(dirname, 'src', 'shared', 'images', 'favicon.ico')));
 app.use('/src', express.static('src'));
 app.use('/public', express.static('public'));
 app.use('/modules', express.static('modules'));

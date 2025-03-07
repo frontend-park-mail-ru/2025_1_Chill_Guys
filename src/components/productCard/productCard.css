@@ -28,6 +28,7 @@
 .old-price {
     font-size: 10px;
     color: var(--light-gray-color);
+    text-decoration: line-through;
 }
 
 .sale-percentage {
@@ -52,11 +53,42 @@
 }
 
 .reviews__star-block {
-    color: var(--reviews-accent-color);
+display: flex;
+    gap: 1px;
+    justify-items: center;
+    justify-content: center;
     font-size: 16px;
 }
 
+.reviews__star-text {
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: 15px 15px;
+    padding-left: 16px;
+    background-image: url("/src/shared/images/productCard-star-ico.svg");
+    color: var(--black-color);
+
+}
+
 .reviews__count-block {
-    color: var(--light-gray-color);
-    font-size: 10px;
+    color: var(--dark-gray-text-color);
+    font-size: 12px;
+}
+
+.card-image {
+    border-radius: 12px;
+}
+
+.active-image-wrapper {
+    border-radius: 12px;
+    width: 256px;
+    height: 256px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background: var(--site-background);
+}
+
+.buy-button-card {
+    width: 100%;
 }

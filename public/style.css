@@ -1,3 +1,4 @@
+@import url("resetStyles.css");
 @import url("globalVariables.css");
 @import url("initialStyles.css");
 @import url("../src/components/index.css");
