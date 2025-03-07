@@ -1,12 +1,13 @@
 import RegisterPage from "./pages/regPage/regPage.js";
+import IndexPage from "./pages/indexPage/indexPage.js";
 import TestPage from "./pages/testPage/testPage.js";
 
 const root = document.getElementById("root");
-const testPage = new TestPage({});
-root.appendChild(testPage.render({ root: true }));
+const indexPage = new IndexPage({});
+root.appendChild(indexPage.render({ root: true }));
 
 const pages = {
-    "/": new TestPage(),
+    "/": new IndexPage(),
     "/login": new TestPage(),
     "/signup": new RegisterPage(),
 }

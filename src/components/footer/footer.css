@@ -1,15 +1,3 @@
-/* list styles */
-.list-reset {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.h-reset {
-    margin: 0;
-    padding: 0;
-}
-
 /* footer styling */
 .footer__light {
     display: grid;
