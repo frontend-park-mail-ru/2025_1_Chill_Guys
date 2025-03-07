@@ -14,6 +14,13 @@ export const BUTTON_VARIANT = {
     PRIMARY: "button__variant__primary",
 };
 
+export const BUTTON_SIZE = {
+    XS: "xs",
+    S: "s",
+    M: "m",
+    L: "xs",
+}
+
 class Button extends BaseComponent {
     #props = {}
 
@@ -22,7 +29,7 @@ class Button extends BaseComponent {
      *
      * @param props - параметры рендера кнопки.
      *  - isDisabled: Активна/Не активна.
-     *  - size: Размер кнопки: ["xs", "s", "m", "l"].
+     *  - size: Размер кнопки: [XS, S, M, L].
      *  - variant: Тип кнопки [TEXT - без фона, PRIMARY - с фоном].
      *  - otherClasses: Строка со стилями, разделенными пробелами.
      *  - iconPosition: Расположение кнопки относительно текста [см. ICON_POSITION].
