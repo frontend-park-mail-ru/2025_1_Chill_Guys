@@ -18,7 +18,7 @@ export const BUTTON_SIZE = {
     XS: "xs",
     S: "s",
     M: "m",
-    L: "xs",
+    L: "l",
 }
 
 class Button extends BaseComponent {
