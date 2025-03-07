@@ -1,129 +1,100 @@
-header,
-footer {
-    flex: 0 1 70px;
-    z-index: 2;
-    background-color: white;
+html {
+    background-color: var(--background);
 }
 
-main {
-    flex: 1 1 auto;
+.login_page {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background-color: #F5F7FA;
-}
-
-.login_page__decoration {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 1300px;
-    height: 1300px;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #EBF3F9;
-    border-radius: 50%;
-}
-
-.login_page__decoration::after {
-    width: 1000px;
-    height: 1000px;
-
-    background-color: #F5F7FA;
-    border-radius: 50%;
-    content: "";
-    z-index: 1;
 }
 
 .login_page__content {
-    width: 650px;
+    padding: 72px 52px 54px 52px;
+    border-radius: 20px;
+
     display: flex;
-    flex-direction: column;
-    padding: 32px 90px;
-    z-index: 2;
 
     border: 1px solid #C1D6E5;
-    border-radius: 16px;
+    background-color: #F5F7FA;
+    height: 566px;
 }
 
-.login_page__content__title {
-    margin-bottom: 37px;
-    text-align: center;
-
-    font-size: 27px;
-    font-weight: 600;
-}
-
-.login_page__content__form .form {
-    gap: 27px;
-}
-
-.login_page__content__form .form__element__error {
-    margin-top: -27px;
-    font-size: 15px;
-}
-
-.login_page__content__remember_flag {
+.login_page__title {
+    width: 424px;
     display: flex;
-    align-items: center;
-    user-select: none;
-    column-gap: 8px;
-    margin-top: 27px;
-    margin-bottom: 22px;
-
-    font-size: 17px;
-    color: #868686;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-.login_page__content__remember_flag input {
-    appearance: none;
-    width: 17px;
-    height: 17px;
+.login_page__title__icon {
+    margin-bottom: 30px;
+}
+
+.login_page__title__header__h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.login_page__title__header__comment {
+    color: #737980;
+    font-size: 16px;
+    width: 361px;
+}
+
+.login_page__title__comment__error {
+    color: #F04346;
+    margin-top: 30px;
+    width: 361px;
+}
+
+.login_page__title__redirect {
+    margin-top: auto;
+    padding: 0;
+}
+
+.login_page__form {
+    width: 500px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-
-    background-color: #D9D9D9;
-    border: 1.5px solid #767676;
-    border-radius: 50%;
 }
 
-.login_page__content__remember_flag input:checked::after {
-    width: 8px;
-    height: 8px;
-
-    background-color: #767676;
-    border-radius: 50%;
-
-    content: "";
+.login_page__form__content {
+    row-gap: 20px;
 }
 
-.login_page__content__sep {
+.login_page__form__rememberMe {
     display: flex;
-    align-items: center;
-    column-gap: 12px;
-    margin-top: 28px;
-    margin-bottom: 28px;
-
-    font-size: 17px;
-    color: #868686;
+    margin-top: 10px;
 }
 
-.login_page__content__sep::before {
-    flex: 1 1 auto;
-
-    border-top: 1px solid #868686;
-    content: "";
+.login_page__form__rememberMe input {
+    margin-right: 8px;
 }
 
-.login_page__content__sep::after {
-    flex: 1 1 auto;
+.login_page__form__rememberMe__title {
+    margin-bottom: 2px;
+    font-size: 14px;
+    color: var(--black-color);
+}
 
-    border-top: 1px solid #868686;
-    content: "";
+.login_page__form__rememberMe__message {
+    font-size: 12px;
+    color: var(--dark-gray-text-color);
+}
+
+.login_page__form__actions {
+    margin-top: 34px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 30px;
+}
+
+.login_page__form__rememberMeButton {
+    align-self: flex-end;
+    padding: 0;
+    height: fit-content;
+    margin-top: 4px;
 }

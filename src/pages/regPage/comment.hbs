@@ -25,6 +25,14 @@
             <li>хотя бы 1 цифра</li>
         </ul>
     </div>
+    {{else if invalid.nowRepeated}}
+    <div class="reg_page__title__comment__error">
+        Пароли не совпдают! Пожалуста, повторите попытку ввода
+    </div>
+    {{else if invalid.userExists}}
+    <div class="reg_page__title__comment__error">
+        Данная почта уже зарегистрирована! Пожалуста, повторите попытку ввода
+    </div>
     {{else if showHelp}}
     <div class="reg_page__title__comment__help">
         Формат пароля не верный. Пожалуйста учтите требования к паролю:
@@ -33,10 +41,6 @@
             <li>хотя бы 1 заглавная и прописная буква латинского алфавита</li>
             <li>хотя бы 1 цифра</li>
         </ul>
-    </div>
-    {{else if invalid.nowRepeated}}
-    <div class="reg_page__title__comment__error">
-        Пароли не совпдают! Пожалуста, повторите попытку ввода
     </div>
     {{/if}}
 </div>

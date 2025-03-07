@@ -1,16 +1,36 @@
-<header></header>
-<main>
-    <div class="login_page__decoration"></div>
-    <div class="login_page__content">
-        <h1 class="login_page__content__title">Войти</h1>
-        <div class="login_page__content__form"></div>
-        <div class="login_page__content__remember_flag">
-            <input id="remember_me" type="checkbox">
-            <label for="remember_me">Запомнить меня</label>
+<div class="container">
+    <header></header>
+    <main class="login_page">
+        <div class="login_page__content">
+            <div class="login_page__title">
+                <div>
+                    <img class="login_page__title__icon" src="/src/shared/images/LogoFull.svg">
+                    <div class="login_page__title__header">
+                        <h1 class="login_page__title__header__h1">Вход</h1>
+                        <div class="login_page__title__header__comment">Укажите данные для ввода</div>
+                    </div>
+                    <component data-id="comment"></component>
+                </div>
+                <component data-id="redirectMainButton"></component>
+            </div>
+            <div class="login_page__form">
+                <component data-id="form"></component>
+                <div class="login_page__form__rememberMe">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">
+                        <h2 class="login_page__form__rememberMe__title">Запомнить меня</h2>
+                        <p class="login_page__form__rememberMe__message">
+                            В следующий раз можно не вводить пароль. Это безопасно.
+                        </p>
+                    </label>
+                </div>
+                <div class="login_page__form__actions">
+                    <component data-id="signupButton"></component>
+                    <component data-id="signinButton"></component>
+                </div>
+                <component data-id="rememberMeButton"></component>
+            </div>
         </div>
-        <button class="btn button__primary" name="signin">Войти на BAZAAR</button>
-        <div class="login_page__content__sep">Нет профиля на BAZAAR</div>
-        <button class="btn button__default" name="signup">Зарегистрироваться</button>
-    </div>
-</main>
-<footer></footer>
+    </main>
+    <footer></footer>
+</div>
