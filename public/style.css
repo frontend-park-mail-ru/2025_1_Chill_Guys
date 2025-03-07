@@ -1,41 +1,4 @@
 @import url("globalVariables.css");
+@import url("initialStyles.css");
 @import url("../src/components/index.css");
 @import url("../src/pages/index.css");
-
-@font-face {
-    font-family: "ALS_Sector";
-    src: url("/src/shared/fonts/ALS_Sector.eot");
-    src: url("/src/shared/fonts/ALS_Sector.eot?#iefix")format("embedded-opentype"),
-        url("/src/shared/fonts/ALS_Sector.woff2")format("woff2"),
-        url("/src/shared/fonts/ALS_Sector.woff")format("woff"),
-        url("/src/shared/fonts/ALS_Sector.ttf")format("truetype"),
-        url("/src/shared/fonts/ALS_Sector.svg#ALS Sector Regular Regular")format("svg");
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "ALS_Sector";
-}
-
-html {
-    background-color: var(--site-background);
-}
-
-body {
-    margin: 0;
-    min-height: 100%;
-}
-
-#root {
-    min-height: 100vh;
-    /*width: var(--max-width);
-    margin: 0 auto;*/
-}
-
-.container {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-}
