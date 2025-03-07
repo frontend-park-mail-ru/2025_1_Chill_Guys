@@ -3,20 +3,6 @@ html {
 }
 
 .reg_page {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-}
-
-.reg_page header,
-.reg_page footer {
-    height: 50px;
-    flex: 0 1 auto;
-}
-
-.reg_page main {
-    flex: 1 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;

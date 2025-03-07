@@ -1,3 +1,4 @@
+import LoginPage from "./pages/loginPage/loginPage.js";
 import RegisterPage from "./pages/regPage/regPage.js";
 import IndexPage from "./pages/indexPage/indexPage.js";
 import TestPage from "./pages/testPage/testPage.js";
@@ -8,8 +9,8 @@ root.appendChild(indexPage.render({ root: true }));
 
 const pages = {
     "/": new IndexPage(),
-    "/login": new TestPage(),
-    "/signup": new RegisterPage(),
+    "/login": new LoginPage(),
+    "/register": new RegisterPage(),
 }
 
 let activePageName = null;

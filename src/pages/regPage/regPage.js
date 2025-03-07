@@ -29,7 +29,18 @@ class RegisterPage extends BasePage {
         const response = await ajax.post("api/auth/register", data, {
             origin: "http://localhost:8081",
         });
-        console.log(response);
+
+        if (response.result.status === 409) {
+            this.children.form.markError("email", true, true);
+            this.setState({
+                invalidInput: {
+                    ...this.state.invalidInput,
+                    userExists: true,
+                }
+            });
+        } else {
+            this.showPage("/");
+        }
     }
 
     render(context) {
@@ -39,15 +50,19 @@ class RegisterPage extends BasePage {
                 onChange: (id, event) => {
                     if (id == "password" || id == "repeat_password") {
                         if (!this.state.invalidInput[id]) {
-                            this.setState({ showHelp: true });
+                            this.setState({
+                                showHelp: true
+                            });
                         }
                     }
                 },
                 onFinish: (id, isSuccess) => {
+                    console.log(id, isSuccess)
                     this.setState({
                         invalidInput: {
                             ...this.state.invalidInput,
-                            [id]: !isSuccess
+                            [id]: !isSuccess,
+                            userExists: false,
                         },
                         showHelp: false
                     });
