@@ -1,12 +1,10 @@
 import BasePage from "../basePage.js";
 import Button, { BUTTON_VARIANT } from "../../components/button/button.js";
-import Header from "../../components/header/header.js"
-import Footer from "../../components/footer/footer.js"
-import TextField from "../../components/textField/textField.js";
 import Form from "../../components/form/form.js";
 import { VALID_TYPES } from "../../../modules/validation.js";
 import TemplateComponent from "../../components/templateComponent/templateComponent.js";
 import ajax from "../../../modules/ajax.js";
+import { SERVER_URL } from "../../settings.js";
 
 class LoginPage extends BasePage {
     constructor(props) {
@@ -21,13 +19,10 @@ class LoginPage extends BasePage {
         const data = {
             email: form.email,
             password: form.password,
-            name: form.name,
-            surname: form.surname,
+            rememberMe: form.rememberMe,
         };
 
-        const response = await ajax.post("api/auth/login", data, {
-            origin: "http://localhost:8081",
-        });
+        const response = await ajax.post("api/auth/login", data, { origin: SERVER_URL });
 
         if (response.result.status === 400) {
             this.children.form.markError("password", true, true);
@@ -44,7 +39,7 @@ class LoginPage extends BasePage {
         return super.renderElement(context, {}, {
             "form": new Form({
                 otherClasses: "login_page__form__content",
-                onChange: (id, event) => {
+                onChange: () => {
                     this.setState({ error: "" });
                 },
                 onFinish: (id, isSuccess) => {
@@ -90,6 +85,12 @@ class LoginPage extends BasePage {
                 size: "l",
                 onClick: () => {
                     const dataValid = this.children.form.validate();
+                    const element = this.getElement();
+
+                    dataValid["rememberMe"] = element.querySelector("#rememberMe").checked;
+
+                    console.log(dataValid);
+
                     if (dataValid) {
                         this.handleSignin(dataValid);
                     }

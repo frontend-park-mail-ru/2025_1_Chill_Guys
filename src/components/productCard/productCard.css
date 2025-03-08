@@ -8,9 +8,10 @@
 }
 
 .product-card {
-    gap: 10px;
+    display: flex;
     padding: 10px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .prices {
@@ -38,12 +39,12 @@
 
 .brand {
     font-size: 16px;
-    color:  var(--black-color);
+    color: var(--black-color);
 }
 
 .product-title {
     font-size: 16px;
-    color:  var(--black-color);
+    color: var(--black-color);
 }
 
 .reviews {
@@ -53,7 +54,7 @@
 }
 
 .reviews__star-block {
-display: flex;
+    display: flex;
     gap: 1px;
     justify-items: center;
     justify-content: center;

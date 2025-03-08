@@ -2,10 +2,10 @@
     font-family: "ALS_Sector";
     src: url("/src/shared/fonts/ALS_Sector.eot");
     src: url("/src/shared/fonts/ALS_Sector.eot?#iefix")format("embedded-opentype"),
-    url("/src/shared/fonts/ALS_Sector.woff2")format("woff2"),
-    url("/src/shared/fonts/ALS_Sector.woff")format("woff"),
-    url("/src/shared/fonts/ALS_Sector.ttf")format("truetype"),
-    url("/src/shared/fonts/ALS_Sector.svg#ALS Sector Regular Regular")format("svg");
+        url("/src/shared/fonts/ALS_Sector.woff2")format("woff2"),
+        url("/src/shared/fonts/ALS_Sector.woff")format("woff"),
+        url("/src/shared/fonts/ALS_Sector.ttf")format("truetype"),
+        url("/src/shared/fonts/ALS_Sector.svg#ALS Sector Regular Regular")format("svg");
 }
 
 * {
@@ -29,8 +29,7 @@ body {
 }
 
 .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
+    margin: 0px 24px;
     min-height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr auto;

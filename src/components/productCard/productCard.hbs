@@ -1,7 +1,7 @@
 <article class="product-card flex-column">
     <div class="carousel-images">
         <div class="active-image-wrapper">
-        <img class="card-image" alt="{{mainImageAlt}}" src="{{mainImageSrc}}">
+            <img class="card-image" alt="{{mainImageAlt}}" src="{{mainImageSrc}}">
         </div>
         <div class="controls">
             ...
@@ -10,13 +10,15 @@
 
     <div class="prices full-wide">
         <div class="sell-price">{{price}} ₽</div>
-        <div class="old-price">{{oldPrice}} ₽</div>
-        <div class="sale-percentage">-{{sale}}%</div>
+        {{#if oldPrice}}<div class="old-price">{{oldPrice}} ₽</div>{{/if}}
+        {{#if sale}}<div class="sale-percentage">-{{sale}}%</div>{{/if}}
     </div>
 
+    {{#if brand}}
     <div class="brand full-wide">
         {{brand}}
     </div>
+    {{/if}}
 
     <div class="product-title full-wide">
         {{title}}

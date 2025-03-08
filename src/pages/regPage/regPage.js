@@ -7,6 +7,7 @@ import Form from "../../components/form/form.js";
 import { VALID_TYPES } from "../../../modules/validation.js";
 import TemplateComponent from "../../components/templateComponent/templateComponent.js";
 import ajax from "../../../modules/ajax.js";
+import { SERVER_URL } from "../../settings.js";
 
 class RegisterPage extends BasePage {
     constructor(props) {
@@ -27,7 +28,7 @@ class RegisterPage extends BasePage {
         };
 
         const response = await ajax.post("api/auth/register", data, {
-            origin: "http://localhost:8081",
+            origin: SERVER_URL,
         });
 
         if (response.result.status === 409) {
