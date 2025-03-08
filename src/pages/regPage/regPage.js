@@ -1,8 +1,5 @@
 import BasePage from "../basePage.js";
 import Button, { BUTTON_VARIANT } from "../../components/button/button.js";
-import Header from "../../components/header/header.js"
-import Footer from "../../components/footer/footer.js"
-import TextField from "../../components/textField/textField.js";
 import Form from "../../components/form/form.js";
 import { VALID_TYPES } from "../../../modules/validation.js";
 import TemplateComponent from "../../components/templateComponent/templateComponent.js";
@@ -10,7 +7,7 @@ import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
 class RegisterPage extends BasePage {
-    constructor(props) {
+    constructor() {
         super("regPage/regPage");
     }
 
@@ -48,7 +45,7 @@ class RegisterPage extends BasePage {
         return super.renderElement(context, {}, {
             "form": new Form({
                 otherClasses: "reg_page__form__content",
-                onChange: (id, event) => {
+                onChange: (id) => {
                     if (id == "password" || id == "repeat_password") {
                         if (!this.state.invalidInput[id]) {
                             this.setState({
