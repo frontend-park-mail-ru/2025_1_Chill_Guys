@@ -7,7 +7,7 @@ import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
 class LoginPage extends BasePage {
-    constructor(props) {
+    constructor() {
         super("loginPage/loginPage");
     }
 
