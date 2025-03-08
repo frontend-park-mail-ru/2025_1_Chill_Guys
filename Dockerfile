@@ -14,7 +14,6 @@ FROM nginx:alpine
 COPY --from=build /app/ /app
 
 COPY default.conf /etc/nginx/conf.d/default.conf
-#COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 

@@ -1,11 +1,8 @@
 import LoginPage from "./pages/loginPage/loginPage.js";
 import RegisterPage from "./pages/regPage/regPage.js";
 import IndexPage from "./pages/indexPage/indexPage.js";
-import TestPage from "./pages/testPage/testPage.js";
 
 const root = document.getElementById("root");
-const indexPage = new IndexPage({});
-root.appendChild(indexPage.render({ root: true }));
 
 const pages = {
     "/": new IndexPage(),
@@ -22,6 +19,7 @@ function showPage(pageName) {
 
     const page = pages[pageName];
     root.appendChild(page.render({ showPage, root: true }));
+
     history.pushState(null, "", pageName)
     activePageName = pageName;
 }

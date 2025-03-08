@@ -21,6 +21,16 @@ class BaseComponent {
         this.templateName = templateName;
     }
 
+    initState() { }
+
+    getElement() {
+        return this.#lastRender?.element;
+    }
+
+    resetElement() {
+        this.#lastRender = null;
+    }
+
     /**
      * Рендерит элемент по шаблону и добавляет в него необходимые компоненты
      * @param {object} context Параметры для render
@@ -29,7 +39,7 @@ class BaseComponent {
      * @returns HTMLElement
      */
     renderElement(context, props, components) {
-        if (this.#lastRender) {
+        if (this.#lastRender && !context.root) {
             return this.updateElement(props, components);
         }
 
@@ -60,7 +70,7 @@ class BaseComponent {
                 });
                 newChildren[K] = elements;
             } else {
-                const child = components[K].render({ id: K, parent: element });
+                const child = components[K].render({ id: K, parent: element, showPage: context.showPage });
                 newChildren[K] = child;
             }
         });
@@ -97,6 +107,7 @@ class BaseComponent {
             element,
             children: newChildren
         }
+        this.initState();
 
         return element;
     }
