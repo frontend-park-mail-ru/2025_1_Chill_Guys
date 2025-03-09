@@ -12,15 +12,24 @@ class IndexPage extends BasePage {
         super("indexPage/indexPage");
     }
 
+    /**
+     * Состояние страницы:
+     * - products: массив доступных товаров
+     */
     state = {
         products: [],
-        user: null,
     }
 
+    /**
+     * Инициализация страницы
+     */
     initState() {
         this.fetchProducts();
     }
 
+    /**
+     * Запрашивает у сервера все доступные товары
+     */
     async fetchProducts() {
         const res = await ajax.get("api/products/", { origin: SERVER_URL });
 
@@ -30,14 +39,13 @@ class IndexPage extends BasePage {
         }
     }
 
+    /**
+     * Функция генерации главной страницы
+     * @returns {HTMLElement}
+     */
     render(context) {
         return super.renderElement(context, {}, {
-            "header": new Header({
-                logInSuccess: this.state.user != null,
-                onLogout: () => {
-                    this.setState({ user: null });
-                }
-            }),
+            "header": new Header({}),
             "footer": new Footer({}),
             "cards": this.state.products.map(
                 (product) => new ProductCard({

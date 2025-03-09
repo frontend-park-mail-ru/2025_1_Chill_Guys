@@ -1,8 +1,5 @@
 import BasePage from "../basePage.js";
 import Button, { BUTTON_VARIANT } from "../../components/button/button.js";
-import Header from "../../components/header/header.js"
-import Footer from "../../components/footer/footer.js"
-import TextField from "../../components/textField/textField.js";
 import Form from "../../components/form/form.js";
 import { VALID_TYPES } from "../../../modules/validation.js";
 import TemplateComponent from "../../components/templateComponent/templateComponent.js";
@@ -10,15 +7,24 @@ import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
 class RegisterPage extends BasePage {
-    constructor(props) {
+    constructor() {
         super("regPage/regPage");
     }
 
+    /**
+     * Состояние компоненты:
+     * - invalidInput: словарь, хранящий информацию о том, какие поля имеют неправильный формат или значение
+     * - showHelp: показывать ли подсказку по вводу пароля
+     */
     state = {
         invalidInput: {},
         showHelp: false,
     }
 
+    /**
+     * Отправляет на сервер форму регистрации
+     * @param {object} form Значения формы для регистрации
+     */
     async handleSignup(form) {
         const data = {
             email: form.email,
@@ -31,7 +37,9 @@ class RegisterPage extends BasePage {
             origin: SERVER_URL,
         });
 
-        if (response.result.status === 409) {
+        if (response.result.status === 200) {
+            this.showPage("/");
+        } else if (response.result.status === 409) {
             this.children.form.markError("email", true, true);
             this.setState({
                 invalidInput: {
@@ -39,16 +47,18 @@ class RegisterPage extends BasePage {
                     userExists: true,
                 }
             });
-        } else {
-            this.showPage("/");
         }
     }
 
+    /**
+     * Функция генерации страницы регистрации
+     * @returns {HTMLElement}
+     */
     render(context) {
         return super.renderElement(context, {}, {
             "form": new Form({
                 otherClasses: "reg_page__form__content",
-                onChange: (id, event) => {
+                onChange: (id) => {
                     if (id == "password" || id == "repeat_password") {
                         if (!this.state.invalidInput[id]) {
                             this.setState({

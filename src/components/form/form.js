@@ -65,10 +65,20 @@ class Form extends BaseComponent {
         return ok ? this.#formValue : false;
     }
 
+    /**
+     * Помечает конкретное поле ошибкой (или скрывает её)
+     * @param {String} fieldId ID поля
+     * @param {boolean} needShow Показать ли ошибку
+     * @param {boolean} ignoreSending Вызывать ли фукнцию onFinish у поля ввода
+     */
     markError(fieldId, needShow, ignoreSending) {
         this.children[`f_${fieldId}`].markError(needShow, ignoreSending);
     }
 
+    /**
+     * Возравщает props компоненты
+     * @returns {object}
+     */
     getProps() {
         return this.#props;
     }

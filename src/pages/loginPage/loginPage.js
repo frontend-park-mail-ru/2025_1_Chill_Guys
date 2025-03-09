@@ -7,34 +7,44 @@ import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
 class LoginPage extends BasePage {
-    constructor(props) {
+    constructor() {
         super("loginPage/loginPage");
     }
 
+    /**
+     * Состояние страницы входа:
+     * - error: ошибки формы
+     */
     state = {
         error: "",
     }
 
+    /**
+     * Отправка формы входа на сервер
+     * @param {object} form Значения формы для входа
+     */
     async handleSignin(form) {
         const data = {
             email: form.email,
             password: form.password,
-            rememberMe: form.rememberMe,
         };
 
         const response = await ajax.post("api/auth/login", data, { origin: SERVER_URL });
 
-        if (response.result.status === 400) {
-            this.children.form.markError("password", true, true);
-            this.setState({ error: "Пароль должен содержать как минимум 8 символов. Пожалуйста, повторите ввод." })
-        } else if (response.result.status === 401) {
+        if (response.result?.status === 200) {
+            this.showPage("/");
+        } else if (response.result?.status === 400 || response.result?.status === 401) {
             this.children.form.markError("password", true, true);
             this.setState({ error: "Указан неверный пароль. Пожалуйста, повторите ввод." })
         } else {
-            this.showPage("/");
+            this.setState({ error: "Ошибка сервиса. Пожалуйста, повторите попытку позже." })
         }
     }
 
+    /**
+     * Функция генерации страницы входа
+     * @returns {HTMLElement}
+     */
     render(context) {
         return super.renderElement(context, {}, {
             "form": new Form({
@@ -85,12 +95,6 @@ class LoginPage extends BasePage {
                 size: "l",
                 onClick: () => {
                     const dataValid = this.children.form.validate();
-                    const element = this.getElement();
-
-                    dataValid["rememberMe"] = element.querySelector("#rememberMe").checked;
-
-                    console.log(dataValid);
-
                     if (dataValid) {
                         this.handleSignin(dataValid);
                     }
