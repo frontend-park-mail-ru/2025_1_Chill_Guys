@@ -74,6 +74,10 @@ class Button extends BaseComponent {
         return element;
     }
 
+    /**
+     * Возравщает props компоненты
+     * @returns {object}
+     */
     getProps() {
         return this.#props;
     }

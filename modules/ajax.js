@@ -10,7 +10,7 @@ export const ContentTypes = {
  * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const get = async (url, options) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "GET",
             credentials: "include",
@@ -28,7 +28,7 @@ export const get = async (url, options) => {
  * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const post = async (url, data, options) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "POST",
             credentials: "include",
@@ -47,7 +47,7 @@ export const post = async (url, data, options) => {
  * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const put = async (url, data, options) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "PUT",
             credentials: "same-origin",
@@ -66,7 +66,7 @@ export const put = async (url, data, options) => {
  * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const del = async (url, data, options) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "DELETE",
             credentials: "include",
@@ -85,7 +85,7 @@ export const del = async (url, data, options) => {
  * @returns {Promise<{ error: false, result: Response } | { error: true, message: error }>}
  */
 export const patch = async (url, data, options) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "PATCH",
             credentials: "include",

@@ -13,14 +13,24 @@ class Header extends BaseComponent {
         this.#props = props;
     }
 
+    /**
+     * Хранит состояние шапки:
+     * - user: Параметры пользователя. Если user = null, то пользователь не залогинился (или происходит обращение к серверу).
+     */
     state = {
         user: null,
     }
 
+    /**
+     * Инициализация компоненты
+     */
     initState() {
         this.fetchUser();
     }
 
+    /**
+     * Получение информации о пользователе
+     */
     async fetchUser() {
         const res = await ajax.get("api/users/me", { origin: "http://localhost:8081" });
 
@@ -30,6 +40,9 @@ class Header extends BaseComponent {
         }
     }
 
+    /**
+     * Выход пользователя из аккаунта
+     */
     async logoutUser() {
         const res = await ajax.post("api/auth/logout", {}, { origin: "http://localhost:8081" });
 
@@ -38,6 +51,10 @@ class Header extends BaseComponent {
         }
     }
 
+    /**
+     * Функция генерации шапки
+     * @returns {HTMLElement}
+     */
     render(context) {
         const components = {
             "catalog-button": new Button({
@@ -108,6 +125,10 @@ class Header extends BaseComponent {
         return super.renderElement(context, this.#props, components);
     }
 
+    /**
+     * Возравщает props компоненты
+     * @returns {object}
+     */
     getProps() {
         return this.#props;
     }
