@@ -22,7 +22,7 @@ export default function validate(validationType, data) {
         case VALID_TYPES.EMAIL_VALID:
             return /^\w+(\.\w*)*@\w+(\.\w{2,})+$/g.exec(data) != null;
         case VALID_TYPES.TELEPHONE_VALID:
-            return /^\+*[78]*\s*\(*\s*-*\d{,3}\)*\s*-*\d{3}\-*\d{2}\-*\d{2}$/g.exec(data) != null;
+            return /^\+*[78]*\s*\(*\s*-*\d{,3}\)*\s*-*\d{3}\\-*\d{2}\\-*\d{2}$/g.exec(data) != null;
         case VALID_TYPES.PASSWORD_VALID:
             return /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/.exec(data) != null;
         case VALID_TYPES.NOT_NULL_VALID:
