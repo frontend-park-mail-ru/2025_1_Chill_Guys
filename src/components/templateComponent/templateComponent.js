@@ -8,10 +8,18 @@ class TemplateComponent extends BaseComponent {
         this.#props = props;
     }
 
+    /**
+     * Функция генерации карточки товара
+     * @returns {HTMLElement}
+     */
     render(context) {
         return super.renderElement(context, this.#props, {});
     }
 
+    /**
+     * Возравщает props компоненты
+     * @returns {object}
+     */
     getProps() {
         return this.#props;
     }
