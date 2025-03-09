@@ -1,7 +1,7 @@
 'use strict';
 
 import BaseComponent from "../baseComponent.js";
-import Button, {BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION} from "../button/button.js";
+import Button, { BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION } from "../button/button.js";
 
 class ProductCard extends BaseComponent {
     #props = {}
@@ -25,6 +25,10 @@ class ProductCard extends BaseComponent {
         this.#props = props;
     }
 
+    /**
+     * Функция генерации карточки товара
+     * @returns {HTMLElement}
+     */
     render(context) {
         return this.renderElement(context, this.#props, {
             "buy-button": new Button({
@@ -40,6 +44,10 @@ class ProductCard extends BaseComponent {
         });
     }
 
+    /**
+     * Возравщает props компоненты
+     * @returns {object}
+     */
     getProps() {
         return this.#props;
     }

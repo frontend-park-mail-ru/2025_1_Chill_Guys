@@ -11,11 +11,20 @@ class RegisterPage extends BasePage {
         super("regPage/regPage");
     }
 
+    /**
+     * Состояние компоненты:
+     * - invalidInput: словарь, хранящий информацию о том, какие поля имеют неправильный формат или значение
+     * - showHelp: показывать ли подсказку по вводу пароля
+     */
     state = {
         invalidInput: {},
         showHelp: false,
     }
 
+    /**
+     * Отправляет на сервер форму регистрации
+     * @param {object} form Значения формы для регистрации
+     */
     async handleSignup(form) {
         const data = {
             email: form.email,
@@ -28,7 +37,9 @@ class RegisterPage extends BasePage {
             origin: SERVER_URL,
         });
 
-        if (response.result.status === 409) {
+        if (response.result.status === 200) {
+            this.showPage("/");
+        } else if (response.result.status === 409) {
             this.children.form.markError("email", true, true);
             this.setState({
                 invalidInput: {
@@ -36,11 +47,13 @@ class RegisterPage extends BasePage {
                     userExists: true,
                 }
             });
-        } else {
-            this.showPage("/");
         }
     }
 
+    /**
+     * Функция генерации страницы регистрации
+     * @returns {HTMLElement}
+     */
     render(context) {
         return super.renderElement(context, {}, {
             "form": new Form({

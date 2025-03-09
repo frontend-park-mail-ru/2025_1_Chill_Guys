@@ -10,23 +10,55 @@ function compareObjects(object1, object2) {
 }
 
 class BaseComponent {
+    /**
+     * Хранит информация о прошлом render компоненты:
+     * - props: параметры компоненты
+     * - components: дочерние компоненты данной компоненты
+     * - element: HTMLElement данной компоненты
+     * - children: словарь HTMLElement каждой дочерней компоненты
+     */
     #lastRender = null;
+
+    /**
+     * Хранит словарь дочерних компонент
+     */
     children = {};
+
+    /**
+     * Флаг того, изменился ли элемент после renderElement
+     */
     elementChanged = true;
 
+    /**
+     * Состояние компоненты
+     */
     state = {};
+
+    /**
+     * Функция перехода между страницами
+     */
     showPage = null;
 
     constructor(templateName) {
         this.templateName = templateName;
     }
 
+    /**
+     * Вызывается автоматически при генерации компоненты после создания всех её детей
+     */
     initState() { }
 
+    /**
+     * Возвращает результат генерации данной компоненты
+     * @returns {HTMLElement}
+     */
     getElement() {
         return this.#lastRender?.element;
     }
 
+    /**
+     * Принуждает компоненту заново сгененировать себя
+     */
     resetElement() {
         this.#lastRender = null;
     }
@@ -112,6 +144,15 @@ class BaseComponent {
         return element;
     }
 
+    /**
+     * Функция обновления компоненты:
+     * - Если обновились props, то заново создаётся элемент из шаблона и заполняется компонентами
+     * - Если обновились компоненты, то заменяются только те, которые были изменены. 
+     *   Изменение компоненты проверяется, сравнивая getProps сейчас и при последней генерации.
+     * @param {*} props 
+     * @param {*} components 
+     * @returns {HTMLElement}
+     */
     updateElement(props, components) {
         const lastProps = this.#lastRender.props;
         const lastComponents = this.#lastRender.components;
@@ -267,6 +308,10 @@ class BaseComponent {
         return newElement;
     }
 
+    /**
+     * Функция изменения состояния компоненты. Принимает словарь новых состояний. Если состояние изменилось, то вызывается render.
+     * @param {object} newState Словарь новых состояний.
+     */
     setState(newState) {
         let needRender = false;
         for (const key of Object.keys(newState)) {
@@ -282,6 +327,10 @@ class BaseComponent {
         }
     }
 
+    /**
+     * Возравщает props компоненты
+     * @returns {object}
+     */
     getProps() {
         return {};
     }
