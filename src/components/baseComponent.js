@@ -121,9 +121,6 @@ class BaseComponent {
         context.parent.querySelector(`component[data-id="${context.id}"]`);
 
       if (componentElement == null) {
-        console.log("Template error:", "No", context.id, "component!");
-        console.log("Template:");
-        console.log(context.parent.outerHTML);
         return element;
       }
 
@@ -286,8 +283,7 @@ class BaseComponent {
             components[key].getProps(),
           )
         ) {
-          // Компонента изменилась => перерисовываем
-          console.log("Component", key, "updated!");
+          // Компонента изменилась => перерисовываемs
           newChildren[key] = components[key].render({
             id: key,
             parent: myElement,
@@ -321,7 +317,6 @@ class BaseComponent {
 
     // Элементы, которые не нужны
     Object.keys(lastComponents).forEach((key) => {
-      console.log("Component", key, "removed!");
       const componentElement = document.createElement("component");
       componentElement.dataset.id = key;
       lastChildren[key].replaceWith(componentElement);

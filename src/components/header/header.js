@@ -65,9 +65,7 @@ class Header extends BaseComponent {
         iconAlt: "Иконка каталога",
         iconSrc: "src/shared/images/catalog-button-ico.svg",
         size: "l",
-        onClick: () => {
-          console.log("hello, world!");
-        },
+        onClick: () => {},
       }),
       "main-search-input": new TextField({
         type: "search",

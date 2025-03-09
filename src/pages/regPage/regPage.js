@@ -72,7 +72,6 @@ class RegisterPage extends BasePage {
               }
             },
             onFinish: (id, isSuccess) => {
-              console.log(id, isSuccess);
               this.setState({
                 invalidInput: {
                   ...this.state.invalidInput,
