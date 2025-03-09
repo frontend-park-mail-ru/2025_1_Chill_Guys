@@ -1,0 +1,98 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 14px;
+    outline: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    color: white;
+    gap: 4px;
+}
+
+.btn-icon__xs {
+    font-size: var(--button-xs-font-size);
+    height: var(--button-xs-height);
+}
+
+.btn-icon__s {
+    font-size: var(--button-s-font-size);
+    height: var(--button-s-height);
+}
+
+.btn-icon__m {
+    font-size: var(--button-m-font-size);
+    height: var(--button-m-height);
+}
+
+.btn-icon__l {
+    font-size: var(--button-l-font-size);
+    height: var(--button-l-height);
+}
+
+/* Text variant */
+
+.button__variant__text {
+    color: var(--background-button-color);
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.button__variant__text:hover {
+    color: var(--background-button-hover-color);
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.button__variant__text:disabled {
+    color: var(--background-button-disabled-color);
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.button__variant__text:active {
+    color: var(--background-button-active-color);
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+/* Primary variant */
+
+.button__variant__primary {
+    border: 1px solid var(--background-button-color);
+    background-color: var(--background-button-color);
+}
+
+.button__variant__primary:hover {
+    border: 1px solid var(--background-button-hover-color);
+    background-color: var(--background-button-hover-color);
+}
+
+.button__variant__primary:disabled {
+    border: 1px solid var(--background-button-disabled-color);
+    background-color: var(--background-button-disabled-color);
+}
+
+.button__variant__primary:active {
+    border: 1px solid var(--background-button-active-color);
+    background-color: var(--background-button-active-color);
+}
+
+.button__orientation__top {
+    flex-direction: column;
+}
+
+.button__orientation__bottom {
+    flex-direction: column-reverse;
+}
+
+.button__orientation__left {
+    flex-direction: row;
+}
+
+.button__orientation__right {
+    flex-direction: row-reverse;
+}
