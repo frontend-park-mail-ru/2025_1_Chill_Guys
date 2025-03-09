@@ -1,6 +1,7 @@
 'use strict';
 
 import ajax from "../../../modules/ajax.js";
+import { SERVER_URL } from "../../settings.js";
 import BaseComponent from "../baseComponent.js";
 import Button, { ICON_POSITION } from "../button/button.js";
 import TextField, { TextFieldMainClass } from "../textField/textField.js";
@@ -32,7 +33,7 @@ class Header extends BaseComponent {
      * Получение информации о пользователе
      */
     async fetchUser() {
-        const res = await ajax.get("api/users/me", { origin: "http://localhost:8081" });
+        const res = await ajax.get("api/users/me", { origin: SERVER_URL });
 
         if (res.result?.status === 200) {
             const user = await res.result.json();
@@ -44,7 +45,7 @@ class Header extends BaseComponent {
      * Выход пользователя из аккаунта
      */
     async logoutUser() {
-        const res = await ajax.post("api/auth/logout", {}, { origin: "http://localhost:8081" });
+        const res = await ajax.post("api/auth/logout", {}, { origin: SERVER_URL });
 
         if (res.result?.status === 200) {
             this.setState({ user: null });
