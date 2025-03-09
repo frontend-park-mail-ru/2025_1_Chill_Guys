@@ -11,10 +11,10 @@ const root = document.getElementById("root");
  * Словарь страниц
  */
 const pages = {
-    "/": new IndexPage(),
-    "/login": new LoginPage(),
-    "/register": new RegisterPage(),
-}
+  "/": new IndexPage(),
+  "/login": new LoginPage(),
+  "/register": new RegisterPage(),
+};
 
 /**
  * Путь активной страницы
@@ -26,16 +26,16 @@ let activePagePath = null;
  * @param {String} pagePath Путь страницы
  */
 function showPage(pagePath) {
-    if (activePagePath) {
-        pages[activePagePath].cleanUp();
-    }
-    root.innerHTML = "";
+  if (activePagePath) {
+    pages[activePagePath].cleanUp();
+  }
+  root.innerHTML = "";
 
-    const page = pages[pagePath];
-    root.appendChild(page.render({ showPage, root: true }));
+  const page = pages[pagePath];
+  root.appendChild(page.render({ showPage, root: true }));
 
-    history.pushState(null, "", pagePath)
-    activePagePath = pagePath;
+  history.pushState(null, "", pagePath);
+  activePagePath = pagePath;
 }
 
 window.addEventListener("popstate", () => showPage(window.location.pathname));

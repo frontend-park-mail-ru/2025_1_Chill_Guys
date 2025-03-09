@@ -1,28 +1,28 @@
 import BaseComponent from "../baseComponent.js";
 
 class TemplateComponent extends BaseComponent {
-    #props = {}
+  #props = {};
 
-    constructor(props) {
-        super(props.template);
-        this.#props = props;
-    }
+  constructor(props) {
+    super(props.template);
+    this.#props = props;
+  }
 
-    /**
-     * Функция генерации карточки товара
-     * @returns {HTMLElement}
-     */
-    render(context) {
-        return super.renderElement(context, this.#props, {});
-    }
+  /**
+   * Функция генерации карточки товара
+   * @returns {HTMLElement}
+   */
+  render(context) {
+    return super.renderElement(context, this.#props, {});
+  }
 
-    /**
-     * Возравщает props компоненты
-     * @returns {object}
-     */
-    getProps() {
-        return this.#props;
-    }
+  /**
+   * Возравщает props компоненты
+   * @returns {object}
+   */
+  getProps() {
+    return this.#props;
+  }
 }
 
 export default TemplateComponent;
