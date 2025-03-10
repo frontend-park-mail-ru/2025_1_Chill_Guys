@@ -87,7 +87,7 @@ class RegisterPage extends BasePage {
               type: "text",
               id: "name",
               name: "Имя",
-              validType: VALID_TYPES.NOT_NULL_VALID,
+              validType: VALID_TYPES.NAME_VALID,
             },
             {
               type: "text",
