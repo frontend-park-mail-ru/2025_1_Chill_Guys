@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import validate from "../../../modules/validation.js";
 import BaseComponent from "../baseComponent.js";

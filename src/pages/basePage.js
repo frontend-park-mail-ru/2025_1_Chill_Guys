@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import BaseComponent from "../components/baseComponent.js";
 

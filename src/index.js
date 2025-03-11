@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import LoginPage from "./pages/loginPage/loginPage.js";
 import RegisterPage from "./pages/regPage/regPage.js";

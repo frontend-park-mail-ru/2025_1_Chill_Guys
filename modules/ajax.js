@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export const ContentTypes = {
     JSON: "application/json",

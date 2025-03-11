@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export const VALID_TYPES = {
     EMAIL_VALID: 0,

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 import globals from "globals";
 import pluginJs from "@eslint/js";
