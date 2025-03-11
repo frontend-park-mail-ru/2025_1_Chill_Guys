@@ -65,13 +65,13 @@ class Header extends BaseComponent {
         iconAlt: "Иконка каталога",
         iconSrc: "src/shared/images/catalog-button-ico.svg",
         size: "l",
-        onClick: () => { },
+        onClick: () => {},
       }),
       "main-search-input": new TextField({
         type: "search",
         placeholder: "Ищите что угодно на Bazaar",
         mainClass: TextFieldMainClass.BASE_SEARCH_INPUT,
-        otherClasses: "tf__type__input__width__400"
+        otherClasses: "tf__type__input__width__400",
       }),
       "orders-button": new Button({
         type: "success",
