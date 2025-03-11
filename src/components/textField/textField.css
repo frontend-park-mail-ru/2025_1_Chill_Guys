@@ -57,6 +57,10 @@
     width: 100%;
 }
 
+.tf__type__input__width__400 {
+    width: 400px;
+}
+
 .tf__type__input__width__500 {
     width: 500px;
 }

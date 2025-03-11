@@ -78,12 +78,13 @@
 
 .card-image {
     border-radius: 12px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .active-image-wrapper {
+    max-width: 100%;
     border-radius: 12px;
-    width: 256px;
-    height: 256px;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -92,4 +93,8 @@
 
 .buy-button-card {
     width: 100%;
+}
+
+.carousel-images {
+    max-width: 100%;
 }
