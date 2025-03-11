@@ -71,6 +71,7 @@ class Header extends BaseComponent {
         type: "search",
         placeholder: "Ищите что угодно на Bazaar",
         mainClass: TextFieldMainClass.BASE_SEARCH_INPUT,
+        otherClasses: "tf__type__input__width__400",
       }),
       "orders-button": new Button({
         type: "success",

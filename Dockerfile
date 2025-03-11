@@ -8,6 +8,8 @@ RUN npm ci
 
 COPY . .
 
+RUN npm run compile
+
 #базовый образ
 FROM nginx:alpine 
 
