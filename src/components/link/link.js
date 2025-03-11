@@ -1,3 +1,5 @@
+'use strict';
+
 import BaseComponent from "../baseComponent.js";
 
 class Link extends BaseComponent {

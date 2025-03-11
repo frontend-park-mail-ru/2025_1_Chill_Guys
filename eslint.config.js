@@ -1,3 +1,5 @@
+'use strict';
+
 import globals from "globals";
 import pluginJs from "@eslint/js";
 import eslintPluginPrettier from "eslint-plugin-prettier/recommended";

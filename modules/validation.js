@@ -1,3 +1,5 @@
+'use strict';
+
 export const VALID_TYPES = {
     EMAIL_VALID: 0,
     TELEPHONE_VALID: 1,

@@ -1,3 +1,5 @@
+'use strict';
+
 import BasePage from "../basePage.js";
 import Button, { BUTTON_VARIANT } from "../../components/button/button.js";
 import Form from "../../components/form/form.js";

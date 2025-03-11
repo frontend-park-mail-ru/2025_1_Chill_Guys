@@ -1,3 +1,5 @@
+'use strict';
+
 import BaseComponent from "../components/baseComponent.js";
 
 class BasePage extends BaseComponent {
