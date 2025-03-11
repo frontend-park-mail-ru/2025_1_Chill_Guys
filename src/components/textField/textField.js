@@ -54,6 +54,7 @@ class TextField extends BaseComponent {
         type: this.#props.type,
         placeholder: this.#props.placeholder ?? "",
         mainClass: this.state.status,
+        otherClasses: this.#props.otherClasses ?? "tf__type__input__width__500",
         defaultValue: this.#elements.inputElement?.value ?? "",
         icon:
           this.state.status == TextFieldMainClass.CORRECT_INPUT
