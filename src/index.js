@@ -13,31 +13,22 @@ const root = document.getElementById("root");
  * Словарь страниц
  */
 const pages = {
-  "/": new IndexPage(),
-  "/login": new LoginPage(),
-  "/register": new RegisterPage(),
+  "/": IndexPage,
+  "/login": LoginPage,
+  "/register": RegisterPage,
 };
-
-/**
- * Путь активной страницы
- */
-let activePagePath = null;
 
 /**
  * Переход на новую страницу
  * @param {String} pagePath Путь страницы
  */
 function showPage(pagePath) {
-  if (activePagePath) {
-    pages[activePagePath].cleanUp();
-  }
   root.innerHTML = "";
 
-  const page = pages[pagePath];
+  const page = new pages[pagePath]();
   root.appendChild(page.render({ showPage, root: true }));
 
   history.pushState(null, "", pagePath);
-  activePagePath = pagePath;
 }
 
 window.addEventListener("popstate", () => showPage(window.location.pathname));
