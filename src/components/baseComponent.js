@@ -1,3 +1,5 @@
+"use strict";
+
 /* eslint-disable no-undef */
 
 function compareObjects(object1, object2) {

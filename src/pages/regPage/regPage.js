@@ -1,3 +1,5 @@
+"use strict";
+
 import BasePage from "../basePage.js";
 import Button, { BUTTON_VARIANT } from "../../components/button/button.js";
 import Form from "../../components/form/form.js";
@@ -87,12 +89,13 @@ class RegisterPage extends BasePage {
               type: "text",
               id: "name",
               name: "Имя",
-              validType: VALID_TYPES.NOT_NULL_VALID,
+              validType: VALID_TYPES.NAME_VALID,
             },
             {
               type: "text",
               id: "surname",
-              name: "Фамилия (необязательно)",
+              name: "Фамилия",
+              validType: VALID_TYPES.NAME_VALID,
             },
             {
               type: "email",

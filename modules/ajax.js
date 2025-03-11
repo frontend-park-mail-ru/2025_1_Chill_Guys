@@ -1,3 +1,5 @@
+"use strict";
+
 export const ContentTypes = {
     JSON: "application/json",
     FORM: "multipart/form-data"
