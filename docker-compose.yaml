@@ -1,0 +1,7 @@
+services:
+  bazaar:
+    build: .
+    container_name: bazaar
+    ports:
+      - "80:80"
+    restart: unless-stopped

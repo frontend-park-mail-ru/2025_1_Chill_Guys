@@ -1,3 +1,5 @@
+"use strict";
+
 import validate from "../../../modules/validation.js";
 import BaseComponent from "../baseComponent.js";
 import TextField from "../textField/textField.js";
