@@ -3,6 +3,10 @@
     <div class="reg_page__title__comment__error">
         Введите ваше имя! Пожалуста, повторите попытку ввода
     </div>
+    {{else if invalid.surname}}
+    <div class="reg_page__title__comment__error">
+        Введите вашу фамилию! Пожалуста, повторите попытку ввода
+    </div>
     {{else if invalid.email}}
     <div class="reg_page__title__comment__error">
         Email является недействительным! Пожалуста, повторите попытку ввода
