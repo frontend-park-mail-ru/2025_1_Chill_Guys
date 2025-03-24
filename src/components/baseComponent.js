@@ -1,7 +1,5 @@
 "use strict";
 
-/* eslint-disable no-undef */
-
 function compareObjects(object1, object2) {
   let keysCount = 0;
   for (const key of Object.keys(object1)) {
@@ -51,7 +49,7 @@ class BaseComponent {
   /**
    * Вызывается автоматически при генерации компоненты после создания всех её детей
    */
-  initState() { }
+  initState() {}
 
   /**
    * Возвращает результат генерации данной компоненты
@@ -85,8 +83,8 @@ class BaseComponent {
 
     // Генерируем шаблон с props
     const parser = new DOMParser();
-    const element = parser.parseFromString(this.template(props), "text/html").body
-      .firstChild;
+    const element = parser.parseFromString(this.template(props), "text/html")
+      .body.firstChild;
 
     const newChildren = {};
 
@@ -180,8 +178,8 @@ class BaseComponent {
     // Если изменились props, то перегенерируем страницу
     if (propsChanged) {
       const parser = new DOMParser();
-      newElement = parser.parseFromString(this.template(props), "text/html").body
-        .firstChild;
+      newElement = parser.parseFromString(this.template(props), "text/html")
+        .body.firstChild;
       myElement.replaceWith(newElement);
     }
 
