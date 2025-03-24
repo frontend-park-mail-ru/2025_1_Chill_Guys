@@ -6,11 +6,19 @@ import BaseComponent from "../baseComponent.js";
 import Button, { ICON_POSITION } from "../button/button.js";
 import TextField, { TextFieldMainClass } from "../textField/textField.js";
 
+import headerTemplate from "./header.hbs";
+
+import catalogButtonIcon from "/src/shared/images/catalog-button-ico.svg";
+import ordersButtonIcon from "/src/shared/images/header-orders-ico.svg";
+import savedButtonIcon from "/src/shared/images/header-saved-ico.svg";
+import cartButtonIcon from "/src/shared/images/header-cart-ico.svg";
+import profileButtonIcon from "/src/shared/images/header-profile-ico.svg";
+
 class Header extends BaseComponent {
   #props = {};
 
   constructor(props) {
-    super("header/header");
+    super(headerTemplate);
     this.#props = props;
   }
 
@@ -63,9 +71,9 @@ class Header extends BaseComponent {
         title: "Каталог",
         isDisabled: false,
         iconAlt: "Иконка каталога",
-        iconSrc: "src/shared/images/catalog-button-ico.svg",
+        iconSrc: catalogButtonIcon,
         size: "l",
-        onClick: () => {},
+        onClick: () => { },
       }),
       "main-search-input": new TextField({
         type: "search",
@@ -78,7 +86,7 @@ class Header extends BaseComponent {
         title: "Заказы",
         isDisabled: false,
         iconAlt: "Иконка коробки для товаров",
-        iconSrc: "src/shared/images/header-orders-ico.svg",
+        iconSrc: ordersButtonIcon,
         iconPosition: ICON_POSITION.TOP,
         otherClasses: "header-nav-button",
         size: "l",
@@ -91,7 +99,7 @@ class Header extends BaseComponent {
         title: "Избранное",
         isDisabled: false,
         iconAlt: "Иконка сердечка",
-        iconSrc: "src/shared/images/header-saved-ico.svg",
+        iconSrc: savedButtonIcon,
         iconPosition: ICON_POSITION.TOP,
         otherClasses: "header-nav-button",
         size: "l",
@@ -104,7 +112,7 @@ class Header extends BaseComponent {
         title: "Корзина",
         isDisabled: false,
         iconAlt: "Иконка корзины",
-        iconSrc: "src/shared/images/header-cart-ico.svg",
+        iconSrc: cartButtonIcon,
         iconPosition: ICON_POSITION.TOP,
         otherClasses: "header-nav-button",
         size: "l",
@@ -117,7 +125,7 @@ class Header extends BaseComponent {
         title: !this.state.user ? "Войти" : "Выйти",
         isDisabled: false,
         iconAlt: "Иконка человечка",
-        iconSrc: "src/shared/images/header-profile-ico.svg",
+        iconSrc: profileButtonIcon,
         iconPosition: ICON_POSITION.TOP,
         otherClasses: "header-nav-button",
         size: "l",

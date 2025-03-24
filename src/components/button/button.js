@@ -1,6 +1,7 @@
 "use strict";
 
 import BaseComponent from "../baseComponent.js";
+import buttonTemplate from "./button.hbs";
 
 export const ICON_POSITION = {
   TOP: "button__orientation__top",
@@ -39,7 +40,7 @@ class Button extends BaseComponent {
    *  - title: Текст на самой кнопке
    */
   constructor(props) {
-    super("button/button");
+    super(buttonTemplate);
     this.#props = props;
   }
 

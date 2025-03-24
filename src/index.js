@@ -4,6 +4,8 @@ import LoginPage from "./pages/loginPage/loginPage.js";
 import RegisterPage from "./pages/regPage/regPage.js";
 import IndexPage from "./pages/indexPage/indexPage.js";
 
+import "./styles/style.scss";
+
 /**
  * Главный элемент страницы
  */

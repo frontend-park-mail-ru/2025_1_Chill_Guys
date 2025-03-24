@@ -8,9 +8,12 @@ import TemplateComponent from "../../components/templateComponent/templateCompon
 import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
+import commentTemplate from "./comment.hbs";
+import regPageTemplate from "./regPage.hbs";
+
 class RegisterPage extends BasePage {
   constructor() {
-    super("regPage/regPage");
+    super(regPageTemplate);
   }
 
   /**
@@ -117,7 +120,7 @@ class RegisterPage extends BasePage {
           ],
         ),
         comment: new TemplateComponent({
-          template: "regPage/comment",
+          template: commentTemplate,
           invalid: this.state.invalidInput,
           showHelp: this.state.showHelp,
         }),

@@ -7,9 +7,11 @@ import Footer from "../../components/footer/footer.js";
 import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
+import indexPageTemplate from "./indexPage.hbs";
+
 class IndexPage extends BasePage {
   constructor() {
-    super("indexPage/indexPage");
+    super(indexPageTemplate);
   }
 
   /**

@@ -5,7 +5,6 @@
         url("/src/shared/fonts/ALS_Sector.woff2")format("woff2"),
         url("/src/shared/fonts/ALS_Sector.woff")format("woff"),
         url("/src/shared/fonts/ALS_Sector.ttf")format("truetype"),
-        url("/src/shared/fonts/ALS_Sector.svg#ALS Sector Regular Regular")format("svg");
 }
 
 * {

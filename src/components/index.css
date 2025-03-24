@@ -1,7 +1,7 @@
-@import url("../components/button/button.css");
-@import url("../components/link/link.css");
-@import url("../components/textField/textField.css");
-@import url("../components/form/form.css");
-@import url("../components/header/header.css");
-@import url("../components/productCard/productCard.css");
-@import url("../components/footer/footer.css");
+@import url("./button/button.css");
+@import url("./link/link.css");
+@import url("./textField/textField.css");
+@import url("./form/form.css");
+@import url("./header/header.css");
+@import url("./productCard/productCard.css");
+@import url("./footer/footer.css");

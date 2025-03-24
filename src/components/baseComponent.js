@@ -43,14 +43,15 @@ class BaseComponent {
    */
   showPage = null;
 
-  constructor(templateName) {
-    this.templateName = templateName;
+  constructor(template) {
+    console.log("TEMPLATE", template);
+    this.template = template;
   }
 
   /**
    * Вызывается автоматически при генерации компоненты после создания всех её детей
    */
-  initState() {}
+  initState() { }
 
   /**
    * Возвращает результат генерации данной компоненты
@@ -83,9 +84,8 @@ class BaseComponent {
     this.children = components;
 
     // Генерируем шаблон с props
-    const template = Handlebars.templates[this.templateName];
     const parser = new DOMParser();
-    const element = parser.parseFromString(template(props), "text/html").body
+    const element = parser.parseFromString(this.template(props), "text/html").body
       .firstChild;
 
     const newChildren = {};
@@ -179,9 +179,8 @@ class BaseComponent {
 
     // Если изменились props, то перегенерируем страницу
     if (propsChanged) {
-      const template = Handlebars.templates[this.templateName];
       const parser = new DOMParser();
-      newElement = parser.parseFromString(template(props), "text/html").body
+      newElement = parser.parseFromString(this.template(props), "text/html").body
         .firstChild;
       myElement.replaceWith(newElement);
     }
