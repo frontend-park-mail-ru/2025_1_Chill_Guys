@@ -7,6 +7,9 @@ import Button, {
   ICON_POSITION,
 } from "../button/button.js";
 
+import productCardTemplate from "./productCard.hbs";
+import cardButtonIcon from "/src/shared/images/productCard-cart-ico.svg";
+
 class ProductCard extends BaseComponent {
   #props = {};
 
@@ -25,7 +28,7 @@ class ProductCard extends BaseComponent {
    * - reviewsCount: количество отзывов.
    */
   constructor(props) {
-    super("productCard/productCard");
+    super(productCardTemplate);
     this.#props = props;
   }
 
@@ -42,7 +45,7 @@ class ProductCard extends BaseComponent {
         iconPosition: ICON_POSITION.LEFT,
         otherClasses: "buy-button-card",
         iconAlt: "Иконка корзины",
-        iconSrc: "/src/shared/images/productCard-cart-ico.svg",
+        iconSrc: cardButtonIcon,
         title: "В корзину",
       }),
     });

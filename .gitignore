@@ -2,3 +2,4 @@ node_modules
 *.precompiled.js
 .DS_Store
 .idea
+build

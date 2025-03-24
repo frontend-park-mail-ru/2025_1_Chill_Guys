@@ -2,6 +2,8 @@
 
 import BaseComponent from "../baseComponent.js";
 
+import linkTemplate from "./link.hbs";
+
 class Link extends BaseComponent {
   #props = {};
 
@@ -9,7 +11,7 @@ class Link extends BaseComponent {
    * @param {{ title: String, onChange: (event: MouseEvent) => {} }} props Параметры ссылки
    */
   constructor(props) {
-    super("link/link");
+    super(linkTemplate);
     this.#props = props;
   }
 

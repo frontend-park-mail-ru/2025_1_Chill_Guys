@@ -4,6 +4,8 @@ import validate from "../../../modules/validation.js";
 import BaseComponent from "../baseComponent.js";
 import TextField from "../textField/textField.js";
 
+import formTemplate from "./form.hbs";
+
 class Form extends BaseComponent {
   #formTemplate; // Шаблон формы
   #formValue; // Значение полей формы
@@ -13,7 +15,7 @@ class Form extends BaseComponent {
    * @param {Array<{ type: String, id: String, name: String, defaultValue: String?, validType: VALID_TYPES?, errorMessage: String? }>} template Поля формы
    */
   constructor(props, template) {
-    super("form/form");
+    super(formTemplate);
     this.#formTemplate = template;
     this.#formValue = {};
     this.#props = props;

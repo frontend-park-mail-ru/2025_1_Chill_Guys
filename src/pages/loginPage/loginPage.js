@@ -8,9 +8,12 @@ import TemplateComponent from "../../components/templateComponent/templateCompon
 import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
 
+import loginPageTemplate from "./loginPage.hbs";
+import commentTemplate from "./comment.hbs";
+
 class LoginPage extends BasePage {
   constructor() {
-    super("loginPage/loginPage");
+    super(loginPageTemplate);
   }
 
   /**
@@ -106,7 +109,7 @@ class LoginPage extends BasePage {
           onClick: () => context.showPage("/"),
         }),
         comment: new TemplateComponent({
-          template: "loginPage/comment",
+          template: commentTemplate,
           error: this.state.error,
         }),
         rememberMeButton: new Button({

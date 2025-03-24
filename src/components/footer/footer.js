@@ -1,6 +1,7 @@
 "use strict";
 
 import BaseComponent from "../baseComponent.js";
+import footerTemplate from "./footer.hbs";
 
 /**
  * Подвал сайта
@@ -9,7 +10,7 @@ class Footer extends BaseComponent {
   #props = {};
 
   constructor(props) {
-    super("footer/footer");
+    super(footerTemplate);
     this.#props = props;
   }
 

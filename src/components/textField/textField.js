@@ -3,6 +3,11 @@
 import validate from "../../../modules/validation.js";
 import BaseComponent from "../baseComponent.js";
 
+import textFieldTemplate from "./textField.hbs";
+
+import textFieldSuccessIcon from "../../shared/images/textfield-success.svg";
+import textFieldInvalidIcon from "../../shared/images/textfield-invalid.svg";
+
 /**
  * Основные CSS классы для input полей.
  * @type {{}}
@@ -36,7 +41,7 @@ class TextField extends BaseComponent {
   };
 
   constructor(props) {
-    super("textField/textField");
+    super(textFieldTemplate);
     this.#props = props;
   }
 
@@ -58,8 +63,8 @@ class TextField extends BaseComponent {
         defaultValue: this.#elements.inputElement?.value ?? "",
         icon:
           this.state.status == TextFieldMainClass.CORRECT_INPUT
-            ? "/src/shared/images/textfield-success.svg"
-            : "/src/shared/images/textfield-invalid.svg",
+            ? textFieldSuccessIcon
+            : textFieldInvalidIcon,
         showIcon: this.state.status != TextFieldMainClass.BASE_INPUT,
       },
       {},
