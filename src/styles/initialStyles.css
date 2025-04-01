@@ -34,3 +34,15 @@ body {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 100%;
 }
+
+header {
+    flex: 0 1 auto;
+}
+
+main {
+    flex: 1 1 auto;
+}
+
+header {
+    flex: 0 1 auto;
+}
