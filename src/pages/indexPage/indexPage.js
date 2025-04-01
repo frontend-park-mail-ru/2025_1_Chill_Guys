@@ -46,6 +46,7 @@ class IndexPage extends BasePage {
    * @returns {HTMLElement}
    */
   render(context) {
+      console.log(`SERVER URL: ${SERVER_URL}`)
     return super.renderElement(
       context,
       {},
