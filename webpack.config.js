@@ -72,8 +72,12 @@ export default {
     devServer: {
         static: {
             directory: path.join(__dirname, 'public'),
+            serveIndex: true,
+        },
+        historyApiFallback: {
+            index: '/'
         },
         compress: true,
-        port: 7500,
+        port: 9000,
     },
 };

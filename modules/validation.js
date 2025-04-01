@@ -6,6 +6,7 @@ export const VALID_TYPES = {
     PASSWORD_VALID: 2,
     NOT_NULL_VALID: 3,
     NAME_VALID: 4,
+    NUMBER_VALID: 5
 };
 
 /**
@@ -32,5 +33,7 @@ export default function validate(validationType, data) {
             return /^[A-ZА-Я]+[a-zA-Zа-яА-Я]*$/.exec(data) != null;
         case VALID_TYPES.NOT_NULL_VALID:
             return data.length > 0;
+        case VALID_TYPES.NUMBER_VALID:
+            return /^[0-9]+.[0-9]*$/.exec(data) != null;
     }
 }
