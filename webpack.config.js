@@ -7,7 +7,7 @@ const __dirname = dirname("./");
 console.log(__dirname)
 
 export default {
-    mode: 'production',
+    mode: 'development',
 
     plugins: [
         new HtmlBundlerPlugin({
@@ -53,27 +53,27 @@ export default {
                 test: /\.ts$/,
                 use: ["ts-loader", {
                     loader: 'babel-loader',
-                    options: {
-                        targets: "defaults",
-                        presets: [
-                            ["@babel/preset-typescript"]
-                        ]
-                    }
+                }]
+            },
+            {
+                test: /\.jsx$/,
+                use: [{
+                    loader: 'babel-loader',
                 }]
             },
             {
                 test: /\.(?:js|mjs|cjs)$/,
-                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
-                    options: {
-                        targets: "defaults",
-                        presets: [
-                            ['@babel/preset-env']
-                        ]
-                    }
                 },
             }
         ],
+    },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'public'),
+        },
+        compress: true,
+        port: 9000,
     },
 };
