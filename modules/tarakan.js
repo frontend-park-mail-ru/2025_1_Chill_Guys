@@ -1,11 +1,43 @@
 const PROPS_NAMES = {
     "onClick": "onclick",
-    "onChange": "oninput"
+    "onChange": "oninput",
+    "onEnd": "onchange",
 }
 
 function isScalar(d) {
     return typeof (d) === "string" || typeof (d) === "number";
 }
+
+function isObject(obj) {
+    return obj != null && typeof obj === "object";
+};
+
+function equal(obj1, obj2) {
+    if (!isObject(obj1) && !isObject(obj2)) {
+        return obj1 === obj2;
+    }
+
+    if (isObject(obj1) != isObject(obj2)) {
+        return false;
+    }
+
+    const objKeys1 = Object.keys(obj1);
+    const objKeys2 = Object.keys(obj2);
+
+    if (objKeys1.length !== objKeys2.length) return false;
+
+    for (var key of objKeys1) {
+        const value1 = obj1[key];
+        const value2 = obj2[key];
+
+        const isObjects = isObject(value1) && isObject(value2);
+
+        if ((isObjects && !equal(value1, value2)) || (!isObjects && value1 !== value2)) {
+            return false;
+        }
+    }
+    return true;
+};
 
 function replaceWith(oldElement, newElement) {
     if (!oldElement || !newElement) {
@@ -16,9 +48,9 @@ function replaceWith(oldElement, newElement) {
         oldElement.at(-1).replaceWith(newElement);
     } else {
         if (Array.isArray(newElement)) {
-            element.replaceWith(...newElement);
+            oldElement.replaceWith(...newElement);
         } else {
-            element.replaceWith(newElement);
+            oldElement.replaceWith(newElement);
         }
     }
 }
@@ -106,7 +138,7 @@ function compareTags(oldTag, newTag) {
 
     let propsChanged = [];
     Object.keys(oldTag.props).forEach((key) => {
-        if (oldTag.props[key] !== newTag.props[key]) {
+        if (!equal(oldTag.props[key], newTag.props[key])) {
             propsChanged.push(key);
         }
     });
@@ -152,8 +184,8 @@ function updateDOM(parent, vDOM, newVDOM, props) {
     const changed = compareTags(vDOM, newVDOM);
 
     if (changed.fullRender) {
-        const newElement = renderDOM(newVDOM, props);
-        replaceWith(vDOM.dom, newElement.dom);
+        const newElement = renderDOM(newVDOM, parent, props);
+        replaceWith(vDOM.dom, newElement);
         return { dom: newVDOM, changed: true };
     }
 
@@ -192,7 +224,16 @@ function _tarakan_tag(tagName, props, ...children) {
             t: tagName,
             statefull: true,
             props: props ?? {},
-            vChildren: children,
+            vChildren: children.map((E) => {
+                return isScalar(E) ? {
+                    t: "scalar",
+                    props: {
+                        data: E,
+                    },
+                    isScalar: true,
+                    children: null,
+                } : E;
+            }).filter((E) => (E)),
 
             component: null,
             children: null,
@@ -211,13 +252,17 @@ function _tarakan_tag(tagName, props, ...children) {
                 isScalar: true,
                 children: null,
             } : E;
-        }),
+        }).filter((E) => (E)),
     }
 }
 
 export class Component {
 
     state = {};
+
+    get props() {
+        return this.#renderResult.props;
+    }
 
     #renderResult = {
         dom: null,
@@ -237,8 +282,7 @@ export class Component {
         }
 
         const newVDOMFact = this.render(
-            this.#renderResult.props,
-            this.#renderResult.dom.vChildren,
+            { ...this.#renderResult.props, children: this.#renderResult.dom.vChildren },
             props,
         );
 
@@ -257,8 +301,8 @@ export class Component {
             dom: vDOM,
             props: userProps,
             sprops: systemProps,
-        };;
-        return this.render(userProps, vDOM.vChildren, systemProps);
+        };
+        return this.render({ ...userProps, children: vDOM.vChildren }, systemProps);
     }
 
     disposeDOM() {
@@ -282,11 +326,57 @@ export class Component {
     }
 }
 
-const tarakan = {
+export class Router {
+    routes = {};
+    path = "";
+    #renderDom = null;
+
+    constructor(routes) {
+        this.routes = routes;
+        this.path = window.location.pathname;
+
+        window.addEventListener("popstate", (ev) => {
+            this.showPage(window.location.pathname);
+        });
+        window.addEventListener("pushstate", (ev) => {
+            this.showPage(window.location.pathname);
+        });
+    }
+
+    render(container) {
+        const Page = this.routes[this.path];
+        this.#renderDom = <Page />;
+        container.appendChild(renderDOM(this.#renderDom, container, {
+            navigateTo: (path) => this.navigateTo(path),
+        }));
+    }
+
+    navigateTo(path) {
+        window.history.pushState({}, "", path);
+        this.showPage(path)
+    }
+
+    showPage(path) {
+        this.path = path;
+        const NewPage = this.routes[this.path];
+        const newRender = <NewPage />;
+
+        updateDOM(
+            this.#renderDom.parent,
+            this.#renderDom,
+            newRender,
+            { navigateTo: (path) => this.navigateTo(path) }
+        )
+        this.#renderDom = newRender;
+    }
+}
+
+const Tarakan = {
     _tarakan_tag,
     renderDOM,
-    Component
+    Component,
+    Router
 }
 
 
-export default tarakan;
+export default Tarakan;
