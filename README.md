@@ -27,7 +27,13 @@ http://90.156.217.63/
 ```shell
 npx webpack serve
 ```
-Эта команда запустит сервер по адресу http://localhost:8001
+Эта команда запустит сервер по адресу http://localhost:7500.
+
+> [!TIP]
+> Порт 7500 можно изменить в файле webpack.config.js в самом низу.
+
+> [!WARNING]  
+> Не забудьте поднять контейнер с бэком. Сделать это можно через docker-compose.yaml, который находится на ветке develop в репозитории https://github.com/go-park-mail-ru/2025_1_ChillGuys 
 
 ## Документация
 
