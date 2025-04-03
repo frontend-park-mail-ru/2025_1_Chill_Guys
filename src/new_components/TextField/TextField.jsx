@@ -5,6 +5,20 @@ import invalidIcon from "../../shared/images/textfield-invalid.svg";
 import successIcon from "../../shared/images/textfield-success.svg"
 import validate, { VALID_TYPES } from "../../../modules/validation.js";
 
+
+export const TEXTFIELD_TYPES = {
+    SEARCH: "search",
+    TEXT: "text",
+    INPUT: "input",
+    EMAIL: "email",
+    NUMBER: "number",
+    FILE: "file",
+    SUBMIT: "submit",
+    TIME: "time",
+    BUTTON: "button",
+    HIDDEN: "hidden",
+}
+
 class TextField extends Tarakan.Component {
     state = {
         status: "default",
@@ -26,7 +40,7 @@ class TextField extends Tarakan.Component {
     }
 
     render(props) {
-        const type = props.type ?? "text";
+        const type = props.type ?? TEXTFIELD_TYPES.TEXT;
         const placeholder = props.title ?? "Поле ввода";
         const defaultValue = props.value ?? "";
         const otherClasses = props.className ?? "";
