@@ -15,8 +15,6 @@ export default class TestComponent extends Tarakan.Component {
     }
 
     render(props) {
-        console.log(this.key, "updated!")
-
         return <div className="row">
             <input onChange={(ev) => this.handleChange(ev)} />
             <span>{this.state.value}</span>

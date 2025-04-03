@@ -42,7 +42,6 @@ class BaseComponent {
   showPage = null;
 
   constructor(template) {
-    console.log("TEMPLATE", template);
     this.template = template;
   }
 
