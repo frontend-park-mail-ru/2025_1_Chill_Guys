@@ -42,14 +42,13 @@ class BaseComponent {
   showPage = null;
 
   constructor(template) {
-    console.log("TEMPLATE", template);
     this.template = template;
   }
 
   /**
    * Вызывается автоматически при генерации компоненты после создания всех её детей
    */
-  initState() {}
+  initState() { }
 
   /**
    * Возвращает результат генерации данной компоненты

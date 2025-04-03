@@ -2,6 +2,9 @@ const PROPS_NAMES = {
     "onClick": "onclick",
     "onChange": "oninput",
     "onEnd": "onchange",
+    "onFocus": "onfocus",
+    "onFocusOut": "onfocusout",
+    "onBlur": "onblur"
 }
 
 function isScalar(d) {
@@ -138,8 +141,20 @@ function compareTags(oldTag, newTag) {
 
     let propsChanged = [];
     Object.keys(oldTag.props).forEach((key) => {
-        if (!equal(oldTag.props[key], newTag.props[key])) {
-            propsChanged.push(key);
+        if (oldTag.statefull) {
+            if (oldTag.component.deepProps.includes(key)) {
+                if (!equal(oldTag.props[key], newTag.props[key])) {
+                    propsChanged.push(key);
+                }
+            } else {
+                if (oldTag.props[key] != newTag.props[key]) {
+                    propsChanged.push(key);
+                }
+            }
+        } else {
+            if (oldTag.props[key] != newTag.props[key]) {
+                propsChanged.push(key);
+            }
         }
     });
 
@@ -256,12 +271,25 @@ function _tarakan_tag(tagName, props, ...children) {
     }
 }
 
+export class Reference {
+    target = null;
+
+    connect(component) {
+        this.target = component;
+    }
+}
+
 export class Component {
 
+    deepProps = [];
     state = {};
 
     get props() {
         return this.#renderResult.props;
+    }
+
+    get app() {
+        return this.#renderResult.sprops;
     }
 
     #renderResult = {
@@ -273,17 +301,22 @@ export class Component {
     render() { }
 
     init() { }
+    update(newProps) { }
     dispose() { }
 
     updateDOM(newVDOM, props) {
         if (newVDOM) {
+            this.update(newVDOM.props);
             this.#renderResult.props = newVDOM.props;
+            this.#renderResult.sprops = props;
             this.#renderResult.dom.vChildren = newVDOM.vChildren;
         }
 
+        if (this.#renderResult.props.ref) this.#renderResult.props.ref.connect(this);
+
         const newVDOMFact = this.render(
             { ...this.#renderResult.props, children: this.#renderResult.dom.vChildren },
-            props,
+            this.#renderResult.sprops,
         );
 
         updateDOM(
@@ -295,7 +328,8 @@ export class Component {
     }
 
     renderDOM(vDOM, userProps, systemProps) {
-        this.init();
+        if (userProps.ref) userProps.ref.connect(this);
+        this.init(userProps);
 
         this.#renderResult = {
             dom: vDOM,
@@ -309,7 +343,7 @@ export class Component {
         this.dispose();
     }
 
-    setState(newState) {
+    setState(newState, ignoreUpdate = false) {
         let needRender = false;
         for (const key of Object.keys(newState)) {
             if (this.state[key] != newState[key]) {
@@ -317,12 +351,21 @@ export class Component {
                 this.state[key] = newState[key];
             }
         }
-        if (needRender) {
+        if (needRender && !ignoreUpdate) {
             const start = Date.now();
             this.updateDOM();
             const end = Date.now();
             console.log(`Render time: ${end - start} ms`);
         }
+    }
+}
+
+class Page404 extends Component {
+    render() {
+        return <div style="padding: 16px">
+            <h1>Данная страница не найдена {":<("}</h1>
+            <hr style="margin-top: 16px; border: 2px solid lightgray" />
+        </div>
     }
 }
 
@@ -344,7 +387,8 @@ export class Router {
     }
 
     render(container) {
-        const Page = this.routes[this.path];
+        const Page = this.routes[this.path] ?? Page404;
+
         this.#renderDom = <Page />;
         container.appendChild(renderDOM(this.#renderDom, container, {
             navigateTo: (path) => this.navigateTo(path),
@@ -358,7 +402,7 @@ export class Router {
 
     showPage(path) {
         this.path = path;
-        const NewPage = this.routes[this.path];
+        const NewPage = this.routes[this.path] ?? Page404;
         const newRender = <NewPage />;
 
         updateDOM(
@@ -374,6 +418,7 @@ export class Router {
 const Tarakan = {
     _tarakan_tag,
     renderDOM,
+    Reference,
     Component,
     Router
 }
