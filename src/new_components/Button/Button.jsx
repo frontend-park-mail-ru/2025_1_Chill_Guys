@@ -2,15 +2,16 @@ import Tarakan from "../../../modules/tarakan.js";
 import "./styles.scss";
 
 export const ICON_POSITION = {
-    TOP: "button__orientation__top",
-    RIGHT: "button__orientation__right",
-    BOTTOM: "button__orientation__bottom",
-    LEFT: "button__orientation__left",
+    TOP: "top",
+    RIGHT: "right",
+    BOTTOM: "bottom",
+    LEFT: "left",
 };
 
 export const BUTTON_VARIANT = {
     TEXT: "text",
     PRIMARY: "primary",
+    TRANSPARENT: "transparent",
 };
 
 export const BUTTON_SIZE = {
@@ -31,9 +32,11 @@ class Button extends Tarakan.Component {
             type="button"
             className={`button ${size}_size ${variant} ${iconPosition} ${otherClasses}`.trim()}
             onClick={(event) => props.onClick ? props.onClick(event) : {}}
+            onMouseOver={(event) => props.onMouseOver ? props.onMouseOver(event) : {}}
+            onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event): {}}
         >
             {
-                props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} class="icon" />
+                props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} className={`icon ${size}_size`}/>
             }
             <span>{props.title}</span>
         </button>
