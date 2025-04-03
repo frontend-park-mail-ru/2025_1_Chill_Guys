@@ -2,6 +2,8 @@ const PROPS_NAMES = {
     "onClick": "onclick",
     "onChange": "oninput",
     "onEnd": "onchange",
+    "onMouseOver": "onmouseover",
+    "onMouseLeave": "onmouseleave",
 }
 
 function isScalar(d) {
