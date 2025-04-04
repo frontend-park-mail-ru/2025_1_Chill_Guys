@@ -1,4 +1,5 @@
 import Tarakan from "../modules/tarakan.js";
+import CartPage from "./new_pages/CartPage/CartPage.jsx";
 
 import IndexPage from "./new_pages/IndexPage/IndexPage.jsx";
 import LoginPage from "./new_pages/LoginPage/LoginPage.jsx";
@@ -8,8 +9,9 @@ import "./styles/style.scss";
 
 const root = document.getElementById("root");
 const router = new Tarakan.Router({
-  "/": IndexPage,
-  "/signup": RegisterPage,
-  "/signin": LoginPage,
+	"/": CartPage,
+	"/signup": RegisterPage,
+	"/signin": LoginPage,
+	"/cart": CartPage,
 });
 router.render(root);
