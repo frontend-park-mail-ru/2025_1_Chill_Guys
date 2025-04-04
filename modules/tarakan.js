@@ -2,9 +2,11 @@ const PROPS_NAMES = {
     "onClick": "onclick",
     "onChange": "oninput",
     "onEnd": "onchange",
+    "onMouseOver": "onmouseover",
+    "onMouseLeave": "onmouseleave",
     "onFocus": "onfocus",
     "onFocusOut": "onfocusout",
-    "onBlur": "onblur"
+    "onBlur": "onblur",
 }
 
 function isScalar(d) {
@@ -13,7 +15,7 @@ function isScalar(d) {
 
 function isObject(obj) {
     return obj != null && typeof obj === "object";
-};
+}
 
 function equal(obj1, obj2) {
     if (!isObject(obj1) && !isObject(obj2)) {

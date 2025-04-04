@@ -78,6 +78,6 @@ export default {
             index: '/'
         },
         compress: true,
-        port: 9000,
+        port: 7500,
     },
 };

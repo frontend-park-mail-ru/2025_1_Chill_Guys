@@ -2,7 +2,7 @@
 
 import BasePage from "../basePage.js";
 import ProductCard from "../../components/productCard/productCard.js";
-import Header from "../../components/header/header.js";
+import Header from "../../components/header/Header.js";
 import Footer from "../../components/footer/footer.js";
 import ajax from "../../../modules/ajax.js";
 import { SERVER_URL } from "../../settings.js";
