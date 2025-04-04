@@ -30,29 +30,30 @@ class Header extends Tarakan.Component {
         profileIcon: HeaderProfile,
     }
 
-    render(props) {
+    render(props, router) {
+        console.log(router);
         return <header className={`header light flex column gap10px`}>
 
             <div className={`row flex main`}>
                 <img
                     className={`logo`}
-                    alt={`Логотип маркетплейса Bazaar`}
+                    alt='Логотип маркетплейса Bazaar'
                     src={`${LogoFull}`}
                 />
 
                 <div className={`search-field-wrapper flex`}>
                     <Button
                         size={BUTTON_SIZE.L}
-                        title={`Каталог`}
+                        title='Каталог'
                         iconSrc={`${CatalogButtonIcon}`}
-                        iconAlt={`Иконка каталога`}
+                        iconAlt='Иконка каталога'
                         onClick={() => {console.log('hello, world!');}}
                     />
 
                     <div className={`tf`}>
                         <TextField
                             type={`${TEXTFIELD_TYPES.SEARCH}`}
-                            title={`Ищите что угодно на Bazaar`}
+                            title='Ищите что угодно на Bazaar'
                             className={`width px400`}
                         />
                     </div>
@@ -64,9 +65,9 @@ class Header extends Tarakan.Component {
                         size={`${BUTTON_SIZE.L}`}
                         iconPosition={`${ICON_POSITION.TOP}`}
                         variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                        title={`Заказы`}
+                        title='Заказы'
                         iconSrc={`${this.state.ordersIcon}`}
-                        iconAlt={`Иконка заказов`}
+                        iconAlt='Иконка заказов'
                         onMouseOver={() => {this.setState({ordersIcon: HeaderOrdersHover})}}
                         onMouseLeave={() => {this.setState({ordersIcon: HeaderOrders})}}
                         onClick={() => {console.log('Открываю заказы');}}
@@ -76,9 +77,9 @@ class Header extends Tarakan.Component {
                         size={`${BUTTON_SIZE.L}`}
                         iconPosition={`${ICON_POSITION.TOP}`}
                         variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                        title={`Избранное`}
+                        title='Избранное'
                         iconSrc={`${this.state.savedIcon}`}
-                        iconAlt={`Иконка сердечко`}
+                        iconAlt='Иконка сердечко'
                         onMouseOver={() => {this.setState({savedIcon: HeaderSavedHover})}}
                         onMouseLeave={() => {this.setState({savedIcon: HeaderSaved})}}
                         onClick={() => {console.log('Открываю избранное');}}
@@ -88,9 +89,9 @@ class Header extends Tarakan.Component {
                         size={`${BUTTON_SIZE.L}`}
                         iconPosition={`${ICON_POSITION.TOP}`}
                         variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                        title={`Корзина`}
+                        title='Корзина'
                         iconSrc={`${this.state.cartIcon}`}
-                        iconAlt={`Иконка корзины`}
+                        iconAlt='Иконка корзины'
                         onMouseOver={() => {this.setState({cartIcon: HeaderCartHover})}}
                         onMouseLeave={() => {this.setState({cartIcon: HeaderCart})}}
                         onClick={() => {console.log('Открываю корзину');}}
@@ -100,12 +101,15 @@ class Header extends Tarakan.Component {
                         size={`${BUTTON_SIZE.L}`}
                         iconPosition={`${ICON_POSITION.TOP}`}
                         variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                        title={`Профиль`}
+                        title='Профиль'
                         iconSrc={`${this.state.profileIcon}`}
-                        iconAlt={`Иконка профиля`}
+                        iconAlt='Иконка профиля'
                         onMouseOver={() => {this.setState({profileIcon: HeaderProfileHover})}}
                         onMouseLeave={() => {this.setState({profileIcon: HeaderProfile})}}
-                        onClick={() => {console.log('Открываю профиль');}}
+                        onClick={() => {
+                            console.log(`Router: ${router}`);
+                            router.navigateTo('/reg');
+                        }}
                     />
 
                 </div>

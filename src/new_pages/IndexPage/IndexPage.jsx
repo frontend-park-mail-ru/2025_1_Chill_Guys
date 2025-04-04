@@ -3,7 +3,7 @@ import Header from "../../new_components/Header/Header.jsx";
 
 class IndexPage extends Tarakan.Component {
     render(props, router) {
-        return <div>
+        return <div className={`container`}>
             <Header/>
 
             <button onClick={() => router.navigateTo("/reg")}>Click</button>
