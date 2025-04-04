@@ -6,7 +6,7 @@ class IndexPage extends Tarakan.Component {
         return <div className={`container`}>
             <Header/>
 
-            <button onClick={() => router.navigateTo("/reg")}>Click</button>
+            <button onClick={() => router.navigateTo("/signin")}>Click</button>
          </div>
     }
 }

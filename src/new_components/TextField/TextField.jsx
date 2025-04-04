@@ -20,23 +20,34 @@ export const TEXTFIELD_TYPES = {
 }
 
 class TextField extends Tarakan.Component {
-    state = {
-        status: "default",
-        value: "",
+
+    init(initProps) {
+        this.state = {
+            status: "default",
+            value: initProps.value,
+        }
     }
 
     handleEnterFinish() {
-        console.log(this.props.validType)
         const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
         if (dataOk) {
             this.setState({ status: "success" });
         } else {
             this.setState({ status: "invalid" });
         }
+        if (this.props.onEnd) this.props.onEnd(dataOk, this.state.value);
     }
 
     handleChange(event) {
         this.setState({ value: event.target.value });
+    }
+
+    handleFocus() {
+        if (this.props.onFocus) this.props.onFocus();
+    }
+
+    update(props) {
+        this.setState({ status: props.status }, true);
     }
 
     render(props) {
@@ -51,8 +62,10 @@ class TextField extends Tarakan.Component {
                 type={type}
                 placeholder={placeholder}
                 value={defaultValue}
+
+                onFocus={() => this.handleFocus()}
                 onChange={(event) => this.handleChange(event)}
-                onEnd={() => this.handleEnterFinish()}
+                onBlur={() => this.handleEnterFinish()}
             />
             {this.state.status !== "default" &&
                 <img class="mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
