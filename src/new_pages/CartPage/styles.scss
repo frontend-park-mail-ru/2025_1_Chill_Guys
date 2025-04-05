@@ -3,24 +3,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-    margin-inline: 20px;
-
-    header,
-    footer {
-        height: 85px;
-        flex: 0 1 auto;
-        background-color: gray;
-    }
-
-    header {
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-    }
-
-    footer {
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-    }
+    margin-inline: 24px;
 
     main {
         flex: 1 1 auto;
