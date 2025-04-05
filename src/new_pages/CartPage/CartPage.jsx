@@ -90,7 +90,7 @@ class CartPage extends Tarakan.Component {
         this.fetchBasket();
     }
 
-    render() {
+    render(props, router) {
         return <div className="cart-page">
             <header />
             <main>
@@ -145,7 +145,11 @@ class CartPage extends Tarakan.Component {
                         }
                     </div>
                     <div className="total">
-                        <Button className="make-order" title="Оформление заказа" />
+                        <Button
+                            className="make-order"
+                            title="Оформление заказа"
+                            onClick={() => router.navigateTo("/place-order")}
+                        />
                         <div className="comment">
                             Способы оплаты и доставки будут доступны на следующем шаге
                         </div>
