@@ -74,8 +74,6 @@ class CartPage extends Tarakan.Component {
             origin: SERVER_URL,
         });
 
-        console.log(response.result);
-
         if (response.result.ok) {
             this.setState({
                 items: [
@@ -92,9 +90,7 @@ class CartPage extends Tarakan.Component {
         this.fetchBasket();
     }
 
-    render(props) {
-        console.log(this.state.items)
-
+    render() {
         return <div className="cart-page">
             <header />
             <main>
@@ -144,9 +140,7 @@ class CartPage extends Tarakan.Component {
                         )}
                         {
                             this.state.items.length === 0 && <div className="empty-cart">
-                                <i>
-                                    Вы пока ничего не добавили в корзину
-                                </i>&#128521;
+                                <i>Вы пока ничего не добавили в корзину</i>&#128521;
                             </div>
                         }
                     </div>
