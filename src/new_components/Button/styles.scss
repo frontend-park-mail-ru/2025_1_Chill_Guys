@@ -50,6 +50,20 @@
         }
     }
 
+    &.transparent {
+        color: var(--dark-gray-text-color);
+        border: none;
+        background: none;
+
+        &:hover {
+            color: var(--background-button-color);
+        }
+
+        &:disabled {
+            color: var(--dark-gray-text-color);
+        }
+    }
+
     &.sm_size {
         font-size: var(--button-xs-font-size);
         height: var(--button-xs-height);
@@ -84,5 +98,12 @@
 
     &.right {
         flex-direction: row-reverse;
+    }
+}
+
+.icon {
+    &.l_size {
+        width: 24px;
+        height: 24px;
     }
 }

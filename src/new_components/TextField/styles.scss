@@ -1,6 +1,12 @@
 .textField {
     position: relative;
 
+    &.width {
+        &.px400 {
+            width: 400px;
+        }
+    }
+
     input {
         outline: none;
         border-radius: var(--input-m-border-radius);
