@@ -5,12 +5,12 @@ import Footer from "../../new_components/Footer/Footer.jsx";
 class IndexPage extends Tarakan.Component {
     render(props, router) {
         return <div className={`container`}>
-            <Header/>
+            <Header />
 
             <button onClick={() => router.navigateTo("/signin")}>Click</button>
 
-            <Footer/>
-         </div>
+            <Footer />
+        </div>
     }
 }
 

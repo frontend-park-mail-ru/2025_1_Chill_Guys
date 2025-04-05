@@ -18,35 +18,19 @@ class LoginPage extends Tarakan.Component {
     async handleClickSignin() {
         const validationResult = this.state.formRef.target.validate();
         if (validationResult) {
-            const result = await this.handleSignin(validationResult);
+            const error = await this.app.store.user.sendAction("signin", {
+                email: validationResult.email,
+                password: validationResult.password,
+            });
 
-            if (result.status === 200) {
+            if (!error) {
                 this.app.navigateTo("/");
-            } else if (
-                result.status === 400 ||
-                result.status === 401
-            ) {
+            } else if (error === 400 || error === 401) {
                 this.state.formRef.target.setFieldStatus("password", true);
                 this.setState({ errorKey: "wrongPassword" });
             } else {
                 this.setState({ errorKey: "serviceError" });
             }
-        }
-    }
-
-    async handleSignin(form) {
-        const data = {
-            email: form.email,
-            password: form.password,
-        };
-
-        const response = await ajax.post("api/auth/login", data, {
-            origin: SERVER_URL,
-        });
-
-        return {
-            status: response.result.status,
-            response: data,
         }
     }
 

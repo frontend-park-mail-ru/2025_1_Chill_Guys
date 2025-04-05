@@ -32,32 +32,19 @@ class RegisterPage extends Tarakan.Component {
                 return;
             }
 
-            const result = await this.handleSignup(validationResult);
+            const error = await this.app.store.user.sendAction("signup", {
+                email: validationResult.email,
+                password: validationResult.password,
+                name: validationResult.name,
+                surname: validationResult.surname,
+            });
 
-            if (result.status === 200) {
+            if (!error) {
                 this.app.navigateTo("/");
-            } else if (result.status === 409) {
+            } else if (error === 409) {
                 this.state.formRef.target.setFieldStatus("email", true);
                 this.setState({ errorKey: "userExists" });
             }
-        }
-    }
-
-    async handleSignup(form) {
-        const data = {
-            email: form.email,
-            password: form.password,
-            name: form.name,
-            surname: form.surname,
-        };
-
-        const response = await ajax.post("api/auth/register", data, {
-            origin: SERVER_URL,
-        });
-
-        return {
-            status: response.result.status,
-            response: data,
         }
     }
 

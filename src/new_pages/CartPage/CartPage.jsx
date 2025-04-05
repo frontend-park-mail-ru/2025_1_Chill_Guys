@@ -10,6 +10,8 @@ import cartRemoveIcon from "../../shared/images/cart-remove-ico.svg";
 import cartAddIcon from "../../shared/images/cart-add-ico.svg";
 import cartSubIcon from "../../shared/images/cart-sub-ico.svg";
 import ajax from "../../../modules/ajax.js";
+import Header from "../../new_components/Header/Header.jsx";
+import Footer from "../../new_components/Footer/Footer.jsx";
 
 class CartPage extends Tarakan.Component {
 
@@ -92,7 +94,7 @@ class CartPage extends Tarakan.Component {
 
     render(props, router) {
         return <div className="cart-page">
-            <header />
+            <Header />
             <main>
                 <h1>Моя корзина</h1>
                 <div className="content">
@@ -164,7 +166,7 @@ class CartPage extends Tarakan.Component {
                     </div>
                 </div>
             </main>
-            <footer />
+            <Footer />
         </div>
     }
 }

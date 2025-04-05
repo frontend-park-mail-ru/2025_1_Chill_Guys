@@ -285,6 +285,7 @@ export class Component {
 
     deepProps = [];
     state = {};
+    #subscribers = {};
 
     get props() {
         return this.#renderResult.props;
@@ -305,6 +306,15 @@ export class Component {
     init() { }
     update(newProps) { }
     dispose() { }
+
+    subscribe(storeName, handler) {
+        this.#subscribers[storeName] = this.app.store[storeName].subscribe(handler);
+    }
+
+    unsubscribe(storeName) {
+        this.app.store[storeName].unsubscribe(this.#subscribers[storeName]);
+        delete this.#subscribers[storeName];
+    }
 
     updateDOM(newVDOM, props) {
         if (newVDOM) {
@@ -331,18 +341,20 @@ export class Component {
 
     renderDOM(vDOM, userProps, systemProps) {
         if (userProps.ref) userProps.ref.connect(this);
-        this.init(userProps);
-
         this.#renderResult = {
             dom: vDOM,
             props: userProps,
             sprops: systemProps,
         };
+        this.init(userProps);
         return this.render({ ...userProps, children: vDOM.vChildren }, systemProps);
     }
 
     disposeDOM() {
         this.dispose();
+        Object.keys((storeName) => {
+            this.app.store[storeName].unsubscribe(this.#subscribers[storeName]);
+        });
     }
 
     setState(newState, ignoreUpdate = false) {
@@ -371,20 +383,67 @@ class Page404 extends Component {
     }
 }
 
-export class Router {
+export class Store {
+    value = null;
+    #initAction = null;
+
+    #actions = {};
+    #subscribers = {};
+    #subscriberIndex = 0;
+
+    constructor(initValue, initAction) {
+        this.value = initValue;
+        this.#initAction = initAction;
+    }
+
+    init() {
+        this.#initAction(this);
+    }
+
+    subscribe(callback) {
+        const subKey = this.#subscriberIndex;
+        this.#subscriberIndex += 1;
+        this.#subscribers[subKey] = callback;
+        return subKey;
+    }
+
+    unsubscribe(subscriberIndex) {
+        delete this.#subscribers[subscriberIndex];
+    }
+
+    async sendAction(name, newValue) {
+        if (this.#actions[name] === undefined) {
+            this.value = newValue;
+            Object.values(this.#subscribers).forEach((subscriber) => {
+                subscriber(name, newValue);
+            });
+        } else {
+            return await this.#actions[name](this, newValue);
+        }
+    }
+
+    addAction(name, handler) {
+        this.#actions[name] = handler;
+    }
+}
+
+export class Application {
+
     routes = {};
     path = "";
+
     #renderDom = null;
+    #stores = {};
 
     constructor(routes) {
         this.routes = routes;
         this.path = window.location.pathname;
 
         window.addEventListener("popstate", (ev) => {
-            this.showPage(window.location.pathname);
+            this.#showPage(window.location.pathname);
         });
         window.addEventListener("pushstate", (ev) => {
-            this.showPage(window.location.pathname);
+            this.#showPage(window.location.pathname);
         });
     }
 
@@ -394,15 +453,18 @@ export class Router {
         this.#renderDom = <Page />;
         container.appendChild(renderDOM(this.#renderDom, container, {
             navigateTo: (path) => this.navigateTo(path),
+            store: this.#stores,
         }));
+
+        Object.values(this.#stores).forEach((store) => store.init());
     }
 
     navigateTo(path) {
         window.history.pushState({}, "", path);
-        this.showPage(path)
+        this.#showPage(path)
     }
 
-    showPage(path) {
+    #showPage(path) {
         this.path = path;
         const NewPage = this.routes[this.path] ?? Page404;
         const newRender = <NewPage />;
@@ -411,9 +473,16 @@ export class Router {
             this.#renderDom.parent,
             this.#renderDom,
             newRender,
-            { navigateTo: (path) => this.navigateTo(path) }
+            {
+                navigateTo: (path) => this.navigateTo(path),
+                store: this.#stores,
+            }
         )
         this.#renderDom = newRender;
+    }
+
+    addStore(name, store) {
+        this.#stores[name] = store;
     }
 }
 
@@ -422,7 +491,8 @@ const Tarakan = {
     renderDOM,
     Reference,
     Component,
-    Router
+    Application,
+    Store
 }
 
 
