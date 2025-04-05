@@ -24,6 +24,8 @@
 
     main {
         flex: 1 1 auto;
+        margin-inline: auto;
+        min-width: 75%;
 
         .content {
             margin-top: 20px;
@@ -35,6 +37,12 @@
             max-height: 100%;
 
             .list {
+                .empty-cart {
+                    color: gray;
+                    display: flex;
+                    column-gap: 8px;
+                }
+
                 padding: 20px;
                 background-color: white;
                 border-radius: 20px;
@@ -55,16 +63,23 @@
                     }
 
                     .description {
+                        flex: 1 1 auto;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+
                         .title {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            column-gap: 16px;
+
                             .name {
                                 font-size: 14px;
                             }
 
-                            .brend {
-                                font-size: 12px;
-                            }
-
                             .price {
+                                margin-left: auto;
                                 display: flex;
                                 align-items: flex-start;
                                 column-gap: 8px;
@@ -84,25 +99,87 @@
                                     font-size: 10px;
                                 }
                             }
+
+                            .actions {
+                                display: flex;
+                                column-gap: 5px;
+                                margin-left: 12px;
+
+                                .button {
+                                    gap: 0;
+                                    padding: 7px 11px;
+                                    height: 30px;
+                                    font-size: 12px;
+                                }
+
+                                .count {
+                                    background-color: lightgray;
+                                    color: black;
+                                    height: 30px;
+                                    display: flex;
+                                    align-items: center;
+                                    border-radius: 8px;
+                                    padding: 7px 11px;
+                                }
+                            }
+                        }
+
+                        .manage {
+                            display: flex;
+                            column-gap: 8px;
+
+                            .icon-btn {
+                                gap: 0;
+                                padding: 7px 11px;
+                                height: 30px;
+                            }
+
+                            .btn {
+                                padding: 7px 11px;
+                                height: 30px;
+                                font-size: 12px;
+                            }
                         }
                     }
                 }
             }
 
             .total {
-                padding: 20px;
-                background-color: white;
-                border-radius: 20px;
                 flex: 0 1 300px;
+
+                width: 300px;
+                background-color: white;
+                padding: 20px;
+                border-radius: 20px;
 
                 .make-order {
                     width: 100%;
                 }
 
                 .comment {
-                    margin-top: 20px;
+                    margin-top: 8px;
+                    margin-bottom: 36px;
                     font-size: 12px;
                     color: darkgray;
+                }
+
+                .discount {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 8px;
+
+                    .cost {
+                        font-size: 16px;
+                    }
+                }
+
+                .sum-cost {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .cost {
+                        font-size: 16px;
+                    }
                 }
             }
         }

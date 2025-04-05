@@ -14,7 +14,7 @@ class Button extends Tarakan.Component {
             onClick={(event) => props.onClick ? props.onClick(event) : {}}
         >
             {
-                props.iconSrc && <img alt={`${iconAlt}`} src={`${iconSrc}`} class="icon" />
+                props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} class="icon" />
             }
             <span>{props.title}</span>
         </button>

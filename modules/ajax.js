@@ -52,7 +52,7 @@ export const put = async (url, data, options) => {
     return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "PUT",
-            credentials: "same-origin",
+            credentials: "include",
             body: (options?.type ?? ContentTypes.JSON) == ContentTypes.JSON ? JSON.stringify(data) : data,
         })
             .then((res) => resolve({ error: false, result: res }))
