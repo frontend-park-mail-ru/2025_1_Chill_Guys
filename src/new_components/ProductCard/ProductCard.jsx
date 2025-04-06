@@ -3,6 +3,8 @@ import Button, {BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION} from "../Button/Butt
 
 import CardButtonIcon from "../../shared/images/productCard-cart-ico.svg";
 
+import "./styles.scss";
+
 class ProductCard extends Tarakan.Component {
     render(props, router) {
         return <article className={`product-card flex column`}>
@@ -52,7 +54,7 @@ class ProductCard extends Tarakan.Component {
                     size={`${BUTTON_SIZE.L}`}
                     variant={`${BUTTON_VARIANT.PRIMARY}`}
                     iconPosition={`${ICON_POSITION.LEFT}`}
-                    otherClasses={`full-wide`}
+                    className={`full-wide`}
                     iconAlt={`Иконка корзины`}
                     iconSrc={`${CardButtonIcon}`}
                     title='В корзину'
