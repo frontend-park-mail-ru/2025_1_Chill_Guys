@@ -54,7 +54,7 @@ class ProductCard extends Tarakan.Component {
                     size={`${BUTTON_SIZE.L}`}
                     variant={`${BUTTON_VARIANT.PRIMARY}`}
                     iconPosition={`${ICON_POSITION.LEFT}`}
-                    otherClasses={`full-wide`}
+                    className={`full-wide`}
                     iconAlt={`Иконка корзины`}
                     iconSrc={`${CardButtonIcon}`}
                     title='В корзину'
