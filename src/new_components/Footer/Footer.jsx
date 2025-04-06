@@ -15,6 +15,9 @@ class Footer extends Tarakan.Component {
                     alt={`Базар логотип`}
                     className={`logo`}
                     src={`${LogoFull}`}
+                    onClick={() => {
+                        router.navigateTo("/");
+                    }}
                 />
             </div>
 

@@ -56,6 +56,9 @@ class Header extends Tarakan.Component {
                     className={`logo`}
                     alt='Логотип маркетплейса Bazaar'
                     src={`${LogoFull}`}
+                    onClick={() => {
+                        app.navigateTo("/");
+                    }}
                 />
 
                 <div className={`search-field-wrapper flex`}>
