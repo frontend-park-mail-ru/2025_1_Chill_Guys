@@ -21,6 +21,10 @@
     .logo {
       height: 48px;
       width: 123px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
