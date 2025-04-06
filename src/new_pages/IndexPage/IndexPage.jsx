@@ -9,7 +9,7 @@ class IndexPage extends Tarakan.Component {
     render(props, router) {
 
         return <div className={`container`}>
-            <Header/>
+            <Header />
 
             <main className={`index-page`}>
                 <h1 className={`h-reset main-h1`}>Весенние хиты</h1>
@@ -27,8 +27,8 @@ class IndexPage extends Tarakan.Component {
                 </div>
             </main>
 
-            <Footer/>
-         </div>
+            <Footer />
+        </div>
     }
 }
 

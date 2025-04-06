@@ -1,11 +1,11 @@
 import Tarakan from "../../../modules/tarakan.js";
 import ajax from "../../../modules/ajax.js";
 
-import Button, {BUTTON_VARIANT, ICON_POSITION} from "../Button/Button.jsx";
+import Button, { BUTTON_VARIANT, ICON_POSITION } from "../Button/Button.jsx";
 import TextField from "../TextField/TextField.jsx";
-import {BUTTON_SIZE} from "../Button/Button.jsx";
-import {TEXTFIELD_TYPES} from "../TextField/TextField.jsx";
-import {SERVER_URL} from "../../settings.js";
+import { BUTTON_SIZE } from "../Button/Button.jsx";
+import { TEXTFIELD_TYPES } from "../TextField/TextField.jsx";
+import { SERVER_URL } from "../../settings.js";
 
 import "./styles.scss";
 
@@ -28,15 +28,26 @@ import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
 
 class Header extends Tarakan.Component {
-    state = {
-        ordersIcon: HeaderOrders,
-        cartIcon: HeaderCart,
-        savedIcon: HeaderSaved,
-        profileIcon: this.isAuthorized() ? HeaderProfile : HeaderLogin,
-        authorized: this.isAuthorized(),
+    init() {
+        this.state = {
+            ordersIcon: HeaderOrders,
+            cartIcon: HeaderCart,
+            savedIcon: HeaderSaved,
+            profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
+            authorized: this.app.store.user.value.login,
+        }
+
+        this.subscribe("user", (name, newValue) => {
+            if (name === "login") {
+                this.setState({
+                    profileIcon: newValue.login ? HeaderProfile : HeaderLogin,
+                    authorized: newValue.login
+                });
+            }
+        });
     }
 
-    render(props, router) {
+    render(props, app) {
         console.log(`Authorized: ${this.state.authorized}`)
         return <header className={`header light flex column gap10px`}>
 
@@ -80,10 +91,10 @@ class Header extends Tarakan.Component {
                             iconSrc={`${this.state.ordersIcon}`}
                             iconAlt='Иконка заказов'
                             onMouseOver={() => {
-                                this.setState({ordersIcon: HeaderOrdersHover})
+                                this.setState({ ordersIcon: HeaderOrdersHover })
                             }}
                             onMouseLeave={() => {
-                                this.setState({ordersIcon: HeaderOrders})
+                                this.setState({ ordersIcon: HeaderOrders })
                             }}
                             onClick={() => {
                                 console.log('Открываю заказы');
@@ -102,10 +113,10 @@ class Header extends Tarakan.Component {
                             iconSrc={`${this.state.savedIcon}`}
                             iconAlt='Иконка сердечко'
                             onMouseOver={() => {
-                                this.setState({savedIcon: HeaderSavedHover})
+                                this.setState({ savedIcon: HeaderSavedHover })
                             }}
                             onMouseLeave={() => {
-                                this.setState({savedIcon: HeaderSaved})
+                                this.setState({ savedIcon: HeaderSaved })
                             }}
                             onClick={() => {
                                 console.log('Открываю избранное');
@@ -120,13 +131,13 @@ class Header extends Tarakan.Component {
                         iconSrc={`${this.state.cartIcon}`}
                         iconAlt='Иконка корзины'
                         onMouseOver={() => {
-                            this.setState({cartIcon: HeaderCartHover})
+                            this.setState({ cartIcon: HeaderCartHover })
                         }}
                         onMouseLeave={() => {
-                            this.setState({cartIcon: HeaderCart})
+                            this.setState({ cartIcon: HeaderCart })
                         }}
                         onClick={() => {
-                            console.log('Открываю корзину');
+                            app.navigateTo("/cart");
                         }}
                     />
 
@@ -141,23 +152,23 @@ class Header extends Tarakan.Component {
                             console.log('profile mouse over');
                             console.log(this.state.authorized);
                             if (this.state.authorized) {
-                                this.setState({profileIcon: HeaderProfileHover});
+                                this.setState({ profileIcon: HeaderProfileHover });
                             } else {
-                                this.setState({profileIcon: HeaderLoginHover});
+                                this.setState({ profileIcon: HeaderLoginHover });
                             }
                         }}
                         onMouseLeave={() => {
                             if (this.state.authorized) {
-                                this.setState({profileIcon: HeaderProfile});
+                                this.setState({ profileIcon: HeaderProfile });
                             } else {
-                                this.setState({profileIcon: HeaderLogin});
+                                this.setState({ profileIcon: HeaderLogin });
                             }
                         }}
                         onClick={() => {
                             if (this.state.authorized) {
                                 console.log('Скоро тут будет профиль');
                             } else {
-                                router.navigateTo('/signin');
+                                app.navigateTo('/signin');
                             }
                         }}
                     />
@@ -173,11 +184,6 @@ class Header extends Tarakan.Component {
             </div>
 
         </header>
-    }
-
-    isAuthorized() {
-        const res = ajax.get('api/users/me/');
-        return res.result?.status === 200;
     }
 }
 
