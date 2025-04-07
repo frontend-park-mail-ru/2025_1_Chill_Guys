@@ -23,6 +23,8 @@ class LoginPage extends Tarakan.Component {
                 password: validationResult.password,
             });
 
+            console.log(error);
+
             if (!error) {
                 this.app.navigateTo("/");
             } else if (error === 400 || error === 401) {

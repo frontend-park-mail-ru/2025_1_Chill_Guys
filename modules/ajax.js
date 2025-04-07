@@ -15,7 +15,7 @@ export const get = async (url, options) => {
     return new Promise((resolve) => {
         fetch(`${options?.origin ?? window.location.origin}/${url}`, {
             method: "GET",
-            credentials: "include",
+            credentials: options.noCredentials ? undefined : "include",
         })
             .then((res) => resolve({ error: false, result: res }))
             .catch((err) => resolve({ error: true, message: err }))

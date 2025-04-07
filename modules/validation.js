@@ -32,7 +32,7 @@ export default function validate(validationType, data) {
         case VALID_TYPES.NAME_VALID:
             return /^[A-ZА-Я]+[a-zA-Zа-яА-Я]*$/.exec(data) != null;
         case VALID_TYPES.NOT_NULL_VALID:
-            return data.length > 0;
+            return data && data.length > 0;
         case VALID_TYPES.NUMBER_VALID:
             return /^[0-9]+.[0-9]*$/.exec(data) != null;
     }

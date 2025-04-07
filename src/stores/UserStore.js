@@ -21,6 +21,7 @@ UserStore.addAction("signin", async (store, data) => {
   const res = await ajax.post("api/auth/login", data, { origin: SERVER_URL });
   if (!res.error && res.result.ok) {
     store.sendAction("me");
+    console.log(res);
     return false;
   }
   return res.error || res.result.status;
