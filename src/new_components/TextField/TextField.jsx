@@ -29,6 +29,7 @@ class TextField extends Tarakan.Component {
     }
 
     handleEnterFinish() {
+        console.log("YES")
         const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
         if (dataOk) {
             this.setState({ status: "success" });
@@ -47,7 +48,9 @@ class TextField extends Tarakan.Component {
     }
 
     update(props) {
-        this.setState({ status: props.status }, true);
+        if (props.status) {
+            this.setState({ status: props.status }, true);
+        }
     }
 
     render(props) {

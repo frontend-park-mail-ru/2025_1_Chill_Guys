@@ -460,8 +460,10 @@ export class Application {
     }
 
     navigateTo(path) {
-        window.history.pushState({}, "", path);
-        this.#showPage(path)
+        if (path !== this.path) {
+            window.history.pushState({}, "", path);
+            this.#showPage(path)
+        }
     }
 
     #showPage(path) {

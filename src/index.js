@@ -3,6 +3,7 @@ import CartPage from "./new_pages/CartPage/CartPage.jsx";
 import IndexPage from "./new_pages/IndexPage/IndexPage.jsx";
 
 import LoginPage from "./new_pages/LoginPage/LoginPage.jsx";
+import PlaceOrderPage from "./new_pages/PlaceOrderPage/PlaceOrderPage.jsx";
 import RegisterPage from "./new_pages/RegisterPage/RegisterPage.jsx";
 import UserStore from "./stores/UserStore.js";
 
@@ -16,6 +17,7 @@ const app = new Tarakan.Application({
   "/signup": RegisterPage,
   "/signin": LoginPage,
   "/cart": CartPage,
+  "/place-order": PlaceOrderPage,
 });
 
 // Регистрация хранилищ глобального состояния
