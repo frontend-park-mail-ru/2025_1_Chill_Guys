@@ -17,6 +17,9 @@
     --site-background: #F2F2F2;
     --dark-gray-text-color: #737980;
 
+    --positive: #2BCA63;
+    --positive-hover: #2BAA63;
+
     /* fonts */
     --font-min-size: 15px;
     --font-main-size: 16px;

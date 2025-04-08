@@ -9,6 +9,14 @@ import ajax from "../../../modules/ajax.js";
 
 class ProductCard extends Tarakan.Component {
 
+    state = {
+        isInCart: false,
+    }
+
+    init(props) {
+        this.state.isInCart = props.inCart;
+    }
+
     async handleAddToCart(itemId) {
         console.log(`Trying to add: ${itemId}`);
         const response = await ajax.post("api/basket/add", {
@@ -20,6 +28,7 @@ class ProductCard extends Tarakan.Component {
         if (!response.error && response.result.ok) {
             console.log(`[debug] Item added to cart: ${itemId}`);
             console.log(`[debug] Item added to cart (json): ${await response.result.json()}`);
+            this.setState({isInCart: true});
         }
     }
 
@@ -71,11 +80,14 @@ class ProductCard extends Tarakan.Component {
                     size={`${BUTTON_SIZE.L}`}
                     variant={`${BUTTON_VARIANT.PRIMARY}`}
                     iconPosition={`${ICON_POSITION.LEFT}`}
-                    className={`full-wide`}
-                    iconAlt={`Иконка корзины`}
-                    iconSrc={`${CardButtonIcon}`}
-                    title='В корзину'
-                    onClick={() => this.handleAddToCart(props.id)}
+                    className={`full-wide ${this.state.isInCart ? 'in-cart-btn' : ''}`}
+                    iconAlt={this.state.isInCart ? '' : `Иконка корзины`}
+                    iconSrc={`${this.state.isInCart ? '' : CardButtonIcon}`}
+                    title={this.state.isInCart ? 'В корзине' : 'В корзину'}
+                    onClick={
+                        () =>
+                            this.state.isInCart ? router.navigateTo('/cart') : this.handleAddToCart(props.id)
+                    }
                 />
             </div>
         </article>
