@@ -14,21 +14,32 @@ class IndexPage extends Tarakan.Component {
     }
 
     async fetchProducts() {
-        const response = await ajax.get("api/products/", {origin: SERVER_URL});
+        const products_response = await ajax.get("api/products/", {origin: SERVER_URL});
+        const basket_response = await ajax.get("api/basket/", {origin: SERVER_URL});
 
-        if (response.result.ok) {
-            const data = await response.result.json();
+        if (products_response.result.ok) {
+            const products = await products_response.result.json();
+
+            let basket = new Set();
+            if (basket_response.result.ok) {
+                const data = await basket_response.result.json();
+                data.products.map((item) => {
+                    basket.add(item.product_id);
+                });
+            }
 
             this.setState({
-                products: data.products.map((item) => ({
+                products: products.products.map((item) => ({
                     id: item.id,
                     name: item.name,
                     image: item.image,
                     price: item.price,
                     reviews_count: item.reviews_count,
                     rating: item.rating,
+                    isInCart: basket.has(item.id),
                 }))
             })
+            console.log(this.state.products)
         }
     }
 
@@ -48,6 +59,8 @@ class IndexPage extends Tarakan.Component {
                         this.state.products.map(
                             (item, index) =>
                                 <ProductCard
+                                    id={`${item.id}`}
+                                    inCart={item.isInCart}
                                     price={`${item.price}`}
                                     title={`${item.name}`}
                                     rating={`${item.rating}`}
