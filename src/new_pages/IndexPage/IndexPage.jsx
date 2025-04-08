@@ -48,6 +48,7 @@ class IndexPage extends Tarakan.Component {
                         this.state.products.map(
                             (item, index) =>
                                 <ProductCard
+                                    id={`${item.id}`}
                                     price={`${item.price}`}
                                     title={`${item.name}`}
                                     rating={`${item.rating}`}

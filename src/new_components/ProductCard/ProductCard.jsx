@@ -4,8 +4,25 @@ import Button, {BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION} from "../Button/Butt
 import CardButtonIcon from "../../shared/images/productCard-cart-ico.svg";
 
 import "./styles.scss";
+import {SERVER_URL} from "../../settings.js";
+import ajax from "../../../modules/ajax.js";
 
 class ProductCard extends Tarakan.Component {
+
+    async handleAddToCart(itemId) {
+        console.log(`Trying to add: ${itemId}`);
+        const response = await ajax.post("api/basket/add", {
+            product_id: itemId,
+        }, {
+            origin: SERVER_URL,
+        });
+
+        if (!response.error && response.result.ok) {
+            console.log(`[debug] Item added to cart: ${itemId}`);
+            console.log(`[debug] Item added to cart (json): ${await response.result.json()}`);
+        }
+    }
+
     render(props, router) {
         return <article className={`product-card flex column`}>
             <div className={`carousel-images`}>
@@ -58,6 +75,7 @@ class ProductCard extends Tarakan.Component {
                     iconAlt={`Иконка корзины`}
                     iconSrc={`${CardButtonIcon}`}
                     title='В корзину'
+                    onClick={() => this.handleAddToCart(props.id)}
                 />
             </div>
         </article>
