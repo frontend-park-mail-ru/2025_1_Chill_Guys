@@ -8,6 +8,7 @@ import RegisterPage from "./new_pages/RegisterPage/RegisterPage.jsx";
 import UserStore from "./stores/UserStore.js";
 
 import "./styles/style.scss";
+import ProfilePage from "./new_pages/ProfilePage/ProfilePage.jsx";
 
 const root = document.getElementById("root");
 
@@ -18,6 +19,7 @@ const app = new Tarakan.Application({
   "/signin": LoginPage,
   "/cart": CartPage,
   "/place-order": PlaceOrderPage,
+  "/profile": ProfilePage,
 });
 
 // Регистрация хранилищ глобального состояния
