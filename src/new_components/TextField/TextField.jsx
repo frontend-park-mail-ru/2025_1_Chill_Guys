@@ -58,14 +58,17 @@ class TextField extends Tarakan.Component {
         const placeholder = props.title ?? "Поле ввода";
         const defaultValue = props.value ?? "";
         const otherClasses = props.className ?? "";
+        const title = props.fieldName ?? "";
+        const isDisabled = props.isDisabled ?? false;
 
-        return <div className={`textField ${otherClasses}`.trim()}>
+        return <div className={`textField flex column ${otherClasses}`.trim()}>
+            {title && <h3 className={`h-reset title`}>{title}</h3>}
             <input
                 className={this.state.status}
                 type={type}
                 placeholder={placeholder}
                 value={defaultValue}
-
+                disabled={isDisabled}
                 onFocus={() => this.handleFocus()}
                 onChange={(event) => this.handleChange(event)}
                 onBlur={() => this.handleEnterFinish()}

@@ -169,7 +169,7 @@ class Header extends Tarakan.Component {
                         }}
                         onClick={() => {
                             if (this.state.authorized) {
-                                console.log('Скоро тут будет профиль');
+                                app.navigateTo('/profile');
                             } else {
                                 app.navigateTo('/signin');
                             }
