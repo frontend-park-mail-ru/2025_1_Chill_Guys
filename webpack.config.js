@@ -46,29 +46,22 @@ export default {
                 loader: "css-loader",
             },
             {
-                test: /\.hbs$/,
-                loader: "handlebars-template-loader",
-            },
-            {
                 test: /\.ts$/,
-                use: ["ts-loader", {
-                    loader: 'babel-loader',
-                }]
+                use: ['babel-loader', "ts-loader"]
             },
             {
-                test: /\.jsx$/,
-                use: [{
-                    loader: 'babel-loader',
-                }]
-            },
-            {
-                test: /\.(?:js|mjs|cjs)$/,
+                test: /\.(?:js|mjs|cjs|jsx)$/,
                 use: {
                     loader: 'babel-loader',
                 },
             }
         ],
     },
+
+    resolve: {
+        extensions: ['.tsx', '.jsx', '.ts', '.js'],
+    },
+
     devServer: {
         static: {
             directory: path.join(__dirname, 'public'),

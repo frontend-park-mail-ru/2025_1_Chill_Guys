@@ -44,13 +44,15 @@ function equal(obj1, obj2) {
     return true;
 };
 
-function replaceWith(oldElement, newElement) {
+function replaceWith(oldElement, newElement, parent) {
     if (!oldElement || !newElement) {
+        console.log(oldElement, newElement);
         return;
     }
 
     if (Array.isArray(oldElement)) {
         oldElement.at(-1).replaceWith(newElement);
+        oldElement.forEach((node) => node.remove());
     } else {
         if (Array.isArray(newElement)) {
             oldElement.replaceWith(...newElement);
@@ -94,13 +96,13 @@ function renderDOM(vDOM, parent, props) {
     }
 
     if (Array.isArray(vDOM)) {
-        const elements = [];
+        const elements = document.createDocumentFragment();
         vDOM.forEach((element) => {
             const newElements = renderDOM(element, parent, props);
             if (Array.isArray(newElements)) {
-                elements.push(...newElements);
+                elements.append(...newElements);
             } else {
-                elements.push(newElements);
+                elements.appendChild(newElements);
             }
         });
         return elements;
@@ -110,6 +112,24 @@ function renderDOM(vDOM, parent, props) {
         const node = document.createTextNode(vDOM.props.data);
         vDOM.parent = parent;
         vDOM.dom = node;
+        return node;
+    }
+
+    if (vDOM.isList) {
+        const node = document.createDocumentFragment();
+        const children = [];
+        vDOM.children.forEach((element) => {
+            const newElements = renderDOM(element, parent, props);
+            if (Array.isArray(newElements)) {
+                node.append(...newElements);
+                children.push(...newElements);
+            } else {
+                node.appendChild(newElements);
+                children.push(newElements)
+            }
+        });
+        vDOM.parent = parent;
+        vDOM.dom = children;
         return node;
     }
 
@@ -165,8 +185,8 @@ function compareTags(oldTag, newTag) {
 
 function updateDOM(parent, vDOM, newVDOM, props) {
     if (Array.isArray(vDOM) != Array.isArray(newVDOM)) {
-        const newElement = renderDOM(newVDOM, props);
-        replaceWith(vDOM.dom, newElement.dom);
+        const newElement = renderDOM(newVDOM, parent, props);
+        replaceWith(vDOM.dom, Array.isArray(newElement) ? newElement : newElement.dom, vDOM.parent);
         return { dom: newVDOM, changed: true };
     }
 
@@ -202,7 +222,7 @@ function updateDOM(parent, vDOM, newVDOM, props) {
 
     if (changed.fullRender) {
         const newElement = renderDOM(newVDOM, parent, props);
-        replaceWith(vDOM.dom, newElement);
+        replaceWith(vDOM.dom, newElement, vDOM.parent);
         return { dom: newVDOM, changed: true };
     }
 
@@ -228,7 +248,11 @@ function updateDOM(parent, vDOM, newVDOM, props) {
         }
 
         if (newVDOM.children) {
-            vDOM.children = updateDOM(vDOM.dom, vDOM.children, newVDOM.children, props).dom;
+            if (vDOM.isList) {
+                vDOM.children = updateDOM(vDOM.parent, vDOM.children, newVDOM.children, props).dom;
+            } else {
+                vDOM.children = updateDOM(vDOM.dom, vDOM.children, newVDOM.children, props).dom;
+            }
         }
     }
 
@@ -242,14 +266,25 @@ function _tarakan_tag(tagName, props, ...children) {
             statefull: true,
             props: props ?? {},
             vChildren: children.map((E) => {
-                return isScalar(E) ? {
-                    t: "scalar",
-                    props: {
-                        data: E,
-                    },
-                    isScalar: true,
-                    children: null,
-                } : E;
+                if (Array.isArray(E)) {
+                    return {
+                        t: "list",
+                        isList: true,
+                        children: E,
+                        props: {}
+                    }
+                } else if (isScalar(E)) {
+                    return {
+                        t: "scalar",
+                        props: {
+                            data: E,
+                        },
+                        isScalar: true,
+                        children: null,
+                    }
+                } else {
+                    return E;
+                }
             }).filter((E) => (E)),
 
             component: null,
@@ -261,14 +296,25 @@ function _tarakan_tag(tagName, props, ...children) {
         t: tagName,
         props: props ?? {},
         children: children.map((E) => {
-            return isScalar(E) ? {
-                t: "scalar",
-                props: {
-                    data: E,
-                },
-                isScalar: true,
-                children: null,
-            } : E;
+            if (Array.isArray(E)) {
+                return {
+                    t: "list",
+                    isList: true,
+                    props: {},
+                    children: E,
+                }
+            } else if (isScalar(E)) {
+                return {
+                    t: "scalar",
+                    props: {
+                        data: E,
+                    },
+                    isScalar: true,
+                    children: null,
+                }
+            } else {
+                return E;
+            }
         }).filter((E) => (E)),
     }
 }
