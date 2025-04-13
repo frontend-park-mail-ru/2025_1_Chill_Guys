@@ -126,28 +126,23 @@ class Header extends Tarakan.Component {
                             }}
                         />
                     }
-
-                    {
-                        this.state.authorized
-                        &&
-                        <Button
-                            size={`${BUTTON_SIZE.L}`}
-                            iconPosition={`${ICON_POSITION.TOP}`}
-                            variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                            title='Корзина'
-                            iconSrc={`${this.state.cartIcon}`}
-                            iconAlt='Иконка корзины'
-                            onMouseOver={() => {
-                                this.setState({ cartIcon: HeaderCartHover })
-                            }}
-                            onMouseLeave={() => {
-                                this.setState({ cartIcon: HeaderCart })
-                            }}
-                            onClick={() => {
-                                app.navigateTo("/cart");
-                            }}
-                        />
-                    }
+                    <Button
+                        size={`${BUTTON_SIZE.L}`}
+                        iconPosition={`${ICON_POSITION.TOP}`}
+                        variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                        title='Корзина'
+                        iconSrc={`${this.state.cartIcon}`}
+                        iconAlt='Иконка корзины'
+                        onMouseOver={() => {
+                            this.setState({ cartIcon: HeaderCartHover })
+                        }}
+                        onMouseLeave={() => {
+                            this.setState({ cartIcon: HeaderCart })
+                        }}
+                        onClick={() => {
+                            app.navigateTo("/cart");
+                        }}
+                    />
 
                     <Button
                         size={`${BUTTON_SIZE.L}`}
@@ -174,7 +169,7 @@ class Header extends Tarakan.Component {
                         }}
                         onClick={() => {
                             if (this.state.authorized) {
-                                console.log('Скоро тут будет профиль');
+                                app.navigateTo('/profile');
                             } else {
                                 app.navigateTo('/signin');
                             }

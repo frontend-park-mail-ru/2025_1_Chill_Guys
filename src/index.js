@@ -8,7 +8,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
 import UserStore from "./stores/UserStore.js";
 
 import "./styles/style.scss";
-import ProfilePage from "./new_pages/ProfilePage/ProfilePage.jsx";
+import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 
 const root = document.getElementById("root");
 
