@@ -1,6 +1,12 @@
 .textField {
     position: relative;
 
+    .title {
+        font-weight: 400;
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+
     &.width {
         &.px400 {
             width: 400px;
@@ -50,6 +56,14 @@
         &:focus {
             outline: 1px solid var(--secondary-color);
             background-color: var(--input-background-color);
+        }
+    }
+
+    .flex {
+        display: flex;
+
+        &.column {
+            flex-direction: column;
         }
     }
 

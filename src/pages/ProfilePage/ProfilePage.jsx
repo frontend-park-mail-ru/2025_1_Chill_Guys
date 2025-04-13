@@ -1,14 +1,14 @@
 import Tarakan from "../../../modules/tarakan.js";
-import Header from "../../new_components/Header/Header.jsx";
-import Footer from "../../new_components/Footer/Footer.jsx";
+import Header from "../../components/Header/Header.jsx";
+import Footer from "../../components/Footer/Footer.jsx";
 
 import "./styles.scss";
 import ajax from "../../../modules/ajax.js";
-import {SERVER_URL} from "../../settings.js";
+import { SERVER_URL } from "../../settings.js";
 
 import ProfilePicture from "../../shared/images/header-profile-ico.svg";
-import Button from "../../new_components/Button/Button.jsx";
-import TextField from "../../new_components/TextField/TextField.jsx";
+import Button from "../../components/Button/Button.jsx";
+import TextField from "../../components/TextField/TextField.jsx";
 
 export default class ProfilePage extends Tarakan.Component {
     state = {}
@@ -44,7 +44,7 @@ export default class ProfilePage extends Tarakan.Component {
     }
 
     async fetchProfileInfo() {
-        const response = await ajax.get('api/users/me', {origin: SERVER_URL});
+        const response = await ajax.get('api/users/me', { origin: SERVER_URL });
 
         if (!response.error) {
             const data = await response.result.json();
@@ -60,7 +60,7 @@ export default class ProfilePage extends Tarakan.Component {
 
     render(props, router) {
         return <div className={`container`}>
-            <Header/>
+            <Header />
 
             <main className={`profile-page flex`}>
                 <div className={`nav-column flex column`}>
@@ -102,19 +102,19 @@ export default class ProfilePage extends Tarakan.Component {
 
                 <div id='personal-data' className={`tab active`}>
                     <div>
-                    <h2 className={`h-reset header`}>Мои данные</h2>
-                    <p className={`help`}>
-                        Здесь Вы можете изменить свои персональные данные. Они будут использоваться при создании заказа.
-                    </p>
+                        <h2 className={`h-reset header`}>Мои данные</h2>
+                        <p className={`help`}>
+                            Здесь Вы можете изменить свои персональные данные. Они будут использоваться при создании заказа.
+                        </p>
                     </div>
 
                     <div className={`main-content flex column`}>
                         <div className={`fields-wrapper`}>
                             <div className={`fields-column`}>
                                 <TextField
-                                fieldName='Имя'
-                                isDisabled={true}
-                                value={`${this.state.name}`}
+                                    fieldName='Имя'
+                                    isDisabled={true}
+                                    value={`${this.state.name}`}
                                 />
 
                                 <TextField
@@ -176,7 +176,7 @@ export default class ProfilePage extends Tarakan.Component {
                 </div>
             </main>
 
-            <Footer/>
+            <Footer />
         </div>
     }
 }
