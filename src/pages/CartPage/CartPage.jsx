@@ -107,7 +107,7 @@ class CartPage extends Tarakan.Component {
                     <div className="list">
                         {this.state.items.map((item, index) =>
                             <article className="item">
-                                <img className="cover" src={`${SERVER_URL}/${item.productImage}`} />
+                                <img className="cover" src={item.productImage} />
                                 <div className="description">
                                     <div className="title">
                                         <div className="name">{item.productName}</div>

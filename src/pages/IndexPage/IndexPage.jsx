@@ -69,7 +69,7 @@ class IndexPage extends Tarakan.Component {
                                     rating={`${item.rating}`}
                                     reviewsCount={`${item.reviewsCount}`}
                                     mainImageAlt={`Изображение товара ${item.name}`}
-                                    mainImageSrc={`${SERVER_URL}/${item.image}`}
+                                    mainImageSrc={item.image}
                                 />
                         )
                     }
