@@ -1,0 +1,54 @@
+.header {
+    &.light {
+        --border-radius: 20px;
+
+        background-color: var(--background);
+        padding: var(--header-padding);
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+    }
+
+    .logo {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .row {
+        width: 100%;
+        height: fit-content;
+        align-items: center;
+
+        &.main {
+            justify-content: space-between;
+
+            .icons-wrapper {
+                gap: 8px;
+            }
+
+            .search-field-wrapper {
+                gap: 9px;
+            }
+        }
+
+        &.secondary {
+            flex-direction: row-reverse;
+
+            .address-wrapper {
+                color: var(--secondary-color);
+            }
+        }
+    }
+}
+
+.flex {
+    display: flex;
+
+    &.column {
+        flex-direction: column;
+    }
+
+    &.gap10px {
+        gap: 10px;
+    }
+}
