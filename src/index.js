@@ -1,10 +1,10 @@
 import Tarakan from "../modules/tarakan.js";
-import CartPage from "./new_pages/CartPage/CartPage.jsx";
-import IndexPage from "./new_pages/IndexPage/IndexPage.jsx";
+import CartPage from "./pages/CartPage/CartPage.jsx";
+import IndexPage from "./pages/IndexPage/IndexPage.jsx";
 
-import LoginPage from "./new_pages/LoginPage/LoginPage.jsx";
-import PlaceOrderPage from "./new_pages/PlaceOrderPage/PlaceOrderPage.jsx";
-import RegisterPage from "./new_pages/RegisterPage/RegisterPage.jsx";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+import PlaceOrderPage from "./pages/PlaceOrderPage/PlaceOrderPage.jsx";
+import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
 import UserStore from "./stores/UserStore.js";
 
 import "./styles/style.scss";

@@ -100,5 +100,5 @@ export const patch = async (url, data, options) => {
 
 export default {
     ContentTypes,
-    get, post, put, del
+    get, post, put, del, patch
 }
