@@ -12,41 +12,50 @@
     color: white;
     gap: 4px;
 
+    &:disabled {
+        cursor: not-allowed;
+    }
+
     &.text {
         color: var(--background-button-color);
         background-color: transparent;
         border: 1px solid transparent;
 
-        &:hover {
-            color: var(--background-button-hover-color);
+        &:not(:disabled) {
+            &:hover {
+                color: var(--background-button-hover-color);
+            }
+
+            &:active {
+                color: var(--background-button-active-color);
+            }
         }
 
         &:disabled {
             color: var(--background-button-disabled-color);
         }
 
-        &:active {
-            color: var(--background-button-active-color);
-        }
     }
 
     &.primary {
         border: 1px solid var(--background-button-color);
         background-color: var(--background-button-color);
 
-        &:hover {
-            border: 1px solid var(--background-button-hover-color);
-            background-color: var(--background-button-hover-color);
+        &:not(:disabled) {
+            &:hover {
+                border: 1px solid var(--background-button-hover-color);
+                background-color: var(--background-button-hover-color);
+            }
+
+            &:active {
+                border: 1px solid var(--background-button-active-color);
+                background-color: var(--background-button-active-color);
+            }
         }
 
         &:disabled {
             border: 1px solid var(--background-button-disabled-color);
             background-color: var(--background-button-disabled-color);
-        }
-
-        &:active {
-            border: 1px solid var(--background-button-active-color);
-            background-color: var(--background-button-active-color);
         }
     }
 
@@ -55,7 +64,7 @@
         border: none;
         background: none;
 
-        &:hover {
+        &:not(:disabled):hover {
             color: var(--background-button-color);
         }
 

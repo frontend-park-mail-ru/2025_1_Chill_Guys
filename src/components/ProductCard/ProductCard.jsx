@@ -16,12 +16,10 @@ class ProductCard extends Tarakan.Component {
     }
 
     init(props) {
-        console.log(props);
         this.state.isInCart = props.inCart;
     }
 
     async handleAddToCart(itemId) {
-        console.log(`Trying to add: ${itemId}`);
         const code = await addToBasket(itemId);
 
         if (code === AJAXErrors.NoError) {
@@ -46,9 +44,13 @@ class ProductCard extends Tarakan.Component {
             </div>
 
             <div className={`prices full-wide`}>
-                <div className={`sell-price`}>{props.price} ₽</div>
-                {props.oldPrice && <div className={`old-price`}>{props.oldPrice} ₽</div>}
-                {props.sale && <div className={`sale-percentage`}>-{props.sale}%</div>}
+                <div className={`sell-price`}>{props.discountPrice || props.price} ₽</div>
+                {
+                    props.discountPrice != 0 && <div className={`old-price`}>{props.price} ₽</div>
+                }
+                {
+                    props.discountPrice != 0 && <div className={`sale-percentage`}>{parseInt((props.discountPrice - props.price) / props.price * 100)}%</div>
+                }
             </div>
 
             {

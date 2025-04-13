@@ -13,18 +13,69 @@ import moneyIcon from "../../shared/images/money-ico.svg";
 import AddressCard from "../../components/AddressCard/AddressCard.jsx";
 import AddressModal from "../../components/AddressModal/AddressModal.jsx";
 
+import { AJAXErrors } from "../../api/errors";
+import { calculateOrderParams, sendOrder } from "../../api/order";
+import { getUserAddresses } from "../../api/address";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
+
 class PlaceOrderPage extends Tarakan.Component {
 
     state = {
         total: 0,
         discount: 0,
-        activeAddress: "1",
-        addAddressModalOpened: true,
-        addresses: []
+        activeAddress: "",
+        addAddressModalOpened: false,
+        addresses: [],
+        successMessageOpened: false,
     }
 
-    render(props, router) {
+    async fetchOrder() {
+        const { code, parametres } = await calculateOrderParams();
+        if (code === AJAXErrors.NoError) {
+            this.setState({
+                total: parametres.price,
+                discount: parametres.discountPrice
+            })
+        } else {
+            this.app.navigateTo("/login");
+        }
+    }
+
+    async fetchAddresses() {
+        const { code, addresses } = await getUserAddresses();
+        if (code === AJAXErrors.NoError) {
+            this.setState({
+                addAddressModalOpened: false,
+                addresses: addresses,
+            })
+        } else {
+            this.app.navigateTo("/login");
+        }
+    }
+
+    async handlePlaceOrder() {
+        const code = await sendOrder({
+            payType: "money",
+            address: this.state.activeAddress
+        });
+
+        if (code === AJAXErrors.NoError) {
+            this.setState({
+                successMessageOpened: true
+            });
+        }
+    }
+
+    init() {
+        this.fetchOrder();
+        this.fetchAddresses();
+    }
+
+    render() {
         return <div className="place-order-page">
+            {
+                this.state.successMessageOpened && <SuccessModal />
+            }
             <Header />
             <main>
                 <h1>Оформление заказа</h1>
@@ -48,8 +99,8 @@ class PlaceOrderPage extends Tarakan.Component {
                             {
                                 this.state.addresses.map((address) =>
                                     <AddressCard
-                                        name={address.name}
-                                        address={address.address}
+                                        name={address.label}
+                                        address={address.addressString}
                                         active={this.state.activeAddress === address.id}
                                         onClick={() => this.setState({ activeAddress: address.id })}
                                     />
@@ -61,19 +112,22 @@ class PlaceOrderPage extends Tarakan.Component {
                                 </div>
                             }
                         </div>
+                        <div className="date">
+                            <h2>Срок доставки:</h2>
+                            5 рабочик дней
+                        </div>
                         {this.state.addAddressModalOpened && <AddressModal
                             opened={this.state.addAddressModalOpened}
-                            onEnd={(form) => {
-                                this.setState({
-                                    addAddressModalOpened: false,
-                                    addresses: [
-                                        ...this.state.addresses,
-                                        form
-                                    ]
-                                });
+                            onEnd={(ok) => {
+                                if (ok) {
+                                    this.fetchAddresses();
+                                } else {
+                                    this.setState({
+                                        addAddressModalOpened: false,
+                                    });
+                                }
                             }}
                             onClose={() => {
-                                console.log("YES")
                                 this.setState({ addAddressModalOpened: false });
                             }}
                         />}
@@ -82,11 +136,9 @@ class PlaceOrderPage extends Tarakan.Component {
                         <Button
                             className="make-order"
                             title="Оформление заказа"
-                            onClick={() => router.navigateTo("/place-order")}
+                            disabled={this.state.activeAddress === ""}
+                            onClick={() => this.handlePlaceOrder()}
                         />
-                        <div className="comment">
-                            Способы оплаты и доставки будут доступны на следующем шаге
-                        </div>
                         <div className="discount">
                             <span>Скидка:</span>
                             <span className="cost">{this.state.total - this.state.discount} ₽</span>

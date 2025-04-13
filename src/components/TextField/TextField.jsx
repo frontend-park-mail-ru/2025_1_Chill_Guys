@@ -29,7 +29,6 @@ class TextField extends Tarakan.Component {
     }
 
     handleEnterFinish() {
-        console.log("YES")
         const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
         if (dataOk) {
             this.setState({ status: "success" });
@@ -48,6 +47,9 @@ class TextField extends Tarakan.Component {
     }
 
     update(props) {
+        if (props.value) {
+            this.setState({ value: props.value }, true);
+        }
         if (props.status) {
             this.setState({ status: props.status }, true);
         }
@@ -61,22 +63,41 @@ class TextField extends Tarakan.Component {
         const title = props.fieldName ?? "";
         const isDisabled = props.isDisabled ?? false;
 
-        return <div className={`textField flex column ${otherClasses}`.trim()}>
-            {title && <h3 className={`h-reset title`}>{title}</h3>}
-            <input
-                className={this.state.status}
-                type={type}
-                placeholder={placeholder}
-                value={defaultValue}
-                disabled={isDisabled}
-                onFocus={() => this.handleFocus()}
-                onChange={(event) => this.handleChange(event)}
-                onBlur={() => this.handleEnterFinish()}
-            />
-            {this.state.status !== "default" &&
-                <img class="mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
-            }
-        </div>
+        return title ?
+            <div className={`textField-title flex column ${otherClasses}`.trim()}>
+                {title && <h3 className={`h-reset title`}>{title}</h3>}
+                <div className="textField">
+                    <input
+                        className={this.state.status}
+                        type={type}
+                        placeholder={placeholder}
+                        value={defaultValue}
+                        disabled={isDisabled}
+                        onFocus={() => this.handleFocus()}
+                        onChange={(event) => this.handleChange(event)}
+                        onBlur={() => this.handleEnterFinish()}
+                    />
+                    {this.state.status !== "default" &&
+                        <img class="mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
+                    }
+                </div>
+            </div>
+            : <div className={`textField flex column ${otherClasses}`.trim()}>
+                <input
+                    className={this.state.status}
+                    type={type}
+                    placeholder={placeholder}
+                    value={defaultValue}
+                    disabled={isDisabled}
+                    onFocus={() => this.handleFocus()}
+                    onChange={(event) => this.handleChange(event)}
+                    onBlur={() => this.handleEnterFinish()}
+                />
+                {this.state.status !== "default" &&
+                    <img class="mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
+                }
+            </div>
+
     }
 }
 

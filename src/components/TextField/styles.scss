@@ -1,11 +1,13 @@
-.textField {
-    position: relative;
-
+.textField-title {
     .title {
         font-weight: 400;
         font-size: 16px;
         margin-bottom: 4px;
     }
+}
+
+.textField {
+    position: relative;
 
     &.width {
         &.px400 {

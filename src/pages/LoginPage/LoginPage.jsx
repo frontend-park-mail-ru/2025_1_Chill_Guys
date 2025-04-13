@@ -24,8 +24,6 @@ class LoginPage extends Tarakan.Component {
                 password: validationResult.password,
             });
 
-            console.log(error);
-
             if (error === AJAXErrors.NoError) {
                 this.app.navigateTo("/");
             } else if (error === AJAXErrors.NoUser) {

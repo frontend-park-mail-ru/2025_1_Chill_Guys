@@ -34,10 +34,10 @@
   }
 
   .carousel-images {
-    max-width: 100%;
+    min-width: 100%;
 
     .active-image-wrapper {
-      max-width: 100%;
+      min-width: 100%;
       border-radius: 12px;
       display: flex;
       justify-content: center;
@@ -46,14 +46,13 @@
 
       .card-image {
         border-radius: 12px;
-        max-width: 100%;
+        min-width: 100%;
         aspect-ratio: 1 / 1;
+        object-fit: contain;
       }
     }
 
-    .controls {
-
-    }
+    .controls {}
   }
 
   .prices {
@@ -64,7 +63,7 @@
     .sell-price {
       font-weight: bold;
       font-size: 16px;
-      color: var(--sale-color);
+      color: var(--positive);
     }
 
     .old-price {
@@ -75,7 +74,7 @@
 
     .sale-percentage {
       font-size: 10px;
-      color: var(--sale-color);
+      color: var(--positive);
     }
   }
 

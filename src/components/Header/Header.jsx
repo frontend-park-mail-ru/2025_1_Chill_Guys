@@ -48,7 +48,6 @@ class Header extends Tarakan.Component {
     }
 
     render(props, app) {
-        console.log(`Authorized: ${this.state.authorized}`)
         return <header className={`header light flex column gap10px`}>
 
             <div className={`row flex main`}>
@@ -68,7 +67,6 @@ class Header extends Tarakan.Component {
                         iconSrc={`${CatalogButtonIcon}`}
                         iconAlt='Иконка каталога'
                         onClick={() => {
-                            console.log('hello, world!');
                         }}
                     />
 
@@ -100,7 +98,6 @@ class Header extends Tarakan.Component {
                                 this.setState({ ordersIcon: HeaderOrders })
                             }}
                             onClick={() => {
-                                console.log('Открываю заказы');
                             }}
                         />
                     }
@@ -122,7 +119,6 @@ class Header extends Tarakan.Component {
                                 this.setState({ savedIcon: HeaderSaved })
                             }}
                             onClick={() => {
-                                console.log('Открываю избранное');
                             }}
                         />
                     }
@@ -152,8 +148,6 @@ class Header extends Tarakan.Component {
                         iconSrc={`${this.state.profileIcon}`}
                         iconAlt='Иконка профиля'
                         onMouseOver={() => {
-                            console.log('profile mouse over');
-                            console.log(this.state.authorized);
                             if (this.state.authorized) {
                                 this.setState({ profileIcon: HeaderProfileHover });
                             } else {

@@ -49,11 +49,18 @@
                     display: flex;
                     flex-direction: column;
                     row-gap: 12px;
+                    margin-bottom: 20px;
 
                     .no-address {
                         color: gray;
                         font-style: italic;
                     }
+                }
+
+                .date {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 12px;
                 }
             }
 
@@ -79,7 +86,9 @@
                 .discount {
                     display: flex;
                     justify-content: space-between;
+                    margin-top: 16px;
                     margin-bottom: 8px;
+                    color: var(--positive);
 
                     .cost {
                         font-size: 16px;

@@ -10,6 +10,8 @@ import Button from "../Button/Button.jsx";
 import { VALID_TYPES } from "../../../modules/validation.js";
 import ajax from "../../../modules/ajax.js";
 import { GEOPIFY_KEY } from "../../settings.js";
+import { saveAddress } from "../../api/address";
+import { AJAXErrors } from "../../api/errors";
 
 class AddressModal extends Tarakan.Component {
     state = {
@@ -22,7 +24,6 @@ class AddressModal extends Tarakan.Component {
             city: "Батагай",
             street: "Октябрьская",
             house: "32",
-            housing: "-",
             flat: "95"
         }
     }
@@ -35,7 +36,7 @@ class AddressModal extends Tarakan.Component {
                 country: "Russia",
                 city: address.city,
                 street: address.street,
-                housenumber: `${address.house}${address.housing != "-" ? ", корпус " + address.housing : ""}`,
+                housenumber: address.house,
             }).map(([K, E]) => `${K}=${encodeURIComponent(E)}`).join("&"),
             { origin: "https://api.geoapify.com", noCredentials: true },
         );
@@ -54,6 +55,7 @@ class AddressModal extends Tarakan.Component {
                     addressSurname: E.properties.address_line2,
                     address: E.properties.formatted,
                     importance: E.properties.rank.importance,
+                    rawData: E.properties,
                 })),
             })
         }
@@ -77,11 +79,19 @@ class AddressModal extends Tarakan.Component {
 
     async handleSave() {
         const address = this.state.searchResult[this.state.selectedResult];
-        this.props.onEnd({
-            id: parseInt(Math.random() * 100000),
-            name: this.state.form.name,
-            ...address,
-        });
+        const code = await saveAddress(
+            address.rawData.state,
+            address.rawData.city,
+            address.address,
+            `${address.lat},${address.log}`,
+            this.state.form.name
+        );
+
+        if (code === AJAXErrors.NoError) {
+            this.props.onEnd(true);
+        } else {
+            this.props.onEnd(false);
+        }
     }
 
     update(newPropes) {
@@ -105,6 +115,7 @@ class AddressModal extends Tarakan.Component {
                                 title="Название адреса"
                                 validType={VALID_TYPES.NOT_NULL_VALID}
                                 value={this.state.form.name}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("name", value)}
                             />
                             <TextField
@@ -112,6 +123,7 @@ class AddressModal extends Tarakan.Component {
                                 title="Город"
                                 validType={VALID_TYPES.NOT_NULL_VALID}
                                 value={this.state.form.city}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("city", value)}
                             />
                             <TextField
@@ -119,6 +131,7 @@ class AddressModal extends Tarakan.Component {
                                 title="Улица"
                                 validType={VALID_TYPES.NOT_NULL_VALID}
                                 value={this.state.form.street}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("street", value)}
                             />
                             <TextField
@@ -126,20 +139,15 @@ class AddressModal extends Tarakan.Component {
                                 title="Дом"
                                 validType={VALID_TYPES.NOT_NULL_VALID}
                                 value={this.state.form.house}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("house", value)}
-                            />
-                            <TextField
-                                className="housing"
-                                title="Корпус"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
-                                value={this.state.form.housing}
-                                onEnd={(ok, value) => this.handleUpdateForm("housing", value)}
                             />
                             <TextField
                                 className="flat"
                                 title="Квартира"
                                 validType={VALID_TYPES.NOT_NULL_VALID}
                                 value={this.state.form.flat}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("flat", value)}
                             />
                         </p>
