@@ -1,9 +1,9 @@
-import Tarakan from "../../../modules/tarakan.js";
+import Tarakan from "bazaar-tarakan";
 
-import Button, {BUTTON_VARIANT, ICON_POSITION} from "../Button/Button.jsx";
-import TextField from "../TextField/TextField.jsx";
-import {BUTTON_SIZE} from "../Button/Button.jsx";
-import {TEXTFIELD_TYPES} from "../TextField/TextField.jsx";
+import Button, {BUTTON_VARIANT, ICON_POSITION} from "../Button/Button";
+import TextField from "../TextField/TextField";
+import {BUTTON_SIZE} from "../Button/Button";
+import {TEXTFIELD_TYPES} from "../TextField/TextField";
 
 import "./styles.scss";
 
@@ -24,8 +24,8 @@ import HeaderProfileHover from "../../shared/images/header-profile-ico-hover.svg
 
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
-import { getAllCategories } from "../../api/categories";
-import { AJAXErrors } from "../../api/errors";
+import {getAllCategories} from "../../api/categories";
+import {AJAXErrors} from "../../api/errors";
 
 class Header extends Tarakan.Component {
     state = {
@@ -41,7 +41,7 @@ class Header extends Tarakan.Component {
             authorized: this.app.store.user.value.login,
         });
         this.fetchCategories();
-        this.subscribe("user", (name, newValue) => {
+        this.subscribe("user", (name: string, newValue: any) => {
             if (name === "login") {
                 this.setState({
                     profileIcon: newValue.login ? HeaderProfile : HeaderLogin,
@@ -63,13 +63,12 @@ class Header extends Tarakan.Component {
         }
     }
 
-    render(props, app) {
-        console.log(`Authorized: ${this.state.authorized}`)
-        return <header className={`header light flex column gap10px`}>
+    render(props: any, app: any) {
+        return <header className="header header_light">
 
-            <div className={`row flex main`}>
+            <div className="header__row header__row_main">
                 <img
-                    className={`logo`}
+                    className="header__logo"
                     alt='Логотип маркетплейса Bazaar'
                     src={`${LogoFull}`}
                     onClick={() => {
@@ -77,14 +76,13 @@ class Header extends Tarakan.Component {
                     }}
                 />
 
-                <div className={`search-field-wrapper flex`}>
+                <div className="header__row_main__search-field-wrapper">
                     <Button
                         size={BUTTON_SIZE.L}
                         title='Каталог'
                         iconSrc={`${CatalogButtonIcon}`}
                         iconAlt='Иконка каталога'
                         onClick={() => {
-                            console.log('hello, world!');
                         }}
                     />
 
@@ -97,7 +95,7 @@ class Header extends Tarakan.Component {
                     </div>
                 </div>
 
-                <div className={`icons-wrapper flex`}>
+                <div className="header__row_main__icons-wrapper">
 
                     {
                         this.state.authorized
@@ -116,7 +114,6 @@ class Header extends Tarakan.Component {
                                 this.setState({ordersIcon: HeaderOrders})
                             }}
                             onClick={() => {
-                                console.log('Открываю заказы');
                             }}
                         />
                     }
@@ -138,7 +135,6 @@ class Header extends Tarakan.Component {
                                 this.setState({savedIcon: HeaderSaved})
                             }}
                             onClick={() => {
-                                console.log('Открываю избранное');
                             }}
                         />
                     }
@@ -168,8 +164,6 @@ class Header extends Tarakan.Component {
                         iconSrc={`${this.state.profileIcon}`}
                         iconAlt='Иконка профиля'
                         onMouseOver={() => {
-                            console.log('profile mouse over');
-                            console.log(this.state.authorized);
                             if (this.state.authorized) {
                                 this.setState({profileIcon: HeaderProfileHover});
                             } else {
@@ -191,9 +185,7 @@ class Header extends Tarakan.Component {
                             }
                         }}
                     />
-
                 </div>
-
             </div>
 
             <div className={`row flex secondary`}>
@@ -210,7 +202,6 @@ class Header extends Tarakan.Component {
                     Улица Космонавтов 7
                 </div>
             </div>
-
         </header>
     }
 }

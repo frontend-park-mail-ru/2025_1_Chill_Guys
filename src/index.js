@@ -1,4 +1,4 @@
-import Tarakan from "../modules/tarakan.js";
+import Tarakan from "bazaar-tarakan";
 import CartPage from "./pages/CartPage/CartPage.jsx";
 import IndexPage from "./pages/IndexPage/IndexPage.jsx";
 

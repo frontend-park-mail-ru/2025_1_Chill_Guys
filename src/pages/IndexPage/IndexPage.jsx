@@ -1,9 +1,7 @@
-import Tarakan from "../../../modules/tarakan";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import ajax from "../../../modules/ajax.js";
-import ProductCard from "../../components/ProductCard/ProductCard.jsx";
-import { SERVER_URL } from "../../settings.js";
+import Tarakan from "bazaar-tarakan";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import ProductCard from "../../components/ProductCard/ProductCard";
 
 import "./styles.scss";
 import { getProducts } from "../../api/product";
@@ -31,14 +29,13 @@ class IndexPage extends Tarakan.Component {
                 });
             }
 
-            console.log(basket, products);
-
             this.setState({
                 products: products.map((item) => ({
                     id: item.id,
                     name: item.name,
                     image: item.image,
                     price: item.price,
+                    discountPrice: item.discountPrice,
                     reviewsCount: item.reviewsCount,
                     rating: item.rating,
                     isInCart: basket.has(item.id),
@@ -52,7 +49,6 @@ class IndexPage extends Tarakan.Component {
     }
 
     render(props, router) {
-
         return <div className={`container`}>
             <Header />
 
@@ -66,11 +62,12 @@ class IndexPage extends Tarakan.Component {
                                     id={`${item.id}`}
                                     inCart={item.isInCart}
                                     price={`${item.price}`}
+                                    discountPrice={item.discountPrice}
                                     title={`${item.name}`}
                                     rating={`${item.rating}`}
                                     reviewsCount={`${item.reviewsCount}`}
                                     mainImageAlt={`Изображение товара ${item.name}`}
-                                    mainImageSrc={`${SERVER_URL}/api/products/${item.id}/cover`}
+                                    mainImageSrc={item.image}
                                 />
                         )
                     }

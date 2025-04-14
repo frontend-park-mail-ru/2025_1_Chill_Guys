@@ -16,6 +16,7 @@ export interface BasketItem {
     productImage: string,
     priceDiscount: number,
     quantity: number,
+    remainQuantity: number,
 }
 
 export async function getBasket(): Promise<{ code: AJAXErrors, data?: Basket }> {
@@ -44,8 +45,9 @@ export async function getBasket(): Promise<{ code: AJAXErrors, data?: Basket }> 
             productName: product.product_name,
             productPrice: product.product_price,
             productImage: product.product_image,
-            priceDiscount: product.price_discount,
+            priceDiscount: product.price_discount || product.product_price,
             quantity: product.quantity,
+            remainQuantity: product.remain_quantity,
         }))
     };
 
@@ -71,8 +73,9 @@ export async function addToBasket(productId: string): Promise<AJAXErrors> {
 }
 
 export async function updateProductQuantity(productId: string, newQuantity: number)
-    : Promise<{ code: AJAXErrors, lastProduct?: boolean }> {
-    const response = await ajax.post(`basket/${productId}`, {
+    : Promise<{ code: AJAXErrors, remainQuantity?: boolean }> {
+
+    const response = await ajax.patch(`basket/${productId}`, {
         quantity: newQuantity
     });
 
@@ -93,7 +96,7 @@ export async function updateProductQuantity(productId: string, newQuantity: numb
     }
 
     const rawData = await response.result.json();
-    return { code: AJAXErrors.NoError, lastProduct: rawData.remain_quantity == 0 };
+    return { code: AJAXErrors.NoError, remainQuantity: rawData.item.remain_quantity };
 }
 
 export async function removeFromBasket(productId: string): Promise<AJAXErrors> {

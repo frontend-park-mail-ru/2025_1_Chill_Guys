@@ -1,19 +1,18 @@
-.textField {
-    position: relative;
-
-    .title {
+.textField_title {
+    &__title {
         font-weight: 400;
         font-size: 16px;
         margin-bottom: 4px;
     }
+}
 
-    &.width {
-        &.px400 {
-            width: 400px;
-        }
-    }
+.textField {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    position: relative;
 
-    input {
+    &__input {
         outline: none;
         border-radius: var(--input-m-border-radius);
         font-family: inherit;
@@ -36,18 +35,18 @@
             color: var(--dark-gray-text-color);
         }
 
-        &.default {
+        &_default {
             background-color: var(--input-background-color);
             padding: 13.5px 10px;
             color: black;
         }
 
-        &.success {
+        &_success {
             padding-right: 42px;
             outline: 2px solid #1783FF;
         }
 
-        &.invalid {
+        &_invalid {
             padding-right: 44px;
             outline: 2px solid #F04346;
             background-color: rgba(240, 67, 70, 10%);
@@ -59,15 +58,7 @@
         }
     }
 
-    .flex {
-        display: flex;
-
-        &.column {
-            flex-direction: column;
-        }
-    }
-
-    img {
+    &__mark {
         position: absolute;
         top: 50%;
         right: 8px;

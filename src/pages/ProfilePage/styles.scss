@@ -15,11 +15,11 @@
   }
 
   .nav-column {
-align-items: center;
+    align-items: center;
     width: 200px;
 
     .name {
-        text-align: center;
+      text-align: center;
       font-size: 24px;
       font-weight: 400;
       margin-bottom: 24px;
@@ -70,9 +70,11 @@ align-items: center;
 
       .button-wrapper {
         margin-left: auto;
+
         .save {
           width: 256px;
         }
+
         .inactive {
 
           @mixin colors {
@@ -112,6 +114,17 @@ align-items: center;
       font-weight: bold;
       margin-bottom: 7px;
       padding-top: 14px;
+    }
+
+    .error {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: red;
+    }
+
+    .help-error {
+      color: red;
     }
 
     .help {

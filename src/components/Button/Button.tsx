@@ -1,4 +1,4 @@
-import Tarakan from "../../../modules/tarakan.js";
+import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
 
 export const ICON_POSITION = {
@@ -22,7 +22,7 @@ export const BUTTON_SIZE = {
 };
 
 class Button extends Tarakan.Component {
-    render(props) {
+    render(props: any) {
         const size = props.size ?? BUTTON_SIZE.L;
         const variant = props.variant ?? BUTTON_VARIANT.PRIMARY;
         const iconPosition = props.iconPosition ?? ICON_POSITION.LEFT;
@@ -30,13 +30,14 @@ class Button extends Tarakan.Component {
 
         return <button
             type="button"
-            className={`button ${size}_size ${variant} ${iconPosition} ${otherClasses}`.trim()}
-            onClick={(event) => props.onClick ? props.onClick(event) : {}}
-            onMouseOver={(event) => props.onMouseOver ? props.onMouseOver(event) : {}}
-            onMouseLeave={(event) => props.onMouseLeave ? props.onMouseLeave(event): {}}
+            disabled={this.props.disabled}
+            className={`button button_${size}_size button_${variant} button_${iconPosition} ${otherClasses}`.trim()}
+            onClick={(event: any) => props.onClick ? props.onClick(event) : {}}
+            onMouseOver={(event: any) => props.onMouseOver ? props.onMouseOver(event) : {}}
+            onMouseLeave={(event: any) => props.onMouseLeave ? props.onMouseLeave(event) : {}}
         >
             {
-                props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} className={`icon ${size}_size`}/>
+                props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} className={`icon icon_${size}_size`} />
             }
             <span>{props.title}</span>
         </button>

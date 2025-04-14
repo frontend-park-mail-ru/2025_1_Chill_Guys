@@ -1,5 +1,9 @@
 .header {
-    &.light {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &_light {
         --border-radius: 20px;
 
         background-color: var(--background);
@@ -8,62 +12,53 @@
         border-bottom-right-radius: var(--border-radius);
     }
 
-    .logo {
+    &__logo {
         &:hover {
             cursor: pointer;
         }
     }
 
-    .row {
+    &__row {
         width: 100%;
+        display: flex;
         height: fit-content;
         align-items: center;
 
-        &.main {
+        &_main {
             justify-content: space-between;
 
-            .icons-wrapper {
+            &__icons-wrapper {
+                display: flex;
                 gap: 8px;
             }
 
-            .search-field-wrapper {
+            &__search-field-wrapper {
+                display: flex;
                 gap: 9px;
             }
         }
+    }
 
-        &.secondary {
-            flex-direction: row;
-            justify-content: space-between;
+    &__secondary {
+        display: flex;
+        flex-direction: row-reverse;
 
-            .address-wrapper {
-                color: var(--secondary-color);
-            }
+        .address-wrapper {
+            color: var(--secondary-color);
+        }
 
-            .categories-wrapper {
-                padding-left: 33px;
-                gap: 24px;
-                color: var(--dark-gray-text-color);
-                font-size: 16px;
+        .categories-wrapper {
+            padding-left: 33px;
+            gap: 24px;
+            color: var(--dark-gray-text-color);
+            font-size: 16px;
 
-                span {
-                    &:hover {
-                        cursor: pointer;
-                        color: var(--black-color);
-                    }
+            span {
+                &:hover {
+                    cursor: pointer;
+                    color: var(--black-color);
                 }
             }
         }
-    }
-}
-
-.flex {
-    display: flex;
-
-    &.column {
-        flex-direction: column;
-    }
-
-    &.gap10px {
-        gap: 10px;
     }
 }
