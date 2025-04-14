@@ -1,0 +1,91 @@
+.login_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    .content {
+        padding: 72px 52px 54px 52px;
+        border-radius: 20px;
+
+        display: flex;
+
+        border: 1px solid #C1D6E5;
+        background-color: #F5F7FA;
+
+        height: 566px;
+
+        .title {
+            width: 424px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .icon {
+                margin-bottom: 30px;
+            }
+
+            .header {
+                .h1 {
+                    font-size: 32px;
+                    font-weight: 500;
+                    margin-bottom: 10px;
+                }
+
+                .comment {
+                    color: #737980;
+                    font-size: 16px;
+                    width: 361px;
+                }
+            }
+
+            .input-comment {
+                margin-top: 30px;
+                width: 361px;
+
+                .error {
+                    color: #F04346;
+                }
+
+                .help ul,
+                .error ul {
+                    margin-top: 12px;
+                    margin-left: 24px;
+                }
+            }
+
+            .redirect {
+                margin-top: auto;
+                padding-inline: 0;
+            }
+        }
+
+        .form {
+            width: 500px;
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+
+            .font-content {
+                row-gap: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .actions {
+                margin-top: 34px;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                column-gap: 30px;
+            }
+
+            .remember-me {
+                align-self: flex-end;
+                padding: 0;
+                height: fit-content;
+                margin-top: 4px;
+            }
+        }
+    }
+}

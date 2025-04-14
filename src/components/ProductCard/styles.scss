@@ -1,0 +1,115 @@
+.flex {
+  display: flex;
+
+  &.column {
+    flex-direction: column;
+  }
+}
+
+.full-wide {
+  width: 100%;
+}
+
+.product-card {
+
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  &__product-manip {
+    &__in-cart-btn {
+      background-color: var(--positive);
+      border: 1px solid var(--positive);
+
+      &:hover {
+        background-color: var(--positive-hover) !important;
+        border: 1px solid var(--positive-hover) !important;
+      }
+
+      &:active {
+        background-color: var(--positive) !important;
+        border: 1px solid var(--positive) !important;
+      }
+    }
+  }
+
+  &__carousel-images {
+    min-width: 100%;
+
+    &__active-image-wrapper {
+      min-width: 100%;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      background-color: var(--site-background);
+
+      &__card-image {
+        border-radius: 12px;
+        min-width: 100%;
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: contain;
+      }
+    }
+
+    .controls {}
+  }
+
+  &__prices {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+
+    &__sell-price {
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--positive);
+    }
+
+    &__old-price {
+      font-size: 10px;
+      color: var(--light-gray-color);
+      text-decoration: line-through;
+    }
+
+    &__sale-percentage {
+      font-size: 10px;
+      color: var(--positive);
+    }
+  }
+
+  &__brand {
+    font-size: 16px;
+    color: var(--black-color);
+  }
+
+  &__product-title {
+    font-size: 16px;
+    color: var(--black-color);
+  }
+
+  &__reviews {
+    gap: 8px;
+    align-items: center;
+
+    &__star-block {
+      gap: 1px;
+      justify-items: center;
+      justify-content: center;
+      font-size: 16px;
+
+      &__star-text {
+        background-repeat: no-repeat;
+        background-position: top left;
+        background-size: 15px 15px;
+        color: var(--black-color);
+      }
+    }
+
+    &__count-block {
+      color: var(--dark-gray-text-color);
+      font-size: 12px;
+    }
+  }
+}

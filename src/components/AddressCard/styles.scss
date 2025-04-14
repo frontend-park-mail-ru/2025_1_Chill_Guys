@@ -1,0 +1,33 @@
+.address-card {
+    background-color: whitesmoke;
+    outline: 1px solid lightgray;
+    border-radius: 8px;
+    width: fit-content;
+    padding: 16px;
+    display: flex;
+    column-gap: 12px;
+    width: 100%;
+    cursor: pointer;
+
+    &__icon {
+        height: 40px;
+    }
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &__title {
+            font-weight: bold;
+        }
+
+        &__address {
+            color: gray;
+        }
+    }
+
+    &_active {
+        outline: 2px solid var(--secondary-color);
+    }
+}

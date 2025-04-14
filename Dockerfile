@@ -8,12 +8,12 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run compile
+RUN npm run build
 
 #базовый образ
 FROM nginx:alpine 
 
-COPY --from=build /app/ /app
+COPY --from=build /app/build/ /build
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 

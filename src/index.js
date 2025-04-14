@@ -1,37 +1,30 @@
-"use strict";
+import Tarakan from "bazaar-tarakan";
+import CartPage from "./pages/CartPage/CartPage.jsx";
+import IndexPage from "./pages/IndexPage/IndexPage.jsx";
+import CategoryPage from "./pages/CategoryPage/CategoryPage.jsx";
 
-import LoginPage from "./pages/loginPage/loginPage.js";
-import RegisterPage from "./pages/regPage/regPage.js";
-import IndexPage from "./pages/indexPage/indexPage.js";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+import PlaceOrderPage from "./pages/PlaceOrderPage/PlaceOrderPage.jsx";
+import RegisterPage from "./pages/RegisterPage/RegisterPage.jsx";
+import UserStore from "./stores/UserStore.js";
 
-/**
- * Главный элемент страницы
- */
+import "./styles/style.scss";
+import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+
 const root = document.getElementById("root");
 
-/**
- * Словарь страниц
- */
-const pages = {
+// Создания приложения и настройка страниц
+const app = new Tarakan.Application({
   "/": IndexPage,
-  "/login": LoginPage,
-  "/register": RegisterPage,
-};
+  "/signup": RegisterPage,
+  "/signin": LoginPage,
+  "/cart": CartPage,
+  "/place-order": PlaceOrderPage,
+  "/profile": ProfilePage,
+  "/category/<id>": CategoryPage,
+});
 
-/**
- * Переход на новую страницу
- * @param {String} pagePath Путь страницы
- */
-function showPage(pagePath) {
-  root.innerHTML = "";
+// Регистрация хранилищ глобального состояния
+app.addStore("user", UserStore);
 
-  const page = new pages[pagePath]();
-  root.appendChild(page.render({ showPage, root: true }));
-
-  history.pushState(null, "", pagePath);
-}
-
-window.addEventListener("popstate", () => showPage(window.location.pathname));
-window.addEventListener("pushstate", () => showPage(window.location.pathname));
-
-showPage(window.location.pathname);
+app.render(root);

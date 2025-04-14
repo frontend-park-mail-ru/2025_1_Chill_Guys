@@ -1,0 +1,139 @@
+.profile-page {
+  background-color: var(--background);
+  border-radius: 12px;
+  padding: 16px 72px;
+  margin: 24px 0;
+  gap: 68px;
+  font-size: 18px;
+
+  .flex {
+    display: flex;
+
+    &.column {
+      flex-direction: column;
+    }
+  }
+
+  .nav-column {
+    align-items: center;
+    width: 200px;
+
+    .name {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 10px;
+    }
+
+    .menu {
+      gap: 6px;
+
+      .menu-item {
+        --webkit-transition: all 250ms ease-out;
+        transition: all 250ms ease-out;
+
+        &.active {
+          font-weight: bold;
+        }
+
+        &:hover {
+          cursor: pointer;
+          scale: (1.05);
+        }
+
+        &.error {
+          color: red;
+        }
+      }
+    }
+  }
+
+  #personal-data {
+    gap: 30px;
+
+    .main-content {
+      gap: 30px;
+
+      .fields-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 52px;
+
+        .fields-column {
+          display: grid;
+          grid-template-rows: auto;
+          grid-row-gap: 16px;
+        }
+      }
+
+      .button-wrapper {
+        margin-left: auto;
+
+        .save {
+          width: 256px;
+        }
+
+        .inactive {
+
+          @mixin colors {
+            background-color: var(--background-button-disabled-color);
+            border: 1px solid var(--background-button-disabled-color);
+          }
+
+          @include colors;
+
+          &:hover {
+            @include colors;
+          }
+
+          &:active {
+            @include colors;
+          }
+
+          &:hover {
+            cursor: initial;
+          }
+        }
+      }
+    }
+  }
+
+  .tab {
+
+    display: none;
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 7px;
+      padding-top: 14px;
+    }
+
+    .error {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 7px;
+      color: red;
+    }
+
+    .help-error {
+      color: red;
+    }
+
+    .help {
+      color: var(--dark-gray-text-color);
+    }
+  }
+
+}

@@ -1,0 +1,108 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+
+    &__pop-up {
+        padding-top: 22px;
+        border-radius: 8px;
+        background-color: var(--background);
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        display: none;
+        z-index: 1;
+        top: 100px;
+        left: 0;
+        position: absolute;
+        flex-direction: row;
+        gap: 72px;
+
+        &__info-wrapper {
+            display: flex;
+            &__category-title {
+                font-size: 26px;
+            }
+        }
+
+        &__list {
+            display: flex;
+            flex-direction: column;
+            width: 242px;
+
+
+            span {
+                width: 100%;
+                padding: 10px 0;
+                text-align: center;
+                font-size: 18px;
+            }
+        }
+    }
+
+    &_light {
+        --border-radius: 20px;
+
+        background-color: var(--background);
+        padding: var(--header-padding);
+        border-bottom-left-radius: var(--border-radius);
+        border-bottom-right-radius: var(--border-radius);
+    }
+
+    &__logo {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__row {
+        width: 100%;
+        display: flex;
+        height: fit-content;
+        align-items: center;
+
+        &_main {
+            justify-content: space-between;
+
+            &__icons-wrapper {
+                display: flex;
+                gap: 8px;
+            }
+
+            &__search-field-wrapper {
+                display: flex;
+                gap: 9px;
+
+                &__px400 {
+                    width: 400px;
+                }
+            }
+        }
+    }
+
+    &__secondary {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+        .address-wrapper {
+            color: var(--secondary-color);
+        }
+
+        .categories-wrapper {
+            display: flex;
+            padding-left: 33px;
+            gap: 24px;
+            color: var(--dark-gray-text-color);
+            font-size: 16px;
+
+            span {
+                &:hover {
+                    cursor: pointer;
+                    color: var(--black-color);
+                }
+            }
+        }
+    }
+}

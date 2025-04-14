@@ -1,0 +1,140 @@
+@keyframes loading-animation {
+    0% {
+        rotate: 0deg;
+    }
+
+    100% {
+        rotate: 360deg;
+    }
+}
+
+.address-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    &_close {
+        display: none;
+    }
+
+    &__modal-content {
+        z-index: 2;
+        background-color: white;
+        border-radius: 16px;
+        padding: 20px;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+
+        &__title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &__close-button {
+                height: 20px;
+                cursor: pointer;
+            }
+        }
+
+        hr {
+            border: 1px solid lightgray;
+        }
+
+        &__description {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+
+            &__name {
+                grid-column-start: 1;
+                grid-column-end: 4;
+            }
+
+            &__city {
+                grid-column-start: 1;
+                grid-column-end: 4;
+            }
+
+            &__street {
+                grid-column-start: 1;
+                grid-column-end: 4;
+            }
+
+            &__house {
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+        }
+
+        &__search-result {
+            display: flex;
+            flex-direction: column;
+            row-gap: 12px;
+
+            max-height: 300px;
+            overflow: scroll;
+
+            &__card {
+                width: 100%;
+                border-radius: 8px;
+                padding: 16px;
+                background-color: whitesmoke;
+                border: 2px solid whitesmoke;
+
+                &_selected {
+                    border: 2px solid var(--secondary-color);
+                }
+
+                &__surname {
+                    color: gray;
+                }
+            }
+        }
+
+        &__actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &__loading {
+                display: flex;
+                column-gap: 16px;
+                font-size: 20px;
+                line-height: 0;
+
+                span {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    line-height: 1;
+                }
+
+                img {
+                    height: 30px;
+                    animation: loading-animation 1s linear infinite;
+                }
+            }
+        }
+    }
+
+    &__modal-shadow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: 0.3;
+        z-index: 1;
+    }
+}

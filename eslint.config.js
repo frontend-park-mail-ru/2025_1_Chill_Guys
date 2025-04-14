@@ -11,6 +11,8 @@ export default [
     languageOptions: { globals: { ...globals.browser } },
     rules: {
       "no-undef": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     },
   },
   pluginJs.configs.recommended,
