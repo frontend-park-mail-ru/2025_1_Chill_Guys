@@ -7,13 +7,13 @@ import "./styles.scss";
 import ProfilePicture from "../../shared/images/header-profile-ico.svg";
 import Button from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
-import { getMe, updateMe, updatePassword } from "../../api/user";
+import { getMe, updateMe, updatePassword, uploadAvatar } from "../../api/user";
 import { AJAXErrors } from "../../api/errors";
 import { ValidTypes } from "bazaar-validation";
 import { logout } from "../../api/auth";
 
 export default class ProfilePage extends Tarakan.Component {
-    state = {
+    state: any = {
         errors: {},
         oldPassword: "",
         password: "",
@@ -66,7 +66,11 @@ export default class ProfilePage extends Tarakan.Component {
         }
     }
 
-    handleChange(key, ok, v) {
+    handleChange(key: any, ok: any, v: any) {
+        if (key === "phoneNumber" && v === "") {
+            return;
+        }
+
         if (ok) {
             if (this.state.errors[key]) {
                 delete this.state.errors[key];
@@ -115,7 +119,15 @@ export default class ProfilePage extends Tarakan.Component {
         }
     }
 
-    render(props, router) {
+    async handleUploadAvatar(event: any) {
+        const file = event.target.files[0];
+        const response = await uploadAvatar(file);
+        if (response.code === AJAXErrors.NoError) {
+            this.setState({ avatarURL: response.url })
+        }
+    }
+
+    render() {
         return <div className={`container`}>
             <Header />
 
@@ -127,40 +139,39 @@ export default class ProfilePage extends Tarakan.Component {
                         alt={`Аватар пользователя`}
                     />
 
+                    {/*<button type="button" className="avatar">
+                        <label for="file">
+                            <img
+                                className={`avatar__img`}
+                                src={this.state.avatarURL ? this.state.avatarURL : `${ProfilePicture}`}
+                                alt={`Аватар пользователя`}
+                            />
+                        </label>
+                    </button>
+                    <input type="file" id="file" style="display:none;" />*/}
+
                     <h2 className={`h-reset name`}>{this.getFullName()}</h2>
 
                     <ol className={`list-reset menu flex column`}>
                         <li
                             className={`menu-item active`}
-                            onClick={(e) => this.showTab(e, 'personal-data')}
+                            onClick={(e: any) => this.showTab(e, 'personal-data')}
                         >
                             Мои данные
+                        </li>
+                        <li className={`menu-item active`}>
+                            <label style="cursor:pointer">
+                                <input type="file" accept=".jpg,.png" style="display:none" onChange={(ev) => this.handleUploadAvatar(ev)} />
+                                Сменить аватарку
+                            </label>
                         </li>
 
                         <li
                             className={`menu-item error active`}
-                            onClick={(e) => this.handleLogout()}
+                            onClick={(e: any) => this.handleLogout()}
                         >
                             Выйти из профиля
                         </li>
-                        {/*<li
-                            className={`menu-item`}
-                            onClick={(e) => this.showTab(e, 'my-orders')}
-                        >
-                            Мои заказы
-                        </li>
-                        <li
-                            className={`menu-item`}
-                            onClick={(e) => this.showTab(e, 'my-reviews')}
-                        >
-                            Мои отзывы
-                        </li>
-                        <li
-                            className={`menu-item`}
-                            onClick={(e) => this.showTab(e, 'my-saved')}
-                        >
-                            Моё избранное
-                        </li>*/}
                     </ol>
                 </div>
 
@@ -179,22 +190,25 @@ export default class ProfilePage extends Tarakan.Component {
                                     fieldName='Имя'
                                     value={`${this.state.name}`}
                                     onEnd={(ok, v) => this.handleChange("name", ok, v)}
-                                    validType={ValidTypes.NAME_VALID}
+                                    validType={ValidTypes.NameValid}
+                                    maxLength={20}
                                 />
 
                                 <TextField
                                     fieldName='Фамилия'
                                     value={`${this.state.surname}`}
-                                    onEnd={(ok, v) => this.handleChange("surname", ok, v)}
+                                    onEnd={(ok: any, v: any) => this.handleChange("surname", ok, v)}
+                                    maxLength={20}
                                 />
 
                                 <TextField
                                     fieldName='Телефон'
                                     value={`${this.state.phoneNumber ?? ""}`}
                                     disabled={"disabled"}
-                                    onEnd={(ok, v) => this.handleChange("phoneNumber", ok, v)}
+                                    onEnd={(ok: any, v: any) => this.handleChange("phoneNumber", ok, v)}
                                     validType={ValidTypes.TelephoneValid}
                                     title="+7**********"
+                                    maxLength={20}
                                 />
                                 <div style="display: flex; justify-content: space-between; align-items: center">
                                     <div>
@@ -224,7 +238,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     type="password"
                                     validType={ValidTypes.NotNullValid}
                                     value={`${this.state.oldPassword}`}
-                                    onEnd={(ok, v) => this.handleChange("oldPassword", ok, v)}
+                                    onEnd={(ok: any, v: any) => this.handleChange("oldPassword", ok, v)}
                                 />
 
                                 <TextField
@@ -233,7 +247,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     validType={ValidTypes.PasswordValid}
                                     type="password"
                                     value={`${this.state.password}`}
-                                    onEnd={(ok, v) => this.handleChange("password", ok, v)}
+                                    onEnd={(ok: any, v: any) => this.handleChange("password", ok, v)}
                                 />
                                 <TextField
                                     fieldName='Новый пароль ещё раз'
@@ -241,7 +255,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     validType={ValidTypes.PasswordValid}
                                     type="password"
                                     value={`${this.state.repeatPassword}`}
-                                    onEnd={(ok, v) => this.handleChange("repeatPassword", ok, v)}
+                                    onEnd={(ok: any, v: any) => this.handleChange("repeatPassword", ok, v)}
                                 />
                                 <div style="display: flex; justify-content: space-between; align-items: center">
                                     <div>

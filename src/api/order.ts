@@ -18,6 +18,14 @@ interface OrderItem {
     quantity: number
 }
 
+interface Order {
+    id: string,
+    status: string,
+    price: number,
+    products: string[],
+    addressName: string,
+}
+
 export async function saveOrderLocal(order: BasketItem[]): Promise<AJAXErrors> {
     localStorage.setItem("order", JSON.stringify(order.map((basketItem) => ({
         productId: basketItem.productId,
@@ -59,6 +67,33 @@ export async function calculateOrderParams(): Promise<{ code: AJAXErrors, parame
     }
 
     return { code: AJAXErrors.NoError, parametres: parametres };
+}
+
+export async function getAllOrders(): Promise<{ orders?: Order[], code: AJAXErrors }> {
+    const response = await ajax.get("orders");
+
+    if (response.error) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    if (response.result.status == 401) {
+        return { code: AJAXErrors.NoError, orders: [] };
+    }
+
+    if (!response.result.ok) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    const rawData = await response.result.json();
+    const orders = rawData.orders.map((order: any) => ({
+        id: order.id,
+        status: order.status,
+        price: order.totalDiscountPrice,
+        products: order.products.map((product: any) => product.ProductImageURL),
+        addressName: order.address.AddressString
+    }));
+
+    return { code: AJAXErrors.NoError, orders: orders };
 }
 
 export async function sendOrder(parametres: OrderPlacingParametres): Promise<AJAXErrors> {

@@ -8,7 +8,7 @@ interface UserAddress {
     coordinate: string,
 }
 
-export async function getUserAddresses(email: string, password: string): Promise<{ code: AJAXErrors, addresses?: UserAddress[] }> {
+export async function getUserAddresses(): Promise<{ code: AJAXErrors, addresses?: UserAddress[] }> {
     const response = await ajax.get("addresses");
 
     if (response.error) {

@@ -71,9 +71,9 @@ export default class CategoryPage extends Tarakan.Component {
     render(props, router) {
         return <div className="container">
             <Header/>
-            <main className="category-page flex column">
-                <h1 className="h-reset main-h1">{this.state.category.name ?? "Товары"}</h1>
-                <div className="cards-container">
+            <main className="category-page category-page_flex category-page_flex_column">
+                <h1 className="h-reset category-page__main-h1">{this.state.category.name ?? "Товары"}</h1>
+                <div className="category-page__cards-container">
                     {
                         this.state.products.map((item) =>
                         <ProductCard
