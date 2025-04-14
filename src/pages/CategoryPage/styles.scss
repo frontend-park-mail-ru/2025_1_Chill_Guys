@@ -6,21 +6,21 @@
   border-radius: 12px;
   padding: 14px;
 
-  .flex {
+  &_flex {
     display: flex;
-    &.column {
+    &_column {
       flex-direction: column;
     }
   }
 
-  .main-h1 {
+  &__main-h1 {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 24px;
     padding-top: 14px;
   }
 
-  .cards-container {
+  &__cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     max-width: 100%;
