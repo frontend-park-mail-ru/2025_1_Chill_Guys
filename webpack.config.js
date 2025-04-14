@@ -1,5 +1,4 @@
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path, { dirname } from "path";
 
 const __dirname = dirname("./");
@@ -24,18 +23,19 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(png|jpg|svg?)$/i,
+                test: /\.(png|jpg?)$/i,
                 type: 'asset/resource',
-                generator: {
-                    filename: 'images/[name][ext][query]',
-                }
             },
             {
                 test: /\.(eot|ttf|woff2?)$/i,
                 type: 'asset/resource',
-                generator: {
-                    filename: 'fonts/[name][ext][query]',
-                }
+            },
+            {
+                test: /\.(png|jpg|svg?)$/i,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'images',
+                },
             },
             {
                 test: /\.(s(a|c)ss)$/,
@@ -46,7 +46,7 @@ export default {
                 loader: "css-loader",
             },
             {
-                test: /\.ts$/,
+                test: /\.(ts|tsx)$/,
                 use: ['babel-loader', "ts-loader"]
             },
             {

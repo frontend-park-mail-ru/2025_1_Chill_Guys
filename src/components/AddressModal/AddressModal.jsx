@@ -1,15 +1,16 @@
-import Tarakan from "../../../modules/tarakan.js";
-import Form from "../Form/Form.jsx";
-import TextField from "../TextField/TextField.jsx";
+import Tarakan from "bazaar-tarakan";
+import TextField from "../TextField/TextField";
 import "./styles.scss";
 
 import crossIcon from "../../shared/images/cross-ico.svg";
 import loadingIcon from "../../shared/images/loading-ico.svg";
 
-import Button from "../Button/Button.jsx";
-import { VALID_TYPES } from "../../../modules/validation.js";
-import ajax from "../../../modules/ajax.js";
+import Button from "../Button/Button";
+import { ValidTypes } from "bazaar-validation";
+import ajax from "bazaar-ajax";
 import { GEOPIFY_KEY } from "../../settings.js";
+import { saveAddress } from "../../api/address";
+import { AJAXErrors } from "../../api/errors";
 
 class AddressModal extends Tarakan.Component {
     state = {
@@ -18,12 +19,11 @@ class AddressModal extends Tarakan.Component {
         searchResult: null,
         selectedResult: -1,
         form: {
-            name: "Адрес 1",
-            city: "Батагай",
-            street: "Октябрьская",
-            house: "32",
-            housing: "-",
-            flat: "95"
+            name: "",
+            city: "",
+            street: "",
+            house: "",
+            flat: ""
         }
     }
 
@@ -35,7 +35,7 @@ class AddressModal extends Tarakan.Component {
                 country: "Russia",
                 city: address.city,
                 street: address.street,
-                housenumber: `${address.house}${address.housing != "-" ? ", корпус " + address.housing : ""}`,
+                housenumber: address.house,
             }).map(([K, E]) => `${K}=${encodeURIComponent(E)}`).join("&"),
             { origin: "https://api.geoapify.com", noCredentials: true },
         );
@@ -45,7 +45,7 @@ class AddressModal extends Tarakan.Component {
             this.setState({
                 searching: false,
                 selectedResult: -1,
-                searchResult: responseData.features.filter((E) =>
+                searchResult: (responseData.features ?? []).filter((E) =>
                     E.properties.result_type == "building" && E.properties.rank.importance != undefined
                 ).map((E) => ({
                     lat: E.properties.lat,
@@ -54,6 +54,7 @@ class AddressModal extends Tarakan.Component {
                     addressSurname: E.properties.address_line2,
                     address: E.properties.formatted,
                     importance: E.properties.rank.importance,
+                    rawData: E.properties,
                 })),
             })
         }
@@ -77,11 +78,19 @@ class AddressModal extends Tarakan.Component {
 
     async handleSave() {
         const address = this.state.searchResult[this.state.selectedResult];
-        this.props.onEnd({
-            id: parseInt(Math.random() * 100000),
-            name: this.state.form.name,
-            ...address,
-        });
+        const code = await saveAddress(
+            address.rawData.state,
+            address.rawData.city,
+            address.address,
+            `${address.lat},${address.log}`,
+            this.state.form.name
+        );
+
+        if (code === AJAXErrors.NoError) {
+            this.props.onEnd(true);
+        } else {
+            this.props.onEnd(false);
+        }
     }
 
     update(newPropes) {
@@ -90,74 +99,72 @@ class AddressModal extends Tarakan.Component {
 
     render(props) {
         return <div className={`address-modal${!props.opened ? " close" : ""}`}>
-            <div className="modal-shadow"></div>
+            <div className="address-modal__modal-shadow"></div>
             {
                 !this.state.searchResult
-                    ? <div className="modal-content">
-                        <div className="title">
+                    ? <div className="address-modal__modal-content">
+                        <div className="address-modal__modal-content__title">
                             <h2>Добавление нового адреса</h2>
-                            <img className="close-button" src={crossIcon} onClick={() => props.onClose && props.onClose()} />
+                            <img className="address-modal__modal-content__title__close-button" src={crossIcon} onClick={() => props.onClose && props.onClose()} />
                         </div>
                         <hr />
-                        <p className="description">
+                        <p className="address-modal__modal-content__description">
                             <TextField
-                                className="name"
+                                className="address-modal__modal-content__description__name"
                                 title="Название адреса"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
+                                validType={ValidTypes.NotNullValid}
                                 value={this.state.form.name}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("name", value)}
                             />
                             <TextField
-                                className="city"
+                                className="address-modal__modal-content__description__city"
                                 title="Город"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
+                                validType={ValidTypes.NotNullValid}
                                 value={this.state.form.city}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("city", value)}
                             />
                             <TextField
-                                className="street"
+                                className="address-modal__modal-content__description__street"
                                 title="Улица"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
+                                validType={ValidTypes.NotNullValid}
                                 value={this.state.form.street}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("street", value)}
                             />
                             <TextField
-                                className="house"
+                                className="address-modal__modal-content__description__house"
                                 title="Дом"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
+                                validType={ValidTypes.NotNullValid}
                                 value={this.state.form.house}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("house", value)}
                             />
                             <TextField
-                                className="housing"
-                                title="Корпус"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
-                                value={this.state.form.housing}
-                                onEnd={(ok, value) => this.handleUpdateForm("housing", value)}
-                            />
-                            <TextField
-                                className="flat"
+                                className="address-modal__modal-content__description__flat"
                                 title="Квартира"
-                                validType={VALID_TYPES.NOT_NULL_VALID}
+                                validType={ValidTypes.NotNullValid}
                                 value={this.state.form.flat}
+                                status={this.state.searching ? "success" : "default"}
                                 onEnd={(ok, value) => this.handleUpdateForm("flat", value)}
                             />
                         </p>
-                        <div className="actions">
-                            <Button className="save" title="Искать" onClick={() => this.handleSearch()} />
-                            {this.state.searching && <div className="loading">
+                        <div className="address-modal__modal-content__actions">
+                            <Button className="address-modal__modal__actions__save" title="Искать" onClick={() => this.handleSearch()} />
+                            {this.state.searching && <div className="address-modal__modal-content__actions__loading">
                                 <span>Поиск совпадений</span>
                                 <img src={loadingIcon} />
                             </div>}
                         </div>
                     </div>
-                    : <div className="modal-content">
-                        <div className="title">
+                    : <div className="address-modal__modal-content">
+                        <div className="address-modal__modal-content__title">
                             <h2>Добавление нового адреса</h2>
-                            <img className="close-button" src={crossIcon} onClick={() => props.onClose && props.onClose()} />
+                            <img className="address-modal__modal-content__title__close-button" src={crossIcon} onClick={() => props.onClose && props.onClose()} />
                         </div>
                         <hr />
-                        <p className="search-result">
+                        <p className="address-modal__modal-content__search-result">
                             {
                                 this.state.searchResult.length === 0
                                     ? <p>
@@ -165,7 +172,7 @@ class AddressModal extends Tarakan.Component {
                                     </p>
                                     : this.state.searchResult.map((result, I) =>
                                         <article
-                                            className={`card${I == this.state.selectedResult ? " selected" : ""}`}
+                                            className={`address-modal__modal-content__search-result__card${I == this.state.selectedResult ? " address-modal__modal-content__search-result__card_selected" : ""}`}
                                             onClick={() => this.setState({ selectedResult: I })}
                                         >
                                             <p className="name">
@@ -178,7 +185,7 @@ class AddressModal extends Tarakan.Component {
                                     )
                             }
                         </p>
-                        <div className="actions">
+                        <div className="address-modal__modal-content__actions">
                             <Button className="edit" variant="text" title="Ввести другой адрес" onClick={() => this.setState({ searchResult: null })} />
                             {this.state.selectedResult !== -1 && <Button className="edit" title="Сохранить" onClick={() => this.handleSave()} />}
                         </div>

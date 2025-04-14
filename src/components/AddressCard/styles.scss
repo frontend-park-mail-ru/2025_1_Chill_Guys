@@ -9,25 +9,25 @@
     width: 100%;
     cursor: pointer;
 
-    .icon {
+    &__icon {
         height: 40px;
     }
 
-    .description {
+    &__description {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
-        .title {
+        &__title {
             font-weight: bold;
         }
 
-        .address {
+        &__address {
             color: gray;
         }
     }
 
-    &.active {
+    &_active {
         outline: 2px solid var(--secondary-color);
     }
 }

@@ -6,19 +6,19 @@
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
 
-  &.light {
+  &_light {
     background-color: white;
   }
 
-  .footer-h4 {
+  &_h4 {
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 10px;
   }
 
-  .ico-column {
+  &__ico-column {
 
-    .logo {
+    &__logo {
       height: 48px;
       width: 123px;
 
@@ -28,17 +28,17 @@
     }
   }
 
-  .links-wrapper {
+  &__links-wrapper {
     display: grid;
     grid-template-rows: 1fr auto;
     row-gap: 32px;
 
-    .links-columns {
+    &__links-columns {
       gap: 30px;
       display: flex;
       justify-content: end;
 
-      .footer-list {
+      &__footer-list {
         display: flex;
         flex-direction: column;
         gap: 6px;
@@ -46,12 +46,12 @@
         font-size: 15px;
 
         li:hover {
-            cursor: pointer;
+          cursor: pointer;
         }
       }
     }
 
-    .all-right-reserved {
+    &__all-right-reserved {
       text-align: right;
       color: var(--dark-gray-text-color);
     }

@@ -1,4 +1,4 @@
-import { Store } from "../../modules/tarakan.js";
+import { Store } from "bazaar-tarakan";
 import { signIn, signUp } from "../api/auth.ts";
 import { AJAXErrors } from "../api/errors.ts";
 import { getMe } from "../api/user.ts";

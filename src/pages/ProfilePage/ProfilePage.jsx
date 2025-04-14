@@ -1,17 +1,25 @@
-import Tarakan from "../../../modules/tarakan.js";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
+import Tarakan from "bazaar-tarakan";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 import "./styles.scss";
-import ajax from "../../../modules/ajax.js";
-import { SERVER_URL } from "../../settings.js";
 
 import ProfilePicture from "../../shared/images/header-profile-ico.svg";
-import Button from "../../components/Button/Button.jsx";
-import TextField from "../../components/TextField/TextField.jsx";
+import Button from "../../components/Button/Button";
+import TextField from "../../components/TextField/TextField";
+import { getMe, updateMe, updatePassword } from "../../api/user";
+import { AJAXErrors } from "../../api/errors";
+import { ValidTypes } from "bazaar-validation";
 
 export default class ProfilePage extends Tarakan.Component {
-    state = {}
+    state = {
+        errors: {},
+        oldPassword: "",
+        password: "",
+        repeatPassword: "",
+        successData: false,
+        successPassword: false
+    }
 
     init(props) {
         this.fetchProfileInfo();
@@ -44,17 +52,57 @@ export default class ProfilePage extends Tarakan.Component {
     }
 
     async fetchProfileInfo() {
-        const response = await ajax.get('api/users/me', { origin: SERVER_URL });
+        const response = await getMe();
 
-        if (!response.error) {
-            const data = await response.result.json();
+        if (response.code === AJAXErrors.NoError) {
             this.setState({
-                name: data.name,
-                surname: data.surname,
-                avatarURL: data.imageURL,
-                email: data.email,
-                phone_number: data.phoneNumber,
+                name: response.data.name,
+                surname: response.data.surname,
+                avatarURL: response.data.imageURL,
+                email: response.data.email,
+                phoneNumber: response.data.phoneNumber,
             });
+        }
+    }
+
+    handleChange(key, ok, v) {
+        if (ok) {
+            if (this.state.errors[key]) {
+                delete this.state.errors[key];
+            }
+        } else {
+            this.setState({ errors: { ...this.state.errors, [key]: true } });
+        }
+        this.setState({
+            [key]: v,
+            successData: false,
+            successPassword: false
+        });
+    }
+
+    async handleSaveData() {
+        const code = await updateMe(this.state.name, this.state.surname, this.state.phoneNumber);
+        if (code === AJAXErrors.NoError) {
+            this.setState({ successData: true });
+        }
+    }
+
+    async handleSavePassword() {
+        if (this.state.errors.notRepeatPassword) delete this.state.errors.notRepeatPassword;
+        if (this.state.errors.wrongPassword) delete this.state.errors.wrongPassword;
+
+        if (this.state.password != this.state.repeatPassword) {
+            this.setState({ errors: { ...this.state.errors, notRepeatPassword: true } });
+            return;
+        }
+
+        const code = await updatePassword(this.state.oldPassword, this.state.password);
+        if (code === AJAXErrors.WrongPassword) {
+            this.setState({ errors: { ...this.state.errors, wrongPassword: true } });
+        }
+
+        if (code === AJAXErrors.NoError) {
+            this.setState({ successPassword: true, wrongPassword: true });
         }
     }
 
@@ -79,7 +127,7 @@ export default class ProfilePage extends Tarakan.Component {
                         >
                             Мои данные
                         </li>
-                        <li
+                        {/*<li
                             className={`menu-item`}
                             onClick={(e) => this.showTab(e, 'my-orders')}
                         >
@@ -96,7 +144,7 @@ export default class ProfilePage extends Tarakan.Component {
                             onClick={(e) => this.showTab(e, 'my-saved')}
                         >
                             Моё избранное
-                        </li>
+                        </li>*/}
                     </ol>
                 </div>
 
@@ -113,48 +161,104 @@ export default class ProfilePage extends Tarakan.Component {
                             <div className={`fields-column`}>
                                 <TextField
                                     fieldName='Имя'
-                                    isDisabled={true}
                                     value={`${this.state.name}`}
+                                    onEnd={(ok, v) => this.handleChange("name", ok, v)}
+                                    validType={ValidTypes.NAME_VALID}
                                 />
 
                                 <TextField
                                     fieldName='Фамилия'
-                                    isDisabled={true}
                                     value={`${this.state.surname}`}
+                                    onEnd={(ok, v) => this.handleChange("surname", ok, v)}
                                 />
+
                                 <TextField
-                                    fieldName='Почта'
-                                    isDisabled={true}
-                                    value={`${this.state.email}`}
+                                    fieldName='Телефон'
+                                    value={`${this.state.phoneNumber ?? ""}`}
+                                    disabled={"disabled"}
+                                    onEnd={(ok, v) => this.handleChange("phoneNumber", ok, v)}
+                                    validType={ValidTypes.TelephoneValid}
+                                    title="+7**********"
                                 />
+                                <div style="display: flex; justify-content: space-between; align-items: center">
+                                    <div>
+                                        {
+                                            this.state.successData && <span style="color: green">
+                                                Данные обновлены
+                                            </span>
+                                        }
+                                    </div>
+                                    <Button
+                                        className={`save button-wrapper`}
+                                        disabled={(
+                                            this.state.errors.name
+                                            || this.state.errors.surname
+                                            || this.state.errors.phoneNumber
+                                        )}
+                                        title={'Сохранить данные'}
+                                        onClick={() => this.handleSaveData()}
+                                    />
+                                </div>
                             </div>
 
                             <div className={`fields-column`}>
                                 <TextField
                                     fieldName='Старый пароль'
-                                    isDisabled={true}
-                                    title={'***********'}
+                                    title={""}
+                                    type="password"
+                                    validType={ValidTypes.NotNullValid}
+                                    value={`${this.state.oldPassword}`}
+                                    onEnd={(ok, v) => this.handleChange("oldPassword", ok, v)}
                                 />
 
                                 <TextField
                                     fieldName='Новый пароль'
-                                    isDisabled={true}
+                                    title={""}
+                                    validType={ValidTypes.PasswordValid}
+                                    type="password"
+                                    value={`${this.state.password}`}
+                                    onEnd={(ok, v) => this.handleChange("password", ok, v)}
                                 />
                                 <TextField
                                     fieldName='Новый пароль ещё раз'
-                                    isDisabled={true}
+                                    title={""}
+                                    validType={ValidTypes.PasswordValid}
+                                    type="password"
+                                    value={`${this.state.repeatPassword}`}
+                                    onEnd={(ok, v) => this.handleChange("repeatPassword", ok, v)}
                                 />
+                                <div style="display: flex; justify-content: space-between; align-items: center">
+                                    <div>
+                                        {
+                                            this.state.errors.notRepeatPassword && <span style="color: red">
+                                                Пароли не совпадают!
+                                            </span>
+                                        }
+                                        {
+                                            this.state.errors.wrongPassword && <span style="color: red">
+                                                Неверный старый пароль!
+                                            </span>
+                                        }
+                                        {
+                                            this.state.successPassword && <span style="color: green">
+                                                Пароль обновлен
+                                            </span>
+                                        }
+                                    </div>
+                                    <Button
+                                        className={`save`}
+                                        title={'Изменить пароль'}
+                                        disabled={(
+                                            this.state.errors.password
+                                            || this.state.errors.repeatPassword
+                                            || this.state.errors.oldPassword
+                                        )}
+                                        onClick={() => this.handleSavePassword()}
+                                    />
+                                </div>
                             </div>
                         </div>
-
-                        <div className={`button-wrapper`}>
-                            <Button
-                                className={`save inactive`}
-                                title={'Сохранить'}
-                            />
-                        </div>
                     </div>
-
                 </div>
 
                 <div id='my-reviews' className={`tab`}>
@@ -174,9 +278,9 @@ export default class ProfilePage extends Tarakan.Component {
                     <p className={`help`}>Здесь будет отображаться список Ваших заказов</p>
                     <div></div>
                 </div>
-            </main>
+            </main >
 
             <Footer />
-        </div>
+        </div >
     }
 }

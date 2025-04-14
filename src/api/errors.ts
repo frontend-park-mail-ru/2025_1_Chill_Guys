@@ -6,7 +6,15 @@ export enum AJAXErrors {
     NoUser,
     UserAlreadyExists,
     Unauthorized,
+    WrongPassword,
+
+    // Product
+    NoProduct,
 
     // Basket
-    ProductQualityLimitOut
+    ProductQualityLimitOut,
+
+    // Order
+    NoOrder,
+    InvalidOrder
 };

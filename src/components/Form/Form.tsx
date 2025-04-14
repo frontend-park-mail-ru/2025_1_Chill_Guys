@@ -1,16 +1,14 @@
-import Tarakan from "../../../modules/tarakan.js";
-import validate from "../../../modules/validation.js";
-import TextField from "../TextField/TextField.jsx";
-import "./styles.scss";
-
+import Tarakan from "bazaar-tarakan";
+import validate from "bazaar-validation";
+import TextField from "../TextField/TextField";
 class Form extends Tarakan.Component {
 
     deepProps = ["form"];
 
-    init(initProps) {
+    init(initProps: any) {
         const initForm = {};
 
-        initProps.form.forEach((field) => {
+        initProps.form.forEach((field: any) => {
             if (field.defaultValue !== "") {
                 initForm[field.id] = field.defaultValue;
             }
@@ -24,7 +22,7 @@ class Form extends Tarakan.Component {
 
     validate() {
         let invalidField = "";
-        this.props.form.forEach((field, index) => {
+        this.props.form.forEach((field: any, index: any) => {
             const fieldOk = field.validType !== undefined ? validate(field.validType, this.state.form[field.id] ?? "") : true;
             if (!fieldOk) {
                 invalidField ||= field.id;
@@ -44,7 +42,7 @@ class Form extends Tarakan.Component {
         return invalidField === "" ? this.state.form : false;
     }
 
-    setFieldStatus(field, isInvalid) {
+    setFieldStatus(field: any, isInvalid: any) {
         this.setState({
             invalidFields: {
                 ...this.state.invalidFields,
@@ -53,15 +51,15 @@ class Form extends Tarakan.Component {
         });
     }
 
-    handleChange(event) {
+    handleChange(event: any) {
         this.setState({ value: event.target.value });
     }
 
-    handleFocus(field) {
+    handleFocus(field: any) {
         if (this.props.onFieldFocus) this.props.onFieldFocus(field);
     }
 
-    handleFieldEnd(id, isSuccess, fieldValue) {
+    handleFieldEnd(id: any, isSuccess: any, fieldValue: any) {
         this.setState({
             invalidFields: {
                 ...this.state.invalidFields,
@@ -74,7 +72,7 @@ class Form extends Tarakan.Component {
         }, true);
 
         let invalidField = "";
-        this.props.form.forEach((field) => {
+        this.props.form.forEach((field: any) => {
             const fieldOk = field.validType !== undefined ? validate(field.validType, this.state.form[field.id] ?? "") : true;
             if (!fieldOk && this.state.invalidFields[field.id] !== undefined) {
                 invalidField ||= field.id;
@@ -86,7 +84,7 @@ class Form extends Tarakan.Component {
     render(props) {
         const otherClasses = props.className ?? "";
         return <div className={`${otherClasses}`.trim()}>
-            {props.form.map((formField) =>
+            {props.form.map((formField: any) =>
                 <TextField
                     type={formField.type}
                     validType={formField.validType}
@@ -100,7 +98,7 @@ class Form extends Tarakan.Component {
                         ) : "default"
                     }
                     onFocus={() => this.handleFocus(formField.id)}
-                    onEnd={(isSuccess, fieldValue) => this.handleFieldEnd(formField.id, isSuccess, fieldValue)}
+                    onEnd={(isSuccess: any, fieldValue: any) => this.handleFieldEnd(formField.id, isSuccess, fieldValue)}
                 />
             )}
         </div>

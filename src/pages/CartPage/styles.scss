@@ -62,24 +62,13 @@
                             }
 
                             .price {
-                                margin-left: auto;
                                 display: flex;
-                                align-items: flex-start;
                                 column-gap: 8px;
+                                font-size: 16px;
+                                margin-left: auto;
 
-                                .now {
-                                    color: var(--sale-color);
-                                    font-size: 16px;
-                                }
-
-                                .old {
-                                    color: var(--light-gray-color);
-                                    font-size: 10px;
-                                }
-
-                                .discount {
-                                    color: var(--sale-color);
-                                    font-size: 10px;
+                                &.discount {
+                                    color: var(--positive);
                                 }
                             }
 
@@ -95,20 +84,25 @@
                                     font-size: 12px;
                                 }
 
+
                                 .count {
                                     background-color: lightgray;
+                                    width: 40px;
                                     color: black;
                                     height: 30px;
                                     display: flex;
                                     align-items: center;
+                                    justify-content: center;
                                     border-radius: 8px;
                                     padding: 7px 11px;
+                                    text-align: center;
                                 }
                             }
                         }
 
                         .manage {
                             display: flex;
+                            align-items: center;
                             column-gap: 8px;
 
                             .icon-btn {
@@ -121,6 +115,11 @@
                                 padding: 7px 11px;
                                 height: 30px;
                                 font-size: 12px;
+                            }
+
+                            .remainCount {
+                                font-size: 14px;
+                                color: gray;
                             }
                         }
                     }
@@ -150,6 +149,7 @@
                     display: flex;
                     justify-content: space-between;
                     margin-bottom: 8px;
+                    color: var(--positive);
 
                     .cost {
                         font-size: 16px;
