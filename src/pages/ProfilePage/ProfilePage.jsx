@@ -10,6 +10,7 @@ import TextField from "../../components/TextField/TextField";
 import { getMe, updateMe, updatePassword } from "../../api/user";
 import { AJAXErrors } from "../../api/errors";
 import { ValidTypes } from "bazaar-validation";
+import { logout } from "../../api/auth";
 
 export default class ProfilePage extends Tarakan.Component {
     state = {
@@ -106,6 +107,14 @@ export default class ProfilePage extends Tarakan.Component {
         }
     }
 
+    async handleLogout() {
+        const code = await logout();
+        if (code === AJAXErrors.NoError) {
+            this.app.store.user.sendAction("logout");
+            this.app.navigateTo("/");
+        }
+    }
+
     render(props, router) {
         return <div className={`container`}>
             <Header />
@@ -126,6 +135,13 @@ export default class ProfilePage extends Tarakan.Component {
                             onClick={(e) => this.showTab(e, 'personal-data')}
                         >
                             Мои данные
+                        </li>
+
+                        <li
+                            className={`menu-item error active`}
+                            onClick={(e) => this.handleLogout()}
+                        >
+                            Выйти из профиля
                         </li>
                         {/*<li
                             className={`menu-item`}
