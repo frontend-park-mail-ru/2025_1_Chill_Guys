@@ -33,6 +33,7 @@ class Header extends Tarakan.Component {
             savedIcon: HeaderSaved,
             profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
             authorized: this.app.store.user.value.login,
+            popUpDisplayed: false,
         }
         this.fetchCategories();
         this.subscribe("user", (name: string, newValue: any) => {
@@ -67,6 +68,7 @@ class Header extends Tarakan.Component {
                             <Button
                                 title={`${item.name}`}
                                 variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                onClick={() => {app.navigateTo(`/category/${item.id}`);}}
                             />
                         )
                     }
@@ -91,8 +93,12 @@ class Header extends Tarakan.Component {
                         iconAlt='Иконка каталога'
                         onClick={() => {
                             const popUp = document.getElementById("pop-up");
-                            popUp.style.display = "flex";
-                            console.log(`${popUp.style.display}`)
+                            if (this.state.popUpDisplayed) {
+                                popUp.style.display = "none";
+                            } else {
+                                popUp.style.display = "flex";
+                            }
+                            this.setState({popUpDisplayed: !this.state.popUpDisplayed});
                         }}
                     />
 

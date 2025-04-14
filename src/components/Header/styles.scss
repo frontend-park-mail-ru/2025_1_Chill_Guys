@@ -5,12 +5,15 @@
     position: relative;
 
     &__pop-up {
+        border-radius: 8px;
         background-color: var(--background);
         width: 100vw;
+        height: 100vh;
         margin: 0;
         display: none;
         z-index: 1;
         top: 100px;
+        left: 0;
         position: absolute;
         flex-direction: column;
         gap: 72px;
