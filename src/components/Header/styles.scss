@@ -32,10 +32,25 @@
         }
 
         &.secondary {
-            flex-direction: row-reverse;
+            flex-direction: row;
+            justify-content: space-between;
 
             .address-wrapper {
                 color: var(--secondary-color);
+            }
+
+            .categories-wrapper {
+                padding-left: 33px;
+                gap: 24px;
+                color: var(--dark-gray-text-color);
+                font-size: 16px;
+
+                span {
+                    &:hover {
+                        cursor: pointer;
+                        color: var(--black-color);
+                    }
+                }
             }
         }
     }

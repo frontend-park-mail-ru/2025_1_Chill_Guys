@@ -1,11 +1,9 @@
 import Tarakan from "../../../modules/tarakan.js";
-import ajax from "../../../modules/ajax.js";
 
-import Button, { BUTTON_VARIANT, ICON_POSITION } from "../Button/Button.jsx";
+import Button, {BUTTON_VARIANT, ICON_POSITION} from "../Button/Button.jsx";
 import TextField from "../TextField/TextField.jsx";
-import { BUTTON_SIZE } from "../Button/Button.jsx";
-import { TEXTFIELD_TYPES } from "../TextField/TextField.jsx";
-import { SERVER_URL } from "../../settings.js";
+import {BUTTON_SIZE} from "../Button/Button.jsx";
+import {TEXTFIELD_TYPES} from "../TextField/TextField.jsx";
 
 import "./styles.scss";
 
@@ -26,17 +24,23 @@ import HeaderProfileHover from "../../shared/images/header-profile-ico-hover.svg
 
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
+import { getAllCategories } from "../../api/categories";
+import { AJAXErrors } from "../../api/errors";
 
 class Header extends Tarakan.Component {
+    state = {
+        categories: [],
+    }
+
     init() {
-        this.state = {
+        this.setState({
             ordersIcon: HeaderOrders,
             cartIcon: HeaderCart,
             savedIcon: HeaderSaved,
             profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
             authorized: this.app.store.user.value.login,
-        }
-
+        });
+        this.fetchCategories();
         this.subscribe("user", (name, newValue) => {
             if (name === "login") {
                 this.setState({
@@ -45,6 +49,18 @@ class Header extends Tarakan.Component {
                 });
             }
         });
+    }
+
+    async fetchCategories() {
+        const response = await getAllCategories();
+        if (response.code === AJAXErrors.NoError) {
+            this.setState({
+                categories: response.data.categories.map((category) => ({
+                    id: category.id,
+                    name: category.name,
+                }))
+            });
+        }
     }
 
     render(props, app) {
@@ -94,10 +110,10 @@ class Header extends Tarakan.Component {
                             iconSrc={`${this.state.ordersIcon}`}
                             iconAlt='Иконка заказов'
                             onMouseOver={() => {
-                                this.setState({ ordersIcon: HeaderOrdersHover })
+                                this.setState({ordersIcon: HeaderOrdersHover})
                             }}
                             onMouseLeave={() => {
-                                this.setState({ ordersIcon: HeaderOrders })
+                                this.setState({ordersIcon: HeaderOrders})
                             }}
                             onClick={() => {
                                 console.log('Открываю заказы');
@@ -116,10 +132,10 @@ class Header extends Tarakan.Component {
                             iconSrc={`${this.state.savedIcon}`}
                             iconAlt='Иконка сердечко'
                             onMouseOver={() => {
-                                this.setState({ savedIcon: HeaderSavedHover })
+                                this.setState({savedIcon: HeaderSavedHover})
                             }}
                             onMouseLeave={() => {
-                                this.setState({ savedIcon: HeaderSaved })
+                                this.setState({savedIcon: HeaderSaved})
                             }}
                             onClick={() => {
                                 console.log('Открываю избранное');
@@ -134,10 +150,10 @@ class Header extends Tarakan.Component {
                         iconSrc={`${this.state.cartIcon}`}
                         iconAlt='Иконка корзины'
                         onMouseOver={() => {
-                            this.setState({ cartIcon: HeaderCartHover })
+                            this.setState({cartIcon: HeaderCartHover})
                         }}
                         onMouseLeave={() => {
-                            this.setState({ cartIcon: HeaderCart })
+                            this.setState({cartIcon: HeaderCart})
                         }}
                         onClick={() => {
                             app.navigateTo("/cart");
@@ -155,16 +171,16 @@ class Header extends Tarakan.Component {
                             console.log('profile mouse over');
                             console.log(this.state.authorized);
                             if (this.state.authorized) {
-                                this.setState({ profileIcon: HeaderProfileHover });
+                                this.setState({profileIcon: HeaderProfileHover});
                             } else {
-                                this.setState({ profileIcon: HeaderLoginHover });
+                                this.setState({profileIcon: HeaderLoginHover});
                             }
                         }}
                         onMouseLeave={() => {
                             if (this.state.authorized) {
-                                this.setState({ profileIcon: HeaderProfile });
+                                this.setState({profileIcon: HeaderProfile});
                             } else {
-                                this.setState({ profileIcon: HeaderLogin });
+                                this.setState({profileIcon: HeaderLogin});
                             }
                         }}
                         onClick={() => {
@@ -181,6 +197,15 @@ class Header extends Tarakan.Component {
             </div>
 
             <div className={`row flex secondary`}>
+                <div className={`flex categories-wrapper`}>
+                    {
+                        this.state.categories.map((category) =>
+                            <span>
+                                {category.name}
+                            </span>
+                        )
+                    }
+                </div>
                 <div className={`address-wrapper`}>
                     Улица Космонавтов 7
                 </div>
