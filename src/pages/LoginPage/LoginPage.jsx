@@ -1,13 +1,9 @@
-import ajax from "../../../modules/ajax.js";
-import Tarakan, { Reference } from "../../../modules/tarakan.js";
-import { VALID_TYPES } from "../../../modules/validation.js";
+import Tarakan, { Reference } from "bazaar-tarakan";
+import { ValidTypes } from "bazaar-validation";
 import { AJAXErrors } from "../../api/errors.ts";
-import Button from "../../components/Button/Button.jsx";
-import Form from "../../components/Form/Form.jsx";
-import { SERVER_URL } from "../../settings.js";
-
+import Button from "../../components/Button/Button";
+import Form from "../../components/Form/Form";
 import LogoIcon from "../../shared/images/LogoFull.svg";
-
 import "./styles.scss";
 
 class LoginPage extends Tarakan.Component {
@@ -92,15 +88,13 @@ class LoginPage extends Tarakan.Component {
                                     type: "email",
                                     id: "email",
                                     title: "Электронная почта",
-                                    defaultValue: "leon@leshak.ru",
-                                    validType: VALID_TYPES.EMAIL_VALID,
+                                    validType: ValidTypes.EmailValid,
                                 },
                                 {
                                     type: "password",
                                     id: "password",
                                     title: "Пароль",
-                                    defaultValue: "1234QWERTYa",
-                                    validType: VALID_TYPES.PASSWORD_VALID,
+                                    validType: ValidTypes.PasswordValid,
                                 },
                             ]}
                             onEnd={(key) => this.setState({ errorKey: key })}

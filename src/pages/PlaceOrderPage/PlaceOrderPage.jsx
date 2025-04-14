@@ -1,17 +1,16 @@
-import Tarakan from "../../../modules/tarakan";
-import Button from "../../components/Button/Button.jsx";
-import { SERVER_URL } from "../../settings";
+import Tarakan from "bazaar-tarakan";
+import Button from "../../components/Button/Button";
+
 import "./styles.scss";
 
-import ajax from "../../../modules/ajax.js";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import PaymentType from "../../components/PaymentType/PaymentType.jsx";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import PaymentType from "../../components/PaymentType/PaymentType";
 
 import spbIcon from "../../shared/images/cbp-ico.svg";
 import moneyIcon from "../../shared/images/money-ico.svg";
-import AddressCard from "../../components/AddressCard/AddressCard.jsx";
-import AddressModal from "../../components/AddressModal/AddressModal.jsx";
+import AddressCard from "../../components/AddressCard/AddressCard";
+import AddressModal from "../../components/AddressModal/AddressModal";
 
 import { AJAXErrors } from "../../api/errors";
 import { calculateOrderParams, sendOrder } from "../../api/order";
@@ -37,7 +36,7 @@ class PlaceOrderPage extends Tarakan.Component {
                 discount: parametres.discountPrice
             })
         } else {
-            this.app.navigateTo("/login");
+            this.app.navigateTo("/signin");
         }
     }
 
@@ -49,7 +48,7 @@ class PlaceOrderPage extends Tarakan.Component {
                 addresses: addresses,
             })
         } else {
-            this.app.navigateTo("/login");
+            this.app.navigateTo("/signin");
         }
     }
 

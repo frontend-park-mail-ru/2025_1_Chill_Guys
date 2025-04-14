@@ -1,10 +1,9 @@
-import Tarakan from "../../../modules/tarakan.js";
+import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
 
 import invalidIcon from "../../shared/images/textfield-invalid.svg";
 import successIcon from "../../shared/images/textfield-success.svg"
-import validate, { VALID_TYPES } from "../../../modules/validation.js";
-
+import validate, { ValidTypes } from "bazaar-validation";
 
 export const TEXTFIELD_TYPES = {
     SEARCH: "search",
@@ -21,7 +20,7 @@ export const TEXTFIELD_TYPES = {
 
 class TextField extends Tarakan.Component {
 
-    init(initProps) {
+    init(initProps: any) {
         this.state = {
             status: "default",
             value: initProps.value,
@@ -38,7 +37,7 @@ class TextField extends Tarakan.Component {
         if (this.props.onEnd) this.props.onEnd(dataOk, this.state.value);
     }
 
-    handleChange(event) {
+    handleChange(event: any) {
         this.setState({ value: event.target.value });
     }
 
@@ -46,7 +45,7 @@ class TextField extends Tarakan.Component {
         if (this.props.onFocus) this.props.onFocus();
     }
 
-    update(props) {
+    update(props: any) {
         if (props.value) {
             this.setState({ value: props.value }, true);
         }
@@ -55,7 +54,7 @@ class TextField extends Tarakan.Component {
         }
     }
 
-    render(props) {
+    render(props: any) {
         const type = props.type ?? TEXTFIELD_TYPES.TEXT;
         const placeholder = props.title ?? "Поле ввода";
         const defaultValue = props.value ?? "";
@@ -64,37 +63,37 @@ class TextField extends Tarakan.Component {
         const isDisabled = props.isDisabled ?? false;
 
         return title ?
-            <div className={`textField-title flex column ${otherClasses}`.trim()}>
-                {title && <h3 className={`h-reset title`}>{title}</h3>}
+            <div className={`textField_title ${otherClasses}`.trim()}>
+                {title && <h3 className="textField_title__title">{title}</h3>}
                 <div className="textField">
                     <input
-                        className={this.state.status}
+                        className={`textField__input textField__input_${this.state.status}`}
                         type={type}
                         placeholder={placeholder}
                         value={defaultValue}
                         disabled={isDisabled}
                         onFocus={() => this.handleFocus()}
-                        onChange={(event) => this.handleChange(event)}
+                        onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
                     />
                     {this.state.status !== "default" &&
-                        <img class="mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
+                        <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                     }
                 </div>
             </div>
-            : <div className={`textField flex column ${otherClasses}`.trim()}>
+            : <div className={`textField ${otherClasses}`.trim()}>
                 <input
-                    className={this.state.status}
+                    className={`textField__input textField__input_${this.state.status}`}
                     type={type}
                     placeholder={placeholder}
                     value={defaultValue}
                     disabled={isDisabled}
                     onFocus={() => this.handleFocus()}
-                    onChange={(event) => this.handleChange(event)}
+                    onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
                 />
                 {this.state.status !== "default" &&
-                    <img class="mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
+                    <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                 }
             </div>
 

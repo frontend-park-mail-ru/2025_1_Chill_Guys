@@ -16,7 +16,7 @@
         cursor: not-allowed;
     }
 
-    &.text {
+    &_text {
         color: var(--background-button-color);
         background-color: transparent;
         border: 1px solid transparent;
@@ -37,7 +37,7 @@
 
     }
 
-    &.primary {
+    &_primary {
         border: 1px solid var(--background-button-color);
         background-color: var(--background-button-color);
 
@@ -59,7 +59,7 @@
         }
     }
 
-    &.transparent {
+    &_transparent {
         color: var(--dark-gray-text-color);
         border: none;
         background: none;
@@ -73,45 +73,45 @@
         }
     }
 
-    &.sm_size {
+    &_sm_size {
         font-size: var(--button-xs-font-size);
         height: var(--button-xs-height);
     }
 
-    &.s_size {
+    &_s_size {
         font-size: var(--button-s-font-size);
         height: var(--button-s-height);
     }
 
-    &.m_size {
+    &_m_size {
         font-size: var(--button-m-font-size);
         height: var(--button-m-height);
     }
 
-    &.l_size {
+    &_l_size {
         font-size: var(--button-l-font-size);
         height: var(--button-l-height);
     }
 
-    &.top {
+    &_top {
         flex-direction: column;
     }
 
-    &.bottom {
+    &_bottom {
         flex-direction: column-reverse;
     }
 
-    &.left {
+    &_left {
         flex-direction: row;
     }
 
-    &.right {
+    &_right {
         flex-direction: row-reverse;
     }
 }
 
 .icon {
-    &.l_size {
+    &_l_size {
         width: 24px;
         height: 24px;
     }

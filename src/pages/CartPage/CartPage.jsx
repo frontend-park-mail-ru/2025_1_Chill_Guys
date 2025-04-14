@@ -1,23 +1,19 @@
-import Tarakan from "../../../modules/tarakan";
-import Button from "../../components/Button/Button.jsx";
-// import { SERVER_URL } from "../../settings";
+import Tarakan from "bazaar-tarakan";
+
 import "./styles.scss";
 
 import cartBuyIcon from "../../shared/images/cart-buy-ico.svg";
-import cartLoveIcon from "../../shared/images/cart-love-ico.svg";
 import cartRemoveIcon from "../../shared/images/cart-remove-ico.svg";
-
 import cartAddIcon from "../../shared/images/cart-add-ico.svg";
 import cartSubIcon from "../../shared/images/cart-sub-ico.svg";
-// import ajax from "../../../modules/ajax.js";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
 
-import { getBasket, removeFromBasket, updateProductQuantity } from "../../api/basket";
+import Button from "../../components/Button/Button";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 import { AJAXErrors } from "../../api/errors";
+import { getBasket, removeFromBasket, updateProductQuantity } from "../../api/basket";
 import { saveOrderLocal } from "../../api/order";
-import { SERVER_URL } from "../../settings";
 
 class CartPage extends Tarakan.Component {
 
@@ -40,7 +36,7 @@ class CartPage extends Tarakan.Component {
         }
 
         if (response.code === AJAXErrors.Unauthorized) {
-            this.app.navigateTo("/login");
+            this.app.navigateTo("/signin");
         }
     }
 

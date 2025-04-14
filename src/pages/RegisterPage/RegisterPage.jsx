@@ -1,10 +1,9 @@
-import ajax from "../../../modules/ajax.js";
-import Tarakan, { Reference } from "../../../modules/tarakan.js";
-import { VALID_TYPES } from "../../../modules/validation.js";
+import Tarakan, { Reference } from "bazaar-tarakan";
+import { ValidTypes } from "bazaar-validation";
 import { AJAXErrors } from "../../api/errors.ts";
-import Button from "../../components/Button/Button.jsx";
-import Form from "../../components/Form/Form.jsx";
-import { SERVER_URL } from "../../settings.js";
+import Button from "../../components/Button/Button";
+import Form from "../../components/Form/Form";
+
 
 import LogoIcon from "../../shared/images/LogoFull.svg";
 
@@ -123,7 +122,7 @@ class RegisterPage extends Tarakan.Component {
                                     type: "text",
                                     id: "name",
                                     title: "Имя",
-                                    validType: VALID_TYPES.NAME_VALID,
+                                    validType: ValidTypes.NameValid,
                                 },
                                 {
                                     type: "text",
@@ -134,19 +133,19 @@ class RegisterPage extends Tarakan.Component {
                                     type: "email",
                                     id: "email",
                                     title: "Электронная почта",
-                                    validType: VALID_TYPES.EMAIL_VALID,
+                                    validType: ValidTypes.EmailValid,
                                 },
                                 {
                                     type: "password",
                                     id: "password",
                                     title: "Пароль",
-                                    validType: VALID_TYPES.PASSWORD_VALID,
+                                    validType: ValidTypes.PasswordValid,
                                 },
                                 {
                                     type: "password",
                                     id: "repeatPassword",
                                     title: "Повторите пароль",
-                                    validType: VALID_TYPES.PASSWORD_VALID,
+                                    validType: ValidTypes.PasswordValid,
                                 },
                             ]}
                             onFieldFocus={(field) => this.handleFieldFocus(field)}

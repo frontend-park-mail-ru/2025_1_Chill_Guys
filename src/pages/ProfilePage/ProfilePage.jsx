@@ -1,24 +1,22 @@
-import Tarakan from "../../../modules/tarakan.js";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
+import Tarakan from "bazaar-tarakan";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 import "./styles.scss";
-import ajax from "../../../modules/ajax.js";
-import { SERVER_URL } from "../../settings.js";
 
 import ProfilePicture from "../../shared/images/header-profile-ico.svg";
-import Button from "../../components/Button/Button.jsx";
-import TextField from "../../components/TextField/TextField.jsx";
+import Button from "../../components/Button/Button";
+import TextField from "../../components/TextField/TextField";
 import { getMe, updateMe, updatePassword } from "../../api/user";
 import { AJAXErrors } from "../../api/errors";
-import { VALID_TYPES } from "../../../modules/validation.js";
+import { ValidTypes } from "bazaar-validation";
 
 export default class ProfilePage extends Tarakan.Component {
     state = {
         errors: {},
-        oldPassword: "1234qwertyA",
-        password: "1234ABCDqwerty",
-        repeatPassword: "1234ABCDqwert",
+        oldPassword: "",
+        password: "",
+        repeatPassword: "",
         successData: false,
         successPassword: false
     }
@@ -165,7 +163,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     fieldName='Имя'
                                     value={`${this.state.name}`}
                                     onEnd={(ok, v) => this.handleChange("name", ok, v)}
-                                    validType={VALID_TYPES.NAME_VALID}
+                                    validType={ValidTypes.NAME_VALID}
                                 />
 
                                 <TextField
@@ -179,7 +177,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     value={`${this.state.phoneNumber ?? ""}`}
                                     disabled={"disabled"}
                                     onEnd={(ok, v) => this.handleChange("phoneNumber", ok, v)}
-                                    validType={VALID_TYPES.TELEPHONE_VALID}
+                                    validType={ValidTypes.TelephoneValid}
                                     title="+7**********"
                                 />
                                 <div style="display: flex; justify-content: space-between; align-items: center">
@@ -208,7 +206,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     fieldName='Старый пароль'
                                     title={""}
                                     type="password"
-                                    validType={VALID_TYPES.NOT_NULL_VALID}
+                                    validType={ValidTypes.NotNullValid}
                                     value={`${this.state.oldPassword}`}
                                     onEnd={(ok, v) => this.handleChange("oldPassword", ok, v)}
                                 />
@@ -216,7 +214,7 @@ export default class ProfilePage extends Tarakan.Component {
                                 <TextField
                                     fieldName='Новый пароль'
                                     title={""}
-                                    validType={VALID_TYPES.PASSWORD_VALID}
+                                    validType={ValidTypes.PasswordValid}
                                     type="password"
                                     value={`${this.state.password}`}
                                     onEnd={(ok, v) => this.handleChange("password", ok, v)}
@@ -224,7 +222,7 @@ export default class ProfilePage extends Tarakan.Component {
                                 <TextField
                                     fieldName='Новый пароль ещё раз'
                                     title={""}
-                                    validType={VALID_TYPES.PASSWORD_VALID}
+                                    validType={ValidTypes.PasswordValid}
                                     type="password"
                                     value={`${this.state.repeatPassword}`}
                                     onEnd={(ok, v) => this.handleChange("repeatPassword", ok, v)}

@@ -19,11 +19,11 @@
     justify-content: center;
     overflow: hidden;
 
-    &.close {
+    &_close {
         display: none;
     }
 
-    .modal-content {
+    &__modal-content {
         z-index: 2;
         background-color: white;
         border-radius: 16px;
@@ -33,12 +33,12 @@
         flex-direction: column;
         row-gap: 16px;
 
-        .title {
+        &__title {
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            .close-button {
+            &__close-button {
                 height: 20px;
                 cursor: pointer;
             }
@@ -48,33 +48,33 @@
             border: 1px solid lightgray;
         }
 
-        .description {
+        &__description {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
 
-            .name {
+            &__name {
                 grid-column-start: 1;
                 grid-column-end: 4;
             }
 
-            .city {
+            &__city {
                 grid-column-start: 1;
                 grid-column-end: 4;
             }
 
-            .street {
+            &__street {
                 grid-column-start: 1;
                 grid-column-end: 4;
             }
 
-            .house {
+            &__house {
                 grid-column-start: 1;
                 grid-column-end: 3;
             }
         }
 
-        .search-result {
+        &__search-result {
             display: flex;
             flex-direction: column;
             row-gap: 12px;
@@ -82,29 +82,29 @@
             max-height: 300px;
             overflow: scroll;
 
-            .card {
+            &__card {
                 width: 100%;
                 border-radius: 8px;
                 padding: 16px;
                 background-color: whitesmoke;
                 border: 2px solid whitesmoke;
 
-                &.selected {
+                &_selected {
                     border: 2px solid var(--secondary-color);
                 }
 
-                .surname {
+                &__surname {
                     color: gray;
                 }
             }
         }
 
-        .actions {
+        &__actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
 
-            .loading {
+            &__loading {
                 display: flex;
                 column-gap: 16px;
                 font-size: 20px;
@@ -125,7 +125,7 @@
         }
     }
 
-    .modal-shadow {
+    &__modal-shadow {
         position: fixed;
         top: 0;
         left: 0;

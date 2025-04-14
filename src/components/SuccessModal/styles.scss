@@ -9,7 +9,7 @@
     justify-content: center;
     overflow: hidden;
 
-    .modal-content {
+    &__modal-content {
         background-color: white;
         z-index: 2;
         padding: 16px;
@@ -22,7 +22,7 @@
         align-items: center;
     }
 
-    .modal-shadow {
+    &__modal-shadow {
         position: fixed;
         top: 0;
         left: 0;

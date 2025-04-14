@@ -1,11 +1,10 @@
-import Tarakan from "../../../modules/tarakan.js";
-import Button, { BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION } from "../Button/Button.jsx";
+import Tarakan from "bazaar-tarakan";
+import Button, { BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION } from "../Button/Button";
 
 import CardButtonIcon from "../../shared/images/productCard-cart-ico.svg";
+import StarIcon from "../../shared/images/productCard-star-ico.svg";
 
 import "./styles.scss";
-import { SERVER_URL } from "../../settings.js";
-import ajax from "../../../modules/ajax.js";
 import { addToBasket } from "../../api/basket";
 import { AJAXErrors } from "../../api/errors";
 
@@ -15,11 +14,11 @@ class ProductCard extends Tarakan.Component {
         isInCart: false,
     }
 
-    init(props) {
+    init(props: any) {
         this.state.isInCart = props.inCart;
     }
 
-    async handleAddToCart(itemId) {
+    async handleAddToCart(itemId: any) {
         const code = await addToBasket(itemId);
 
         if (code === AJAXErrors.NoError) {
@@ -27,59 +26,60 @@ class ProductCard extends Tarakan.Component {
         }
     }
 
-    render(props, router) {
+    render(props: any, router: any) {
         return <article className={`product-card flex column`}>
-            <div className={`carousel-images`}>
-                <div className={`active-image-wrapper`}>
+            <div className={`product-card__carousel-images`}>
+                <div className={`product-card__carousel-images__active-image-wrapper`}>
                     <img
-                        className={`card-image`}
+                        className={`product-card__carousel-images__active-image-wrapper__card-image`}
                         alt={`${props.mainImageAlt}`}
                         src={`${props.mainImageSrc}`}
                     />
                 </div>
 
-                <div className={`controls`}>
+                <div className={`product-card__carousel-images__controls`}>
                     ...
                 </div>
             </div>
 
-            <div className={`prices full-wide`}>
-                <div className={`sell-price`}>{props.discountPrice || props.price} ₽</div>
+            <div className={`product-card__prices full-wide`}>
+                <div className={`product-card__prices__sell-price`}>{props.discountPrice || props.price} ₽</div>
                 {
-                    props.discountPrice != 0 && <div className={`old-price`}>{props.price} ₽</div>
+                    props.discountPrice != 0 && <div className={`product-card__prices__old-price`}>{props.price} ₽</div>
                 }
                 {
-                    props.discountPrice != 0 && <div className={`sale-percentage`}>{parseInt((props.discountPrice - props.price) / props.price * 100)}%</div>
+                    props.discountPrice != 0 && <div className={`product-card__prices__sale-percentage`}>{`${((props.discountPrice - props.price) / props.price * 100) | 0}`}%</div>
                 }
             </div>
 
             {
                 props.brand
                 &&
-                <div className={`brand full-wide`}>
+                <div className={`product-card__brand full-wide`}>
                     {props.brand}
                 </div>
             }
 
-            <div className={`product-title full-wide`}>
+            <div className={`product-card__product-title full-wide`}>
                 {props.title}
             </div>
 
-            <div className={`reviews flex full-wide`}>
-                <div className={`star-block flex`}>
-                    <span className={`star-text`}>{props.rating}</span>
+            <div className={`product-card__reviews flex full-wide`}>
+                <div className={`product-card__reviews__star-block flex`}>
+                    <img className={`product-card__reviews__star-block__star-text`} src={StarIcon} />
+                    <span>{props.rating}</span>
                 </div>
-                <div className={`count-block`}>
+                <div className={`product-card__reviews__star-block__count-block`}>
                     {props.reviewsCount} отзывов
                 </div>
             </div>
 
-            <div className={`product-manip full-wide`}>
+            <div className={`product-card__reviews__star-block__product-manip full-wide`}>
                 <Button
                     size={`${BUTTON_SIZE.L}`}
                     variant={`${BUTTON_VARIANT.PRIMARY}`}
                     iconPosition={`${ICON_POSITION.LEFT}`}
-                    className={`full-wide ${this.state.isInCart ? 'in-cart-btn' : ''}`}
+                    className={`full-wide ${this.state.isInCart ? 'product-card__product-manip__in-cart-btn' : ''}`}
                     iconAlt={this.state.isInCart ? '' : `Иконка корзины`}
                     iconSrc={`${this.state.isInCart ? '' : CardButtonIcon}`}
                     title={this.state.isInCart ? 'В корзине' : 'В корзину'}

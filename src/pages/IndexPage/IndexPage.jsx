@@ -1,9 +1,7 @@
-import Tarakan from "../../../modules/tarakan";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
-import ajax from "../../../modules/ajax.js";
-import ProductCard from "../../components/ProductCard/ProductCard.jsx";
-import { SERVER_URL } from "../../settings.js";
+import Tarakan from "bazaar-tarakan";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import ProductCard from "../../components/ProductCard/ProductCard";
 
 import "./styles.scss";
 import { getProducts } from "../../api/product";

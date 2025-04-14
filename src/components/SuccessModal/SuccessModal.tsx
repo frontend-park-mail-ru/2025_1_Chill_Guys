@@ -1,4 +1,4 @@
-import Tarakan from "../../../modules/tarakan";
+import Tarakan from "bazaar-tarakan";
 import Button from "../Button/Button";
 
 import "./styles.scss";
@@ -8,14 +8,14 @@ class SuccessModal extends Tarakan.Component {
         opened: false
     }
 
-    update(newPropes) {
+    update(newPropes: any) {
         this.setState({ opened: newPropes.opened });
     }
 
-    render(props, app) {
+    render(props: any, app: any) {
         return <div className="success-modal">
-            <div className="modal-shadow"></div>
-            <div className="modal-content">
+            <div className="success-modal__modal-shadow"></div>
+            <div className="success-modal__modal-content">
                 <h2>Заказ успешно оформлен</h2>
                 <Button title="Вернутся на главную страницу" onClick={() => app.navigateTo("/")} />
             </div>
