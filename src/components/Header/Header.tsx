@@ -1,9 +1,7 @@
 import Tarakan from "bazaar-tarakan";
 
-import Button, {BUTTON_VARIANT, ICON_POSITION} from "../Button/Button";
-import TextField from "../TextField/TextField";
-import {BUTTON_SIZE} from "../Button/Button";
-import {TEXTFIELD_TYPES} from "../TextField/TextField";
+import Button, {BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION} from "../Button/Button";
+import TextField, {TEXTFIELD_TYPES} from "../TextField/TextField";
 
 import "./styles.scss";
 
@@ -28,18 +26,14 @@ import {getAllCategories} from "../../api/categories";
 import {AJAXErrors} from "../../api/errors";
 
 class Header extends Tarakan.Component {
-    state = {
-        categories: [],
-    }
-
     init() {
-        this.setState({
+        this.state = {
             ordersIcon: HeaderOrders,
             cartIcon: HeaderCart,
             savedIcon: HeaderSaved,
             profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
             authorized: this.app.store.user.value.login,
-        });
+        }
         this.fetchCategories();
         this.subscribe("user", (name: string, newValue: any) => {
             if (name === "login") {
@@ -55,10 +49,10 @@ class Header extends Tarakan.Component {
         const response = await getAllCategories();
         if (response.code === AJAXErrors.NoError) {
             this.setState({
-                categories: response.data.categories.map((category) => ({
-                    id: category.id,
-                    name: category.name,
-                }))
+                categories: response.data.categories.map((item) => ({
+                    id: item.id,
+                    name: item.name,
+                })).slice(0, 6)
             });
         }
     }
@@ -90,7 +84,7 @@ class Header extends Tarakan.Component {
                         <TextField
                             type={`${TEXTFIELD_TYPES.SEARCH}`}
                             title='Ищите что угодно на Bazaar'
-                            className={`width px400`}
+                            className={`width header__row_main__search-field-wrapper__px400`}
                         />
                     </div>
                 </div>
@@ -188,13 +182,14 @@ class Header extends Tarakan.Component {
                 </div>
             </div>
 
-            <div className={`row flex secondary`}>
-                <div className={`flex categories-wrapper`}>
+            <div className="header__secondary">
+                <div className={`categories-wrapper`}>
                     {
+                        this.state.categories &&
                         this.state.categories.map((category) =>
-                            <span>
-                                {category.name}
-                            </span>
+                        <span onClick={() => {console.log(`${category.name}`);}}>
+                            {category.name}
+                        </span>
                         )
                     }
                 </div>

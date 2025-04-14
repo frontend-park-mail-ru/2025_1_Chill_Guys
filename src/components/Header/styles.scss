@@ -35,19 +35,25 @@
             &__search-field-wrapper {
                 display: flex;
                 gap: 9px;
+
+                &__px400 {
+                    width: 400px;
+                }
             }
         }
     }
 
     &__secondary {
         display: flex;
-        flex-direction: row-reverse;
+        justify-content: space-between;
+        flex-direction: row;
 
         .address-wrapper {
             color: var(--secondary-color);
         }
 
         .categories-wrapper {
+            display: flex;
             padding-left: 33px;
             gap: 24px;
             color: var(--dark-gray-text-color);
