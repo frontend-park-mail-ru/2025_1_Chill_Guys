@@ -38,6 +38,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     async fetchProducts() {
+        console.log(this.app.urlParams.id);
         const productsResponse = await getProductsByCategory(this.app.urlParams.id);
         const basketResponse = await getBasket();
 

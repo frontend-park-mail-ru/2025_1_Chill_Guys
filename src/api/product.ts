@@ -86,8 +86,8 @@ export function getProductImagePath(product: Product): string {
     return `cover/files/${product.id}`;
 }
 
-export async function getProductsByCategory(category: Category): Promise<{ code: AJAXErrors, products ?: Product[] }> {
-    const response = await ajax.get(`products/category/${category.id}`);
+export async function getProductsByCategory(id: number): Promise<{ code: AJAXErrors, products ?: Product[] }> {
+    const response = await ajax.get(`products/category/${id}`);
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };
