@@ -100,26 +100,26 @@ class CartPage extends Tarakan.Component {
             <main>
                 <h1>Моя корзина</h1>
                 <div className="content">
-                    <div className="list">
+                    <div className="content__list">
                         {this.state.items.map((item, index) =>
-                            <article className="item">
-                                <img className="cover" src={item.productImage} />
-                                <div className="description">
-                                    <div className="title">
-                                        <div className="name">{item.productName}</div>
-                                        <div className={`price${(item.productPrice - item.priceDiscount) != 0 ? " discount" : ""}`}>
-                                            <span className="now">{item.priceDiscount} ₽</span>
-                                            {(item.productPrice - item.priceDiscount) != 0 && <span className="discount">
+                            <article className="content__list__item">
+                                <img className="content__list__item__cover" src={item.productImage} />
+                                <div className="content__list__item__description">
+                                    <div className="content__list__item__description__title">
+                                        <div className="content__list__item__description__title__name">{item.productName}</div>
+                                        <div className={`content__list__item__description__title__price${(item.productPrice - item.priceDiscount) != 0 ? " content__list__item__description__title__price_discount" : ""}`}>
+                                            <span className="">{item.priceDiscount} ₽</span>
+                                            {(item.productPrice - item.priceDiscount) != 0 && <span className="content__list__item__description__title__price_discount">
                                                 ({-parseInt((item.productPrice - item.priceDiscount) / item.productPrice * 100)}%)
                                             </span>}
                                         </div>
-                                        <div className="actions">
+                                        <div className="content__list__item__description__title__actions">
                                             <Button
                                                 size="s"
                                                 iconSrc={cartSubIcon}
                                                 onClick={() => this.handleUpdateQuantity(index, -1)}
                                             />
-                                            <span className="count">
+                                            <span className="content__list__item__description__title__actions__count">
                                                 {item.quantity}
                                             </span>
                                             <Button
@@ -130,20 +130,20 @@ class CartPage extends Tarakan.Component {
                                             />
                                         </div>
                                     </div>
-                                    <div className="manage">
+                                    <div className="content__list__item__description__manage">
                                         <Button
-                                            className="icon-btn"
+                                            className="content__list__item__description__manage__icon-btn"
                                             size="s"
                                             iconSrc={cartRemoveIcon}
                                             onClick={() => this.handleDelete(index)}
                                         />
                                         <Button
-                                            className="btn"
+                                            className="content__list__item__description__manage__btn"
                                             title="Купить"
                                             size="s"
                                             iconSrc={cartBuyIcon}
                                             onClick={() => this.handleSaveOneProductToBasket(index)} />
-                                        <div className="remainCount">
+                                        <div className="content__list__item__description__manage__remainCount">
                                             Осталось {item.remainQuantity} шт
                                         </div>
                                     </div>
@@ -156,23 +156,23 @@ class CartPage extends Tarakan.Component {
                             </div>
                         }
                     </div>
-                    <div className="total">
+                    <div className="content__total">
                         <Button
-                            className="make-order"
+                            className="content__total__make-order"
                             title="Оформление заказа"
                             onClick={() => this.handleSaveFullBasket()}
                             disabled={this.state.items.length == 0}
                         />
-                        <div className="comment">
+                        <div className="content__total__comment">
                             Способы оплаты и доставки будут доступны на следующем шаге
                         </div>
-                        <div className="discount">
+                        <div className="content__total__discount">
                             <span>Скидка:</span>
-                            <span className="cost">{this.state.total - this.state.discount} ₽</span>
+                            <span className="content__total__discount__cost">{this.state.total - this.state.discount} ₽</span>
                         </div>
-                        <div className="sum-cost">
+                        <div className="content__total__sum-cost">
                             <span>Итог:</span>
-                            <span className="cost">{this.state.discount} ₽</span>
+                            <span className="content__total__discount__cost">{this.state.discount} ₽</span>
                         </div>
                     </div>
                 </div>
