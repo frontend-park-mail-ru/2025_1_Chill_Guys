@@ -1,6 +1,6 @@
 import Tarakan, { Reference } from "bazaar-tarakan";
 import { ValidTypes } from "bazaar-validation";
-import { AJAXErrors } from "../../api/errors.ts";
+import { AJAXErrors } from "../../api/errors";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
 
@@ -55,7 +55,7 @@ class RegisterPage extends Tarakan.Component {
                 <div className="reg-page__content">
                     <div className="reg-page__content__title">
                         <div>
-                            <img className="reg-page__content__title__icon" src={LogoIcon} alt="Логотип Базара"/>
+                            <img className="reg-page__content__title__icon" src={LogoIcon} alt="Логотип Базара" />
                             <div className="reg-page__content__title__header">
                                 <h1 className="reg-page__content__title__header__h1">Регистрация</h1>
                                 <div className="reg-page__content__title__header__comment">Заполните основную информацию о себе</div>

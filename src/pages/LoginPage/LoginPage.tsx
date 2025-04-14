@@ -1,13 +1,13 @@
 import Tarakan, { Reference } from "bazaar-tarakan";
 import { ValidTypes } from "bazaar-validation";
-import { AJAXErrors } from "../../api/errors.ts";
+import { AJAXErrors } from "../../api/errors";
 import Button from "../../components/Button/Button";
 import Form from "../../components/Form/Form";
 import LogoIcon from "../../shared/images/LogoFull.svg";
 import "./styles.scss";
 
 class LoginPage extends Tarakan.Component {
-    state = {
+    state: any = {
         errorKey: "",
         formRef: new Reference(),
     }
@@ -99,7 +99,7 @@ class LoginPage extends Tarakan.Component {
                                     validType: ValidTypes.PasswordValid,
                                 },
                             ]}
-                            onEnd={(key) => this.setState({ errorKey: key })}
+                            onEnd={(key: any) => this.setState({ errorKey: key })}
                         />
                         <div className="login-page__content__form__actions">
                             <Button title="Регистрация" variant="text" onClick={() => router.navigateTo("/signup")} />

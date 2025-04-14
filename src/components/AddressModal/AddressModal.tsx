@@ -8,7 +8,7 @@ import loadingIcon from "../../shared/images/loading-ico.svg";
 import Button from "../Button/Button";
 import { ValidTypes } from "bazaar-validation";
 import ajax from "bazaar-ajax";
-import { GEOPIFY_KEY } from "../../settings.js";
+import { GEOPIFY_KEY } from "../../settings";
 import { saveAddress } from "../../api/address";
 import { AJAXErrors } from "../../api/errors";
 
@@ -46,7 +46,8 @@ class AddressModal extends Tarakan.Component {
                 searching: false,
                 selectedResult: -1,
                 searchResult: (responseData.features ?? []).filter((E) =>
-                    E.properties.result_type == "building" && E.properties.rank.importance != undefined
+                    E.properties.result_type == "building"
+                    && (E.properties.rank.importance != undefined || E.properties.rank.popularity != undefined)
                 ).map((E) => ({
                     lat: E.properties.lat,
                     log: E.properties.log,
@@ -81,7 +82,7 @@ class AddressModal extends Tarakan.Component {
         const code = await saveAddress(
             address.rawData.state,
             address.rawData.city,
-            address.address,
+            (this.state.form.flat ? `кв. ${this.state.form.flat}, ` : "") + address.address,
             `${address.lat},${address.log}`,
             this.state.form.name
         );

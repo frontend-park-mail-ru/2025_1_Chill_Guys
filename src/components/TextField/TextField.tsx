@@ -91,6 +91,7 @@ class TextField extends Tarakan.Component {
                     onFocus={() => this.handleFocus()}
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
+                    maxlength={props.maxLength ?? ""}
                 />
                 {this.state.status !== "default" &&
                     <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />

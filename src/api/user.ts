@@ -1,4 +1,4 @@
-import ajax from "bazaar-ajax";
+import ajax, { AJAXRequestContentType } from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 
 export interface UserData {
@@ -59,4 +59,25 @@ export async function updatePassword(oldPassword: string, newPassword: string): 
     }
 
     return AJAXErrors.NoError;
+}
+
+export async function uploadAvatar(avatarFile: any): Promise<{ code: AJAXErrors, url?: string }> {
+    const form = new FormData();
+    form.append("file", avatarFile);
+    const response = await ajax.post("users/upload-avatar", form, { type: AJAXRequestContentType.FORM });
+
+    if (response.error) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    if (response.result.status == 401) {
+        return { code: AJAXErrors.Unauthorized };
+    }
+
+    if (!response.result.ok) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    const rawData = await response.result.json();
+    return { code: AJAXErrors.NoError, url: rawData.imageURL };
 }
