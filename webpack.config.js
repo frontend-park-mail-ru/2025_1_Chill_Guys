@@ -18,6 +18,7 @@ export default {
 
     output: {
         path: path.resolve(__dirname, './build'),
+        publicPath: '/',
     },
 
     module: {
@@ -67,9 +68,7 @@ export default {
             directory: path.join(__dirname, 'public'),
             serveIndex: true,
         },
-        historyApiFallback: {
-            index: '/'
-        },
+        historyApiFallback: true,
         compress: true,
         port: 7500,
     },
