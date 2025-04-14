@@ -1,9 +1,7 @@
 import Tarakan from "bazaar-tarakan";
 
-import Button, { BUTTON_VARIANT, ICON_POSITION } from "../Button/Button";
-import TextField from "../TextField/TextField";
-import { BUTTON_SIZE } from "../Button/Button";
-import { TEXTFIELD_TYPES } from "../TextField/TextField";
+import Button, {BUTTON_SIZE, BUTTON_VARIANT, ICON_POSITION} from "../Button/Button";
+import TextField, {TEXTFIELD_TYPES} from "../TextField/TextField";
 
 import "./styles.scss";
 
@@ -24,6 +22,8 @@ import HeaderProfileHover from "../../shared/images/header-profile-ico-hover.svg
 
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
+import {getAllCategories} from "../../api/categories";
+import {AJAXErrors} from "../../api/errors";
 
 class Header extends Tarakan.Component {
     init() {
@@ -33,8 +33,9 @@ class Header extends Tarakan.Component {
             savedIcon: HeaderSaved,
             profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
             authorized: this.app.store.user.value.login,
+            popUpDisplayed: false,
         }
-
+        this.fetchCategories();
         this.subscribe("user", (name: string, newValue: any) => {
             if (name === "login") {
                 this.setState({
@@ -45,8 +46,42 @@ class Header extends Tarakan.Component {
         });
     }
 
+    async fetchCategories() {
+        const response = await getAllCategories();
+        if (response.code === AJAXErrors.NoError) {
+            this.setState({
+                categories: response.data.categories.map((item) => ({
+                    id: item.id,
+                    name: item.name,
+                })).slice(0, 6)
+            });
+        }
+    }
+
     render(props: any, app: any) {
         return <header className="header header_light">
+            <div id="pop-up" className="header__pop-up">
+                <div className="header__pop-up__list">
+                    {
+                        this.state.categories &&
+                        this.state.categories.map((item) =>
+                            <Button
+                                title={`${item.name}`}
+                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                onClick={() => {app.navigateTo(`/category/${item.id}`);}}
+                                onMouseOver={(e) => {
+                                    console.log(e.target);
+                                    const categoryH2 = document.getElementById('category-h2');
+                                    categoryH2.innerHTML = e.target.innerHTML;
+                                }}
+                            />
+                        )
+                    }
+                </div>
+                <div className="header__pop-up__info-wrapper">
+                    <h2 id="category-h2" className="h2-reset header__pop-up__info-wrapper__category-title">Выберите категорию</h2>
+                </div>
+            </div>
 
             <div className="header__row header__row_main">
                 <img
@@ -65,6 +100,13 @@ class Header extends Tarakan.Component {
                         iconSrc={`${CatalogButtonIcon}`}
                         iconAlt='Иконка каталога'
                         onClick={() => {
+                            const popUp = document.getElementById("pop-up");
+                            if (this.state.popUpDisplayed) {
+                                popUp.style.display = "none";
+                            } else {
+                                popUp.style.display = "flex";
+                            }
+                            this.setState({popUpDisplayed: !this.state.popUpDisplayed});
                         }}
                     />
 
@@ -72,7 +114,7 @@ class Header extends Tarakan.Component {
                         <TextField
                             type={`${TEXTFIELD_TYPES.SEARCH}`}
                             title='Ищите что угодно на Bazaar'
-                            className={`width px400`}
+                            className={`width header__row_main__search-field-wrapper__px400`}
                         />
                     </div>
                 </div>
@@ -90,10 +132,10 @@ class Header extends Tarakan.Component {
                             iconSrc={`${this.state.ordersIcon}`}
                             iconAlt='Иконка заказов'
                             onMouseOver={() => {
-                                this.setState({ ordersIcon: HeaderOrdersHover })
+                                this.setState({ordersIcon: HeaderOrdersHover})
                             }}
                             onMouseLeave={() => {
-                                this.setState({ ordersIcon: HeaderOrders })
+                                this.setState({ordersIcon: HeaderOrders})
                             }}
                             onClick={() => {
                             }}
@@ -111,10 +153,10 @@ class Header extends Tarakan.Component {
                             iconSrc={`${this.state.savedIcon}`}
                             iconAlt='Иконка сердечко'
                             onMouseOver={() => {
-                                this.setState({ savedIcon: HeaderSavedHover })
+                                this.setState({savedIcon: HeaderSavedHover})
                             }}
                             onMouseLeave={() => {
-                                this.setState({ savedIcon: HeaderSaved })
+                                this.setState({savedIcon: HeaderSaved})
                             }}
                             onClick={() => {
                             }}
@@ -128,10 +170,10 @@ class Header extends Tarakan.Component {
                         iconSrc={`${this.state.cartIcon}`}
                         iconAlt='Иконка корзины'
                         onMouseOver={() => {
-                            this.setState({ cartIcon: HeaderCartHover })
+                            this.setState({cartIcon: HeaderCartHover})
                         }}
                         onMouseLeave={() => {
-                            this.setState({ cartIcon: HeaderCart })
+                            this.setState({cartIcon: HeaderCart})
                         }}
                         onClick={() => {
                             app.navigateTo("/cart");
@@ -147,16 +189,16 @@ class Header extends Tarakan.Component {
                         iconAlt='Иконка профиля'
                         onMouseOver={() => {
                             if (this.state.authorized) {
-                                this.setState({ profileIcon: HeaderProfileHover });
+                                this.setState({profileIcon: HeaderProfileHover});
                             } else {
-                                this.setState({ profileIcon: HeaderLoginHover });
+                                this.setState({profileIcon: HeaderLoginHover});
                             }
                         }}
                         onMouseLeave={() => {
                             if (this.state.authorized) {
-                                this.setState({ profileIcon: HeaderProfile });
+                                this.setState({profileIcon: HeaderProfile});
                             } else {
-                                this.setState({ profileIcon: HeaderLogin });
+                                this.setState({profileIcon: HeaderLogin});
                             }
                         }}
                         onClick={() => {
@@ -171,6 +213,18 @@ class Header extends Tarakan.Component {
             </div>
 
             <div className="header__secondary">
+                <div className={`categories-wrapper`}>
+                    {
+                        this.state.categories &&
+                        this.state.categories.map((category) =>
+                        <span onClick={() => {
+                            app.navigateTo(`/category/${category.id}`);
+                        }}>
+                            {category.name}
+                        </span>
+                        )
+                    }
+                </div>
                 <div className={`address-wrapper`}>
                     Улица Космонавтов 7
                 </div>
