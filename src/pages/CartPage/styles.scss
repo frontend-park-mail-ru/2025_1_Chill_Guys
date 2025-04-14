@@ -19,7 +19,7 @@
             overflow: hidden;
             max-height: 100%;
 
-            .list {
+            &__list {
                 .empty-cart {
                     color: gray;
                     display: flex;
@@ -35,44 +35,44 @@
                 flex-direction: column;
                 row-gap: 22px;
 
-                .item {
+                &__item {
                     display: flex;
                     column-gap: 12px;
 
-                    .cover {
+                    &__cover {
                         width: 100px;
                         height: 100px;
                         border-radius: 12px;
                     }
 
-                    .description {
+                    &__description {
                         flex: 1 1 auto;
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;
 
-                        .title {
+                        &__title {
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
                             column-gap: 16px;
 
-                            .name {
+                            &__name {
                                 font-size: 14px;
                             }
 
-                            .price {
+                            &__price {
                                 display: flex;
                                 column-gap: 8px;
                                 font-size: 16px;
                                 margin-left: auto;
 
-                                &.discount {
+                                &_discount {
                                     color: var(--positive);
                                 }
                             }
 
-                            .actions {
+                            &__actions {
                                 display: flex;
                                 column-gap: 5px;
                                 margin-left: 12px;
@@ -85,7 +85,7 @@
                                 }
 
 
-                                .count {
+                                &__count {
                                     background-color: lightgray;
                                     width: 40px;
                                     color: black;
@@ -100,24 +100,24 @@
                             }
                         }
 
-                        .manage {
+                        &__manage {
                             display: flex;
                             align-items: center;
                             column-gap: 8px;
 
-                            .icon-btn {
+                            &__icon-btn {
                                 gap: 0;
                                 padding: 7px 11px;
                                 height: 30px;
                             }
 
-                            .btn {
+                            &__btn {
                                 padding: 7px 11px;
                                 height: 30px;
                                 font-size: 12px;
                             }
 
-                            .remainCount {
+                            &__remainCount {
                                 font-size: 14px;
                                 color: gray;
                             }
@@ -126,7 +126,7 @@
                 }
             }
 
-            .total {
+            &__total {
                 flex: 0 1 300px;
 
                 width: 300px;
@@ -134,33 +134,33 @@
                 padding: 20px;
                 border-radius: 20px;
 
-                .make-order {
+                &__make-order {
                     width: 100%;
                 }
 
-                .comment {
+                &__comment {
                     margin-top: 8px;
                     margin-bottom: 36px;
                     font-size: 12px;
                     color: darkgray;
                 }
 
-                .discount {
+                &__discount {
                     display: flex;
                     justify-content: space-between;
                     margin-bottom: 8px;
                     color: var(--positive);
 
-                    .cost {
+                    &__cost {
                         font-size: 16px;
                     }
                 }
 
-                .sum-cost {
+                &__sum-cost {
                     display: flex;
                     justify-content: space-between;
 
-                    .cost {
+                    &__cost {
                         font-size: 16px;
                     }
                 }

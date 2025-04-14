@@ -79,22 +79,22 @@ class PlaceOrderPage extends Tarakan.Component {
             <main>
                 <h1>Оформление заказа</h1>
                 <div className="content">
-                    <div className="settings">
+                    <div className="content__settings">
                         <h2>Способ оплаты</h2>
-                        <div className="payment-types">
+                        <div className="content__settings__payment-types">
                             <PaymentType icon={moneyIcon} name="Наличными" active={true} />
                             <PaymentType icon={spbIcon} name="СПБ" disabled={true} />
                         </div>
-                        <div className="address-title">
+                        <div className="content__settings__address-title">
                             <h2>Адрес доставки</h2>
                             <Button
-                                className="add-address-button"
+                                className="content__settings__address-title__add-address-button"
                                 title="Добавить адрес"
                                 variant="text"
                                 onClick={() => this.setState({ addAddressModalOpened: true })}
                             />
                         </div>
-                        <div className="addresses">
+                        <div className="content__settings__addresses">
                             {
                                 this.state.addresses.map((address) =>
                                     <AddressCard
@@ -106,12 +106,13 @@ class PlaceOrderPage extends Tarakan.Component {
                                 )
                             }
                             {
-                                this.state.addresses.length === 0 && <div className="no-address">
+                                this.state.addresses.length === 0 &&
+                                <div className="content__settings__addresses_no-address">
                                     У вас пока нет ни одного адреса доставки
                                 </div>
                             }
                         </div>
-                        <div className="date">
+                        <div className="content__settings__date">
                             <h2>Срок доставки:</h2>
                             5 рабочик дней
                         </div>
@@ -131,20 +132,20 @@ class PlaceOrderPage extends Tarakan.Component {
                             }}
                         />}
                     </div>
-                    <div className="total">
+                    <div className="content__total">
                         <Button
-                            className="make-order"
+                            className="content__total__make-order"
                             title="Оформление заказа"
                             disabled={this.state.activeAddress === ""}
                             onClick={() => this.handlePlaceOrder()}
                         />
-                        <div className="discount">
+                        <div className="content__total__discount">
                             <span>Скидка:</span>
-                            <span className="cost">{this.state.total - this.state.discount} ₽</span>
+                            <span className="content__total__discount_cost">{this.state.total - this.state.discount} ₽</span>
                         </div>
-                        <div className="sum-cost">
+                        <div className="content__total__sum-cost">
                             <span>Итог:</span>
-                            <span className="cost">{this.state.discount} ₽</span>
+                            <span className="content__total__sum-cost_cost">{this.state.discount} ₽</span>
                         </div>
                     </div>
                 </div>

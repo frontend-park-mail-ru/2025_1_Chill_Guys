@@ -34,39 +34,41 @@ class LoginPage extends Tarakan.Component {
     render(props, router) {
         return <div>
             <header />
-            <main className="login_page">
-                <div className="content">
-                    <div className="title">
+            <main className="login-page">
+                <div className="login-page__content">
+                    <div className="login-page__content__title">
                         <div>
-                            <img className="icon" src={LogoIcon} />
-                            <div className="header">
-                                <h1 className="h1">Вход</h1>
-                                <div className="comment">Укажите данные для входа</div>
+                            <img className="login-page__content__title__icon" src={LogoIcon} alt="Логотип Базара" />
+                            <div className="login-page__content__title__header">
+                                <h1 className="login-page__content__title__header__h1">Вход</h1>
+                                <div className="login-page__content__title__header__comment">
+                                    Укажите данные для входа
+                                </div>
                             </div>
-                            <div className="input-comment">
+                            <div className="login-page__content__title__input-comment">
                                 {
                                     this.state.errorKey &&
                                     {
-                                        "email": <div className="error">
+                                        "email": <div className="login-page__content__title__input-comment__error">
                                             Email является недействительным. Пожалуста, повторите попытку ввода
                                         </div>,
 
-                                        "password": <div className="error">
+                                        "password": <div className="login-page__content__title__input-comment__error">
                                             Пароль должен содержать как минимум 8 символов. Пожалуйста, повторите ввод.
                                         </div>,
 
-                                        "wrongPassword": <div className="error">
+                                        "wrongPassword": <div className="login-page__content__title__input-comment__error">
                                             Указан неверный пароль. Пожалуйста, повторите ввод.
                                         </div>,
 
-                                        "serviceError": <div className="error">
+                                        "serviceError": <div className="login-page__content__title__input-comment__error">
                                             Ошибка сервиса. Пожалуйста, повторите попытку позже.
                                         </div>,
                                     }[this.state.errorKey]
 
                                 }
                                 {
-                                    (!this.state.errorKey && this.state.passwordHelp) && <div className="help">
+                                    (!this.state.errorKey && this.state.passwordHelp) && <div className="login-page__content__title__input-comment__help">
                                         Формат пароля не верный. Пожалуйста учтите требования к паролю:
                                         <ul>
                                             <li>длина от 8 до 24 символов</li>
@@ -77,12 +79,12 @@ class LoginPage extends Tarakan.Component {
                                 }
                             </div>
                         </div>
-                        <Button className="redirect" title="Вернуться на главную страницу" variant="text" onClick={() => router.navigateTo("/")} />
+                        <Button className="login-page__content__title__redirect" title="Вернуться на главную страницу" variant="text" onClick={() => router.navigateTo("/")} />
                     </div>
-                    <div className="form">
+                    <div className="login-page__content__form">
                         <Form
                             ref={this.state.formRef}
-                            className="font-content"
+                            className="login-page__content__form__font-content"
                             form={[
                                 {
                                     type: "email",
@@ -99,11 +101,11 @@ class LoginPage extends Tarakan.Component {
                             ]}
                             onEnd={(key) => this.setState({ errorKey: key })}
                         />
-                        <div className="actions">
+                        <div className="login-page__content__form__actions">
                             <Button title="Регистрация" variant="text" onClick={() => router.navigateTo("/signup")} />
                             <Button title="Войти" variant="primary" onClick={() => this.handleClickSignin()} />
                         </div>
-                        <Button className="remember-me" title="Забыли пароль?" variant="text" />
+                        <Button className="login-page__content__form__remember-me" title="Забыли пароль?" variant="text" />
                     </div>
                 </div>
             </main>
