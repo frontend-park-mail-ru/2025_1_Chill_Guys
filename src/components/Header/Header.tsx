@@ -69,9 +69,17 @@ class Header extends Tarakan.Component {
                                 title={`${item.name}`}
                                 variant={`${BUTTON_VARIANT.TRANSPARENT}`}
                                 onClick={() => {app.navigateTo(`/category/${item.id}`);}}
+                                onMouseOver={(e) => {
+                                    console.log(e.target);
+                                    const categoryH2 = document.getElementById('category-h2');
+                                    categoryH2.innerHTML = e.target.innerHTML;
+                                }}
                             />
                         )
                     }
+                </div>
+                <div className="header__pop-up__info-wrapper">
+                    <h2 id="category-h2" className="h2-reset header__pop-up__info-wrapper__category-title">Выберите категорию</h2>
                 </div>
             </div>
 

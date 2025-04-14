@@ -5,6 +5,7 @@
     position: relative;
 
     &__pop-up {
+        padding-top: 22px;
         border-radius: 8px;
         background-color: var(--background);
         width: 100vw;
@@ -15,8 +16,15 @@
         top: 100px;
         left: 0;
         position: absolute;
-        flex-direction: column;
+        flex-direction: row;
         gap: 72px;
+
+        &__info-wrapper {
+            display: flex;
+            &__category-title {
+                font-size: 26px;
+            }
+        }
 
         &__list {
             display: flex;

@@ -28,7 +28,7 @@ export default class CategoryPage extends Tarakan.Component {
     async fetchCategory() {
         const categories = await getAllCategories();
         if (categories.code === AJAXErrors.NoError) {
-            for (const category in categories.data.categories) {
+            for (const category of categories.data.categories) {
                 if (category.id === this.app.urlParams.id) {
                     this.setState({category: category});
                     break;
