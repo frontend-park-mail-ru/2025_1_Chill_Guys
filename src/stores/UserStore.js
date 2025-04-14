@@ -18,6 +18,10 @@ UserStore.addAction("me", async (store) => {
   return res.code;
 });
 
+UserStore.addAction("logout", async (store) => {
+  store.sendAction("login", { login: false });
+});
+
 UserStore.addAction("signin", async (store, data) => {
   const code = await signIn(data.email, data.password);
   if (code === AJAXErrors.NoError) {
