@@ -88,6 +88,7 @@
                 padding: 16px;
                 background-color: whitesmoke;
                 border: 2px solid whitesmoke;
+                cursor: pointer;
 
                 &_selected {
                     border: 2px solid var(--secondary-color);

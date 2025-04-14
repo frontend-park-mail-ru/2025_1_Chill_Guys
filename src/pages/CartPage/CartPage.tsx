@@ -17,7 +17,7 @@ import { saveOrderLocal } from "../../api/order";
 
 class CartPage extends Tarakan.Component {
 
-    state = {
+    state: any = {
         items: [],
         total: 0,
         discount: 0,
@@ -40,7 +40,7 @@ class CartPage extends Tarakan.Component {
         }
     }
 
-    async handleUpdateQuantity(productIndex, countOffset) {
+    async handleUpdateQuantity(productIndex: any, countOffset: any) {
         const product = this.state.items[productIndex];
 
         if (product.quantity + countOffset == 0) {
@@ -60,7 +60,7 @@ class CartPage extends Tarakan.Component {
         }
     }
 
-    async handleDelete(productIndex) {
+    async handleDelete(productIndex: any) {
         const product = this.state.items[productIndex];
         const code = await removeFromBasket(product.productId);
 
@@ -83,7 +83,7 @@ class CartPage extends Tarakan.Component {
         }
     }
 
-    async handleSaveOneProductToBasket(index) {
+    async handleSaveOneProductToBasket(index: any) {
         const code = await saveOrderLocal([{ ...this.state.items[index], quantity: 1 }]);
         if (code === AJAXErrors.NoError) {
             this.app.navigateTo("/place-order")
@@ -110,7 +110,7 @@ class CartPage extends Tarakan.Component {
                                         <div className={`content__list__item__description__title__price${(item.productPrice - item.priceDiscount) != 0 ? " content__list__item__description__title__price_discount" : ""}`}>
                                             <span className="">{item.priceDiscount} ₽</span>
                                             {(item.productPrice - item.priceDiscount) != 0 && <span className="content__list__item__description__title__price_discount">
-                                                ({-parseInt((item.productPrice - item.priceDiscount) / item.productPrice * 100)}%)
+                                                ({-parseInt(`${(item.productPrice - item.priceDiscount) / item.productPrice * 100}`)}%)
                                             </span>}
                                         </div>
                                         <div className="content__list__item__description__title__actions">

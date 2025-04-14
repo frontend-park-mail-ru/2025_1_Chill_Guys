@@ -21,6 +21,7 @@
 
         &__info-wrapper {
             display: flex;
+
             &__category-title {
                 font-size: 26px;
             }
@@ -92,7 +93,6 @@
 
         .categories-wrapper {
             display: flex;
-            padding-left: 33px;
             gap: 24px;
             color: var(--dark-gray-text-color);
             font-size: 16px;

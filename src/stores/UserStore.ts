@@ -1,7 +1,7 @@
 import { Store } from "bazaar-tarakan";
-import { signIn, signUp } from "../api/auth.ts";
-import { AJAXErrors } from "../api/errors.ts";
-import { getMe } from "../api/user.ts";
+import { signIn, signUp } from "../api/auth";
+import { AJAXErrors } from "../api/errors";
+import { getMe } from "../api/user";
 
 const initValue = {};
 const initAction = (store) => store.sendAction("me");

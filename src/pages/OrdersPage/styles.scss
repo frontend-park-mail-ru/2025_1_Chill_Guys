@@ -1,0 +1,100 @@
+.orders-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    margin-inline: 24px;
+
+    &__main {
+        flex: 1 1 auto;
+        margin-inline: auto;
+        min-width: 75%;
+
+        &__content {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            column-gap: 20px;
+            align-items: flex-start;
+            overflow: hidden;
+            max-height: 100%;
+
+            &__list {
+                .empty-cart {
+                    color: gray;
+                    display: flex;
+                    column-gap: 8px;
+                }
+
+                padding: 20px;
+                background-color: white;
+                border-radius: 20px;
+
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                row-gap: 22px;
+
+                &__item {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 8px;
+
+                    &__title {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        &__statuses {
+                            &__date {
+                                padding: 8px;
+                                background-color: var(--positive);
+                                color: white;
+                                border-radius: 10px;
+                            }
+
+                            &__status {
+                                padding: 8px;
+                                background-color: var(--secondary-color);
+                                color: white;
+                                border-radius: 10px;
+                                margin-right: 8px;
+                            }
+                        }
+                    }
+
+                    &__images {
+                        margin-top: 8px;
+                        display: flex;
+                        column-gap: 16px;
+                        border-radius: 10px;
+
+                        &__img {
+                            width: 100px;
+                            height: 100px;
+                            object-fit: contain;
+                            border-radius: 10px;
+                        }
+                    }
+
+                    &__info {
+                        margin-top: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        row-gap: 8px;
+
+                        &__item {
+                            font-size: 16px;
+                        }
+                    }
+
+                    &__sep {
+                        border: 1px solid whitesmoke;
+                        margin-top: 8px;
+                    }
+                }
+
+            }
+        }
+    }
+}
