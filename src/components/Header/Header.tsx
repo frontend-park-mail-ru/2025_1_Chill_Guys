@@ -59,6 +59,19 @@ class Header extends Tarakan.Component {
 
     render(props: any, app: any) {
         return <header className="header header_light">
+            <div id="pop-up" className="header__pop-up">
+                <div className="header__pop-up__list">
+                    {
+                        this.state.categories &&
+                        this.state.categories.map((item) =>
+                            <Button
+                                title={`${item.name}`}
+                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                            />
+                        )
+                    }
+                </div>
+            </div>
 
             <div className="header__row header__row_main">
                 <img
@@ -77,6 +90,9 @@ class Header extends Tarakan.Component {
                         iconSrc={`${CatalogButtonIcon}`}
                         iconAlt='Иконка каталога'
                         onClick={() => {
+                            const popUp = document.getElementById("pop-up");
+                            popUp.style.display = "flex";
+                            console.log(`${popUp.style.display}`)
                         }}
                     />
 
@@ -188,7 +204,7 @@ class Header extends Tarakan.Component {
                         this.state.categories &&
                         this.state.categories.map((category) =>
                         <span onClick={() => {
-                            app.navigateTo("/category");
+                            app.navigateTo(`/category/${category.id}`);
                         }}>
                             {category.name}
                         </span>

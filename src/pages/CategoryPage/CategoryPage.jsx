@@ -1,11 +1,13 @@
 import Tarakan from "bazaar-tarakan";
-import Header from "../../components/Header/Header.tsx";
-import Footer from "../../components/Footer/Footer.tsx";
-import {getProducts, getProductsByCategory} from "../../api/product";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import {getProductsByCategory} from "../../api/product";
 import {AJAXErrors} from "../../api/errors";
 import {getBasket} from "../../api/basket";
 import {getAllCategories} from "../../api/categories";
-import ProductCard from "../../components/ProductCard/ProductCard.tsx";
+import ProductCard from "../../components/ProductCard/ProductCard";
+
+import "./styles.scss";
 
 export default class CategoryPage extends Tarakan.Component {
 
@@ -18,6 +20,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     init() {
+        console.log(`Category page urlParams: ${this.app.urlParams.id}`)
         this.fetchProducts();
         this.fetchCategory();
     }
@@ -35,7 +38,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     async fetchProducts() {
-        const productsResponse = await getProducts(this.app.urlParams.id);
+        const productsResponse = await getProductsByCategory(this.app.urlParams.id);
         const basketResponse = await getBasket();
 
         if (productsResponse.code === AJAXErrors.NoError) {

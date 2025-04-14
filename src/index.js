@@ -21,7 +21,7 @@ const app = new Tarakan.Application({
   "/cart": CartPage,
   "/place-order": PlaceOrderPage,
   "/profile": ProfilePage,
-  "/category": CategoryPage,
+  "/category/<id>": CategoryPage,
 });
 
 // Регистрация хранилищ глобального состояния
