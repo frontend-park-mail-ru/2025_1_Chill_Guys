@@ -52,9 +52,9 @@ class IndexPage extends Tarakan.Component {
         return <div className={`container`}>
             <Header />
 
-            <main className={`index-page flex column`}>
-                <h1 className={`h-reset main-h1`}>Весенние хиты</h1>
-                <div className={`cards-container`}>
+            <main className={`index-page index-page_flex index-page_flex_column`}>
+                <h1 className={`h-reset index-page__main-h1`}>Весенние хиты</h1>
+                <div className={`index-page__cards-container`}>
                     {
                         this.state.products.map(
                             (item) =>
