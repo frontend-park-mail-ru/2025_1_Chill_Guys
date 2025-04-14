@@ -187,7 +187,9 @@ class Header extends Tarakan.Component {
                     {
                         this.state.categories &&
                         this.state.categories.map((category) =>
-                        <span onClick={() => {console.log(`${category.name}`);}}>
+                        <span onClick={() => {
+                            app.navigateTo("/category");
+                        }}>
                             {category.name}
                         </span>
                         )

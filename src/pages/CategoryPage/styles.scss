@@ -1,0 +1,29 @@
+.category-page {
+  align-items: flex-start;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  background-color: var(--background);
+  border-radius: 12px;
+  padding: 14px;
+
+  .flex {
+    display: flex;
+    &.column {
+      flex-direction: column;
+    }
+  }
+
+  .main-h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    padding-top: 14px;
+  }
+
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    max-width: 100%;
+    column-gap: 5px;
+  }
+}
