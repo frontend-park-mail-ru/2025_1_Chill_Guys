@@ -2,7 +2,7 @@ import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 
 export async function signIn(email: string, password: string): Promise<AJAXErrors> {
-    const response = await ajax.post("auth/login", { email, password });
+    const response = await ajax.post("auth/login", { email, password }, { setCSRF: true });
 
     if (response.error) {
         return AJAXErrors.ServerError;
@@ -20,7 +20,7 @@ export async function signIn(email: string, password: string): Promise<AJAXError
 }
 
 export async function signUp(name: string, surname: string, email: string, password: string): Promise<AJAXErrors> {
-    const response = await ajax.post("auth/register", { name, surname, email, password });
+    const response = await ajax.post("auth/register", { name, surname, email, password }, { setCSRF: true });
 
     if (response.error) {
         return AJAXErrors.ServerError;
@@ -39,6 +39,8 @@ export async function signUp(name: string, surname: string, email: string, passw
 
 export async function logout(): Promise<AJAXErrors> {
     const response = await ajax.post("auth/logout", {});
+
+    console.log(response);
 
     if (response.error) {
         return AJAXErrors.ServerError;
