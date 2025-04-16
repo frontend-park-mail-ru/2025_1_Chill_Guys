@@ -27,7 +27,7 @@ interface Order {
 }
 
 export async function saveOrderLocal(order: BasketItem[]): Promise<AJAXErrors> {
-    localStorage.setItem("order", JSON.stringify(order.map((basketItem) => ({
+    localStorage.setItem("order", JSON.stringify(order.filter((basketItem) => basketItem.remainQuantity >= 0).map((basketItem) => ({
         productId: basketItem.productId,
         quantity: basketItem.quantity
     }))));

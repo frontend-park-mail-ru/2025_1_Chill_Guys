@@ -94,7 +94,7 @@ class CartPage extends Tarakan.Component {
         this.fetchBasket();
     }
 
-    render(props, router) {
+    render() {
         return <div className="cart-page">
             <Header />
             <main>
@@ -102,7 +102,7 @@ class CartPage extends Tarakan.Component {
                 <div className="content">
                     <div className="content__list">
                         {this.state.items.map((item, index) =>
-                            <article className="content__list__item">
+                            <article className={`content__list__item ${item.remainQuantity < 0 ? "content__list__item_ignore" : ""}`.trim()}>
                                 <img className="content__list__item__cover" src={item.productImage} />
                                 <div className="content__list__item__description">
                                     <div className="content__list__item__description__title">
@@ -115,15 +115,16 @@ class CartPage extends Tarakan.Component {
                                         </div>
                                         <div className="content__list__item__description__title__actions">
                                             <Button
+                                                disabled={item.remainQuantity < 0}
                                                 size="s"
                                                 iconSrc={cartSubIcon}
                                                 onClick={() => this.handleUpdateQuantity(index, -1)}
                                             />
                                             <span className="content__list__item__description__title__actions__count">
-                                                {item.quantity}
+                                                {item.remainQuantity < 0 ? 0 : item.quantity}
                                             </span>
                                             <Button
-                                                disabled={item.remainQuantity === 0}
+                                                disabled={item.remainQuantity === 0 || item.remainQuantity < 0}
                                                 size="s"
                                                 iconSrc={cartAddIcon}
                                                 onClick={() => this.handleUpdateQuantity(index, 1)}
@@ -142,9 +143,13 @@ class CartPage extends Tarakan.Component {
                                             title="Купить"
                                             size="s"
                                             iconSrc={cartBuyIcon}
+                                            disabled={item.remainQuantity < 0}
                                             onClick={() => this.handleSaveOneProductToBasket(index)} />
                                         <div className="content__list__item__description__manage__remainCount">
-                                            Осталось {item.remainQuantity} шт
+                                            {item.remainQuantity >= 0
+                                                ? `Осталось ${item.remainQuantity} шт`
+                                                : "Закончились"
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +166,7 @@ class CartPage extends Tarakan.Component {
                             className="content__total__make-order"
                             title="Оформление заказа"
                             onClick={() => this.handleSaveFullBasket()}
-                            disabled={this.state.items.length == 0}
+                            disabled={this.state.items.filter((basketItem) => basketItem.remainQuantity >= 0).length == 0}
                         />
                         <div className="content__total__comment">
                             Способы оплаты и доставки будут доступны на следующем шаге
