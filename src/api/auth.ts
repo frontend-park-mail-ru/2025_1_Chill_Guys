@@ -40,8 +40,6 @@ export async function signUp(name: string, surname: string, email: string, passw
 export async function logout(): Promise<AJAXErrors> {
     const response = await ajax.post("auth/logout", {});
 
-    console.log(response);
-
     if (response.error) {
         return AJAXErrors.ServerError;
     }

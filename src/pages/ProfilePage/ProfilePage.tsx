@@ -63,6 +63,8 @@ export default class ProfilePage extends Tarakan.Component {
                 email: response.data.email,
                 phoneNumber: response.data.phoneNumber,
             });
+        } else {
+            this.app.navigateTo("/signin");
         }
     }
 
@@ -113,7 +115,6 @@ export default class ProfilePage extends Tarakan.Component {
 
     async handleLogout() {
         const code = await logout();
-        console.log("NOOO", code);
         if (code === AJAXErrors.NoError) {
             this.app.store.user.sendAction("logout");
             this.app.navigateTo("/");
