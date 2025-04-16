@@ -6,7 +6,7 @@ const __dirname = dirname("./");
 console.log(__dirname)
 
 export default {
-    mode: 'development',
+    mode: 'production',
 
     plugins: [
         new HtmlBundlerPlugin({
@@ -26,10 +26,16 @@ export default {
             {
                 test: /\.(png|jpg?)$/i,
                 type: 'asset/resource',
+                generator: {
+                    filename: 'font/[hash][ext][query]'
+                }
             },
             {
                 test: /\.(eot|ttf|woff2?)$/i,
                 type: 'asset/resource',
+                generator: {
+                    filename: 'font/[hash][ext][query]'
+                }
             },
             {
                 test: /\.(png|jpg|svg?)$/i,
@@ -68,6 +74,12 @@ export default {
             directory: path.join(__dirname, 'public'),
             serveIndex: true,
         },
+        proxy: [
+            {
+                context: ['/api'],
+                target: 'http://localhost:8080',
+            },
+        ],
         historyApiFallback: true,
         compress: true,
         port: 7500,
