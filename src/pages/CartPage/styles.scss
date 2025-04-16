@@ -39,6 +39,10 @@
                     display: flex;
                     column-gap: 12px;
 
+                    &_ignore {
+                        opacity: 0.5;
+                    }
+
                     &__cover {
                         width: 100px;
                         height: 100px;
