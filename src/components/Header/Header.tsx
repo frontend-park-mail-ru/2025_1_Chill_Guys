@@ -70,7 +70,7 @@ class Header extends Tarakan.Component {
                                 variant={`${BUTTON_VARIANT.TRANSPARENT}`}
                                 onClick={() => { app.navigateTo(`/category/${item.id}`); }}
                                 onMouseOver={(e) => {
-                                    console.log(e.target);
+                                    // console.log(e.target);
                                     const categoryH2 = document.getElementById('category-h2');
                                     categoryH2.innerHTML = e.target.innerHTML;
                                 }}
