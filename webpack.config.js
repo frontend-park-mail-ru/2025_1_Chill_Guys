@@ -3,7 +3,7 @@ import path, { dirname } from "path";
 
 const __dirname = dirname("./");
 
-console.log(__dirname)
+// console.log(__dirname)
 
 export default {
     mode: 'production',

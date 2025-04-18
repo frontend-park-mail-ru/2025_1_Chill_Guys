@@ -1,10 +1,10 @@
 import Tarakan from "bazaar-tarakan";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import {getProductsByCategory} from "../../api/product";
-import {AJAXErrors} from "../../api/errors";
-import {getBasket} from "../../api/basket";
-import {getAllCategories} from "../../api/categories";
+import { getProductsByCategory } from "../../api/product";
+import { AJAXErrors } from "../../api/errors";
+import { getBasket } from "../../api/basket";
+import { getAllCategories } from "../../api/categories";
 import ProductCard from "../../components/ProductCard/ProductCard";
 
 import "./styles.scss";
@@ -20,7 +20,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     init() {
-        console.log(`Category page urlParams: ${this.app.urlParams.id}`)
+        // console.log(`Category page urlParams: ${this.app.urlParams.id}`)
         this.fetchProducts();
         this.fetchCategory();
     }
@@ -30,7 +30,7 @@ export default class CategoryPage extends Tarakan.Component {
         if (categories.code === AJAXErrors.NoError) {
             for (const category of categories.data.categories) {
                 if (category.id === this.app.urlParams.id) {
-                    this.setState({category: category});
+                    this.setState({ category: category });
                     break;
                 }
             }
@@ -38,7 +38,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     async fetchProducts() {
-        console.log(this.app.urlParams.id);
+        // console.log(this.app.urlParams.id);
         const productsResponse = await getProductsByCategory(this.app.urlParams.id);
         const basketResponse = await getBasket();
 
@@ -70,28 +70,28 @@ export default class CategoryPage extends Tarakan.Component {
 
     render(props, router) {
         return <div className="container">
-            <Header/>
+            <Header />
             <main className="category-page category-page_flex category-page_flex_column">
                 <h1 className="h-reset category-page__main-h1">{this.state.category.name ?? "Товары"}</h1>
                 <div className="category-page__cards-container">
                     {
                         this.state.products.map((item) =>
-                        <ProductCard
-                            id={`${item.id}`}
-                            inCart={item.isInCart}
-                            price={`${item.price}`}
-                            discountPrice={item.discountPrice}
-                            title={`${item.name}`}
-                            rating={`${item.rating}`}
-                            reviewsCount={`${item.reviewsCount}`}
-                            mainImageAlt={`Изображение товара ${item.name}`}
-                            mainImageSrc={item.image}
-                        />
+                            <ProductCard
+                                id={`${item.id}`}
+                                inCart={item.isInCart}
+                                price={`${item.price}`}
+                                discountPrice={item.discountPrice}
+                                title={`${item.name}`}
+                                rating={`${item.rating}`}
+                                reviewsCount={`${item.reviewsCount}`}
+                                mainImageAlt={`Изображение товара ${item.name}`}
+                                mainImageSrc={item.image}
+                            />
                         )
                     }
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </div>
     }
 }
