@@ -4,10 +4,11 @@
   margin-bottom: 24px;
   background-color: var(--background);
   border-radius: 12px;
-  padding: 14px;
+  padding: 24px;
 
   &_flex {
     display: flex;
+
     &_column {
       flex-direction: column;
     }
@@ -16,7 +17,7 @@
   &__main-h1 {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 24px;
+    margin-bottom: 24px !important;
     padding-top: 14px;
   }
 
@@ -24,6 +25,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     max-width: 100%;
-    column-gap: 5px;
+    gap: 16px;
   }
 }

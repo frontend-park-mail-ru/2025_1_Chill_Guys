@@ -1,5 +1,6 @@
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin";
 import path, { dirname } from "path";
+import express from "express";
 
 const __dirname = dirname("./");
 
@@ -13,6 +14,7 @@ export default {
             entry: {
                 index: './public/index.html',
             },
+            favicon: "./public/favicon.ico"
         }),
     ],
 
@@ -24,7 +26,7 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(png|jpg?)$/i,
+                test: /\.(png|jpg|ico?)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'font/[hash][ext][query]'
@@ -78,10 +80,24 @@ export default {
             {
                 context: ['/api'],
                 target: 'http://localhost:8080',
-            },
+            }
         ],
+        setupMiddlewares: (middlewares, devServer) => {
+            middlewares.unshift({
+                name: "p",
+                path: '/media/product-default',
+                middleware: (req, res) => {
+                    res.sendFile("./src/shared/images/cover.jpeg", {
+                        root: path.join(__dirname)
+                    });
+                },
+            });
+            return middlewares;
+        },
         historyApiFallback: true,
         compress: true,
         port: 7500,
+        host: '0.0.0.0',
+        allowedHosts: ['all']
     },
 };

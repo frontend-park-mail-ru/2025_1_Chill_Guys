@@ -4,7 +4,8 @@
         [
             "@babel/preset-react",
             {
-                "pragma": "Tarakan.createElement"
+                "pragma": "Tarakan.createElement",
+                "fragment": "Tarakan.Fragment"
             }
         ]
     ]

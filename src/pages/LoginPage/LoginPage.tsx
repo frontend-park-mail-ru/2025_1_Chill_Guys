@@ -54,7 +54,7 @@ class LoginPage extends Tarakan.Component {
                                         </div>,
 
                                         "password": <div className="login-page__content__title__input-comment__error">
-                                            Пароль должен содержать как минимум 8 символов. Пожалуйста, повторите ввод.
+                                            Не введён пароль. Пожалуста, повторите попытку ввода
                                         </div>,
 
                                         "wrongPassword": <div className="login-page__content__title__input-comment__error">
@@ -96,7 +96,7 @@ class LoginPage extends Tarakan.Component {
                                     type: "password",
                                     id: "password",
                                     title: "Пароль",
-                                    validType: ValidTypes.PasswordValid,
+                                    validType: ValidTypes.NotNullValid,
                                 },
                             ]}
                             onEnd={(key: any) => this.setState({ errorKey: key })}
