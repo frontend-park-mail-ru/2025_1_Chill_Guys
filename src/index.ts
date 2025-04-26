@@ -15,6 +15,9 @@ import ProductPage from "./pages/ProductPage/ProductPage";
 import "./styles/style.scss";
 import ProductsStore from "./stores/ProductsStore";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import SurveyPage from "./pages/SurveyPage/SurveyPage";
+import StatisticsPage from "./pages/StatisticsPage/StatisticsPage";
+import CSATStore from "./stores/CSATStore";
 
 const root = document.getElementById("root");
 
@@ -30,10 +33,13 @@ const app = new Tarakan.Application({
   "/profile": ProfilePage,
   "/category/<id>": CategoryPage,
   "/search": SearchPage,
+  "/stats": StatisticsPage,
+  "/csat/<id>": SurveyPage,
 });
 
 // Регистрация хранилищ глобального состояния
 app.addStore("user", UserStore);
 app.addStore("products", ProductsStore);
+app.addStore("csat", CSATStore);
 
 app.render(root);

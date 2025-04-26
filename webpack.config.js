@@ -100,4 +100,9 @@ export default {
         host: '0.0.0.0',
         allowedHosts: ['all']
     },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    }
 };

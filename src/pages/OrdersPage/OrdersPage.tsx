@@ -5,10 +5,12 @@ import Footer from "../../components/Footer/Footer";
 import "./styles.scss";
 import { getAllOrders } from "../../api/order";
 import { AJAXErrors } from "../../api/errors";
+import CSAT from "../CSAT/CSAT";
 
 class OrdersPage extends Tarakan.Component {
     state = {
-        items: []
+        items: [],
+        csat: false,
     }
 
     async fetchOrders() {
@@ -20,12 +22,14 @@ class OrdersPage extends Tarakan.Component {
 
     init() {
         this.fetchOrders();
+        setTimeout(() => this.setState({ csat: true }), 20000);
     }
 
     render() {
         return <div className="orders-page">
             <Header />
             <main className="orders-page__main">
+                {this.state.csat && <CSAT id="Order" />}
                 <h1>Мои заказы</h1>
                 <div className="orders-page__main__content">
                     <div className="orders-page__main__content__list">

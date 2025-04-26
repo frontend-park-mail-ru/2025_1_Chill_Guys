@@ -1,0 +1,74 @@
+.survey {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 16px;
+
+    &__title {
+        &__name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+
+            &__h {
+                font-size: 24px;
+            }
+
+            &__counter {
+                font-size: 18px;
+                color: gray;
+            }
+        }
+
+        &__line {
+            width: 100%;
+            height: 4px;
+            background-color: lightgray;
+
+            &__progress {
+                background-color: var(--secondary-color);
+                height: 4px;
+                transition: width 0.5s;
+            }
+        }
+    }
+
+    &__content {
+        flex: 1 1 auto;
+        padding: 16px;
+
+        &__question {
+            width: 480px;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        &__answer {
+            display: flex;
+            cursor: pointer;
+
+            &__star {
+                flex: 1 1 auto;
+                width: 48px;
+                padding-inline: 8px;
+
+                &.removed {
+                    opacity: 0.3;
+                }
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: space-between;
+        column-gap: 16px;
+        padding: 16px;
+
+        &__skip {}
+
+        &__next {}
+    }
+}
