@@ -20,7 +20,11 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     init() {
-        // console.log(`Category page urlParams: ${this.app.urlParams.id}`)
+        this.fetchProducts();
+        this.fetchCategory();
+    }
+
+    update(newProps: any) {
         this.fetchProducts();
         this.fetchCategory();
     }
@@ -38,7 +42,6 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     async fetchProducts() {
-        // console.log(this.app.urlParams.id);
         const productsResponse = await getProductsByCategory(this.app.urlParams.id);
         const basketResponse = await getBasket();
 
@@ -55,13 +58,7 @@ export default class CategoryPage extends Tarakan.Component {
 
             this.setState({
                 products: products.map((item) => ({
-                    id: item.id,
-                    name: item.name,
-                    image: item.image,
-                    price: item.price,
-                    discountPrice: item.discountPrice,
-                    reviewsCount: item.reviewsCount,
-                    rating: item.rating,
+                    ...item,
                     isInCart: basket.has(item.id),
                 }))
             })
@@ -69,6 +66,9 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     render(props, router) {
+
+        console.log(this.state)
+
         return <div className="container">
             <Header />
             <main className="category-page category-page_flex category-page_flex_column">

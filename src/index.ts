@@ -8,15 +8,20 @@ import PlaceOrderPage from "./pages/PlaceOrderPage/PlaceOrderPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import UserStore from "./stores/UserStore";
 
-import "./styles/style.scss";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import OrdersPage from "./pages/OrdersPage/OrdersPage";
+import ProductPage from "./pages/ProductPage/ProductPage";
+
+import "./styles/style.scss";
+import ProductsStore from "./stores/ProductsStore";
+import SearchPage from "./pages/SearchPage/SearchPage";
 
 const root = document.getElementById("root");
 
 // Создания приложения и настройка страниц
 const app = new Tarakan.Application({
   "/": IndexPage,
+  "/product/<productId>": ProductPage,
   "/signup": RegisterPage,
   "/signin": LoginPage,
   "/cart": CartPage,
@@ -24,9 +29,11 @@ const app = new Tarakan.Application({
   "/place-order": PlaceOrderPage,
   "/profile": ProfilePage,
   "/category/<id>": CategoryPage,
+  "/search": SearchPage,
 });
 
 // Регистрация хранилищ глобального состояния
 app.addStore("user", UserStore);
+app.addStore("products", ProductsStore);
 
 app.render(root);

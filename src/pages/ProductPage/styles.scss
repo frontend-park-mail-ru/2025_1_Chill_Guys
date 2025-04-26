@@ -1,0 +1,170 @@
+.product-page {
+    margin-inline: 24px;
+    row-gap: 24px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    &__main {
+        padding: 24px;
+        background-color: white;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+        min-width: 75%;
+        max-width: 75%;
+        margin-inline: auto;
+
+        &__card {
+            display: flex;
+            column-gap: 24px;
+
+            &__image {
+                line-height: 0;
+
+                img {
+                    width: 300px;
+                }
+            }
+
+            &__details {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                row-gap: 16px;
+
+                &__about {
+                    display: flex;
+                    flex-direction: column;
+
+                    &::before {
+                        content: "Описание";
+                        margin-bottom: 4px;
+                        color: gray;
+                    }
+                }
+
+                &__buyer {
+                    display: flex;
+                    flex-direction: column;
+
+                    &::before {
+                        content: "Продавец";
+                        margin-bottom: 4px;
+                        color: gray;
+                    }
+                }
+
+                &__action {
+                    width: 100%;
+                    display: flex;
+                    margin-top: auto;
+
+                    &__price {
+                        &-default {
+                            font-size: 24px;
+                            color: black;
+                        }
+
+                        &-discount {
+                            font-size: 24px;
+                            color: var(--positive);
+                        }
+                    }
+
+                    &__discount {
+                        font-size: 24px;
+                        color: var(--positive);
+                        margin-left: 8px;
+                    }
+
+                    &__buy {
+                        margin-left: auto;
+                        display: flex;
+                        column-gap: 8px;
+
+                        .no-text {
+                            gap: 0;
+                        }
+
+                        &__in-cart {
+                            background-color: var(--positive) !important;
+                            border: 1px solid var(--positive) !important;
+
+                            &:hover {
+                                background-color: var(--positive-hover) !important;
+                                border: 1px solid var(--positive-hover) !important;
+                            }
+
+                            &:active {
+                                background-color: var(--positive) !important;
+                                border: 1px solid var(--positive) !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &__details {
+            margin-top: 12px;
+        }
+
+        &__description {
+            &__value {
+                margin-top: 4px;
+            }
+        }
+
+        &__reviews {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+
+            &__title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                &__action {
+                    padding: 0;
+                    height: fit-content;
+                }
+            }
+
+            &__content {
+                display: flex;
+                flex-direction: column;
+                row-gap: 12px;
+
+                &__comment {
+                    border: 1px solid lightgray;
+                    padding: 12px;
+                    border-radius: 12px;
+
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 12px;
+
+                    &__info {
+                        color: #555;
+                        display: flex;
+
+                        &__review {
+                            display: flex;
+                            column-gap: 4px;
+                            width: 50px;
+                        }
+
+                        &__date {
+                            margin-left: auto;
+                            display: flex;
+                            column-gap: 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
