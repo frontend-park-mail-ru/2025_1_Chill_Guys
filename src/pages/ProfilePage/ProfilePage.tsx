@@ -11,6 +11,7 @@ import { getMe, updateMe, updatePassword, uploadAvatar } from "../../api/user";
 import { AJAXErrors } from "../../api/errors";
 import { ValidTypes } from "bazaar-validation";
 import { logout } from "../../api/auth";
+import CSAT from "../CSAT/CSAT";
 
 export default class ProfilePage extends Tarakan.Component {
     state: any = {
@@ -19,11 +20,13 @@ export default class ProfilePage extends Tarakan.Component {
         password: "",
         repeatPassword: "",
         successData: false,
-        successPassword: false
+        successPassword: false,
+        csat: false,
     }
 
     init(props) {
         this.fetchProfileInfo();
+        setTimeout(() => this.setState({ csat: true }), 10000);
     }
 
     getFullName() {
@@ -134,6 +137,7 @@ export default class ProfilePage extends Tarakan.Component {
             <Header />
 
             <main className={`profile-page flex`}>
+                {this.state.csat && <CSAT id="Profile" />}
                 <div className={`nav-column flex column`}>
                     <img
                         className={`avatar`}

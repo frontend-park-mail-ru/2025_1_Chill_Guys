@@ -7,11 +7,14 @@ import "./styles.scss";
 import { getProducts } from "../../api/product";
 import { getBasket } from "../../api/basket";
 import { AJAXErrors } from "../../api/errors";
+import SurveyPage from "../SurveyPage/SurveyPage";
+import CSAT from "../CSAT/CSAT";
 
 class IndexPage extends Tarakan.Component {
 
     state = {
         products: [],
+        csat: false
     }
 
     async fetchProducts() {
@@ -46,13 +49,14 @@ class IndexPage extends Tarakan.Component {
 
     init() {
         this.fetchProducts();
+        setTimeout(() => this.setState({ csat: true }), 10000);
     }
 
     render(props, router) {
         return <div className={`container`}>
             <Header />
-
             <main className={`index-page index-page_flex index-page_flex_column`}>
+                {this.state.csat && <CSAT id="Mainpage" />}
                 <h1 className={`h-reset index-page__main-h1`}>Весенние хиты</h1>
                 <div className={`index-page__cards-container`}>
                     {

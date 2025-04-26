@@ -49,7 +49,7 @@ export async function getProducts(): Promise<{ code: AJAXErrors, products?: Prod
 }
 
 export async function getSearchResult(searchString: string): Promise<{ code: AJAXErrors, data?: SearchResult }> {
-    const response = await ajax.post("/suggestions", {
+    const response = await ajax.post("suggestions", {
         sub_string: searchString,
     });
 
@@ -62,7 +62,7 @@ export async function getSearchResult(searchString: string): Promise<{ code: AJA
 }
 
 export async function getSearchResultItems(searchString: string): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
-    const response = await ajax.post("/search", {
+    const response = await ajax.post("search", {
         sub_string: searchString,
     });
 

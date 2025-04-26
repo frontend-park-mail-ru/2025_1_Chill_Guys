@@ -155,8 +155,13 @@ class ProductCard extends Tarakan.Component {
                     iconSrc={`${this.state.isInCart ? '' : CardButtonIcon}`}
                     title={this.state.isInCart ? 'В корзине' : 'В корзину'}
                     onClick={
-                        () =>
-                            this.state.isInCart ? router.navigateTo('/cart') : this.handleAddToCart(props.id)
+                        () => {
+                            if (this.state.isInCart) {
+                                router.navigateTo('/cart');
+                            } else {
+                                this.handleAddToCart(props.id)
+                            }
+                        }
                     }
                 />
             </div>
