@@ -26,7 +26,7 @@ export default class ProfilePage extends Tarakan.Component {
 
     init(props) {
         this.fetchProfileInfo();
-        setTimeout(() => this.setState({ csat: true }), 20000);
+        setTimeout(() => this.setState({ csat: true }), 10000);
     }
 
     getFullName() {

@@ -61,10 +61,10 @@ class SurveyPage extends Tarakan.Component {
         });
     }
 
-    async sendSurvey() {
+    async sendSurvey(f) {
         const code = await sendSurvey(this.state.surveyId, [...this.state.answers, {
             questionId: this.state.questions[this.state.questionIndex].questionId,
-            value: this.state.starCountSelected,
+            value: f ? 0 : this.state.starCountSelected,
         }]);
         if (code === AJAXErrors.NoError) {
             this.setState({
@@ -138,7 +138,7 @@ class SurveyPage extends Tarakan.Component {
                         if (this.state.questionIndex !== this.state.questionCount - 1) {
                             this.skipQuestion();
                         } else {
-                            this.sendSurvey();
+                            this.sendSurvey(true);
                         }
                     }}
                 />}
@@ -153,7 +153,7 @@ class SurveyPage extends Tarakan.Component {
                                 if (this.state.questionIndex !== this.state.questionCount - 1) {
                                     this.nextQuestion();
                                 } else {
-                                    this.sendSurvey();
+                                    this.sendSurvey(false);
                                 }
                             }}
                         />
