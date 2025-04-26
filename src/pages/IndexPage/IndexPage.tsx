@@ -49,7 +49,7 @@ class IndexPage extends Tarakan.Component {
 
     init() {
         this.fetchProducts();
-        setTimeout(() => this.setState({ csat: true }), 20000);
+        setTimeout(() => this.setState({ csat: true }), 10000);
     }
 
     render(props, router) {

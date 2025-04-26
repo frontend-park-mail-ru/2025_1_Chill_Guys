@@ -22,7 +22,7 @@ class OrdersPage extends Tarakan.Component {
 
     init() {
         this.fetchOrders();
-        setTimeout(() => this.setState({ csat: true }), 20000);
+        setTimeout(() => this.setState({ csat: true }), 10000);
     }
 
     render() {

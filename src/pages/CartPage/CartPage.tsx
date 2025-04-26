@@ -94,7 +94,7 @@ class CartPage extends Tarakan.Component {
 
     init() {
         this.fetchBasket();
-        setTimeout(() => this.setState({ csatString: true }), 20000);
+        setTimeout(() => this.setState({ csatString: true }), 10000);
     }
 
     render() {
