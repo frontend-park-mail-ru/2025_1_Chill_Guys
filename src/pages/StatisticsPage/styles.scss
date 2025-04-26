@@ -1,0 +1,146 @@
+.stats-page {
+    margin-inline: 24px;
+    row-gap: 24px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    &__main {
+        padding: 24px;
+        background-color: white;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+        width: 100%;
+        margin-inline: auto;
+
+        &__h {
+            flex: 0 1 auto;
+        }
+
+        &__result {
+            flex: 1 1 auto;
+            display: flex;
+            column-gap: 16px;
+
+            &__list {
+                padding-right: 16px;
+                border-right: 2px solid lightgray;
+
+                &__h {
+                    margin-bottom: 8px;
+                    font-size: 24px;
+                    color: gray;
+                }
+
+                &__items {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 8px;
+
+                    &__item {
+                        width: fit-content;
+                        height: fit-content;
+                        padding: 0;
+                    }
+                }
+            }
+
+            &__survey {
+                &__h {
+                    margin-bottom: 8px;
+                }
+
+                &__description {
+                    margin-bottom: 16px;
+                }
+
+                hr {
+                    border: 1px solid lightgray;
+                    margin-block: 8px;
+                }
+
+                &__questions {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 16px;
+
+                    &__t {
+                        color: gray;
+                    }
+
+                    &__actions {
+                        display: flex;
+                        column-gap: 8px;
+
+                        &__b {
+                            width: 40px;
+                        }
+
+                        &__b-selected {
+                            width: 40px;
+                            background-color: var(--positive);
+                            border: 1px solid var(--positive);
+
+                            &:hover {
+                                background-color: var(--positive-hover) !important;
+                                border: 1px solid var(--positive-hover) !important;
+                            }
+
+                            &:active {
+                                background-color: var(--positive) !important;
+                                border: 1px solid var(--positive) !important;
+                            }
+
+                        }
+                    }
+                }
+
+                &__question {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 16px;
+                    margin-bottom: 8px;
+
+                    &__t {
+                        color: gray;
+                    }
+
+                    &-result {
+                        &__t {
+                            color: gray;
+                            margin-bottom: 8px;
+                        }
+
+                        &__value {
+                            display: flex;
+                            flex-direction: column;
+                            row-gap: 8px;
+
+                            &__c {
+                                display: flex;
+                                column-gap: 8px;
+                                align-items: center;
+                            }
+                        }
+
+                        &__s {
+                            margin-top: 16px;
+                            margin-bottom: 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.stars {
+    display: flex;
+    column-gap: 8px;
+
+    .star {
+        width: 32px;
+    }
+}

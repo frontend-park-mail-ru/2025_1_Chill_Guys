@@ -28,6 +28,7 @@ import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover
 import { getAllCategories } from "../../api/categories";
 import { AJAXErrors } from "../../api/errors";
 import { getSearchResult, getSearchResultItems } from "../../api/product";
+import CSAT from "../../pages/CSAT/CSAT";
 
 class Header extends Tarakan.Component {
     init() {
@@ -90,6 +91,7 @@ class Header extends Tarakan.Component {
 
     render(props: any, app: any) {
         return <header className="header header_light">
+            {this.state.csatString && <CSAT id={this.state.csatString} onEnd={() => this.setState({ csatString: "" })} />}
             <div className="header__nav">
                 <div className="header__nav__row header__nav__row_main">
                     <img

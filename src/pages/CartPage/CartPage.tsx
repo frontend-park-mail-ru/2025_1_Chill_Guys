@@ -14,6 +14,7 @@ import Footer from "../../components/Footer/Footer";
 import { AJAXErrors } from "../../api/errors";
 import { getBasket, removeFromBasket, updateProductQuantity } from "../../api/basket";
 import { saveOrderLocal } from "../../api/order";
+import CSAT from "../CSAT/CSAT";
 
 class CartPage extends Tarakan.Component {
 
@@ -21,6 +22,7 @@ class CartPage extends Tarakan.Component {
         items: [],
         total: 0,
         discount: 0,
+        csatString: "",
     }
 
     async fetchBasket() {
@@ -92,12 +94,14 @@ class CartPage extends Tarakan.Component {
 
     init() {
         this.fetchBasket();
+        setTimeout(() => this.setState({ csatString: true }), 20000);
     }
 
     render() {
         return <div className="cart-page">
             <Header />
             <main>
+                {this.state.csatString && <CSAT id="Cart" />}
                 <h1>Моя корзина</h1>
                 <div className="content">
                     <div className="content__list">

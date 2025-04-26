@@ -27,7 +27,7 @@ export async function getUserAddresses(): Promise<{ code: AJAXErrors, addresses?
     const addresses: UserAddress[] = addressesRaw.addresses.map((address: any) => ({
         id: address.id,
         label: address.label,
-        addressString: address.addressString,
+        addressString: address.addressString ?? address.AddressString,
         coordinate: address.coordinate,
     }));
 

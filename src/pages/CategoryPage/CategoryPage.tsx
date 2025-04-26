@@ -8,6 +8,7 @@ import { getAllCategories } from "../../api/categories";
 import ProductCard from "../../components/ProductCard/ProductCard";
 
 import "./styles.scss";
+import CSAT from "../CSAT/CSAT";
 
 export default class CategoryPage extends Tarakan.Component {
 
@@ -16,12 +17,14 @@ export default class CategoryPage extends Tarakan.Component {
         category: {
             id: undefined,
             name: undefined,
-        }
+        },
+        csat: false,
     }
 
     init() {
         this.fetchProducts();
         this.fetchCategory();
+        setTimeout(() => this.setState({ csat: true }), 20000);
     }
 
     update(newProps: any) {
@@ -67,10 +70,9 @@ export default class CategoryPage extends Tarakan.Component {
 
     render(props, router) {
 
-        console.log(this.state)
-
         return <div className="container">
             <Header />
+            {this.state.csat && <CSAT id="Category" />}
             <main className="category-page category-page_flex category-page_flex_column">
                 <h1 className="h-reset category-page__main-h1">{this.state.category.name ?? "Товары"}</h1>
                 <div className="category-page__cards-container">
