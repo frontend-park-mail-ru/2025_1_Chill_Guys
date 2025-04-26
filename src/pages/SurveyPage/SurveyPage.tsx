@@ -55,7 +55,7 @@ class SurveyPage extends Tarakan.Component {
             starCountHover: 0,
             starCountSelected: 0,
             answers: [...this.state.answers, {
-                questionId: this.state.questions[this.state.questionIndex].id,
+                questionId: this.state.questions[this.state.questionIndex].questionId,
                 value: 0,
             }]
         });
