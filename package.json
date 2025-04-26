@@ -24,9 +24,8 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys#readme",
   "dependencies": {
     "bazaar-ajax": "^1.1.13",
-    "bazaar-tarakan": "^1.0.8",
+    "bazaar-tarakan": "^1.0.56",
     "bazaar-validation": "^1.2.1",
-    "express": "^4.21.2",
     "json5": "^2.2.3",
     "serve-favicon": "^2.5.0"
   },
@@ -43,6 +42,7 @@
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
+    "express": "^5.1.0",
     "file-loader": "^6.2.0",
     "globals": "^16.0.0",
     "handlebars": "^4.7.8",
