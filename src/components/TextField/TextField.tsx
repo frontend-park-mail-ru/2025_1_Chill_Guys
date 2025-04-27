@@ -63,6 +63,8 @@ class TextField extends Tarakan.Component {
         const title = props.fieldName ?? "";
         const isDisabled = props.isDisabled ?? false;
 
+        console.log(props);
+
         return title ?
             <div className={`textField_title ${otherClasses}`.trim()}>
                 {title && <h3 className="textField_title__title">{title}</h3>}
@@ -76,7 +78,7 @@ class TextField extends Tarakan.Component {
                         onFocus={() => this.handleFocus()}
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
-
+                        maxLength={props.maxLength ?? ""}
                     />
                     {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                         <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
@@ -93,7 +95,7 @@ class TextField extends Tarakan.Component {
                     onFocus={() => this.handleFocus()}
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
-                    maxlength={props.maxLength ?? ""}
+                    maxLength={props.maxLength ?? ""}
                 />
                 {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                     <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />

@@ -197,13 +197,14 @@ export default class ProfilePage extends Tarakan.Component {
                                     value={`${this.state.name}`}
                                     onEnd={(ok, v) => this.handleChange("name", ok, v)}
                                     validType={ValidTypes.NameValid}
-                                    maxLength={20}
+                                    maxLength={"20"}
                                 />
 
                                 <TextField
                                     fieldName='Фамилия'
                                     value={`${this.state.surname}`}
                                     onEnd={(ok: any, v: any) => this.handleChange("surname", ok, v)}
+                                    validType={ValidTypes.SurnameValid}
                                     maxLength={20}
                                 />
 
@@ -213,7 +214,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     disabled={"disabled"}
                                     onEnd={(ok: any, v: any) => this.handleChange("phoneNumber", ok, v)}
                                     validType={ValidTypes.TelephoneValid}
-                                    title="+7**********"
+                                    title="Введите номер телефона"
                                     maxLength={20}
                                 />
                                 <div style="display: flex; justify-content: space-between; align-items: center">
