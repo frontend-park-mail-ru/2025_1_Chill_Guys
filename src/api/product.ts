@@ -28,7 +28,7 @@ export interface SearchFullResult {
 }
 
 export async function getProducts(): Promise<{ code: AJAXErrors, products?: Product[] }> {
-    const response = await ajax.get("products");
+    const response = await ajax.get("products/0");
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };
@@ -62,7 +62,7 @@ export async function getSearchResult(searchString: string): Promise<{ code: AJA
 }
 
 export async function getSearchResultItems(searchString: string): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
-    const response = await ajax.post("search", {
+    const response = await ajax.post("search/0", {
         sub_string: searchString,
     });
 
@@ -129,7 +129,7 @@ export function getProductImagePath(product: Product): string {
 }
 
 export async function getProductsByCategory(id: number): Promise<{ code: AJAXErrors, products?: Product[] }> {
-    const response = await ajax.get(`products/category/${id}`);
+    const response = await ajax.get(`products/category/${id}/0`);
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };
