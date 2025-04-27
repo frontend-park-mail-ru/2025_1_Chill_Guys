@@ -96,7 +96,7 @@ export async function getProductsByIds(productIDs: string[]): Promise<{ code: AJ
 }
 
 export async function getProduct(productId: string): Promise<{ code: AJAXErrors, product?: Product }> {
-    const response = await ajax.get(`products/${productId}`);
+    const response = await ajax.get(`product/${productId}`);
 
     if (response.error) {
         return { code: AJAXErrors.ServerError };
