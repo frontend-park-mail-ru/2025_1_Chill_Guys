@@ -128,6 +128,7 @@ class RegisterPage extends Tarakan.Component {
                                     type: "text",
                                     id: "surname",
                                     title: "Фамилия (необязательно)",
+                                    validType: ValidTypes.SurnameValid
                                 },
                                 {
                                     type: "email",

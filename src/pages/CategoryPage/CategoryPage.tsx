@@ -9,6 +9,7 @@ import ProductCard from "../../components/ProductCard/ProductCard";
 
 import "./styles.scss";
 import CSAT from "../CSAT/CSAT";
+import Alert from "../../components/Alert/Alert";
 
 export default class CategoryPage extends Tarakan.Component {
 
@@ -19,6 +20,7 @@ export default class CategoryPage extends Tarakan.Component {
             name: undefined,
         },
         csat: false,
+        showNotAuthAlert: false,
     }
 
     init() {
@@ -74,6 +76,13 @@ export default class CategoryPage extends Tarakan.Component {
             <Header />
             {this.state.csat && <CSAT id="Category" />}
             <main className="category-page category-page_flex category-page_flex_column">
+                {this.state.showNotAuthAlert && <Alert
+                    title="Необходимо войти"
+                    content="Для добавления товаров в корзину, надо сначала войти в профиль."
+                    successButtonTitle="Войти"
+                    onSuccess={() => router.navigateTo("/signin")}
+                    onClose={() => this.setState({ showNotAuthAlert: false })}
+                />}
                 <h1 className="h-reset category-page__main-h1">{this.state.category.name ?? "Товары"}</h1>
                 <div className="category-page__cards-container">
                     {
@@ -88,6 +97,11 @@ export default class CategoryPage extends Tarakan.Component {
                                 reviewsCount={`${item.reviewsCount}`}
                                 mainImageAlt={`Изображение товара ${item.name}`}
                                 mainImageSrc={item.image}
+                                onError={(err: any) => {
+                                    if (err === AJAXErrors.Unauthorized) {
+                                        this.setState({ showNotAuthAlert: true });
+                                    }
+                                }}
                             />
                         )
                     }
