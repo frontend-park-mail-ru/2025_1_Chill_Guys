@@ -26,6 +26,10 @@ class ProductCard extends Tarakan.Component {
         if (code === AJAXErrors.NoError) {
             this.setState({ isInCart: true });
         }
+
+        if (code === AJAXErrors.Unauthorized) {
+            if (this.props.onError) this.props.onError(AJAXErrors.Unauthorized);
+        }
     }
 
     async handleAddProduct() {
@@ -44,6 +48,10 @@ class ProductCard extends Tarakan.Component {
                     quantity: this.props.quantity + 1,
                 }
             });
+        }
+
+        if (code === AJAXErrors.Unauthorized) {
+            if (this.props.onError) this.props.onError(AJAXErrors.Unauthorized);
         }
     }
 

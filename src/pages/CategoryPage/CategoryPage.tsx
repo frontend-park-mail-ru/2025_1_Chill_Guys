@@ -24,7 +24,7 @@ export default class CategoryPage extends Tarakan.Component {
     init() {
         this.fetchProducts();
         this.fetchCategory();
-        setTimeout(() => this.setState({ csat: true }), 10000);
+        // setTimeout => this.setState({ csat: true }), 10000);
     }
 
     update(newProps: any) {

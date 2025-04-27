@@ -68,7 +68,7 @@ class TextField extends Tarakan.Component {
                 {title && <h3 className="textField_title__title">{title}</h3>}
                 <div className="textField">
                     <input
-                        className={`textField__input textField__input_${props.validType ? this.state.status : "default"}`}
+                        className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
                         type={type}
                         placeholder={placeholder}
                         value={defaultValue}
@@ -78,14 +78,14 @@ class TextField extends Tarakan.Component {
                         onBlur={() => this.handleEnterFinish()}
 
                     />
-                    {(props.validType ? this.state.status : "default") !== "default" &&
+                    {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                         <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                     }
                 </div>
             </div>
             : <div className={`textField ${otherClasses}`.trim()}>
                 <input
-                    className={`textField__input textField__input_${props.validType ? this.state.status : "default"}`}
+                    className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
                     type={type}
                     placeholder={placeholder}
                     value={defaultValue}
@@ -95,7 +95,7 @@ class TextField extends Tarakan.Component {
                     onBlur={() => this.handleEnterFinish()}
                     maxlength={props.maxLength ?? ""}
                 />
-                {(props.validType ? this.state.status : "default") !== "default" &&
+                {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                     <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                 }
             </div>
