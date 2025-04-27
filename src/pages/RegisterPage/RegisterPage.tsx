@@ -65,7 +65,7 @@ class RegisterPage extends Tarakan.Component {
                                     this.state.errorKey &&
                                     {
                                         "name": <div className="reg-page__content__title__input-comment__error">
-                                            Введите ваше имя с заглавной буквы. Пожалуста, повторите попытку ввода
+                                            Введите ваше настоящее имя с заглавной буквы. Пожалуста, повторите попытку ввода
                                         </div>,
 
                                         "email": <div className="reg-page__content__title__input-comment__error">

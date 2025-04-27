@@ -105,7 +105,6 @@ class LoginPage extends Tarakan.Component {
                             <Button title="Регистрация" variant="text" onClick={() => router.navigateTo("/signup")} />
                             <Button title="Войти" variant="primary" onClick={() => this.handleClickSignin()} />
                         </div>
-                        <Button className="login-page__content__form__remember-me" title="Забыли пароль?" variant="text" />
                     </div>
                 </div>
             </main>

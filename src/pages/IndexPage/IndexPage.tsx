@@ -9,12 +9,14 @@ import { getBasket } from "../../api/basket";
 import { AJAXErrors } from "../../api/errors";
 import SurveyPage from "../SurveyPage/SurveyPage";
 import CSAT from "../CSAT/CSAT";
+import Alert from "../../components/Alert/Alert";
 
 class IndexPage extends Tarakan.Component {
 
     state = {
         products: [],
-        csat: false
+        csat: false,
+        showNotAuthAlert: false,
     }
 
     async fetchProducts() {
@@ -49,7 +51,7 @@ class IndexPage extends Tarakan.Component {
 
     init() {
         this.fetchProducts();
-        setTimeout(() => this.setState({ csat: true }), 10000);
+        // setTimeout => this.setState({ csat: true }), 10000);
     }
 
     render(props, router) {
@@ -57,6 +59,13 @@ class IndexPage extends Tarakan.Component {
             <Header />
             <main className={`index-page index-page_flex index-page_flex_column`}>
                 {this.state.csat && <CSAT id="Mainpage" />}
+                {this.state.showNotAuthAlert && <Alert
+                    title="Необходимо войти"
+                    content="Для добавления товаров в корзину, надо сначала войти в профиль."
+                    successButtonTitle="Войти"
+                    onSuccess={() => router.navigateTo("/signin")}
+                    onClose={() => this.setState({ showNotAuthAlert: false })}
+                />}
                 <h1 className={`h-reset index-page__main-h1`}>Весенние хиты</h1>
                 <div className={`index-page__cards-container`}>
                     {
@@ -72,6 +81,11 @@ class IndexPage extends Tarakan.Component {
                                     reviewsCount={`${item.reviewsCount}`}
                                     mainImageAlt={`Изображение товара ${item.name}`}
                                     mainImageSrc={item.image}
+                                    onError={(err) => {
+                                        if (err === AJAXErrors.Unauthorized) {
+                                            this.setState({ showNotAuthAlert: true });
+                                        }
+                                    }}
                                 />
                         )
                     }
