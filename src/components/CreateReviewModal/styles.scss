@@ -1,0 +1,97 @@
+@keyframes review-modal-showing-animation {
+    0% {
+        opacity: 0;
+        z-index: 100;
+    }
+
+    100% {
+        opacity: 1;
+        z-index: 100;
+    }
+}
+
+.review-modal {
+    &__tint {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        opacity: 0.3;
+        z-index: 100;
+    }
+
+    &__content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 16px;
+        width: 40%;
+        z-index: 101;
+
+        &__title {
+            padding: 16px;
+            border-bottom: 2px solid lightgray;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &__h {
+                font-size: 20px;
+                font-weight: 900;
+            }
+
+            &__close {
+                line-height: 0;
+
+                &__img {
+                    width: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &__form {
+            padding: 16px;
+            padding-bottom: 0;
+            font-size: 18px;
+
+            &__description {
+                max-width: 100%;
+                width: 100%;
+                margin-top: 16px;
+            }
+
+            &__rating {
+                display: flex;
+                align-items: center;
+                column-gap: 8px;
+
+                &__title {}
+
+                &__value {
+                    line-height: 0;
+
+                    &__star {
+                        flex: 1 1 auto;
+                        width: 38px;
+                        padding-inline: 4px;
+
+                        &.removed {
+                            opacity: 0.3;
+                        }
+                    }
+                }
+            }
+        }
+
+        &__actions {
+            padding: 16px;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}

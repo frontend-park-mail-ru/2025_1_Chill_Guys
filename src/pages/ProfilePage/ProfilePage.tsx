@@ -61,10 +61,10 @@ export default class ProfilePage extends Tarakan.Component {
         if (response.code === AJAXErrors.NoError) {
             this.setState({
                 name: response.data.name,
-                surname: response.data.surname,
-                avatarURL: response.data.imageURL,
+                surname: response.data.surname ?? "",
+                avatarURL: response.data.imageURL ?? "",
                 email: response.data.email,
-                phoneNumber: response.data.phoneNumber,
+                phoneNumber: response.data.phoneNumber ?? "",
             });
         } else {
             this.app.navigateTo("/signin");
