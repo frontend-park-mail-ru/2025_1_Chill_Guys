@@ -76,6 +76,7 @@ class TextField extends Tarakan.Component {
                         onFocus={() => this.handleFocus()}
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
+                        onEnd={(ev) => props.onEnter && props.onEnter(ev)}
                         maxLength={props.maxLength ?? "255"}
                     />
                     {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
@@ -93,6 +94,7 @@ class TextField extends Tarakan.Component {
                     onFocus={() => this.handleFocus()}
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
+                    onEnd={(ev) => props.onEnter && props.onEnter(ev)}
                     maxLength={props.maxLength ?? "255"}
                 />
                 {(props.validType !== undefined ? this.state.status : "default") !== "default" &&

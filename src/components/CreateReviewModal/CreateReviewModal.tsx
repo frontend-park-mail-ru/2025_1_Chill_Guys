@@ -30,7 +30,7 @@ class CreateReviewModal extends Tarakan.Component {
                         Оставить отзыв
                     </div>
                     <div className="review-modal__content__title__close">
-                        <img className="review-modal__content__title__close__img" src={crossIcon} />
+                        <img className="review-modal__content__title__close__img" src={crossIcon} onClick={() => props.onClose()} />
                     </div>
                 </div>
                 <div className="review-modal__content__form">
