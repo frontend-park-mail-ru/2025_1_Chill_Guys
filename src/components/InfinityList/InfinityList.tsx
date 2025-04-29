@@ -10,7 +10,7 @@ class InfinityList extends Tarakan.Component {
             }
         }, {
             root: null,
-            threshold: 0.1, // set offset 0.1 means trigger if atleast 10% of element in viewport
+            threshold: 0.1,
         })
 
         observer.observe(container);

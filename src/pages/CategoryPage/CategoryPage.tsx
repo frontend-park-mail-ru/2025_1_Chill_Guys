@@ -4,7 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import { getProductsByCategory, getSearchResultByFilters } from "../../api/product";
 import { AJAXErrors } from "../../api/errors";
 import { getBasket } from "../../api/basket";
-import { getAllCategories, getSearchCategoryByFilters } from "../../api/categories";
+import { getAllCategories, getCategory, getSearchCategoryByFilters } from "../../api/categories";
 import ProductCard from "../../components/ProductCard/ProductCard";
 
 import CSAT from "../CSAT/CSAT";
@@ -23,7 +23,6 @@ export default class CategoryPage extends Tarakan.Component {
 
 
     init() {
-        this.fetchCategory();
         this.state = {
             products: [],
             category: {
@@ -43,23 +42,21 @@ export default class CategoryPage extends Tarakan.Component {
                 sortType: this.app.queryParams.s ?? "default",
             },
         }
+        this.fetchCategory();
         this.fetchSearchResult();
         // setTimeout => this.setState({ csat: true }), 10000);
     }
 
     update(newProps: any) {
+        console.log(newProps);
         this.fetchCategory();
+        this.fetchSearchResult();
     }
 
     async fetchCategory() {
-        const categories = await getAllCategories();
+        const categories = await getCategory(this.app.urlParams.id);
         if (categories.code === AJAXErrors.NoError) {
-            for (const category of categories.data.categories) {
-                if (category.id === this.app.urlParams.id) {
-                    this.setState({ category: category });
-                    break;
-                }
-            }
+            this.setState({ category: categories.subcategory });
         }
     }
 
@@ -74,13 +71,13 @@ export default class CategoryPage extends Tarakan.Component {
             if (this.state.filters.maxPrice) { request["h"] = this.state.filters.maxPrice }
             if (this.state.filters.sortType) { request["s"] = this.state.filters.sortType }
         }
-        this.app.navigateTo("/category/" + this.state.category.id, request)
+        this.app.navigateTo("/category/" + this.app.urlParams.id, request)
         this.fetchSearchResult();
     }
 
     async fetchSearchResult() {
         const { code, products } = await getSearchCategoryByFilters(
-            this.state.category.id,
+            this.app.urlParams.id,
             this.state.searchString,
             this.state.showFilters
                 ? this.state.filters
@@ -95,8 +92,6 @@ export default class CategoryPage extends Tarakan.Component {
                     basket.add(item.productId);
                 });
             }
-
-            console.log(products);
 
             this.setState({
                 products: products.map((item) => ({

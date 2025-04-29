@@ -25,7 +25,7 @@ import CrossIcon from "../../shared/images/cross-ico.svg";
 
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
-import { getAllCategories } from "../../api/categories";
+import { getAllCategories, getSubCategories } from "../../api/categories";
 import { AJAXErrors } from "../../api/errors";
 import { getSearchResult, getSearchResultItems } from "../../api/product";
 import CSAT from "../../pages/CSAT/CSAT";
@@ -44,6 +44,8 @@ class Header extends Tarakan.Component {
             searchResult: null,
             searchValue: "",
             categories: null,
+            selectedCategory: null,
+            subcategories: null,
         }
 
         this.fetchCategories();
@@ -63,6 +65,16 @@ class Header extends Tarakan.Component {
         this.setState({
             categories: categories.slice(0, 6)
         });
+    }
+
+    async fetchSubcategories(category: any) {
+        const { code, data } = await getSubCategories(category.id);
+        if (code === AJAXErrors.NoError) {
+            this.setState({
+                subcategories: data.subcategories,
+                selectedCategory: category,
+            });
+        }
     }
 
     async fetchSearchResult(ev: any) {
@@ -375,22 +387,34 @@ class Header extends Tarakan.Component {
                             <Button
                                 title={`${item.name}`}
                                 variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                                onClick={() => {
-                                    this.setState({ popUpDisplayed: false })
-                                    app.navigateTo(`/category/${item.id}`);
-                                }}
                                 className="header__pop-up__list__button"
                                 onMouseOver={(e) => {
-                                    // console.log(e.target);
-                                    const categoryH2 = document.getElementById('category-h2');
-                                    categoryH2.innerHTML = e.target.innerHTML;
+                                    if (!this.state.selectedCategory || item.id !== this.state.selectedCategory.id) {
+                                        this.fetchSubcategories(item);
+                                    }
                                 }}
                             />
                         )
                     }
                 </div>
                 <div className="header__pop-up__info-wrapper">
-                    <h2 id="category-h2" className="h2-reset header__pop-up__info-wrapper__category-title">Выберите категорию</h2>
+                    <h2 id="category-h2" className="h2-reset header__pop-up__info-wrapper__category-title">
+                        {this.state.selectedCategory ? this.state.selectedCategory.name : "Выберите категорию"}
+                    </h2>
+                    <div className="header__pop-up__info-wrapper__list">
+                        {this.state.subcategories && this.state.subcategories.map((e) =>
+                            <Button
+                                title={`${e.name}`}
+                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                onClick={() => {
+                                    this.setState({ popUpDisplayed: false })
+                                    app.navigateTo(`/category/${e.id}`);
+                                }}
+                                className="header__pop-up__info-wrapper__list__item"
+                            />
+                        )}
+                    </div>
+
                 </div>
             </div>
         </header >
