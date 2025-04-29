@@ -107,9 +107,49 @@ export default class CategoryPage extends Tarakan.Component {
         }
     }
 
-    render(props, router) {
-        console.log(this.state);
+    handleSearch() {
+        console.log(this.state.searchString)
+        const request = {
+            r: this.state.searchString,
+        };
+        if (this.state.showFilters) {
+            if (this.state.filters.minRating) { request["rt"] = this.state.filters.minRating }
+            if (this.state.filters.minPrice) { request["l"] = this.state.filters.minPrice }
+            if (this.state.filters.maxPrice) { request["h"] = this.state.filters.maxPrice }
+            if (this.state.filters.sortType) { request["s"] = this.state.filters.sortType }
+        }
+        this.app.navigateTo("/category/" + this.state.category.id, request)
+        this.fetchSearchResult();
+    }
 
+    async fetchSearchResult() {
+        const { code, products } = await getSearchCategoryByFilters(
+            this.state.category.id,
+            this.state.searchString,
+            this.state.showFilters
+                ? this.state.filters
+                : {}
+        );
+        const basketResponse = await getBasket();
+        if (code === AJAXErrors.NoError) {
+            let basket = new Set();
+            if (basketResponse.code === AJAXErrors.NoError) {
+                const data = basketResponse.data;
+                data.products.map((item) => {
+                    basket.add(item.productId);
+                });
+            }
+
+            this.setState({
+                products: products.map((item) => ({
+                    ...item,
+                    isInCart: basket.has(item.id),
+                }))
+            })
+        }
+    }
+
+    render(props, router) {
         const searchString = router.queryParams.r ?? "";
 
         const sortType = router.queryParams.s ?? "default";
