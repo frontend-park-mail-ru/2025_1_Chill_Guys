@@ -48,7 +48,6 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     update(newProps: any) {
-        this.fetchProducts();
         this.fetchCategory();
     }
 
@@ -61,30 +60,6 @@ export default class CategoryPage extends Tarakan.Component {
                     break;
                 }
             }
-        }
-    }
-
-    async fetchProducts() {
-        const productsResponse = await getProductsByCategory(this.app.urlParams.id);
-        const basketResponse = await getBasket();
-
-        if (productsResponse.code === AJAXErrors.NoError) {
-            const products = productsResponse.products;
-
-            let basket = new Set();
-            if (basketResponse.code === AJAXErrors.NoError) {
-                const data = basketResponse.data;
-                data.products.map((item) => {
-                    basket.add(item.productId);
-                });
-            }
-
-            this.setState({
-                products: products.map((item) => ({
-                    ...item,
-                    isInCart: basket.has(item.id),
-                }))
-            })
         }
     }
 
@@ -121,6 +96,8 @@ export default class CategoryPage extends Tarakan.Component {
                 });
             }
 
+            console.log(products);
+
             this.setState({
                 products: products.map((item) => ({
                     ...item,
@@ -131,6 +108,8 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     render(props, router) {
+        console.log(this.state);
+
         const searchString = router.queryParams.r ?? "";
 
         const sortType = router.queryParams.s ?? "default";
