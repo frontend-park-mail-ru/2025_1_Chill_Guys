@@ -27,6 +27,13 @@ export interface SearchFullResult {
     products: { products: any[], total: number },
 }
 
+export interface Filters {
+    sortType: string,
+    minPrice: string,
+    maxPrice: string,
+    minRating: number,
+}
+
 export async function getProducts(): Promise<{ code: AJAXErrors, products?: Product[] }> {
     const response = await ajax.get("products/0");
 
@@ -63,6 +70,30 @@ export async function getSearchResult(searchString: string): Promise<{ code: AJA
 
 export async function getSearchResultItems(searchString: string): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
     const response = await ajax.post("search/0", {
+        sub_string: searchString,
+    });
+
+    if (response.error || !response.result.ok) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    const data: SearchFullResult = await response.result.json();
+    return { code: AJAXErrors.NoError, data };
+}
+
+export async function getSearchResultByFilters(searchString: string, filters: Filters): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
+    const request = {};
+
+    if (filters.sortType !== "default") request["sort"] = filters.sortType;
+    if (filters.minPrice !== "") request["min_price"] = filters.minPrice;
+    if (filters.minPrice !== "") request["max_price"] = filters.minPrice;
+    if (filters.minRating !== 0) request["min_rating"] = filters.minRating;
+
+    const query = "?" + Object.entries(request).map((([K, V]) =>
+        `${K}=${encodeURIComponent(V as any)}`
+    )).join("&");
+
+    const response = await ajax.post("search/sort/0" + query, {
         sub_string: searchString,
     });
 

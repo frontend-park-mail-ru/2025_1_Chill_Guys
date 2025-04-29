@@ -4,10 +4,9 @@ import Button from "../Button/Button";
 import crossIcon from "../../shared/images/cross-ico.svg";
 import StarIcon from "../../shared/images/star-ico.svg";
 import StarFilledIcon from "../../shared/images/star-filled-ico.svg";
+import TextArea from "../TextArea/TextArea";
 
 import "./styles.scss";
-import TextField from "../TextField/TextField";
-import TextArea from "../TextArea/TextArea";
 
 class CreateReviewModal extends Tarakan.Component {
     state = {
@@ -30,7 +29,7 @@ class CreateReviewModal extends Tarakan.Component {
                         Оставить отзыв
                     </div>
                     <div className="review-modal__content__title__close">
-                        <img className="review-modal__content__title__close__img" src={crossIcon} />
+                        <img className="review-modal__content__title__close__img" src={crossIcon} onClick={() => props.onClose()} />
                     </div>
                 </div>
                 <div className="review-modal__content__form">

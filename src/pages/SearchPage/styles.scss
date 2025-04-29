@@ -1,0 +1,127 @@
+.search-page {
+    display: flex;
+    flex-direction: column;
+    margin-inline: 24px;
+    row-gap: 24px;
+    height: 100vh;
+
+    &__content {
+        flex: 1 1 auto;
+        background-color: white;
+        border-radius: 12px;
+        padding: 24px;
+
+        &__search {
+            display: flex;
+            column-gap: 16px;
+            padding-bottom: 18px;
+
+            &__btn {
+                min-width: 250px;
+            }
+        }
+
+        &__sep {
+            border: 1px solid lightgray;
+            margin-bottom: 24px;
+        }
+
+        &__filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--input-m-font-size);
+            margin-bottom: 24px;
+
+            &>div {
+                display: flex;
+                align-items: center;
+            }
+
+            &__sep {
+                align-self: normal;
+                border: 1px solid lightgray;
+            }
+
+            &__sort-title {
+                margin-right: 12px;
+            }
+
+            &__min-price-title {
+                width: fit-content;
+                margin-right: 12px;
+            }
+
+            &__min-price {
+                width: calc(6em);
+            }
+
+            &__max-price-title {
+                width: fit-content;
+                margin-inline: 12px;
+            }
+
+            &__max-price {
+                width: calc(6em);
+            }
+
+            &__rating-title {
+                margin-right: 8px;
+            }
+
+            &__rating-value {
+                line-height: 0;
+            }
+
+            &__apply-btn {}
+        }
+
+        &__categories {
+            margin-bottom: 24px;
+
+            &__h {
+                margin-bottom: 12px;
+            }
+
+            &__list {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+
+                &__item {
+                    justify-self: flex-start;
+                    padding-inline: 0;
+                }
+            }
+        }
+
+        &__products {
+            &__h {
+                margin-bottom: 12px;
+            }
+
+            &__list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                max-width: 100%;
+                gap: 16px;
+            }
+        }
+    }
+}
+
+.tf-button {
+    display: flex;
+    flex: 1 1 auto;
+
+    &__tf {
+        .textField__input {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    &__btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

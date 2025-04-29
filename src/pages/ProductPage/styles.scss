@@ -127,6 +127,17 @@
                 justify-content: space-between;
                 align-items: center;
 
+                h2 {
+                    display: flex;
+                    align-items: center;
+                }
+
+                &__star {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 4px;
+                }
+
                 &__action {
                     padding: 0;
                     height: fit-content;
@@ -188,6 +199,12 @@
                             }
                         }
                     }
+                }
+
+                &__more {
+                    align-self: flex-start;
+                    padding: 0;
+                    height: fit-content;
                 }
             }
         }

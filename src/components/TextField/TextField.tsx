@@ -76,7 +76,9 @@ class TextField extends Tarakan.Component {
                         onFocus={() => this.handleFocus()}
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
+                        onEnd={(ev) => props.onEnter && props.onEnter(ev)}
                         maxLength={props.maxLength ?? "255"}
+                        cols={props.cols}
                     />
                     {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                         <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
@@ -93,7 +95,9 @@ class TextField extends Tarakan.Component {
                     onFocus={() => this.handleFocus()}
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
+                    onEnd={(ev) => props.onEnter && props.onEnter(ev)}
                     maxLength={props.maxLength ?? "255"}
+                    cols={props.cols}
                 />
                 {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                     <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />

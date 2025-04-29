@@ -25,6 +25,7 @@ class ProductPage extends Tarakan.Component {
         comments: [],
         addReviewModal: false,
         showNotAuthAlert: false,
+        showComments: false,
     }
 
     async fetchProduct() {
@@ -219,7 +220,10 @@ class ProductPage extends Tarakan.Component {
                 </div>
                 <div className="product-page__main__reviews">
                     <div className="product-page__main__reviews__title">
-                        <h2>Отзывы</h2>
+                        <h2>Отзывы (<img
+                            className="product-page__main__reviews__title__star"
+                            src={StarFilledIcon}
+                        />{parseFloat(this.state.product?.rating).toFixed(2)})</h2>
                         {this.state.showNotAuthAlert && <Alert
                             title="Необходимо войти"
                             content="Чтобы оставить отзыв, надо сначала войти в профиль."
@@ -227,7 +231,7 @@ class ProductPage extends Tarakan.Component {
                             onSuccess={() => app.navigateTo("/signin")}
                             onClose={() => this.setState({ showNotAuthAlert: false })}
                         />}
-                        {this.state.addReviewModal && <CreateReviewModal onSend={(D: any, R: any) => this.sendReview(D, R)} />}
+                        {this.state.addReviewModal && <CreateReviewModal onSend={(D: any, R: any) => this.sendReview(D, R)} onClose={() => this.setState({ addReviewModal: false })} />}
                         <Button
                             className="product-page__main__reviews__title__action"
                             title="Оставить отзыв"
@@ -244,7 +248,7 @@ class ProductPage extends Tarakan.Component {
                     <div className="product-page__main__reviews__content">
                         {this.state.comments.length === 0
                             ? "У данного товара пока нет отзывов"
-                            : this.state.comments.map((comment: any) =>
+                            : (this.state.showComments ? this.state.comments : this.state.comments.slice(0, 3)).map((comment: any) =>
                                 <div className="product-page__main__reviews__content__comment">
                                     <div className="product-page__main__reviews__content__comment__info">
                                         <span className="product-page__main__reviews__content__comment__info__avatar">
@@ -287,7 +291,16 @@ class ProductPage extends Tarakan.Component {
                             )
                         }
                     </div>
-                    <InfinityList onShow={() => this.fetchReviews()} />
+                    {
+                        this.state.showComments
+                            ? <InfinityList onShow={() => this.fetchReviews()} />
+                            : <Button
+                                variant="text"
+                                title="Показать все комментарии"
+                                className="product-page__main__reviews__content__more"
+                                onClick={() => this.setState({ showComments: true })}
+                            />
+                    }
                 </div>
             </main>
             <Footer />
