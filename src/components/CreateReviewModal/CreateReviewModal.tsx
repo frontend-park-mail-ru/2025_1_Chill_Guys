@@ -8,7 +8,6 @@ import TextArea from "../TextArea/TextArea";
 
 import "./styles.scss";
 
-
 class CreateReviewModal extends Tarakan.Component {
     state = {
         description: "",
