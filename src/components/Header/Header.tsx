@@ -121,9 +121,12 @@ class Header extends Tarakan.Component {
                                 className={`width header__nav__row_main__search-field-wrapper__body__field`}
                                 onChange={(ev: any) => this.fetchSearchResult(ev)}
                                 onFocus={() => this.setState({ searchMenuOpened: true })}
-                                onEnter={() => app.navigateTo("/search", {
-                                    r: this.state.searchValue
-                                })}
+                                onEnter={() => {
+                                    this.setState({ searchMenuOpened: false });
+                                    app.navigateTo("/search", {
+                                        r: this.state.searchValue
+                                    })
+                                }}
                                 onEnd={() => {
                                     if (this.state.searchResult === "") {
                                         this.setState({ searchMenuOpened: false })

@@ -14,11 +14,96 @@
         &__search {
             display: flex;
             column-gap: 16px;
-            border-bottom: 2px solid var(--input-background-color);
-            padding-bottom: 24px;
+            padding-bottom: 18px;
 
             &__btn {
-                min-width: fit-content;
+                min-width: 250px;
+            }
+        }
+
+        &__sep {
+            border: 1px solid lightgray;
+            margin-bottom: 24px;
+        }
+
+        &__filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--input-m-font-size);
+            margin-bottom: 24px;
+
+            &>div {
+                display: flex;
+                align-items: center;
+            }
+
+            &__sep {
+                align-self: normal;
+                border: 1px solid lightgray;
+            }
+
+            &__sort-title {
+                margin-right: 12px;
+            }
+
+            &__min-price-title {
+                width: fit-content;
+                margin-right: 12px;
+            }
+
+            &__min-price {
+                width: calc(6em);
+            }
+
+            &__max-price-title {
+                width: fit-content;
+                margin-inline: 12px;
+            }
+
+            &__max-price {
+                width: calc(6em);
+            }
+
+            &__rating-title {
+                margin-right: 8px;
+            }
+
+            &__rating-value {
+                line-height: 0;
+            }
+
+            &__apply-btn {}
+        }
+
+        &__categories {
+            margin-bottom: 24px;
+
+            &__h {
+                margin-bottom: 12px;
+            }
+
+            &__list {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+
+                &__item {
+                    justify-self: flex-start;
+                    padding-inline: 0;
+                }
+            }
+        }
+
+        &__products {
+            &__h {
+                margin-bottom: 12px;
+            }
+
+            &__list {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                max-width: 100%;
+                gap: 16px;
             }
         }
     }

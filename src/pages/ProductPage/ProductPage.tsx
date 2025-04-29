@@ -220,10 +220,10 @@ class ProductPage extends Tarakan.Component {
                 </div>
                 <div className="product-page__main__reviews">
                     <div className="product-page__main__reviews__title">
-                        <h2>Отзывы ({this.state.product?.rating} <img
+                        <h2>Отзывы (<img
                             className="product-page__main__reviews__title__star"
                             src={StarFilledIcon}
-                        />)</h2>
+                        />{parseFloat(this.state.product?.rating).toFixed(2)})</h2>
                         {this.state.showNotAuthAlert && <Alert
                             title="Необходимо войти"
                             content="Чтобы оставить отзыв, надо сначала войти в профиль."
