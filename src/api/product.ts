@@ -86,7 +86,8 @@ export async function getSearchResultByFilters(searchString: string, filters: Fi
 
     if (filters.sortType !== "default") request["sort"] = filters.sortType;
     if (filters.minPrice !== "") request["min_price"] = filters.minPrice;
-    if (filters.minPrice !== "") request["max_price"] = filters.minPrice;
+    if (filters.minPrice !== "") request["max_price"] = filters.maxPrice;
+
     if (filters.minRating !== 0) request["min_rating"] = filters.minRating;
 
     const query = "?" + Object.entries(request).map((([K, V]) =>

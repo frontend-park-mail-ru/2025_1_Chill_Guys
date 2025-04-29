@@ -48,7 +48,6 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     update(newProps: any) {
-        this.fetchProducts();
         this.fetchCategory();
     }
 
@@ -64,13 +63,31 @@ export default class CategoryPage extends Tarakan.Component {
         }
     }
 
-    async fetchProducts() {
-        const productsResponse = await getProductsByCategory(this.app.urlParams.id);
+    handleSearch() {
+        console.log(this.state.searchString)
+        const request = {
+            r: this.state.searchString,
+        };
+        if (this.state.showFilters) {
+            if (this.state.filters.minRating) { request["rt"] = this.state.filters.minRating }
+            if (this.state.filters.minPrice) { request["l"] = this.state.filters.minPrice }
+            if (this.state.filters.maxPrice) { request["h"] = this.state.filters.maxPrice }
+            if (this.state.filters.sortType) { request["s"] = this.state.filters.sortType }
+        }
+        this.app.navigateTo("/category/" + this.state.category.id, request)
+        this.fetchSearchResult();
+    }
+
+    async fetchSearchResult() {
+        const { code, products } = await getSearchCategoryByFilters(
+            this.state.category.id,
+            this.state.searchString,
+            this.state.showFilters
+                ? this.state.filters
+                : {}
+        );
         const basketResponse = await getBasket();
-
-        if (productsResponse.code === AJAXErrors.NoError) {
-            const products = productsResponse.products;
-
+        if (code === AJAXErrors.NoError) {
             let basket = new Set();
             if (basketResponse.code === AJAXErrors.NoError) {
                 const data = basketResponse.data;
@@ -78,6 +95,8 @@ export default class CategoryPage extends Tarakan.Component {
                     basket.add(item.productId);
                 });
             }
+
+            console.log(products);
 
             this.setState({
                 products: products.map((item) => ({
