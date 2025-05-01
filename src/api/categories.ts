@@ -2,16 +2,33 @@ import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 import { Filters } from "./product";
 
+export interface Category {
+    id: string,
+    name: string,
+}
+
+
 export interface Categories {
     total: number
-
     categories: Category[],
 }
 
-export interface Category {
+export interface SubCategory {
     id: string,
-
     name: string,
+}
+
+export interface SubCategories {
+    total: number
+    subcategories: Category[],
+}
+
+export async function getCategory(subcategoryId: string): Promise<{ code: AJAXErrors, subcategory?: SubCategory }> {
+    const response = await ajax.get(`subcategory/${subcategoryId}`);
+    if (response.error || !response.result.ok) {
+        return { code: AJAXErrors.ServerError };
+    }
+    return { code: AJAXErrors.NoError, subcategory: await response.result.json() }
 }
 
 export async function getAllCategories(): Promise<{ code: AJAXErrors, data?: Categories }> {
@@ -38,6 +55,24 @@ export async function getAllCategories(): Promise<{ code: AJAXErrors, data?: Cat
         }))
     };
     return { code: AJAXErrors.NoError, data: categories };
+}
+
+export async function getSubCategories(categoryId: string): Promise<{ code: AJAXErrors, data?: SubCategories }> {
+    const response = await ajax.get(`categories/${categoryId}`);
+
+    if (response.error || !response.result.ok) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    const rawData = await response.result.json();
+    const subCategories = {
+        total: rawData.total,
+        subcategories: rawData.categories.map((subcategory: any) => ({
+            id: subcategory.id,
+            name: subcategory.name,
+        }))
+    };
+    return { code: AJAXErrors.NoError, data: subCategories };
 }
 
 export async function getSearchCategoryByFilters(categoryId: string, searchString: string, filters: Filters): Promise<{ code: AJAXErrors, products?: any[] }> {

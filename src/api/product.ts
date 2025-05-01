@@ -81,7 +81,7 @@ export async function getSearchResultItems(searchString: string): Promise<{ code
     return { code: AJAXErrors.NoError, data };
 }
 
-export async function getSearchResultByFilters(searchString: string, filters: Filters): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
+export async function getSearchResultByFilters(searchString: string, offset: number, filters: Filters): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
     const request = {};
 
     if (filters.sortType !== "default") request["sort"] = filters.sortType;
@@ -94,7 +94,7 @@ export async function getSearchResultByFilters(searchString: string, filters: Fi
         `${K}=${encodeURIComponent(V as any)}`
     )).join("&");
 
-    const response = await ajax.post("search/sort/0" + query, {
+    const response = await ajax.post("search/sort/" + offset + query, {
         sub_string: searchString,
     });
 

@@ -90,20 +90,40 @@
         gap: 28px;
 
         &__info-wrapper {
+            flex: 1 1 auto;
             display: flex;
+            flex-direction: column;
+            align-items: flex-start;
 
             &__category-title {
+                flex: 0 1 auto;
                 font-size: 26px;
+            }
+
+            &__list {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+                overflow: auto;
+                column-gap: 32px;
+
+                &__item {
+                    padding: 0;
+                    width: fit-content;
+                    padding-block: 16px;
+                }
             }
         }
 
         &__list {
+            flex: 0 1 auto;
             display: flex;
             flex-direction: column;
             row-gap: 14px;
             text-align: left;
             border-right: 2px solid lightgray;
             padding-right: 28px;
+            overflow: auto;
 
             &__button {
                 padding-inline: 0;

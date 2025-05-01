@@ -13,6 +13,7 @@ import "./styles.scss";
 import { getSearchResultByFilters } from "../../api/product";
 import { AJAXErrors } from "../../api/errors";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import InfinityList from "../../components/InfinityList/InfinityList";
 
 
 class SearchPage extends Tarakan.Component {
@@ -34,6 +35,7 @@ class SearchPage extends Tarakan.Component {
     async fetchSearchResult() {
         const { code, data } = await getSearchResultByFilters(
             this.state.searchString,
+            0,
             this.state.showFilters
                 ? this.state.filters
                 : {}
@@ -41,7 +43,24 @@ class SearchPage extends Tarakan.Component {
         if (code === AJAXErrors.NoError) {
             this.setState({
                 categories: data.categories.categories,
-                products: data.products.products
+                products: data.products.products,
+                productsOffset: this.state.productsOffset + data.products.products.length
+            });
+        }
+    }
+
+    async fetchNext() {
+        const { code, data } = await getSearchResultByFilters(
+            this.state.searchString,
+            this.state.productsOffset,
+            this.state.showFilters
+                ? this.state.filters
+                : {}
+        );
+        if (code === AJAXErrors.NoError) {
+            this.setState({
+                products: [...this.state.products, ...data.products.products],
+                productsOffset: this.state.productsOffset + data.products.products.length
             });
         }
     }
@@ -57,6 +76,7 @@ class SearchPage extends Tarakan.Component {
                 maxPrice: this.app.queryParams.h ?? "",
                 sortType: this.app.queryParams.s ?? "default",
             },
+            productsOffset: 0,
             products: [],
             categories: []
         }
@@ -249,6 +269,9 @@ class SearchPage extends Tarakan.Component {
                             )
                         }
                     </div> : "По вашему запросу товары не найдены"}
+                    {this.state.products.length > 0 &&
+                        <InfinityList onShow={() => this.fetchNext()} />
+                    }
                 </div>
             </main>
             <Footer />
