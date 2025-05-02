@@ -1,7 +1,81 @@
+@media screen and (max-width: 720px) {
+    .search-page {
+        margin-inline: 2px;
+
+        &__content {
+            padding: 12px 2px 12px;
+
+            &__search {
+                display: flex;
+                flex-direction: column;
+            }
+
+            &__filters {
+                flex-direction: column;
+                gap: 20px;
+
+                .select {
+                    width: auto;
+                }
+            }
+
+            &__categories {
+                &__list {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            &__products {
+
+                &__list {
+                    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .search-page {
+        &__content {
+            &__filters {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .search-page {
+        margin-inline: 24px;
+
+        &__content {
+            padding: 24px;
+
+            &__search {
+                display: flex;
+            }
+
+            &__categories {
+                &__list {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+
+            &__products {
+
+                &__list {
+                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                }
+            }
+        }
+    }
+}
+
 .search-page {
     display: flex;
     flex-direction: column;
-    margin-inline: 24px;
     row-gap: 24px;
     height: 100vh;
 
@@ -9,11 +83,9 @@
         flex: 1 1 auto;
         background-color: white;
         border-radius: 12px;
-        padding: 24px;
 
         &__search {
-            display: flex;
-            column-gap: 16px;
+            gap: 16px;
             padding-bottom: 18px;
 
             &__btn {
@@ -85,7 +157,6 @@
 
             &__list {
                 display: grid;
-                grid-template-columns: repeat(4, 1fr);
 
                 &__item {
                     justify-self: flex-start;
@@ -102,7 +173,6 @@
 
             &__list {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                 max-width: 100%;
                 gap: 16px;
             }
