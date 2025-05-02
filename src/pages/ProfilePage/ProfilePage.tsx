@@ -26,7 +26,7 @@ export default class ProfilePage extends Tarakan.Component {
 
     init(props) {
         this.fetchProfileInfo();
-        setTimeout(() => this.setState({ csat: true }), 10000);
+        // setTimeout => this.setState({ csat: true }), 10000);
     }
 
     getFullName() {
@@ -61,10 +61,10 @@ export default class ProfilePage extends Tarakan.Component {
         if (response.code === AJAXErrors.NoError) {
             this.setState({
                 name: response.data.name,
-                surname: response.data.surname,
-                avatarURL: response.data.imageURL,
+                surname: response.data.surname ?? "",
+                avatarURL: response.data.imageURL ?? "",
                 email: response.data.email,
-                phoneNumber: response.data.phoneNumber,
+                phoneNumber: response.data.phoneNumber ?? "",
             });
         } else {
             this.app.navigateTo("/signin");
@@ -197,13 +197,14 @@ export default class ProfilePage extends Tarakan.Component {
                                     value={`${this.state.name}`}
                                     onEnd={(ok, v) => this.handleChange("name", ok, v)}
                                     validType={ValidTypes.NameValid}
-                                    maxLength={20}
+                                    maxLength={"20"}
                                 />
 
                                 <TextField
                                     fieldName='Фамилия'
                                     value={`${this.state.surname}`}
                                     onEnd={(ok: any, v: any) => this.handleChange("surname", ok, v)}
+                                    validType={ValidTypes.SurnameValid}
                                     maxLength={20}
                                 />
 
@@ -213,7 +214,7 @@ export default class ProfilePage extends Tarakan.Component {
                                     disabled={"disabled"}
                                     onEnd={(ok: any, v: any) => this.handleChange("phoneNumber", ok, v)}
                                     validType={ValidTypes.TelephoneValid}
-                                    title="+7**********"
+                                    title="Введите номер телефона"
                                     maxLength={20}
                                 />
                                 <div style="display: flex; justify-content: space-between; align-items: center">

@@ -26,6 +26,10 @@ class ProductCard extends Tarakan.Component {
         if (code === AJAXErrors.NoError) {
             this.setState({ isInCart: true });
         }
+
+        if (code === AJAXErrors.Unauthorized) {
+            if (this.props.onError) this.props.onError(AJAXErrors.Unauthorized);
+        }
     }
 
     async handleAddProduct() {
@@ -44,6 +48,10 @@ class ProductCard extends Tarakan.Component {
                     quantity: this.props.quantity + 1,
                 }
             });
+        }
+
+        if (code === AJAXErrors.Unauthorized) {
+            if (this.props.onError) this.props.onError(AJAXErrors.Unauthorized);
         }
     }
 
@@ -106,7 +114,7 @@ class ProductCard extends Tarakan.Component {
             <div className={`product-card__reviews flex full-wide`}>
                 <div className={`product-card__reviews__star-block flex`}>
                     <img className={`product-card__reviews__star-block__star-text`} src={StarIcon} />
-                    <span>{props.rating}</span>
+                    <span>{parseFloat(props.rating).toFixed(2)}</span>
                 </div>
                 <div className={`product-card__reviews__star-block__count-block`}>
                     {props.reviewsCount} отзывов

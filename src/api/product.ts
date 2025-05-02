@@ -27,8 +27,15 @@ export interface SearchFullResult {
     products: { products: any[], total: number },
 }
 
+export interface Filters {
+    sortType: string,
+    minPrice: string,
+    maxPrice: string,
+    minRating: number,
+}
+
 export async function getProducts(): Promise<{ code: AJAXErrors, products?: Product[] }> {
-    const response = await ajax.get("products");
+    const response = await ajax.get("products/0");
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };
@@ -62,7 +69,32 @@ export async function getSearchResult(searchString: string): Promise<{ code: AJA
 }
 
 export async function getSearchResultItems(searchString: string): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
-    const response = await ajax.post("search", {
+    const response = await ajax.post("search/0", {
+        sub_string: searchString,
+    });
+
+    if (response.error || !response.result.ok) {
+        return { code: AJAXErrors.ServerError };
+    }
+
+    const data: SearchFullResult = await response.result.json();
+    return { code: AJAXErrors.NoError, data };
+}
+
+export async function getSearchResultByFilters(searchString: string, offset: number, filters: Filters): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
+    const request = {};
+
+    if (filters.sortType !== "default") request["sort"] = filters.sortType;
+    if (filters.minPrice !== "") request["min_price"] = filters.minPrice;
+    if (filters.minPrice !== "") request["max_price"] = filters.maxPrice;
+
+    if (filters.minRating !== 0) request["min_rating"] = filters.minRating;
+
+    const query = "?" + Object.entries(request).map((([K, V]) =>
+        `${K}=${encodeURIComponent(V as any)}`
+    )).join("&");
+
+    const response = await ajax.post("search/sort/" + offset + query, {
         sub_string: searchString,
     });
 
@@ -96,7 +128,7 @@ export async function getProductsByIds(productIDs: string[]): Promise<{ code: AJ
 }
 
 export async function getProduct(productId: string): Promise<{ code: AJAXErrors, product?: Product }> {
-    const response = await ajax.get(`products/${productId}`);
+    const response = await ajax.get(`product/${productId}`);
 
     if (response.error) {
         return { code: AJAXErrors.ServerError };
@@ -129,7 +161,7 @@ export function getProductImagePath(product: Product): string {
 }
 
 export async function getProductsByCategory(id: number): Promise<{ code: AJAXErrors, products?: Product[] }> {
-    const response = await ajax.get(`products/category/${id}`);
+    const response = await ajax.get(`products/category/${id}/0`);
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };

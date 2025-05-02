@@ -117,3 +117,18 @@
     }
   }
 }
+
+.success-button {
+  background-color: var(--positive);
+  border: 1px solid var(--positive);
+
+  &:hover {
+    background-color: var(--positive-hover) !important;
+    border: 1px solid var(--positive-hover) !important;
+  }
+
+  &:active {
+    background-color: var(--positive) !important;
+    border: 1px solid var(--positive) !important;
+  }
+}

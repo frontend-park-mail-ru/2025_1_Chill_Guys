@@ -18,7 +18,7 @@ export const TEXTFIELD_TYPES = {
     HIDDEN: "hidden",
 }
 
-class TextField extends Tarakan.Component {
+class TextArea extends Tarakan.Component {
 
     init(initProps: any) {
         this.state = {
@@ -64,47 +64,41 @@ class TextField extends Tarakan.Component {
         const isDisabled = props.isDisabled ?? false;
 
         return title ?
-            <div className={`textField_title ${otherClasses}`.trim()}>
-                {title && <h3 className="textField_title__title">{title}</h3>}
-                <div className="textField">
-                    <input
-                        className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
-                        type={type}
+            <div className={`textArea_title ${otherClasses}`.trim()}>
+                {title && <h3 className="textArea_title__title">{title}</h3>}
+                <div className="textArea">
+                    <textarea
+                        className={`textArea__input textArea__input_${props.validType !== undefined ? this.state.status : "default"}`}
                         placeholder={placeholder}
                         value={defaultValue}
                         disabled={isDisabled}
                         onFocus={() => this.handleFocus()}
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
-                        onEnd={(ev) => props.onEnter && props.onEnter(ev)}
-                        maxLength={props.maxLength ?? "255"}
-                        cols={props.cols}
+                        rows={props.rows}
                     />
                     {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
-                        <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
+                        <img className="textArea__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                     }
                 </div>
             </div>
-            : <div className={`textField ${otherClasses}`.trim()}>
-                <input
-                    className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
-                    type={type}
+            : <div className={`textArea ${otherClasses}`.trim()}>
+                <textarea
+                    className={`textArea__input textArea__input_${props.validType !== undefined ? this.state.status : "default"}`}
                     placeholder={placeholder}
                     value={defaultValue}
                     disabled={isDisabled}
                     onFocus={() => this.handleFocus()}
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
-                    onEnd={(ev) => props.onEnter && props.onEnter(ev)}
-                    maxLength={props.maxLength ?? "255"}
-                    cols={props.cols}
+                    rows={props.rows}
                 />
                 {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
-                    <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
+                    <img className="textArea__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                 }
             </div>
 
     }
 }
 
-export default TextField;
+export default TextArea;
