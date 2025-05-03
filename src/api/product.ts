@@ -34,8 +34,8 @@ export interface Filters {
     minRating: number,
 }
 
-export async function getProducts(): Promise<{ code: AJAXErrors, products?: Product[] }> {
-    const response = await ajax.get("products/0");
+export async function getProducts(offset: number): Promise<{ code: AJAXErrors, products?: Product[] }> {
+    const response = await ajax.get("products/" + offset);
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };

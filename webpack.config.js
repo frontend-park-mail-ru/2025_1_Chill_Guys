@@ -1,5 +1,5 @@
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin";
-import { InjectManifest } from "workbox-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
 import path, { dirname } from "path";
 
 const __dirname = dirname("./");
@@ -13,7 +13,13 @@ export default {
                 index: './public/index.html',
                 sw: "./public/sw.ts"
             },
-            favicon: "./public/favicon.ico"
+            favicon: "./public/favicon.ico",
+            manifest: "./public/manifest.webmanifest"
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "./public/icons", to: "./icons" },
+            ],
         }),
     ],
 
@@ -25,10 +31,17 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(png|jpg|ico?)$/i,
+                test: /\.(png|jpg?)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'font/[hash][ext][query]'
+                }
+            },
+            {
+                test: /\.(webmanifest|ico?)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: "[name][ext]",
                 }
             },
             {
@@ -73,10 +86,12 @@ export default {
 
 
     devServer: {
-        static: {
-            directory: path.join(__dirname, 'public'),
-            serveIndex: true,
-        },
+
+        static: [
+            {
+                directory: path.join(__dirname, 'public'),
+                serveIndex: true,
+            }],
         proxy: [
             {
                 context: ['/api'],

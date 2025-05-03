@@ -15,7 +15,7 @@ const ProductsStore = new Store(initValue, initAction);
 // Скачивание данных
 
 ProductsStore.addAction("all", async (store: Store) => {
-    const { code, products } = await getProducts();
+    const { code, products } = await getProducts(0);
     if (code === AJAXErrors.NoError) {
         store.sendAction("productsUpdated", {
             ...store.value,

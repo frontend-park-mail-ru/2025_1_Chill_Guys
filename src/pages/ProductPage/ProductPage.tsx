@@ -275,14 +275,6 @@ class ProductPage extends Tarakan.Component {
                                                 {comment.rating}
                                             </span>
                                         </span>
-                                        {/* <span className="product-page__main__reviews__content__comment__info__date">
-                                            <span>
-                                                {comment.date.toLocaleTimeString("ru-RU")}
-                                            </span>
-                                            <span>
-                                                {comment.date.toLocaleDateString("ru-RU")}
-                                            </span>
-                                        </span> */}
                                     </div>
                                     <div className="product-page__main__reviews__content__comment__description">
                                         {comment.comment}

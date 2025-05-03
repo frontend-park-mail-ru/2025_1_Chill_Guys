@@ -1,4 +1,9 @@
 const assets = [
+    "/icons/favicon_32x32",
+    "/icons/favicon_64x64",
+    "/icons/favicon_128x128",
+    "/icons/favicon_256x256",
+    "/icons/favicon_512x512",
     "/font/124cdf7b53c7aa89dcbc.ttf",
     "/font/198d18913afd00221956.woff",
     "/font/55c4dfe8ffe5c0e46fd2.eot",
