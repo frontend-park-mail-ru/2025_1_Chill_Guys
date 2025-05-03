@@ -86,12 +86,10 @@ export default {
 
 
     devServer: {
-
-        static: [
-            {
-                directory: path.join(__dirname, 'public'),
-                serveIndex: true,
-            }],
+        static: {
+            directory: path.join(__dirname, 'public'),
+            serveIndex: true,
+        },
         proxy: [
             {
                 context: ['/api'],
@@ -112,7 +110,7 @@ export default {
         },
         historyApiFallback: true,
         compress: true,
-        port: 7500,
+        port: 7501,
         host: '0.0.0.0',
         allowedHosts: ['all'],
     },

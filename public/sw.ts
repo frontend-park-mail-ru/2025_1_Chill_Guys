@@ -8,7 +8,6 @@ const assets = [
     "/font/198d18913afd00221956.woff",
     "/font/55c4dfe8ffe5c0e46fd2.eot",
     "/font/72dc95e787feabc2da4a.woff2",
-    "/font/c1d7cf7cc700989bbf59.ico",
     "/images/0218d6733a7f9bfdaf21705728b6bfa8.svg",
     "/images/09a2bc935a28dc7382ebcef663197793.svg",
     "/images/0a5545f8a545e2d5529550856e86772f.svg",
