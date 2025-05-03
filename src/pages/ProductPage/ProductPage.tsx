@@ -164,7 +164,7 @@ class ProductPage extends Tarakan.Component {
                         <img src={`${this.state.product?.image}`} />
                     </div>
                     <div className="product-page__main__card__details">
-                        <h1>{this.state.product?.name}</h1>
+                        <h1 className="product-page__main__card__details__title">{this.state.product?.name}</h1>
                         <div className="product-page__main__card__details__buyer">
                             ООО "Клуб анонимных фронтендеров и бекэндеров"
                         </div>
