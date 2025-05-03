@@ -24,10 +24,11 @@
   "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys#readme",
   "dependencies": {
     "bazaar-ajax": "^1.1.13",
-    "bazaar-tarakan": "^1.0.63",
+    "bazaar-tarakan": "^1.0.65",
     "bazaar-validation": "^1.2.4",
     "json5": "^2.2.3",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "svg-inline-loader": "^0.8.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
@@ -60,6 +61,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^5.2.1",
+    "workbox-webpack-plugin": "^7.3.0"
   }
 }

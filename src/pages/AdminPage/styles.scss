@@ -1,0 +1,100 @@
+.admin-page {
+    margin-inline: 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+
+    &__content {
+        flex: 1 1 auto;
+        background-color: white;
+        border-radius: 20px;
+        padding: 24px;
+
+        &__sellers {
+            &__h {
+                margin-bottom: 24px;
+            }
+
+            &__table {
+                border: 1px solid lightgray;
+                border-collapse: collapse;
+                width: 100%;
+
+                thead {
+                    background-color: whitesmoke;
+                    border-bottom: 3px solid lightgray;
+
+                    th {
+                        padding: 16px;
+                        border: 1px solid lightgray;
+                        border-collapse: collapse;
+                        text-align: left;
+                    }
+                }
+
+                tbody {
+                    td {
+                        padding: 16px;
+                        border: 1px solid lightgray;
+                        border-collapse: collapse;
+
+                        &.link {
+                            color: var(--secondary-color);
+                            cursor: pointer;
+
+                            &:hover {
+                                filter: brightness(0.5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &__products {
+            &__h {
+                margin-bottom: 24px;
+            }
+
+            &__table {
+                border: 1px solid lightgray;
+                border-collapse: collapse;
+                width: 100%;
+
+                thead {
+                    background-color: whitesmoke;
+                    border-bottom: 3px solid lightgray;
+
+                    th {
+                        padding: 16px;
+                        border: 1px solid lightgray;
+                        border-collapse: collapse;
+                        text-align: left;
+                    }
+                }
+
+                tbody {
+                    td {
+                        padding: 16px;
+                        border: 1px solid lightgray;
+                        border-collapse: collapse;
+
+                        &.link {
+                            color: var(--secondary-color);
+                            cursor: pointer;
+
+                            &:hover {
+                                filter: brightness(0.5);
+                            }
+                        }
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,10 +1,8 @@
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin";
+import { InjectManifest } from "workbox-webpack-plugin";
 import path, { dirname } from "path";
-import express from "express";
 
 const __dirname = dirname("./");
-
-// console.log(__dirname)
 
 export default {
     mode: 'production',
@@ -71,6 +69,8 @@ export default {
         extensions: ['.tsx', '.jsx', '.ts', '.js'],
     },
 
+
+
     devServer: {
         static: {
             directory: path.join(__dirname, 'public'),
@@ -98,8 +98,9 @@ export default {
         compress: true,
         port: 7500,
         host: '0.0.0.0',
-        allowedHosts: ['all']
+        allowedHosts: ['all'],
     },
+
     performance: {
         hints: false,
         maxEntrypointSize: 512000,
