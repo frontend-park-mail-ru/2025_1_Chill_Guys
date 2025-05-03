@@ -41,7 +41,7 @@ const addResourcesToCache = async (resources) => {
     await cache.addAll(resources);
 };
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", (event: any) => {
     event.waitUntil(
         addResourcesToCache([
             "/",
@@ -53,7 +53,7 @@ self.addEventListener("install", (event) => {
     );
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", (event: any) => {
     const url = new URL(event.request.url);
     if (!url.pathname.includes("api") && !url.pathname.includes("s3") && !url.pathname.includes(".")) {
         event.respondWith(caches.open("v1").then((cache) => cache.match("/index.html")));

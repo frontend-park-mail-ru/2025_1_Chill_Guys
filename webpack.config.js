@@ -11,6 +11,7 @@ export default {
         new HtmlBundlerPlugin({
             entry: {
                 index: './public/index.html',
+                sw: "./public/sw.ts"
             },
             favicon: "./public/favicon.ico"
         }),
