@@ -368,10 +368,37 @@ class Header extends Tarakan.Component {
                         {
                             this.state.categories &&
                             this.state.categories.map((category: any) =>
-                                <span onClick={() => {
-                                    app.navigateTo(`/category/${category.id}`);
-                                }}>
-                                    {category.name}
+                                <span
+                                    className="categories-wrapper__item"
+                                    onMouseOver={(e) => {
+                                        if (!this.state.selectedCategory || category.id !== this.state.selectedCategory.id) {
+                                            this.fetchSubcategories(category);
+                                        }
+                                    }}
+                                >
+                                    <span className="categories-wrapper__item__value">
+                                        {category.name}
+                                    </span>
+                                    {this.state.selectedCategory?.id === category.id &&
+                                        <div
+                                            className="subcategories-modal"
+                                            onMouseLeave={() => this.setState({ selectedCategory: null })}>
+                                            <div className="subcategories-modal__items">
+                                                {this.state.subcategories.map((E) =>
+                                                    <span
+                                                        className="subcategories-modal__items__item"
+                                                        onClick={() => {
+                                                            this.setState({ selectedCategory: null })
+                                                            app.navigateTo("/category/" + E.id)
+                                                        }}
+                                                    >
+                                                        {E.name}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                        </div>
+                                    }
                                 </span>
                             )
                         }

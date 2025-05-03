@@ -37,7 +37,14 @@ class Button extends Tarakan.Component {
             onMouseLeave={(event: any) => props.onMouseLeave ? props.onMouseLeave(event) : {}}
         >
             {
-                props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} className={`icon icon_${size}_size`} />
+                props.icon
+                    ? {
+                        ...props.icon, props: {
+                            ...props.icon.props,
+                            className: props.icon.props.className ?? "" + ` ${`icon icon_${size}_size`}`.trim()
+                        }
+                    }
+                    : props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} className={`icon icon_${size}_size`} />
             }
             {props.title && <span>{props.title}</span>}
         </button>

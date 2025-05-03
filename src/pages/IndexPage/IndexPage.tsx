@@ -10,32 +10,36 @@ import { AJAXErrors } from "../../api/errors";
 import SurveyPage from "../SurveyPage/SurveyPage";
 import CSAT from "../CSAT/CSAT";
 import Alert from "../../components/Alert/Alert";
+import InfinityList from "../../components/InfinityList/InfinityList";
 
 class IndexPage extends Tarakan.Component {
 
     state = {
         products: [],
-        csat: false,
+        basket: null,
         showNotAuthAlert: false,
     }
 
     async fetchProducts() {
-        const productsResponse = await getProducts();
-        const basketResponse = await getBasket();
+        const productsResponse = await getProducts(this.state.products.length);
 
-        if (productsResponse.code === AJAXErrors.NoError) {
-            const products = productsResponse.products;
+        let basket = this.state.basket;
 
-            let basket = new Set();
+        if (basket === null) {
+            const basketResponse = await getBasket();
             if (basketResponse.code === AJAXErrors.NoError) {
-                const data = basketResponse.data;
-                data.products.map((item) => {
+                basket = new Set();
+                basketResponse.data.products.map((item) => {
                     basket.add(item.productId);
                 });
             }
+        }
 
+        if (productsResponse.code === AJAXErrors.NoError) {
+            const products = productsResponse.products;
             this.setState({
-                products: products.map((item) => ({
+                basket: basket || new Set(),
+                products: [...this.state.products, ...products.map((item) => ({
                     id: item.id,
                     name: item.name,
                     image: item.image,
@@ -43,22 +47,20 @@ class IndexPage extends Tarakan.Component {
                     discountPrice: item.discountPrice,
                     reviewsCount: item.reviewsCount,
                     rating: item.rating,
-                    isInCart: basket.has(item.id),
-                }))
+                    isInCart: basket ? basket.has(item.id) : false,
+                }))]
             })
         }
     }
 
     init() {
         this.fetchProducts();
-        // setTimeout => this.setState({ csat: true }), 10000);
     }
 
     render(props, router) {
         return <div className={`container`}>
             <Header />
             <main className={`index-page index-page_flex index-page_flex_column`}>
-                {this.state.csat && <CSAT id="Mainpage" />}
                 {this.state.showNotAuthAlert && <Alert
                     title="Необходимо войти"
                     content="Для добавления товаров в корзину, надо сначала войти в профиль."
@@ -90,6 +92,7 @@ class IndexPage extends Tarakan.Component {
                         )
                     }
                 </div>
+                <InfinityList onShow={() => this.fetchProducts()} />
             </main>
 
             <Footer />

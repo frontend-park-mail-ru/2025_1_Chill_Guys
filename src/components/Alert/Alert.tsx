@@ -17,7 +17,7 @@ class Alert extends Tarakan.Component {
                     {props.title}
                 </div>
                 <div className="alert__title__close">
-                    <img className="alert__title__close__img" src={crossIcon} onClick={() => props.onSuccess && props.onClose()} />
+                    <img className="alert__title__close__img" src={crossIcon} onClick={() => props.onClose && props.onClose()} />
                 </div>
             </div>
             <div className="alert__content">
