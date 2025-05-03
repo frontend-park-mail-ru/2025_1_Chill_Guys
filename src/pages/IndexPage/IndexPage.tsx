@@ -68,7 +68,7 @@ class IndexPage extends Tarakan.Component {
                     onSuccess={() => router.navigateTo("/signin")}
                     onClose={() => this.setState({ showNotAuthAlert: false })}
                 />}
-                <h1 className={`h-reset index-page__main-h1`}>Весенние хиты</h1>
+                <h1 className={`index-page__main-h1`}>Весенние хиты</h1>
                 <div className={`index-page__cards-container`}>
                     {
                         this.state.products.map(

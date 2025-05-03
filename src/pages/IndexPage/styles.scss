@@ -1,10 +1,33 @@
+@media screen and (max-width: 720px) {
+  .index-page {
+    padding: 0 2px 12px;
+
+    &__main-h1 {
+      padding: 24px 24px 0;
+    }
+
+    &__cards-container {
+      grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .index-page {
+    padding: 24px;
+
+    &__cards-container {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+  }
+}
+
 .index-page {
   align-items: flex-start;
   margin-top: 24px;
   margin-bottom: 24px;
   background-color: var(--background);
   border-radius: 12px;
-  padding: 24px;
 
   &_flex {
     display: flex;
@@ -23,8 +46,7 @@
 
   &__cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    max-width: 100%;
     gap: 16px;
+    max-width: 100%;
   }
 }

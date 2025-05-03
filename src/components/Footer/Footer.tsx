@@ -28,34 +28,21 @@ class Footer extends Tarakan.Component {
                         <h4 className={`footer_h4`}>Bazaar маркетплейс</h4>
                         <ol className={`list-reset footer__links-wrapper__links-columns__footer-list`}>
                             <li>О Bazaar / About Bazaar</li>
-                            <li>Вакансии</li>
-                            <li>Реквизиты</li>
-                            <li>Стать курьером</li>
+
+                            <li  onClick={() => {
+                                router.navigateTo("/");
+                            }}>
+                                Главная
+                            </li>
+
+                            <li  onClick={() => {
+                                router.navigateTo("/search");
+                            }}>
+                                Каталог
+                            </li>
                         </ol>
                     </div>
 
-                    <div>
-                        <h4 className={`footer_h4`}>Зарабатывать с Bazaar</h4>
-                        <ol className={`list-reset footer__links-wrapper__links-columns__footer-list`}>
-                            <li>Стать продавцом</li>
-                            <li>Что продавать на Bazaar</li>
-                            <li>Открыть ПВЗ Bazaar</li>
-                        </ol>
-                    </div>
-
-                    <div>
-                        <h4 className={`footer_h4`}>Помощь</h4>
-                        <ol className={`list-reset footer__links-wrapper__links-columns__footer-list`}>
-                            <li>Как сделать заказ</li>
-                            <li>Оплата</li>
-                            <li>Доставка</li>
-                            <li>Адреса ПВЗ</li>
-                            <li>Возврат товаров</li>
-                            <li>Контакты</li>
-                            <li>Безопасность</li>
-                            <li>Условия обработки данных</li>
-                        </ol>
-                    </div>
                 </div>
 
                 <div className={`footer__links-wrapper__all-right-reserved`}>

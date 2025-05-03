@@ -86,7 +86,6 @@ export default {
 
 
     devServer: {
-
         static: {
             directory: path.join(__dirname, 'public'),
             serveIndex: true,
