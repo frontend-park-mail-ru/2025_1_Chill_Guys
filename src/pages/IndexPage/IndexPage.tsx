@@ -31,7 +31,7 @@ class IndexPage extends Tarakan.Component {
         return [...newProducts.slice(0, i), {
             ad: true,
             url: "http://re-target.ru/api/v1/banner/uniq_link/60",
-        }, ...newProducts.slice(i + 1)];
+        }, ...newProducts.slice(i)];
     }
 
     async fetchProducts() {
