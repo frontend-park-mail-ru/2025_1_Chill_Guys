@@ -10,6 +10,10 @@ export interface Product {
     price: number,
     reviewsCount: number,
     rating: number,
+    seller: {
+        title: string,
+        description: string,
+    },
 
     discountPrice?: number,
     quantity?: number
@@ -125,6 +129,7 @@ export async function getProductsByIds(productIDs: string[]): Promise<{ code: AJ
         discountPrice: product.discount_price,
         reviewsCount: product.reviews_count,
         rating: product.rating,
+        seller: product.seller,
     }));
 
     return { code: AJAXErrors.NoError, products: products };
@@ -155,6 +160,7 @@ export async function getProduct(productId: string): Promise<{ code: AJAXErrors,
         discountPrice: productRaw.price_discount,
         reviewsCount: productRaw.reviews_count,
         rating: productRaw.rating,
+        seller: productRaw.seller,
     };
     return { code: AJAXErrors.NoError, product: product };
 }
@@ -179,6 +185,7 @@ export async function getProductsByCategory(id: number): Promise<{ code: AJAXErr
         discountPrice: product.discount_price,
         reviewsCount: product.reviews_count,
         rating: product.rating,
+        seller: product.seller,
     }));
 
     return { code: AJAXErrors.NoError, products: products };

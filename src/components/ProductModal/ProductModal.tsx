@@ -87,7 +87,7 @@ class ProductModal extends Tarakan.Component {
                                 {
                                     "pending": "Ожидание одобрения",
                                     "empty": "Товар закончился",
-                                    "approved": "Принят",
+                                    "approved": "В продаже",
                                     "rejected": "Отказано"
                                 }[request?.status]
                             }</span>

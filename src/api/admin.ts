@@ -17,7 +17,11 @@ export interface ProductRequest {
     id: string,
     name: string,
     image: string,
-    price: number
+    price: number,
+    sellerInfo: {
+        title: string,
+        description: string,
+    }
 }
 
 export async function getUserRequests(offset: number): Promise<{ code: AJAXErrors, requests?: UserRequest[] }> {
@@ -101,6 +105,7 @@ export async function getProductsRequests(offset: number): Promise<{ code: AJAXE
         name: request.name,
         image: request.image,
         price: request.price,
+        sellerInfo: request.seller,
     }));
     return { code: AJAXErrors.NoError, requests };
 }

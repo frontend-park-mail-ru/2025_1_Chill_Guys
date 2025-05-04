@@ -25,7 +25,7 @@
   "dependencies": {
     "bazaar-ajax": "^1.1.13",
     "bazaar-tarakan": "^1.0.65",
-    "bazaar-validation": "^1.2.4",
+    "bazaar-validation": "^1.2.5",
     "json5": "^2.2.3",
     "serve-favicon": "^2.5.0",
     "svg-inline-loader": "^0.8.2"

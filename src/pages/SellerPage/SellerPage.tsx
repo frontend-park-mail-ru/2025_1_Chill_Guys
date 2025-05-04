@@ -142,7 +142,7 @@ class SellerPage extends Tarakan.Component {
                                                     {
                                                         "pending": "Ожидание",
                                                         "empty": "Закончился",
-                                                        "approved": "Принято",
+                                                        "approved": "В продаже",
                                                         "rejected": "Отказано"
                                                     }[product.status]
                                                 }</span>

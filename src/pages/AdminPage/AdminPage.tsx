@@ -23,6 +23,9 @@ class AdminPage extends Tarakan.Component {
     state = {
         tabOpened: "sellers",
 
+        productsFetch: false,
+        sellersFetch: false,
+
         sellerInfoModalRef: new Reference(),
         productInfoModalRef: new Reference(),
 
@@ -45,18 +48,22 @@ class AdminPage extends Tarakan.Component {
     }
 
     async fetchUserRequests() {
+        if (this.state.sellersFetch) return;
+        this.state.sellersFetch = true;
         const { code, requests } = await getUserRequests(this.state.sellers?.length ?? 0);
         if (code === AJAXErrors.NoError) {
-            this.setState({ sellers: [...this.state.sellers ?? [], ...requests], fetchDone: true });
+            this.setState({ sellers: [...this.state.sellers ?? [], ...requests], sellersFetch: false });
         } else {
             this.app.navigateTo("/");
         }
     }
 
     async fetchProductsRequests() {
+        if (this.state.productsFetch) return;
+        this.state.productsFetch = true;
         const { code, requests } = await getProductsRequests(this.state.products?.length ?? 0);
         if (code === AJAXErrors.NoError) {
-            this.setState({ products: [...this.state.products ?? [], ...requests], fetchDone: true });
+            this.setState({ products: [...this.state.products ?? [], ...requests], productsFetch: false });
         } else {
             this.app.navigateTo("/");
         }
@@ -149,7 +156,7 @@ class AdminPage extends Tarakan.Component {
                             }
                         </tbody>
                     </table>
-                    <InfinityList onShow={() => this.state.fetchDone && this.fetchNextRequests()} />
+                    <InfinityList onShow={() => this.fetchNextRequests()} />
                     <UserRequestModal
                         ref={this.state.sellerInfoModalRef}
                         request={this.state.selectedRequest}

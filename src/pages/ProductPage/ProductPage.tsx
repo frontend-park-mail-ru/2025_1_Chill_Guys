@@ -166,7 +166,7 @@ class ProductPage extends Tarakan.Component {
                     <div className="product-page__main__card__details">
                         <h1>{this.state.product?.name}</h1>
                         <div className="product-page__main__card__details__buyer">
-                            ООО "Клуб анонимных фронтендеров и бекэндеров"
+                            {this.state.product?.seller.title}
                         </div>
                         {this.state.product && <div className="product-page__main__card__details__action">
                             <span className={`product-page__main__card__details__action__price${this.state.product.discountPrice !== 0 ? "-discount" : "-default"}`}>

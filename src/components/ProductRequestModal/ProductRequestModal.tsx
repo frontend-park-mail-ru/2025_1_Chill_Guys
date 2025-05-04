@@ -70,6 +70,14 @@ class ProductRequestModal extends Tarakan.Component {
                             {convertMoney(request?.price ?? 0)}
                         </div>
                     </div>
+                    <div className="request-modal__content__data__item">
+                        <div className="request-modal__content__data__item__name">
+                            Владелец
+                        </div>
+                        <div className="request-modal__content__data__item__value">
+                            {request?.seller.title}
+                        </div>
+                    </div>
                 </div>
                 <div className="request-modal__content__actions">
                     <Button title="Одобрить товар" onClick={() => props.onSuccess()} />
