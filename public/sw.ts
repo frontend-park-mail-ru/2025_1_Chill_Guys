@@ -40,20 +40,15 @@ const assets = [
     "/images/fe2a08dc93b7e496e7223cbd5583640b.svg",
 ]
 
-const addResourcesToCache = async (resources) => {
-    const cache = await caches.open("v1");
-    await cache.addAll(resources);
-};
-
 self.addEventListener("install", (event: any) => {
     event.waitUntil(
-        addResourcesToCache([
+        caches.open("v1").then(cache => cache.addAll([
             "/",
             "/index.html",
             "/index.css",
             "/index.js",
             ...assets,
-        ]),
+        ]).catch(() => { })),
     );
 });
 

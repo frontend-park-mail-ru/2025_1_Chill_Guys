@@ -107,7 +107,7 @@ class Header extends Tarakan.Component {
     }
 
     render(props: any, app: any) {
-        console.log(this.state.role);
+        // console.log(this.state.role);
 
         return <header className="header header_light">
             {this.state.csatString && <CSAT id={this.state.csatString} onEnd={() => this.setState({ csatString: "" })} />}
@@ -394,7 +394,7 @@ class Header extends Tarakan.Component {
                                             className="subcategories-modal"
                                             onMouseLeave={() => {
                                                 this.setState({ selectedCategory: null });
-                                                console.log("leave");
+                                                // console.log("leave");
                                             }}>
                                             <div className="subcategories-modal__items">
                                                 {this.state.subcategories.map((E) =>

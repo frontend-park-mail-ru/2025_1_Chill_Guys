@@ -20,6 +20,7 @@ class IndexPage extends Tarakan.Component {
         fetching: false,
         basket: null,
         showNotAuthAlert: false,
+        offset: 0,
     }
 
     applyAd(newProducts: any[]) {
@@ -27,10 +28,9 @@ class IndexPage extends Tarakan.Component {
             return newProducts;
         }
         const i = Math.trunc(Math.random() * (newProducts.length - 10) + 5);
-        console.log(i);
         return [...newProducts.slice(0, i), {
             ad: true,
-            url: "http://re-target.ru/api/v1/banner/uniq_link/60",
+            url: "https://bazaar-techpark.ru/ad/banner/uniq_link/60",
         }, ...newProducts.slice(i)];
     }
 
@@ -38,7 +38,7 @@ class IndexPage extends Tarakan.Component {
         if (this.state.fetching) return;
         this.state.fetching = true;
 
-        const productsResponse = await getProducts(this.state.products.length);
+        const productsResponse = await getProducts(this.state.offset);
 
         let basket = this.state.basket;
 
@@ -66,9 +66,13 @@ class IndexPage extends Tarakan.Component {
                     rating: item.rating,
                     isInCart: basket ? basket.has(item.id) : false,
                 })))],
+                offset: this.state.offset + products.length,
                 fetching: false,
             })
+        } else {
+            this.state.fetching = false;
         }
+
     }
 
     init() {

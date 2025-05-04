@@ -118,9 +118,9 @@ class SearchPage extends Tarakan.Component {
         let s = new Set();
         for (let e of this.state.products) {
             if (s.has(e.id)) {
-                console.log("HAS", e.id)
+                // console.log("HAS", e.id)
             } else {
-                console.log(e.id)
+                // console.log(e.id)
                 s.add(e.id);
             }
         }
@@ -179,6 +179,7 @@ class SearchPage extends Tarakan.Component {
                             title="0"
                             className="search-page__content__filters__min-price"
                             maxLength={7}
+                            min={0}
                             value={minPrice}
                             onChange={(ev: any) => this.setState({
                                 filters: {
@@ -194,6 +195,7 @@ class SearchPage extends Tarakan.Component {
                             className="search-page__content__filters__max-price"
                             maxLength={7}
                             value={maxPrice}
+                            min={0}
                             onChange={(ev: any) => this.setState({
                                 filters: {
                                     ...this.state.filters,
