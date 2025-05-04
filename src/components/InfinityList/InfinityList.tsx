@@ -14,6 +14,7 @@ class InfinityList extends Tarakan.Component {
         })
 
         observer.observe(container);
+        this.props.onShow();
     }
 
     render() {

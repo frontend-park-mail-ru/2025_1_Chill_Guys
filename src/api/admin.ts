@@ -104,3 +104,28 @@ export async function getProductsRequests(offset: number): Promise<{ code: AJAXE
     }));
     return { code: AJAXErrors.NoError, requests };
 }
+
+export async function sendProductRequestAnswer(productId: string, accepted: boolean): Promise<AJAXErrors> {
+    const response = await ajax.post("admin/product/update", {
+        productID: productId,
+        update: accepted ? 1 : 0
+    });
+
+    if (response.error) {
+        return AJAXErrors.NoError;
+    }
+
+    if (response.result.status == 401) {
+        return AJAXErrors.Unauthorized;
+    }
+
+    if (response.result.status == 403) {
+        return AJAXErrors.PermissionsDenied;
+    }
+
+    if (!response.result.ok) {
+        return AJAXErrors.NoError;
+    }
+
+    return AJAXErrors.NoError;
+}

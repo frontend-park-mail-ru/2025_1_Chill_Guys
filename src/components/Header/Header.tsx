@@ -20,6 +20,9 @@ import HeaderCartHover from "../../shared/images/header-cart-ico-hover.svg"
 import HeaderProfile from "../../shared/images/header-profile-ico.svg";
 import HeaderProfileHover from "../../shared/images/header-profile-ico-hover.svg";
 
+import ToolIcon from "../../shared/images/tool-ico.svg";
+import ToolIconHover from "../../shared/images/tool-ico-hover.svg";
+
 import MenuIcon from "../../shared/images/menu.svg";
 import CrossIcon from "../../shared/images/cross-ico.svg";
 
@@ -35,9 +38,10 @@ class Header extends Tarakan.Component {
         this.state = {
             ordersIcon: HeaderOrders,
             cartIcon: HeaderCart,
-            savedIcon: HeaderSaved,
+            iconIcon: ToolIcon,
             profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
             authorized: this.app.store.user.value.login,
+            role: this.app.store.user.value.role,
             popUpDisplayed: false,
             menuOpened: false,
             searchMenuOpened: false,
@@ -54,7 +58,8 @@ class Header extends Tarakan.Component {
             if (name === "login") {
                 this.setState({
                     profileIcon: newValue.login ? HeaderProfile : HeaderLogin,
-                    authorized: newValue.login
+                    authorized: newValue.login,
+                    role: newValue.role,
                 });
             }
         });
@@ -102,6 +107,8 @@ class Header extends Tarakan.Component {
     }
 
     render(props: any, app: any) {
+        console.log(this.state.role);
+
         return <header className="header header_light">
             {this.state.csatString && <CSAT id={this.state.csatString} onEnd={() => this.setState({ csatString: "" })} />}
             <div className="header__nav">
@@ -210,7 +217,31 @@ class Header extends Tarakan.Component {
                     </div>
 
                     <div className="header__nav__row_main__icons-wrapper">
-
+                        {
+                            this.state.authorized && (this.state.role === "admin" || this.state.role === "seller")
+                            &&
+                            <Button
+                                size={`${BUTTON_SIZE.L}`}
+                                iconPosition={`${ICON_POSITION.TOP}`}
+                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                title={this.state.role === "seller" ? "Продажа" : "Консоль"}
+                                iconSrc={`${this.state.iconIcon}`}
+                                iconAlt='Иконка сердечко'
+                                onMouseOver={() => {
+                                    this.setState({ iconIcon: ToolIconHover })
+                                }}
+                                onMouseLeave={() => {
+                                    this.setState({ iconIcon: ToolIcon })
+                                }}
+                                onClick={() => {
+                                    if (this.state.role === "seller") {
+                                        app.navigateTo('/seller');
+                                    } else {
+                                        app.navigateTo("/admin");
+                                    }
+                                }}
+                            />
+                        }
                         {
                             this.state.authorized
                             &&
@@ -229,27 +260,6 @@ class Header extends Tarakan.Component {
                                 }}
                                 onClick={() => {
                                     app.navigateTo('/orders');
-                                }}
-                            />
-                        }
-
-                        {
-                            this.state.authorized
-                            &&
-                            <Button
-                                size={`${BUTTON_SIZE.L}`}
-                                iconPosition={`${ICON_POSITION.TOP}`}
-                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                                title='Избранное'
-                                iconSrc={`${this.state.savedIcon}`}
-                                iconAlt='Иконка сердечко'
-                                onMouseOver={() => {
-                                    this.setState({ savedIcon: HeaderSavedHover })
-                                }}
-                                onMouseLeave={() => {
-                                    this.setState({ savedIcon: HeaderSaved })
-                                }}
-                                onClick={() => {
                                 }}
                             />
                         }
@@ -382,7 +392,10 @@ class Header extends Tarakan.Component {
                                     {this.state.selectedCategory?.id === category.id &&
                                         <div
                                             className="subcategories-modal"
-                                            onMouseLeave={() => this.setState({ selectedCategory: null })}>
+                                            onMouseLeave={() => {
+                                                this.setState({ selectedCategory: null });
+                                                console.log("leave");
+                                            }}>
                                             <div className="subcategories-modal__items">
                                                 {this.state.subcategories.map((E) =>
                                                     <span
@@ -403,6 +416,16 @@ class Header extends Tarakan.Component {
                             )
                         }
                     </div>
+                    {this.state.role === "buyer" &&
+                        <div className="header__nav__secondary__seller" onClick={() => app.navigateTo("/seller-form")}>
+                            Хочу стать продавцом!
+                        </div>
+                    }
+                    {this.state.role === "pending" &&
+                        <div className="header__nav__secondary__seller-pending">
+                            Заявка на продавца отправлена
+                        </div>
+                    }
                 </div>
             </div>
 

@@ -1,0 +1,216 @@
+.seller-page {
+
+    margin-inline: 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+
+    &__content {
+        flex: 1 1 auto;
+        background-color: white;
+        border-radius: 20px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+
+        &__products {
+            flex: 1 1 auto;
+
+            &__title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+
+                &__h {}
+            }
+
+            &__table {
+                border: 1px solid lightgray;
+                border-collapse: collapse;
+                width: 100%;
+
+                thead {
+                    background-color: whitesmoke;
+                    border-bottom: 3px solid lightgray;
+
+                    th {
+                        padding: 16px;
+                        border: 1px solid lightgray;
+                        border-collapse: collapse;
+                        text-align: left;
+                    }
+                }
+
+                tbody {
+                    td {
+                        padding: 16px;
+                        border: 1px solid lightgray;
+                        border-collapse: collapse;
+
+                        &.ellipsis {
+                            position: relative;
+
+                            &::before {
+                                content: ' ';
+                                visibility: hidden;
+                            }
+
+                            span {
+                                position: absolute;
+                                left: 16px;
+                                right: 16px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
+                        & img {
+                            width: 100%;
+                        }
+
+                        &.status {
+                            padding: 8px;
+
+                            span {
+                                display: block;
+                                color: white;
+                                padding: 8px;
+                                border-radius: 8px;
+                                width: 100%;
+                                text-align: center;
+                            }
+
+                            &.pending span {
+                                background-color: orange;
+                            }
+
+                            &.empty span {
+                                background-color: gray;
+                            }
+
+                            &.approved span {
+                                background-color: green;
+                            }
+
+                            &.rejected span {
+                                background-color: red;
+                            }
+                        }
+
+                        &.link {
+                            color: var(--secondary-color);
+                            cursor: pointer;
+
+                            &:hover {
+                                filter: brightness(0.5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &__new-product {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            &__h {
+                flex: 0 1 auto;
+                margin-bottom: 24px;
+            }
+
+            &__options {
+                flex: 1 1 auto;
+                display: flex;
+                margin-bottom: 24px;
+
+                &__description {
+                    flex: 1 1 50%;
+                    padding-right: 16px;
+                    border-right: 1px solid whitesmoke;
+
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 16px;
+
+                    &__desc {
+                        flex: 1 1 auto;
+                        min-height: 150px;
+                    }
+
+                    &__count {
+                        column-gap: 16px;
+                        display: flex;
+                    }
+                }
+
+                &__image {
+                    padding-left: 16px;
+                    border-left: 1px solid whitesmoke;
+                    flex: 1 1 50%;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 16px;
+
+                    h3 {
+                        flex: 0 1 auto;
+                    }
+
+                    &__ico {
+                        flex: 1 1 auto;
+                        align-self: flex-start;
+                        aspect-ratio: 1 / 1;
+                        border: 2px dotted lightgray;
+
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+
+                        cursor: pointer;
+
+                        object-fit: contain;
+
+                        &__title {
+                            text-align: center;
+                        }
+
+                        &__img {
+                            height: 0;
+                            min-height: 100%;
+                            min-width: 100%;
+                            object-fit: contain;
+                        }
+
+
+                    }
+
+                    &__category {
+                        flex: 0 1 auto;
+                    }
+                }
+            }
+
+            &__actions {
+                flex: 0 1 auto;
+                align-self: flex-start;
+
+                display: flex;
+                align-items: center;
+                column-gap: 24px;
+
+                &__error {
+                    color: red;
+                }
+            }
+        }
+    }
+
+}

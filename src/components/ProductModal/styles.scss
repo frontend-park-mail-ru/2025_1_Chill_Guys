@@ -1,4 +1,4 @@
-@keyframes request-modal-open-animation {
+@keyframes product-modal-open-animation {
     0% {
         transform: translateX(100%);
     }
@@ -8,7 +8,7 @@
     }
 }
 
-@keyframes request-modal-close-animation {
+@keyframes product-modal-close-animation {
     0% {
         transform: translateX(0);
     }
@@ -18,7 +18,7 @@
     }
 }
 
-.request-modal {
+.product-modal {
     &__tint {
         position: fixed;
         top: 0;
@@ -86,12 +86,32 @@
             flex-direction: column;
             row-gap: 16px;
             padding: 16px;
-            overflow: auto;
+            overflow: scroll;
 
             &__item {
                 &__name {
                     color: gray;
                     margin-bottom: 4px;
+                }
+
+                &__value {
+                    &__status {
+                        &.pending {
+                            color: orange;
+                        }
+
+                        &.empty {
+                            color: gray;
+                        }
+
+                        &.approved {
+                            color: green;
+                        }
+
+                        &.rejected {
+                            color: red;
+                        }
+                    }
                 }
             }
 

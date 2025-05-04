@@ -107,6 +107,16 @@ class SearchPage extends Tarakan.Component {
         const minPrice = app.queryParams.l ?? "";
         const maxPrice = app.queryParams.h ?? "";
 
+        let s = new Set();
+        for (let e of this.state.products) {
+            if (s.has(e.id)) {
+                console.log("HAS", e.id)
+            } else {
+                console.log(e.id)
+                s.add(e.id);
+            }
+        }
+
         return <div className="search-page">
             <Header />
             <main className="search-page__content">

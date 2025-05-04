@@ -110,7 +110,7 @@ export default {
         },
         historyApiFallback: true,
         compress: true,
-        port: 7501,
+        port: 7500,
         host: '0.0.0.0',
         allowedHosts: ['all'],
     },

@@ -5,6 +5,8 @@ import "./styles.scss";
 import crossIcon from "../../shared/images/cross-ico.svg";
 import Button from "../Button/Button";
 import { ProductRequest, UserRequest } from "../../api/admin";
+import { Product } from "../../api/product";
+import { convertMoney } from "../../pages/AdminPage/AdminPage";
 
 class ProductRequestModal extends Tarakan.Component {
     state = {
@@ -25,7 +27,7 @@ class ProductRequestModal extends Tarakan.Component {
     }
 
     render(props) {
-        const request: ProductRequest = props.request;
+        const request: Product = props.request;
         return <div className="request-modal">
             <div className={"request-modal__tint " + this.state.status} onClick={() => this.handleClose()} />
             <div className={"request-modal__content " + this.state.status}>
@@ -54,10 +56,18 @@ class ProductRequestModal extends Tarakan.Component {
                     </div>
                     <div className="request-modal__content__data__item">
                         <div className="request-modal__content__data__item__name">
+                            Описание
+                        </div>
+                        <div className="request-modal__content__data__item__value">
+                            {request?.description}
+                        </div>
+                    </div>
+                    <div className="request-modal__content__data__item">
+                        <div className="request-modal__content__data__item__name">
                             Цена
                         </div>
                         <div className="request-modal__content__data__item__value">
-                            {request?.price}
+                            {convertMoney(request?.price ?? 0)}
                         </div>
                     </div>
                 </div>

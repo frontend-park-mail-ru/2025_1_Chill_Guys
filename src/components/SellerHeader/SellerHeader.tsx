@@ -10,7 +10,7 @@ import LogoutIconHover from "../../shared/images/logout-ico-hover.svg";
 
 import "./styles.scss";
 
-class AdminHeader extends Tarakan.Component {
+class SellerHeader extends Tarakan.Component {
     state = {
         logoutIcon: LogoutIcon,
     }
@@ -28,7 +28,7 @@ class AdminHeader extends Tarakan.Component {
                                 app.navigateTo("/");
                             }}
                         />
-                        <span className="header-admin__nav__logo__text">ADMIN</span>
+                        <span className="header-admin__nav__logo__text">ПРОДАВЕЦ</span>
                     </div>
 
                     <div className="header-admin__nav__row_main__icons-wrapper">
@@ -47,18 +47,9 @@ class AdminHeader extends Tarakan.Component {
                         />
                     </div>
                 </div>
-
-                <div
-                    className={`header-admin__nav__secondary`}
-                >
-                    <div className={`categories-wrapper`}>
-                        <span onClick={() => app.navigateTo("/admin/sellers")}>Продавцы</span>
-                        <span onClick={() => app.navigateTo("/admin/products")}>Товары</span>
-                    </div>
-                </div>
             </div>
         </header >
     }
 }
 
-export default AdminHeader;
+export default SellerHeader;
