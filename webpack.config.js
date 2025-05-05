@@ -1,10 +1,8 @@
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
 import path, { dirname } from "path";
-import express from "express";
 
 const __dirname = dirname("./");
-
-// console.log(__dirname)
 
 export default {
     mode: 'production',
@@ -13,8 +11,15 @@ export default {
         new HtmlBundlerPlugin({
             entry: {
                 index: './public/index.html',
+                sw: "./public/sw.ts"
             },
-            favicon: "./public/favicon.ico"
+            favicon: "./public/favicon.ico",
+            manifest: "./public/manifest.webmanifest"
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "./public/icons", to: "./icons" },
+            ],
         }),
     ],
 
@@ -26,10 +31,17 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(png|jpg|ico?)$/i,
+                test: /\.(png|jpg?)$/i,
                 type: 'asset/resource',
                 generator: {
                     filename: 'font/[hash][ext][query]'
+                }
+            },
+            {
+                test: /\.(webmanifest|ico?)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: "[name][ext]",
                 }
             },
             {
@@ -71,6 +83,8 @@ export default {
         extensions: ['.tsx', '.jsx', '.ts', '.js'],
     },
 
+
+
     devServer: {
         static: {
             directory: path.join(__dirname, 'public'),
@@ -98,8 +112,9 @@ export default {
         compress: true,
         port: 7500,
         host: '0.0.0.0',
-        allowedHosts: ['all']
+        allowedHosts: ['all'],
     },
+
     performance: {
         hints: false,
         maxEntrypointSize: 512000,

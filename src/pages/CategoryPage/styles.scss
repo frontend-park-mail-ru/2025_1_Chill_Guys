@@ -1,3 +1,79 @@
+@media screen and (max-width: 720px) {
+  .category-page {
+    margin-inline: 2px;
+
+    &__content {
+      padding: 16px;
+
+      &__search {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &__filters {
+        flex-direction: column;
+        gap: 20px;
+
+        .select {
+          width: auto;
+        }
+      }
+
+      &__categories {
+        &__list {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      &__products {
+
+        &__list {
+          grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .category-page {
+    &__content {
+      &__filters {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .category-page {
+    margin-inline: 24px;
+
+    &__content {
+      padding: 24px;
+
+      &__search {
+        display: flex;
+      }
+
+      &__categories {
+        &__list {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      &__products {
+
+        &__list {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+      }
+    }
+  }
+}
+
+
 .category-page {
   align-items: flex-start;
   margin-top: 24px;
@@ -15,10 +91,7 @@
   }
 
   &__main-h1 {
-    font-size: 24px;
-    font-weight: bold;
     margin-bottom: 24px !important;
-    padding-top: 14px;
   }
 
   &__cards-container {
@@ -26,5 +99,75 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     max-width: 100%;
     column-gap: 16px;
+    row-gap: 16px;
+  }
+
+  &>* {
+    width: 100%;
+  }
+
+  &__search {
+    display: flex;
+    column-gap: 16px;
+    padding-bottom: 18px;
+
+    &__btn {
+      min-width: 250px;
+    }
+  }
+
+  &__sep {
+    border: 1px solid lightgray;
+    margin-bottom: 24px;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--input-m-font-size);
+    margin-bottom: 24px;
+
+    &>div {
+      display: flex;
+      align-items: center;
+    }
+
+    &__sep {
+      align-self: normal;
+      border: 1px solid lightgray;
+    }
+
+    &__sort-title {
+      margin-right: 12px;
+    }
+
+    &__min-price-title {
+      width: fit-content;
+      margin-right: 12px;
+    }
+
+    &__min-price {
+      width: calc(6em);
+    }
+
+    &__max-price-title {
+      width: fit-content;
+      margin-inline: 12px;
+    }
+
+    &__max-price {
+      width: calc(6em);
+    }
+
+    &__rating-title {
+      margin-right: 8px;
+    }
+
+    &__rating-value {
+      line-height: 0;
+    }
+
+    &__apply-btn {}
   }
 }

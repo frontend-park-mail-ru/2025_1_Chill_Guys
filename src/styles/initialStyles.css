@@ -28,9 +28,20 @@ body {
     width: 100vw;
 }
 
+@media screen and (max-width: 720px) {
+    .container {
+        margin-inline: 2px;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .container {
+        margin-inline: 24px;
+    }
+}
+
 .container {
     min-height: 100vh;
-    margin-inline: 24px;
     display: grid;
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 100%;

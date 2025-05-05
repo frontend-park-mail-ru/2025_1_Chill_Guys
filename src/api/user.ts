@@ -11,7 +11,7 @@ export interface UserData {
 }
 
 export async function getMe(): Promise<{ code: AJAXErrors, data?: UserData }> {
-    const response = await ajax.get("users/me");
+    const response = await ajax.get("users/me", { setCSRF: true });
 
     if (response.error) {
         return { code: AJAXErrors.ServerError };

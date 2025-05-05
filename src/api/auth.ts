@@ -8,7 +8,7 @@ export async function signIn(email: string, password: string): Promise<AJAXError
         return AJAXErrors.ServerError;
     }
 
-    if (response.result.status == 400 || response.result.status == 401) {
+    if (response.result.status == 400 || response.result.status == 401 || response.result.status == 404) {
         return AJAXErrors.NoUser;
     }
 

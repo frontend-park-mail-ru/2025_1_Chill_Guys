@@ -7,6 +7,7 @@ export enum AJAXErrors {
     UserAlreadyExists,
     Unauthorized,
     WrongPassword,
+    PermissionsDenied,
 
     // Product
     NoProduct,

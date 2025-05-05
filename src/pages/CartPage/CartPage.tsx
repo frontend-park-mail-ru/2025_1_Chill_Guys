@@ -94,7 +94,7 @@ class CartPage extends Tarakan.Component {
 
     init() {
         this.fetchBasket();
-        setTimeout(() => this.setState({ csatString: true }), 10000);
+        // setTimeout => this.setState({ csatString: true }), 10000);
     }
 
     render() {
@@ -112,7 +112,7 @@ class CartPage extends Tarakan.Component {
                                     <div className="content__list__item__description__title">
                                         <div className="content__list__item__description__title__name">{item.productName}</div>
                                         <div className={`content__list__item__description__title__price${(item.productPrice - item.priceDiscount) != 0 ? " content__list__item__description__title__price_discount" : ""}`}>
-                                            <span className="">{item.priceDiscount} ₽</span>
+                                            <span className="">{item.priceDiscount}&nbsp;₽</span>
                                             {(item.productPrice - item.priceDiscount) != 0 && <span className="content__list__item__description__title__price_discount">
                                                 ({-parseInt(`${(item.productPrice - item.priceDiscount) / item.productPrice * 100}`)}%)
                                             </span>}
@@ -123,6 +123,7 @@ class CartPage extends Tarakan.Component {
                                                 size="s"
                                                 iconSrc={cartSubIcon}
                                                 onClick={() => this.handleUpdateQuantity(index, -1)}
+                                                className="content__list__item__description__title__actions__hidden"
                                             />
                                             <span className="content__list__item__description__title__actions__count">
                                                 {item.remainQuantity < 0 ? 0 : item.quantity}
@@ -132,6 +133,7 @@ class CartPage extends Tarakan.Component {
                                                 size="s"
                                                 iconSrc={cartAddIcon}
                                                 onClick={() => this.handleUpdateQuantity(index, 1)}
+                                                className="content__list__item__description__title__actions__hidden"
                                             />
                                         </div>
                                     </div>

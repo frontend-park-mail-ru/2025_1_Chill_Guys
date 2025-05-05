@@ -29,6 +29,7 @@ class TextField extends Tarakan.Component {
 
     handleEnterFinish() {
         const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
+        // console.log(this.props.validType, this.state.value, dataOk);
         if (dataOk) {
             this.setState({ status: "success" });
         } else {
@@ -68,7 +69,7 @@ class TextField extends Tarakan.Component {
                 {title && <h3 className="textField_title__title">{title}</h3>}
                 <div className="textField">
                     <input
-                        className={`textField__input textField__input_${props.validType ? this.state.status : "default"}`}
+                        className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
                         type={type}
                         placeholder={placeholder}
                         value={defaultValue}
@@ -76,16 +77,20 @@ class TextField extends Tarakan.Component {
                         onFocus={() => this.handleFocus()}
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
-
+                        onEnd={(ev) => props.onEnter && props.onEnter(ev)}
+                        maxLength={props.maxLength ?? "255"}
+                        cols={props.cols}
+                        min={props.min}
+                        max={props.max}
                     />
-                    {(props.validType ? this.state.status : "default") !== "default" &&
+                    {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                         <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                     }
                 </div>
             </div>
             : <div className={`textField ${otherClasses}`.trim()}>
                 <input
-                    className={`textField__input textField__input_${props.validType ? this.state.status : "default"}`}
+                    className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
                     type={type}
                     placeholder={placeholder}
                     value={defaultValue}
@@ -93,9 +98,13 @@ class TextField extends Tarakan.Component {
                     onFocus={() => this.handleFocus()}
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
-                    maxlength={props.maxLength ?? ""}
+                    onEnd={(ev) => props.onEnter && props.onEnter(ev)}
+                    maxLength={props.maxLength ?? "255"}
+                    cols={props.cols}
+                    min={props.min}
+                    max={props.max}
                 />
-                {(props.validType ? this.state.status : "default") !== "default" &&
+                {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                     <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
                 }
             </div>

@@ -11,21 +11,23 @@ import CatalogButtonIcon from "../../shared/images/catalog-button-ico.svg";
 import HeaderOrders from "../../shared/images/header-orders-ico.svg";
 import HeaderOrdersHover from "../../shared/images/header-orders-ico-hover.svg";
 
-import HeaderSaved from "../../shared/images/header-saved-ico.svg";
-import HeaderSavedHover from "../../shared/images/header-saved-ico-hover.svg";
-
 import HeaderCart from "../../shared/images/header-cart-ico.svg";
 import HeaderCartHover from "../../shared/images/header-cart-ico-hover.svg"
 
 import HeaderProfile from "../../shared/images/header-profile-ico.svg";
 import HeaderProfileHover from "../../shared/images/header-profile-ico-hover.svg";
 
+import ToolIcon from "../../shared/images/tool-ico.svg";
+import ToolIconHover from "../../shared/images/tool-ico-hover.svg";
+
 import MenuIcon from "../../shared/images/menu.svg";
 import CrossIcon from "../../shared/images/cross-ico.svg";
 
+import SearchIcon from "../../shared/images/search-ico-gray.svg";
+
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
-import { getAllCategories } from "../../api/categories";
+import { getAllCategories, getSubCategories } from "../../api/categories";
 import { AJAXErrors } from "../../api/errors";
 import { getSearchResult, getSearchResultItems } from "../../api/product";
 import CSAT from "../../pages/CSAT/CSAT";
@@ -35,15 +37,18 @@ class Header extends Tarakan.Component {
         this.state = {
             ordersIcon: HeaderOrders,
             cartIcon: HeaderCart,
-            savedIcon: HeaderSaved,
+            iconIcon: ToolIcon,
             profileIcon: this.app.store.user.value.login ? HeaderProfile : HeaderLogin,
             authorized: this.app.store.user.value.login,
+            role: this.app.store.user.value.role,
             popUpDisplayed: false,
             menuOpened: false,
             searchMenuOpened: false,
             searchResult: null,
             searchValue: "",
             categories: null,
+            selectedCategory: null,
+            subcategories: null,
         }
 
         this.fetchCategories();
@@ -52,7 +57,8 @@ class Header extends Tarakan.Component {
             if (name === "login") {
                 this.setState({
                     profileIcon: newValue.login ? HeaderProfile : HeaderLogin,
-                    authorized: newValue.login
+                    authorized: newValue.login,
+                    role: newValue.role,
                 });
             }
         });
@@ -62,6 +68,14 @@ class Header extends Tarakan.Component {
         const categories = await this.app.store.products.sendAction("getCategories");
         this.setState({
             categories: categories.slice(0, 6)
+        });
+    }
+
+    async fetchSubcategories(category: any) {
+        const data = await this.app.store.products.sendAction("getSubCategories", category.id);
+        this.setState({
+            subcategories: data,
+            selectedCategory: category,
         });
     }
 
@@ -90,6 +104,8 @@ class Header extends Tarakan.Component {
     }
 
     render(props: any, app: any) {
+        // console.log(this.state.role);
+
         return <header className="header header_light">
             {this.state.csatString && <CSAT id={this.state.csatString} onEnd={() => this.setState({ csatString: "" })} />}
             <div className="header__nav">
@@ -121,6 +137,12 @@ class Header extends Tarakan.Component {
                                 className={`width header__nav__row_main__search-field-wrapper__body__field`}
                                 onChange={(ev: any) => this.fetchSearchResult(ev)}
                                 onFocus={() => this.setState({ searchMenuOpened: true })}
+                                onEnter={() => {
+                                    this.setState({ searchMenuOpened: false });
+                                    app.navigateTo("/search", {
+                                        r: this.state.searchValue
+                                    })
+                                }}
                                 onEnd={() => {
                                     if (this.state.searchResult === "") {
                                         this.setState({ searchMenuOpened: false })
@@ -192,7 +214,31 @@ class Header extends Tarakan.Component {
                     </div>
 
                     <div className="header__nav__row_main__icons-wrapper">
-
+                        {
+                            this.state.authorized && (this.state.role === "admin" || this.state.role === "seller")
+                            &&
+                            <Button
+                                size={`${BUTTON_SIZE.L}`}
+                                iconPosition={`${ICON_POSITION.TOP}`}
+                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                title={this.state.role === "seller" ? "Продажа" : "Консоль"}
+                                iconSrc={`${this.state.iconIcon}`}
+                                iconAlt='Иконка сердечко'
+                                onMouseOver={() => {
+                                    this.setState({ iconIcon: ToolIconHover })
+                                }}
+                                onMouseLeave={() => {
+                                    this.setState({ iconIcon: ToolIcon })
+                                }}
+                                onClick={() => {
+                                    if (this.state.role === "seller") {
+                                        app.navigateTo('/seller');
+                                    } else {
+                                        app.navigateTo("/admin");
+                                    }
+                                }}
+                            />
+                        }
                         {
                             this.state.authorized
                             &&
@@ -211,27 +257,6 @@ class Header extends Tarakan.Component {
                                 }}
                                 onClick={() => {
                                     app.navigateTo('/orders');
-                                }}
-                            />
-                        }
-
-                        {
-                            this.state.authorized
-                            &&
-                            <Button
-                                size={`${BUTTON_SIZE.L}`}
-                                iconPosition={`${ICON_POSITION.TOP}`}
-                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                                title='Избранное'
-                                iconSrc={`${this.state.savedIcon}`}
-                                iconAlt='Иконка сердечко'
-                                onMouseOver={() => {
-                                    this.setState({ savedIcon: HeaderSavedHover })
-                                }}
-                                onMouseLeave={() => {
-                                    this.setState({ savedIcon: HeaderSaved })
-                                }}
-                                onClick={() => {
                                 }}
                             />
                         }
@@ -305,38 +330,75 @@ class Header extends Tarakan.Component {
                                     <span className="menu-modal__content__title__text">Меню</span>
                                 </div>
                                 <Button
-                                    title="Профиль"
-                                    iconSrc={HeaderProfile}
+                                    title="Поиск"
+                                    iconSrc={SearchIcon}
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
-                                        app.navigateTo('/profile');
+                                        this.setState({ menuOpened: false })
+                                        app.navigateTo('/search?r=');
                                     }}
                                 />
                                 <Button
-                                    title="Избранное"
-                                    iconSrc={HeaderSaved}
+                                    title={this.state.authorized ? "Профиль" : "Войти"}
+                                    iconSrc={this.state.authorized ? HeaderProfile : HeaderLogin}
                                     variant="text"
                                     className="menu-modal__content__button"
+                                    onClick={() => {
+                                        this.setState({ menuOpened: false })
+                                        app.navigateTo('/profile');
+                                    }}
                                 />
-                                <Button
+                                {this.state.authorized && < Button
                                     title="Корзина"
                                     iconSrc={HeaderCart}
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
+                                        this.setState({ menuOpened: false })
                                         app.navigateTo('/cart');
                                     }}
-                                />
-                                <Button
+                                />}
+                                {this.state.authorized && < Button
                                     title="Заказы"
                                     iconSrc={HeaderOrders}
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
+                                        this.setState({ menuOpened: false })
                                         app.navigateTo('/orders');
                                     }}
-                                />
+                                />}
+                                {
+                                    this.state.authorized && (this.state.role === "admin" || this.state.role === "seller")
+                                    &&
+                                    < Button
+                                        title={this.state.role === "seller" ? "Продажа" : "Консоль"}
+                                        variant="text"
+                                        className="menu-modal__content__button"
+                                        iconSrc={ToolIcon}
+                                        onClick={() => {
+                                            if (this.state.role === "seller") {
+                                                app.navigateTo('/seller');
+                                            } else {
+                                                app.navigateTo("/admin");
+                                            }
+                                        }}
+                                    />
+                                }
+                                {this.state.role === "buyer" &&
+                                    < Button
+                                        title="Хочу&#160;стать&#160;продавцом!"
+                                        variant="text"
+                                        className="bottom-button"
+                                        onClick={() => app.navigateTo("/seller-form")}
+                                    />
+                                }
+                                {this.state.role === "pending" &&
+                                    <div className="header__nav__secondary__seller-pending">
+                                        Заявка&#160;на&#160;продавца&#160;отправлена
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -350,14 +412,54 @@ class Header extends Tarakan.Component {
                         {
                             this.state.categories &&
                             this.state.categories.map((category: any) =>
-                                <span onClick={() => {
-                                    app.navigateTo(`/category/${category.id}`);
-                                }}>
-                                    {category.name}
+                                <span
+                                    className="categories-wrapper__item"
+                                    onMouseOver={(e) => {
+                                        if (!this.state.selectedCategory || category.id !== this.state.selectedCategory.id) {
+                                            this.fetchSubcategories(category);
+                                        }
+                                    }}
+                                >
+                                    <span className="categories-wrapper__item__value">
+                                        {category.name}
+                                    </span>
+                                    {this.state.selectedCategory?.id === category.id &&
+                                        <div
+                                            className="subcategories-modal"
+                                            onMouseLeave={() => {
+                                                this.setState({ selectedCategory: null });
+                                                // console.log("leave");
+                                            }}>
+                                            <div className="subcategories-modal__items">
+                                                {this.state.subcategories.map((E) =>
+                                                    <span
+                                                        className="subcategories-modal__items__item"
+                                                        onClick={() => {
+                                                            this.setState({ selectedCategory: null })
+                                                            app.navigateTo("/category/" + E.id)
+                                                        }}
+                                                    >
+                                                        {E.name}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                        </div>
+                                    }
                                 </span>
                             )
                         }
                     </div>
+                    {this.state.role === "buyer" &&
+                        <div className="header__nav__secondary__seller" onClick={() => app.navigateTo("/seller-form")}>
+                            Хочу стать продавцом!
+                        </div>
+                    }
+                    {this.state.role === "pending" &&
+                        <div className="header__nav__secondary__seller-pending">
+                            Заявка на продавца отправлена
+                        </div>
+                    }
                 </div>
             </div>
 
@@ -369,22 +471,34 @@ class Header extends Tarakan.Component {
                             <Button
                                 title={`${item.name}`}
                                 variant={`${BUTTON_VARIANT.TRANSPARENT}`}
-                                onClick={() => {
-                                    this.setState({ popUpDisplayed: false })
-                                    app.navigateTo(`/category/${item.id}`);
-                                }}
                                 className="header__pop-up__list__button"
                                 onMouseOver={(e) => {
-                                    // console.log(e.target);
-                                    const categoryH2 = document.getElementById('category-h2');
-                                    categoryH2.innerHTML = e.target.innerHTML;
+                                    if (!this.state.selectedCategory || item.id !== this.state.selectedCategory.id) {
+                                        this.fetchSubcategories(item);
+                                    }
                                 }}
                             />
                         )
                     }
                 </div>
                 <div className="header__pop-up__info-wrapper">
-                    <h2 id="category-h2" className="h2-reset header__pop-up__info-wrapper__category-title">Выберите категорию</h2>
+                    <h2 id="category-h2" className="h2-reset header__pop-up__info-wrapper__category-title">
+                        {this.state.selectedCategory ? this.state.selectedCategory.name : "Выберите категорию"}
+                    </h2>
+                    <div className="header__pop-up__info-wrapper__list">
+                        {this.state.subcategories && this.state.subcategories.map((e) =>
+                            <Button
+                                title={`${e.name}`}
+                                variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                onClick={() => {
+                                    this.setState({ popUpDisplayed: false })
+                                    app.navigateTo(`/category/${e.id}`);
+                                }}
+                                className="header__pop-up__info-wrapper__list__item"
+                            />
+                        )}
+                    </div>
+
                 </div>
             </div>
         </header >

@@ -2,47 +2,37 @@ import Tarakan from "bazaar-tarakan";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import "./styles.scss";
-import { getProduct } from "../../api/product";
-import { AJAXErrors } from "../../api/errors";
+import {getProduct} from "../../api/product";
+import {AJAXErrors} from "../../api/errors";
 import Button from "../../components/Button/Button";
 
-import StarIcon from "../../shared/images/productCard-star-ico.svg";
+import ProfileIcon from "../../shared/images/header-profile-ico.svg";
 import cartAddIcon from "../../shared/images/cart-add-ico.svg";
 import cartSubIcon from "../../shared/images/cart-sub-ico.svg";
-import { addToBasket, getBasket, removeFromBasket, updateProductQuantity } from "../../api/basket";
+import StarIcon from "../../shared/images/star-ico.svg";
+import StarFilledIcon from "../../shared/images/star-filled-ico.svg";
+
+import {addToBasket, getBasket, removeFromBasket, updateProductQuantity} from "../../api/basket";
+import {getComments, sendComment} from "../../api/comments";
+import CreateReviewModal from "../../components/CreateReviewModal/CreateReviewModal";
+import Alert from "../../components/Alert/Alert";
+import InfinityList from "../../components/InfinityList/InfinityList";
+import { convertMoney } from "../AdminPage/AdminPage";
 
 class ProductPage extends Tarakan.Component {
     state: any = {
         product: null,
-        comments: [
-            {
-                id: "comment",
-                description: "Таким образом, курс на социально-ориентированный национальный проект влечет за собой процесс внедрения и модернизации соответствующих условий активизации. Задача организации, в особенности же выбранный нами инновационный путь требует от нас анализа позиций, занимаемых участниками в отношении поставленных задач? Повседневная практика показывает, что выбранный нами инновационный путь создаёт предпосылки качественно новых шагов для дальнейших направлений развития проекта.",
-                author: "Круглов Леонид",
-                date: new Date(Date.parse("2025-04-20T18:25:55.280Z")),
-                review: 4,
-            },
-            {
-                id: "comment",
-                description: "Таким образом, курс на социально-ориентированный национальный проект влечет за собой процесс внедрения и модернизации соответствующих условий активизации. Задача организации, в особенности же выбранный нами инновационный путь требует от нас анализа позиций, занимаемых участниками в отношении поставленных задач? Повседневная практика показывает, что выбранный нами инновационный путь создаёт предпосылки качественно новых шагов для дальнейших направлений развития проекта.",
-                author: "Мамаев Никита",
-                date: new Date(Date.parse("2025-04-20T18:25:55.280Z")),
-                review: 5,
-            },
-            {
-                id: "comment",
-                description: "Таким образом, курс на социально-ориентированный национальный проект влечет за собой процесс внедрения и модернизации соответствующих условий активизации. Задача организации, в особенности же выбранный нами инновационный путь требует от нас анализа позиций, занимаемых участниками в отношении поставленных задач? Повседневная практика показывает, что выбранный нами инновационный путь создаёт предпосылки качественно новых шагов для дальнейших направлений развития проекта.",
-                author: "Марков Михаил",
-                date: new Date(Date.parse("2025-04-20T18:25:55.280Z")),
-                review: 3,
-            }
-        ],
-        menuOpened: "reviews",
+        commentsOffset: 0,
+        comments: [],
+        addReviewModal: false,
+        showNotAuthAlert: false,
+        showComments: false,
+        fetching: false,
     }
 
     async fetchProduct() {
         const productId = this.app.urlParams.productId;
-        const { code: basketCode, data } = await getBasket();
+        const {code: basketCode, data} = await getBasket();
         let quantity = 0;
 
         if (basketCode === AJAXErrors.NoError) {
@@ -54,7 +44,7 @@ class ProductPage extends Tarakan.Component {
             }
         }
 
-        const { code: productCode, product } = await getProduct(productId);
+        const {code: productCode, product} = await getProduct(productId);
 
         if (productCode === AJAXErrors.NoError) {
             this.setState({
@@ -63,6 +53,7 @@ class ProductPage extends Tarakan.Component {
                     quantity,
                 }
             });
+            this.fetchReviews();
         } else {
             this.app.navigateTo("/");
         }
@@ -112,6 +103,55 @@ class ProductPage extends Tarakan.Component {
         }
     }
 
+    async fetchReviews() {
+        if (!this.state.product) {
+            return;
+        }
+        if (this.state.fetching) {
+            return;
+        }
+        this.state.fetching = true;
+        const { code, reviews } = await getComments(this.state.product.id, this.state.commentsOffset);
+        if (code === AJAXErrors.NoError) {
+            this.setState({
+                commentsOffset: this.state.commentsOffset + 7,
+                comments: [
+                    ...this.state.comments,
+                    ...reviews,
+                ],
+                fetching: false,
+            })
+        } else {
+            this.state.fetching = false;
+        }
+    }
+
+    async sendReview(description: string, rating: number) {
+        const code = await sendComment(this.state.product.id ?? "", rating, description);
+        if (code === AJAXErrors.NoError) {
+            // console.log(this.app.store);
+            this.setState({
+                comments: [
+                    {
+                        "id": "0",
+                        "name": this.app.store.user.value.name,
+                        "surname": this.app.store.user.value.surname,
+                        "imageURL": this.app.store.user.value.imageURL,
+                        "rating": rating,
+                        "comment": description,
+                    },
+                    ...this.state.comments,
+                ],
+                product: {
+                    ...this.state.product,
+                    reviewsCount: this.state.product.reviewsCount + 1,
+                    rating: (this.state.product.rating * this.state.product.reviewsCount + rating) / (this.state.product.reviewsCount + 1)
+                },
+                addReviewModal: false
+            })
+        }
+    }
+
     update() {
         if (this.app.urlParams.productId) {
             this.fetchProduct();
@@ -128,29 +168,29 @@ class ProductPage extends Tarakan.Component {
         }
     }
 
-    render() {
+    render(props, app) {
         return <div className="product-page">
-            <Header />
+            <Header/>
             <main className="product-page__main">
                 <div className="product-page__main__card">
                     <div className="product-page__main__card__image">
-                        <img src={`${this.state.product?.image}`} />
+                        <img src={`${this.state.product?.image}`}/>
                     </div>
                     <div className="product-page__main__card__details">
-                        <h1>{this.state.product?.name}</h1>
+                        <h1 className="product-page__main__card__details__title">{this.state.product?.name}</h1>
                         <div className="product-page__main__card__details__buyer">
-                            ООО "Клуб анонимных фронтендеров и бекэндеров"
+                            {this.state.product?.seller.title}
                         </div>
                         {this.state.product && <div className="product-page__main__card__details__action">
                             <span className={`product-page__main__card__details__action__price${this.state.product.discountPrice !== 0 ? "-discount" : "-default"}`}>
-                                {this.state.product.discountPrice || this.state.product.price} ₽
+                                {convertMoney(this.state.product.discountPrice || this.state.product.price)}
                             </span>
-                            {
-                                this.state.product.discountPrice !== 0 &&
-                                <span className="product-page__main__card__details__action__discount">
+                                {
+                                    this.state.product.discountPrice !== 0 &&
+                                    <span className="product-page__main__card__details__action__discount">
                                     (-{parseInt(`${(this.state.product.price - this.state.product.discountPrice) / this.state.product.price * 100}`)}%)
                                 </span>
-                            }
+                                }
                             <div className="product-page__main__card__details__action__buy">
                                 <Button
                                     disabled={this.state.product.quantity === 0}
@@ -193,45 +233,85 @@ class ProductPage extends Tarakan.Component {
                 </div>
                 <div className="product-page__main__reviews">
                     <div className="product-page__main__reviews__title">
-                        <h2>Отзывы</h2>
+                        <h2>Отзывы (<img
+                            className="product-page__main__reviews__title__star"
+                            src={StarFilledIcon}
+                        />{parseFloat(this.state.product?.rating).toFixed(2)})</h2>
+                        {this.state.showNotAuthAlert && <Alert
+                            title="Необходимо войти"
+                            content="Чтобы оставить отзыв, надо сначала войти в профиль."
+                            successButtonTitle="Войти"
+                            onSuccess={() => app.navigateTo("/signin")}
+                            onClose={() => this.setState({showNotAuthAlert: false})}
+                        />}
+                        {this.state.addReviewModal &&
+                            <CreateReviewModal onSend={(D: any, R: any) => this.sendReview(D, R)}
+                                               onClose={() => this.setState({addReviewModal: false})}/>}
                         <Button
                             className="product-page__main__reviews__title__action"
                             title="Оставить отзыв"
                             variant="text"
+                            onClick={() => {
+                                if (app.store.user.value.login) {
+                                    this.setState({addReviewModal: true})
+                                } else {
+                                    this.setState({showNotAuthAlert: true})
+                                }
+                            }}
                         />
                     </div>
                     <div className="product-page__main__reviews__content">
                         {this.state.comments.length === 0
                             ? "У данного товара пока нет отзывов"
-                            : this.state.comments.map((comment: any) =>
+                            : (this.state.showComments ? this.state.comments : this.state.comments.slice(0, 3)).map((comment: any) =>
                                 <div className="product-page__main__reviews__content__comment">
-                                    <h4 className="product-page__main__reviews__content__comment__info">
-                                        <span className="product-page__main__reviews__content__comment__info__review">
-                                            <img className={`product-card__reviews__star-block__star-text`} src={StarIcon} />
-                                            {comment.review}
+                                    <div className="product-page__main__reviews__content__comment__info">
+                                        <span className="product-page__main__reviews__content__comment__info__avatar">
+                                            <img
+                                                className="product-page__main__reviews__content__comment__info__avatar__img"
+                                                src={comment.imageURL ?? ProfileIcon}
+                                            />
                                         </span>
                                         <span className="product-page__main__reviews__content__comment__info__author">
-                                            {comment.author}
+                                            {comment.name}
                                         </span>
-                                        <span className="product-page__main__reviews__content__comment__info__date">
-                                            <span>
-                                                {comment.date.toLocaleTimeString("ru-RU")}
+                                        <span className="product-page__main__reviews__content__comment__info__review">
+                                            <span
+                                                className="product-page__main__reviews__content__comment__info__review__rating"
+                                            >
+                                                {Array(5).fill(0).map((E, I) =>
+                                                    <img
+                                                        className="product-page__main__reviews__content__comment__info__review__rating__star"
+                                                        src={comment.rating > I ? StarFilledIcon : StarIcon}
+                                                    />
+                                                )}
                                             </span>
-                                            <span>
-                                                {comment.date.toLocaleDateString("ru-RU")}
+                                            <span
+                                                className="product-page__main__reviews__content__comment__info__review__value">
+                                                {comment.rating}
                                             </span>
                                         </span>
-                                    </h4>
+                                    </div>
                                     <div className="product-page__main__reviews__content__comment__description">
-                                        {comment.description}
+                                        {comment.comment}
                                     </div>
                                 </div>
                             )
                         }
                     </div>
+                    {
+                        this.state.showComments
+                            ? <InfinityList onShow={() => this.fetchReviews()} />
+                            : this.state.comments > 3 && <Button
+                                variant="text"
+                                title="Показать все комментарии"
+                                className="product-page__main__reviews__content__more"
+                                onClick={() => this.setState({showComments: true})}
+                            />
+                    }
                 </div>
             </main>
-            <Footer />
+            <Footer/>
         </div>
     }
 }

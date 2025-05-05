@@ -1,26 +1,81 @@
+@media screen and (max-width: 720px) {
+    .product-page {
+        margin-inline: 2px;
+
+        &__main {
+            padding: 2px;
+            row-gap: 24px;
+            padding: 16px;
+
+            &__card {
+                display: flex;
+                flex-direction: column;
+
+                &__details {
+                    &__title {
+                        font-size: 20px;
+                        font-weight: 700;
+                    }
+
+                    &__action {
+                        flex-direction: column;
+                        gap: 20px;
+
+                        &__buy {
+                            justify-content: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .product-page {
+        margin-inline: 24px;
+
+        &__main {
+            padding: 24px;
+            row-gap: 12px;
+
+            &__card {
+                column-gap: 24px;
+
+                &__image {}
+
+                &__details {
+                    &__action {
+                        &__buy {
+                            margin-left: auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 .product-page {
-    margin-inline: 24px;
     row-gap: 24px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 
     &__main {
-        padding: 24px;
-        background-color: white;
+        background-color: var(--background);
         border-radius: 20px;
         display: flex;
         flex-direction: column;
-        row-gap: 12px;
-        min-width: 75%;
-        max-width: 75%;
+        width: 100%;
         margin-inline: auto;
 
         &__card {
             display: flex;
-            column-gap: 24px;
 
             &__image {
+                display: flex;
+                justify-content: center;
                 line-height: 0;
 
                 img {
@@ -80,7 +135,6 @@
                     }
 
                     &__buy {
-                        margin-left: auto;
                         display: flex;
                         column-gap: 8px;
 
@@ -127,6 +181,17 @@
                 justify-content: space-between;
                 align-items: center;
 
+                h2 {
+                    display: flex;
+                    align-items: center;
+                }
+
+                &__star {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 4px;
+                }
+
                 &__action {
                     padding: 0;
                     height: fit-content;
@@ -150,19 +215,50 @@
                     &__info {
                         color: #555;
                         display: flex;
+                        align-items: center;
+                        column-gap: 12px;
+
+                        &__avatar {
+                            line-height: 0;
+
+                            &__img {
+                                border-radius: 50%;
+                                width: 48px;
+                                height: 48px;
+                                object-fit: contain;
+                            }
+                        }
+
+                        &__author {
+                            font-size: 20px;
+                        }
 
                         &__review {
                             display: flex;
-                            column-gap: 4px;
-                            width: 50px;
-                        }
-
-                        &__date {
+                            align-items: center;
+                            font-size: 20px;
                             margin-left: auto;
-                            display: flex;
                             column-gap: 8px;
+
+                            &__rating {
+                                display: flex;
+                                align-items: center;
+                                column-gap: 4px;
+                                line-height: 0;
+
+                                &__star {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
                         }
                     }
+                }
+
+                &__more {
+                    align-self: flex-start;
+                    padding: 0;
+                    height: fit-content;
                 }
             }
         }

@@ -1,0 +1,141 @@
+@keyframes product-modal-open-animation {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes product-modal-close-animation {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.product-modal {
+    &__tint {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        transition: opacity 0.2s, visibility 0.2s;
+
+        &.opened {
+            opacity: 0.3;
+        }
+
+        &.closed,
+        &.default {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    &__content {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 400px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+
+        transition: transform 0.2s;
+
+        &.opened {
+            transform: translateX(0%);
+        }
+
+        &.closed {
+            transform: translateX(100%);
+        }
+
+        &__title {
+            padding: 16px;
+            border-bottom: 2px solid lightgray;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &__h {
+                font-size: 20px;
+                font-weight: 900;
+            }
+
+            &__close {
+                line-height: 0;
+
+                &__img {
+                    width: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &__data {
+            display: flex;
+            flex-direction: column;
+            row-gap: 16px;
+            padding: 16px;
+            overflow: auto;
+
+            &__item {
+                &__name {
+                    color: gray;
+                    margin-bottom: 4px;
+                }
+
+                &__value {
+                    &__status {
+                        &.pending {
+                            color: orange;
+                        }
+
+                        &.empty {
+                            color: gray;
+                        }
+
+                        &.approved {
+                            color: green;
+                        }
+
+                        &.rejected {
+                            color: red;
+                        }
+                    }
+                }
+            }
+
+            &__icon {
+                line-height: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 2px solid whitesmoke;
+                padding-bottom: 16px;
+
+                &__img {
+                    max-width: 100%;
+                }
+            }
+        }
+
+        &__actions {
+            margin-top: auto;
+            display: flex;
+            padding: 16px;
+            justify-content: space-between;
+            justify-self: flex-end;
+        }
+    }
+}
