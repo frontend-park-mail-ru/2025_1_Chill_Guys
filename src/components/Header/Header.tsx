@@ -23,7 +23,7 @@ import ToolIconHover from "../../shared/images/tool-ico-hover.svg";
 import MenuIcon from "../../shared/images/menu.svg";
 import CrossIcon from "../../shared/images/cross-ico.svg";
 
-import SearchIcon from "../../shared/images/search-ico.svg";
+import SearchIcon from "../../shared/images/search-ico-gray.svg";
 
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
@@ -335,6 +335,7 @@ class Header extends Tarakan.Component {
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
+                                        this.setState({ menuOpened: false })
                                         app.navigateTo('/search?r=');
                                     }}
                                 />
@@ -344,6 +345,7 @@ class Header extends Tarakan.Component {
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
+                                        this.setState({ menuOpened: false })
                                         app.navigateTo('/profile');
                                     }}
                                 />
@@ -353,6 +355,7 @@ class Header extends Tarakan.Component {
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
+                                        this.setState({ menuOpened: false })
                                         app.navigateTo('/cart');
                                     }}
                                 />}
@@ -362,6 +365,7 @@ class Header extends Tarakan.Component {
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
+                                        this.setState({ menuOpened: false })
                                         app.navigateTo('/orders');
                                     }}
                                 />}

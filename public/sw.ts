@@ -48,29 +48,27 @@ self.addEventListener("install", (event: any) => {
 });
 
 self.addEventListener("fetch", (event: any) => {
-    try {
-        const url = new URL(event.request.url);
-        if (!url.pathname.includes("api")
-            && !url.pathname.includes("s3")
-            && !url.pathname.includes(".")
-            && !url.pathname.includes("ad")
-            && url.origin === "bazaar-techpark.ru") {
-            event.respondWith(caches.open("v1").then((cache) => cache.match("/index.html")));
-        } else {
-            event.respondWith(
-                caches.open("v1").then((cache) => {
-                    return fetch(event.request)
-                        .then((networkResponse) => {
-                            if (!url.pathname.includes("auth") && !url.pathname.includes("ad") && event.request.method == "GET") {
-                                cache.put(event.request, networkResponse.clone());
-                            }
-                            return networkResponse;
-                        })
-                        .catch(() => {
-                            return cache.match(event.request);
-                        });
-                })
-            );
-        }
-    } catch { }
+    const url = new URL(event.request.url);
+    if (!url.pathname.includes("api")
+        && !url.pathname.includes("s3")
+        && !url.pathname.includes(".")
+        && !url.pathname.includes("ad")
+        && url.origin === "bazaar-techpark.ru") {
+        event.respondWith(caches.open("v1").then((cache) => cache.match("/index.html")));
+    } else {
+        event.respondWith(
+            caches.open("v1").then((cache) => {
+                return fetch(event.request)
+                    .then((networkResponse) => {
+                        if (!url.pathname.includes("auth") && !url.pathname.includes("ad") && event.request.method == "GET") {
+                            cache.put(event.request, networkResponse.clone());
+                        }
+                        return networkResponse;
+                    })
+                    .catch(() => {
+                        return cache.match(event.request);
+                    });
+            })
+        );
+    }
 });

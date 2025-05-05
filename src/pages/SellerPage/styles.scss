@@ -1,3 +1,45 @@
+@media (max-width: 1050px) {
+    .seller-form-page__content {
+        flex-direction: column;
+        height: fit-content;
+        width: fit-content;
+    }
+
+    .seller-form-page__content__title__redirect {
+        margin-block: 20px;
+
+        span {
+            text-align: left;
+        }
+    }
+
+    .seller-form-page__content__title {
+        width: auto;
+    }
+
+    .seller-form-page__content__form {
+        width: 100%;
+        row-gap: 20px;
+    }
+
+    .seller-form-page__content__title__header__comment {
+        width: auto;
+    }
+
+    .seller-form-page__content__form__actions {
+        max-width: 500px;
+        width: 100%;
+
+        button {
+            width: 100%;
+
+            span {
+                width: 100%;
+            }
+        }
+    }
+}
+
 .seller-page {
 
     margin-inline: 24px;
