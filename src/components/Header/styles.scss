@@ -287,9 +287,20 @@
                 &__item {
                     position: relative;
 
-                    &__value {
+                    &__value:hover {
                         cursor: pointer;
+                        color: var(--black-color);
                     }
+                }
+            }
+
+            &__seller {
+                color: green;
+                cursor: pointer;
+
+                &-pending {
+                    color: orange;
+                    cursor: pointer;
                 }
             }
 
@@ -298,37 +309,37 @@
                 visibility: hidden;
                 height: 0;
             }
-
-            &__seller {
-                color: green;
-                cursor: pointer;
-
-                &:hover {
-                    font-weight: bold;
-                }
-
-                &-pending {
-                    color: orange;
-                }
-            }
         }
 
         .menu-modal {
             position: fixed;
+            z-index: 100;
+            top: 0;
+            right: 0;
+            background-color: white;
+            border-left: 1px solid lightgray;
+
+            &.opened {
+                .menu-modal__tint {
+                    opacity: 0.3;
+                    z-index: 100;
+                }
+
+                .menu-modal__content {
+                    min-width: 300px;
+                    z-index: 500;
+                    position: relative;
+                }
+            }
 
             &__content {
-                position: fixed;
-                top: 0;
-                right: 0;
                 width: 0;
                 min-width: 0;
                 max-width: 0;
                 height: 100vh;
                 transition: width 0.5s, min-width 0.5s;
-                background-color: white;
 
                 z-index: 2;
-                border-left: 1px solid lightgray;
 
                 &__title {
                     display: flex;
@@ -352,6 +363,7 @@
                 }
 
                 &__padding {
+                    margin-top: 16px;
                     margin: 8px;
                 }
 
@@ -375,15 +387,10 @@
 .subcategories-modal {
     position: absolute;
     left: -12px;
-    top: -100%;
+    z-index: 100;
     width: max-content;
-    cursor: pointer;
 
     &__items {
-        position: relative;
-        cursor: auto;
-        z-index: 100;
-
         padding: 12px;
 
         display: flex;
@@ -391,7 +398,7 @@
         row-gap: 12px;
 
         background-color: white;
-        margin-top: 57px;
+        margin-top: 12px;
         box-shadow: 0px 0px 20px lightgray;
         border-radius: 8px;
 
@@ -404,3 +411,5 @@
         }
     }
 }
+
+.bottom-button {}

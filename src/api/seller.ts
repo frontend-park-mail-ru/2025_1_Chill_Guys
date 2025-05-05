@@ -12,7 +12,7 @@ export interface ProductForm {
 }
 
 export async function sendRequest(title: string, description: string): Promise<AJAXErrors> {
-    const response = await ajax.post("users/update-role", { title, description });
+    const response = await ajax.post("users/update-role", { title, description }, { setCSRF: true });
 
     if (response.error) {
         return AJAXErrors.ServerError;

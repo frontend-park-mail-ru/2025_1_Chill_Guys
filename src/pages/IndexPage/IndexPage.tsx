@@ -16,7 +16,7 @@ import AdBanner from "../../components/AdBanner/AdBanner";
 class IndexPage extends Tarakan.Component {
 
     state = {
-        products: [],
+        products: [{ end: true }],
         fetching: false,
         basket: null,
         showNotAuthAlert: false,
@@ -56,7 +56,7 @@ class IndexPage extends Tarakan.Component {
             const products = productsResponse.products;
             this.setState({
                 basket: basket || new Set(),
-                products: [...this.state.products, ...this.applyAd(products.map((item) => ({
+                products: [...this.state.products.slice(0, this.state.products.length - 1), ...this.applyAd(products.map((item) => ({
                     id: item.id,
                     name: item.name,
                     image: item.image,
@@ -65,7 +65,7 @@ class IndexPage extends Tarakan.Component {
                     reviewsCount: item.reviewsCount,
                     rating: item.rating,
                     isInCart: basket ? basket.has(item.id) : false,
-                })))],
+                }))), { end: true }],
                 offset: this.state.offset + products.length,
                 fetching: false,
             })
@@ -94,8 +94,8 @@ class IndexPage extends Tarakan.Component {
                 <div className={`index-page__cards-container`}>
                     {
                         this.state.products.map(
-                            (item) =>
-                                !item.ad
+                            (item: any) =>
+                                !item.ad && !item.end
                                     ? <ProductCard
                                         id={`${item.id}`}
                                         inCart={item.isInCart}
@@ -112,11 +112,10 @@ class IndexPage extends Tarakan.Component {
                                             }
                                         }}
                                     />
-                                    : <AdBanner url={item.url} />
+                                    : item.ad ? <AdBanner url={item.url} /> : <InfinityList onShow={() => this.fetchProducts()} />
                         )
                     }
                 </div>
-                <InfinityList onShow={() => this.fetchProducts()} />
             </main>
 
             <Footer />

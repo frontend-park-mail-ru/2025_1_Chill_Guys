@@ -29,16 +29,10 @@ class Footer extends Tarakan.Component {
                         <ol className={`list-reset footer__links-wrapper__links-columns__footer-list`}>
                             <li>О Bazaar / About Bazaar</li>
 
-                            <li  onClick={() => {
+                            <li onClick={() => {
                                 router.navigateTo("/");
                             }}>
                                 Главная
-                            </li>
-
-                            <li  onClick={() => {
-                                router.navigateTo("/search");
-                            }}>
-                                Каталог
                             </li>
                         </ol>
                     </div>

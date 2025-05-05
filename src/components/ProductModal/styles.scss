@@ -86,7 +86,7 @@
             flex-direction: column;
             row-gap: 16px;
             padding: 16px;
-            overflow: scroll;
+            overflow: auto;
 
             &__item {
                 &__name {

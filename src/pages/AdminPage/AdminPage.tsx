@@ -140,7 +140,7 @@ class AdminPage extends Tarakan.Component {
                                     <tr>
                                         <td>{request.sellerInfo.title}</td>
                                         <td>{request.sellerInfo.description}</td>
-                                        <td>{`${request.surname} ${request.name}`.trim()}</td>
+                                        <td>{`${request.surname ?? ""} ${request.name}`.trim()}</td>
                                         <td>{request.email}</td>
                                         <td className="link" onClick={() => {
                                             this.setState({ selectedRequest: request });

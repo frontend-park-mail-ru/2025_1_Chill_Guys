@@ -65,7 +65,7 @@ self.addEventListener("fetch", (event: any) => {
             caches.open("v1").then((cache) => {
                 return fetch(event.request)
                     .then((networkResponse) => {
-                        if (!url.pathname.includes("auth") && !url.pathname.includes("ad")) {
+                        if (!url.pathname.includes("auth") && !url.pathname.includes("ad") && event.request.method == "GET") {
                             cache.put(event.request, networkResponse.clone());
                         }
                         return networkResponse;

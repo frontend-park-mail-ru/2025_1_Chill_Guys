@@ -7,7 +7,8 @@
     }
 
     &__cards-container {
-      grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+      padding-inline: 16px;
     }
   }
 }

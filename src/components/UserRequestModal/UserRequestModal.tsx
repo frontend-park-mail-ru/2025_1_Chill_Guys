@@ -25,7 +25,7 @@ class UserRequestModal extends Tarakan.Component {
     }
 
     render(props) {
-        console.log(props);
+        // console.log(props);
         const request: UserRequest = props.request;
         return <div className="product-modal">
             <div className={"product-modal__tint " + this.state.status} onClick={() => this.handleClose()} />
@@ -63,7 +63,7 @@ class UserRequestModal extends Tarakan.Component {
                             Владелец
                         </div>
                         <div className="product-modal__content__data__item__value">
-                            {`${request?.surname} ${request?.name}`.trim()}
+                            {`${request?.surname ?? ""} ${request?.name}`.trim()}
                         </div>
                     </div>
                     <div className="product-modal__content__data__item">

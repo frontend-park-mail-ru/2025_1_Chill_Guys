@@ -333,21 +333,15 @@ class Header extends Tarakan.Component {
                                     <span className="menu-modal__content__title__text">Меню</span>
                                 </div>
                                 <Button
-                                    title="Профиль"
-                                    iconSrc={HeaderProfile}
+                                    title={this.state.authorized ? "Профиль" : "Войти"}
+                                    iconSrc={this.state.authorized ? HeaderProfile : HeaderLogin}
                                     variant="text"
                                     className="menu-modal__content__button"
                                     onClick={() => {
                                         app.navigateTo('/profile');
                                     }}
                                 />
-                                <Button
-                                    title="Избранное"
-                                    iconSrc={HeaderSaved}
-                                    variant="text"
-                                    className="menu-modal__content__button"
-                                />
-                                <Button
+                                {this.state.authorized && < Button
                                     title="Корзина"
                                     iconSrc={HeaderCart}
                                     variant="text"
@@ -355,8 +349,8 @@ class Header extends Tarakan.Component {
                                     onClick={() => {
                                         app.navigateTo('/cart');
                                     }}
-                                />
-                                <Button
+                                />}
+                                {this.state.authorized && < Button
                                     title="Заказы"
                                     iconSrc={HeaderOrders}
                                     variant="text"
@@ -364,7 +358,37 @@ class Header extends Tarakan.Component {
                                     onClick={() => {
                                         app.navigateTo('/orders');
                                     }}
-                                />
+                                />}
+                                {
+                                    this.state.authorized && (this.state.role === "admin" || this.state.role === "seller")
+                                    &&
+                                    < Button
+                                        title={this.state.role === "seller" ? "Продажа" : "Консоль"}
+                                        variant="text"
+                                        className="menu-modal__content__button"
+                                        iconSrc={ToolIcon}
+                                        onClick={() => {
+                                            if (this.state.role === "seller") {
+                                                app.navigateTo('/seller');
+                                            } else {
+                                                app.navigateTo("/admin");
+                                            }
+                                        }}
+                                    />
+                                }
+                                {this.state.role === "buyer" &&
+                                    < Button
+                                        title="Хочу&#160;стать&#160;продавцом!"
+                                        variant="text"
+                                        className="bottom-button"
+                                        onClick={() => app.navigateTo("/seller-form")}
+                                    />
+                                }
+                                {this.state.role === "pending" &&
+                                    <div className="header__nav__secondary__seller-pending">
+                                        Заявка&#160;на&#160;продавца&#160;отправлена
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
