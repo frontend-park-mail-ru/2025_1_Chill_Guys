@@ -54,4 +54,4 @@ jobs:
             docker container stop $CONTAINER_NAME
             docker system prune -af
             docker pull $REGISTRY/$IMAGE_NAME:latest
-            docker run --rm -d --network host --name $CONTAINER_NAME $REGISTRY/$IMAGE_NAME:latest
+            docker run --rm -d --network host --name $CONTAINER_NAME --volume /home/ubuntu/ssl:/ssl $REGISTRY/$IMAGE_NAME:latest

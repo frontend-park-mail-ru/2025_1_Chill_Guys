@@ -5,6 +5,7 @@
         &__main {
             padding: 2px;
             row-gap: 24px;
+            padding: 16px;
 
             &__card {
                 display: flex;
@@ -19,6 +20,7 @@
                     &__action {
                         flex-direction: column;
                         gap: 20px;
+
                         &__buy {
                             justify-content: center;
                         }
@@ -37,21 +39,19 @@
             padding: 24px;
             row-gap: 12px;
 
-        &__card {
-            column-gap: 24px;
+            &__card {
+                column-gap: 24px;
 
-            &__image {
+                &__image {}
 
-            }
-
-            &__details {
-                &__action {
-                    &__buy {
-                        margin-left: auto;
+                &__details {
+                    &__action {
+                        &__buy {
+                            margin-left: auto;
+                        }
                     }
                 }
             }
-        }
         }
     }
 }
