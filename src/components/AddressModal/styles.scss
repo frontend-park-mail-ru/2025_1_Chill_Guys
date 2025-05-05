@@ -1,3 +1,20 @@
+@media screen and (max-width: 720px) {
+    .address-modal {
+        &__modal-content {
+            width: 98%;
+        }
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .address-modal {
+        &__modal-content {
+            width: 40%;
+
+        }
+    }
+}
+
 @keyframes loading-animation {
     0% {
         rotate: 0deg;
@@ -28,7 +45,6 @@
         background-color: white;
         border-radius: 16px;
         padding: 20px;
-        width: 40%;
         display: flex;
         flex-direction: column;
         row-gap: 16px;
