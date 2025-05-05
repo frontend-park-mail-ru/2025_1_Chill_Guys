@@ -2,8 +2,8 @@ import Tarakan from "bazaar-tarakan";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import "./styles.scss";
-import { getProduct } from "../../api/product";
-import { AJAXErrors } from "../../api/errors";
+import {getProduct} from "../../api/product";
+import {AJAXErrors} from "../../api/errors";
 import Button from "../../components/Button/Button";
 
 import ProfileIcon from "../../shared/images/header-profile-ico.svg";
@@ -12,8 +12,8 @@ import cartSubIcon from "../../shared/images/cart-sub-ico.svg";
 import StarIcon from "../../shared/images/star-ico.svg";
 import StarFilledIcon from "../../shared/images/star-filled-ico.svg";
 
-import { addToBasket, getBasket, removeFromBasket, updateProductQuantity } from "../../api/basket";
-import { getComments, sendComment } from "../../api/comments";
+import {addToBasket, getBasket, removeFromBasket, updateProductQuantity} from "../../api/basket";
+import {getComments, sendComment} from "../../api/comments";
 import CreateReviewModal from "../../components/CreateReviewModal/CreateReviewModal";
 import Alert from "../../components/Alert/Alert";
 import InfinityList from "../../components/InfinityList/InfinityList";
@@ -32,7 +32,7 @@ class ProductPage extends Tarakan.Component {
 
     async fetchProduct() {
         const productId = this.app.urlParams.productId;
-        const { code: basketCode, data } = await getBasket();
+        const {code: basketCode, data} = await getBasket();
         let quantity = 0;
 
         if (basketCode === AJAXErrors.NoError) {
@@ -44,7 +44,7 @@ class ProductPage extends Tarakan.Component {
             }
         }
 
-        const { code: productCode, product } = await getProduct(productId);
+        const {code: productCode, product} = await getProduct(productId);
 
         if (productCode === AJAXErrors.NoError) {
             this.setState({
@@ -107,7 +107,6 @@ class ProductPage extends Tarakan.Component {
         if (!this.state.product) {
             return;
         }
-
         if (this.state.fetching) {
             return;
         }
@@ -171,14 +170,14 @@ class ProductPage extends Tarakan.Component {
 
     render(props, app) {
         return <div className="product-page">
-            <Header />
+            <Header/>
             <main className="product-page__main">
                 <div className="product-page__main__card">
                     <div className="product-page__main__card__image">
-                        <img src={`${this.state.product?.image}`} />
+                        <img src={`${this.state.product?.image}`}/>
                     </div>
                     <div className="product-page__main__card__details">
-                        <h1>{this.state.product?.name}</h1>
+                        <h1 className="product-page__main__card__details__title">{this.state.product?.name}</h1>
                         <div className="product-page__main__card__details__buyer">
                             {this.state.product?.seller.title}
                         </div>
@@ -186,12 +185,12 @@ class ProductPage extends Tarakan.Component {
                             <span className={`product-page__main__card__details__action__price${this.state.product.discountPrice !== 0 ? "-discount" : "-default"}`}>
                                 {convertMoney(this.state.product.discountPrice || this.state.product.price)}
                             </span>
-                            {
-                                this.state.product.discountPrice !== 0 &&
-                                <span className="product-page__main__card__details__action__discount">
+                                {
+                                    this.state.product.discountPrice !== 0 &&
+                                    <span className="product-page__main__card__details__action__discount">
                                     (-{parseInt(`${(this.state.product.price - this.state.product.discountPrice) / this.state.product.price * 100}`)}%)
                                 </span>
-                            }
+                                }
                             <div className="product-page__main__card__details__action__buy">
                                 <Button
                                     disabled={this.state.product.quantity === 0}
@@ -243,18 +242,20 @@ class ProductPage extends Tarakan.Component {
                             content="Чтобы оставить отзыв, надо сначала войти в профиль."
                             successButtonTitle="Войти"
                             onSuccess={() => app.navigateTo("/signin")}
-                            onClose={() => this.setState({ showNotAuthAlert: false })}
+                            onClose={() => this.setState({showNotAuthAlert: false})}
                         />}
-                        {this.state.addReviewModal && <CreateReviewModal onSend={(D: any, R: any) => this.sendReview(D, R)} onClose={() => this.setState({ addReviewModal: false })} />}
+                        {this.state.addReviewModal &&
+                            <CreateReviewModal onSend={(D: any, R: any) => this.sendReview(D, R)}
+                                               onClose={() => this.setState({addReviewModal: false})}/>}
                         <Button
                             className="product-page__main__reviews__title__action"
                             title="Оставить отзыв"
                             variant="text"
                             onClick={() => {
                                 if (app.store.user.value.login) {
-                                    this.setState({ addReviewModal: true })
+                                    this.setState({addReviewModal: true})
                                 } else {
-                                    this.setState({ showNotAuthAlert: true })
+                                    this.setState({showNotAuthAlert: true})
                                 }
                             }}
                         />
@@ -285,7 +286,8 @@ class ProductPage extends Tarakan.Component {
                                                     />
                                                 )}
                                             </span>
-                                            <span className="product-page__main__reviews__content__comment__info__review__value">
+                                            <span
+                                                className="product-page__main__reviews__content__comment__info__review__value">
                                                 {comment.rating}
                                             </span>
                                         </span>
@@ -304,12 +306,12 @@ class ProductPage extends Tarakan.Component {
                                 variant="text"
                                 title="Показать все комментарии"
                                 className="product-page__main__reviews__content__more"
-                                onClick={() => this.setState({ showComments: true })}
+                                onClick={() => this.setState({showComments: true})}
                             />
                     }
                 </div>
             </main>
-            <Footer />
+            <Footer/>
         </div>
     }
 }
