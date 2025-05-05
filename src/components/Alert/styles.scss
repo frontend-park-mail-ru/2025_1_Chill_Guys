@@ -8,6 +8,14 @@
     }
 }
 
+@media (max-width: 500px) {
+    .alert {
+        width: auto !important;
+        left: 16px !important;
+        right: 16px !important;
+    }
+}
+
 .alert {
     position: fixed;
     right: 16px;

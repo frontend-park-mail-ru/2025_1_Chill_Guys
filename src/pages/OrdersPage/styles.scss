@@ -1,3 +1,11 @@
+@media (max-width: 700px) {
+    .orders-page__main__content__list__item__title__statuses {
+        display: flex;
+        flex-direction: column;
+        row-gap: 8px;
+    }
+}
+
 .orders-page {
     min-height: 100vh;
     display: flex;

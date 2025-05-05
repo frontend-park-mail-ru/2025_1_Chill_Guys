@@ -36,6 +36,7 @@
         background-color: white;
         opacity: 0;
         pointer-events: none;
+        z-index: 100;
 
         transition: 0.5s visibilty, 0.5s opacity;
 
