@@ -17,7 +17,11 @@ export interface ProductRequest {
     id: string,
     name: string,
     image: string,
-    price: number
+    price: number,
+    sellerInfo: {
+        title: string,
+        description: string,
+    }
 }
 
 export async function getUserRequests(offset: number): Promise<{ code: AJAXErrors, requests?: UserRequest[] }> {
@@ -101,6 +105,32 @@ export async function getProductsRequests(offset: number): Promise<{ code: AJAXE
         name: request.name,
         image: request.image,
         price: request.price,
+        sellerInfo: request.seller,
     }));
     return { code: AJAXErrors.NoError, requests };
+}
+
+export async function sendProductRequestAnswer(productId: string, accepted: boolean): Promise<AJAXErrors> {
+    const response = await ajax.post("admin/product/update", {
+        productID: productId,
+        update: accepted ? 1 : 0
+    });
+
+    if (response.error) {
+        return AJAXErrors.NoError;
+    }
+
+    if (response.result.status == 401) {
+        return AJAXErrors.Unauthorized;
+    }
+
+    if (response.result.status == 403) {
+        return AJAXErrors.PermissionsDenied;
+    }
+
+    if (!response.result.ok) {
+        return AJAXErrors.NoError;
+    }
+
+    return AJAXErrors.NoError;
 }

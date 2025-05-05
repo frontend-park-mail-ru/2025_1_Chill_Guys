@@ -17,6 +17,7 @@ import {getComments, sendComment} from "../../api/comments";
 import CreateReviewModal from "../../components/CreateReviewModal/CreateReviewModal";
 import Alert from "../../components/Alert/Alert";
 import InfinityList from "../../components/InfinityList/InfinityList";
+import { convertMoney } from "../AdminPage/AdminPage";
 
 class ProductPage extends Tarakan.Component {
     state: any = {
@@ -26,6 +27,7 @@ class ProductPage extends Tarakan.Component {
         addReviewModal: false,
         showNotAuthAlert: false,
         showComments: false,
+        fetching: false,
     }
 
     async fetchProduct() {
@@ -103,10 +105,13 @@ class ProductPage extends Tarakan.Component {
 
     async fetchReviews() {
         if (!this.state.product) {
-            alert(JSON.stringify(this.state));
             return;
         }
-        const {code, reviews} = await getComments(this.state.product.id, this.state.commentsOffset);
+        if (this.state.fetching) {
+            return;
+        }
+        this.state.fetching = true;
+        const { code, reviews } = await getComments(this.state.product.id, this.state.commentsOffset);
         if (code === AJAXErrors.NoError) {
             this.setState({
                 commentsOffset: this.state.commentsOffset + 7,
@@ -114,14 +119,17 @@ class ProductPage extends Tarakan.Component {
                     ...this.state.comments,
                     ...reviews,
                 ],
+                fetching: false,
             })
+        } else {
+            this.state.fetching = false;
         }
     }
 
     async sendReview(description: string, rating: number) {
         const code = await sendComment(this.state.product.id ?? "", rating, description);
         if (code === AJAXErrors.NoError) {
-            console.log(this.app.store);
+            // console.log(this.app.store);
             this.setState({
                 comments: [
                     {
@@ -134,6 +142,11 @@ class ProductPage extends Tarakan.Component {
                     },
                     ...this.state.comments,
                 ],
+                product: {
+                    ...this.state.product,
+                    reviewsCount: this.state.product.reviewsCount + 1,
+                    rating: (this.state.product.rating * this.state.product.reviewsCount + rating) / (this.state.product.reviewsCount + 1)
+                },
                 addReviewModal: false
             })
         }
@@ -166,13 +179,11 @@ class ProductPage extends Tarakan.Component {
                     <div className="product-page__main__card__details">
                         <h1 className="product-page__main__card__details__title">{this.state.product?.name}</h1>
                         <div className="product-page__main__card__details__buyer">
-                            ООО "Клуб анонимных фронтендеров и бекэндеров"
+                            {this.state.product?.seller.title}
                         </div>
                         {this.state.product && <div className="product-page__main__card__details__action">
-                            <div>
-                            <span
-                                className={`product-page__main__card__details__action__price${this.state.product.discountPrice !== 0 ? "-discount" : "-default"}`}>
-                                {this.state.product.discountPrice || this.state.product.price} ₽
+                            <span className={`product-page__main__card__details__action__price${this.state.product.discountPrice !== 0 ? "-discount" : "-default"}`}>
+                                {convertMoney(this.state.product.discountPrice || this.state.product.price)}
                             </span>
                                 {
                                     this.state.product.discountPrice !== 0 &&
@@ -180,7 +191,6 @@ class ProductPage extends Tarakan.Component {
                                     (-{parseInt(`${(this.state.product.price - this.state.product.discountPrice) / this.state.product.price * 100}`)}%)
                                 </span>
                                 }
-                            </div>
                             <div className="product-page__main__card__details__action__buy">
                                 <Button
                                     disabled={this.state.product.quantity === 0}
@@ -291,8 +301,8 @@ class ProductPage extends Tarakan.Component {
                     </div>
                     {
                         this.state.showComments
-                            ? <InfinityList onShow={() => this.fetchReviews()}/>
-                            : <Button
+                            ? <InfinityList onShow={() => this.fetchReviews()} />
+                            : this.state.comments > 3 && <Button
                                 variant="text"
                                 title="Показать все комментарии"
                                 className="product-page__main__reviews__content__more"

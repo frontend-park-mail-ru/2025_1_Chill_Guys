@@ -18,7 +18,6 @@ import InfinityList from "../../components/InfinityList/InfinityList";
 
 class SearchPage extends Tarakan.Component {
     handleSearch() {
-        console.log(this.state.searchString)
         const request = {
             r: this.state.searchString,
         };
@@ -33,6 +32,8 @@ class SearchPage extends Tarakan.Component {
     }
 
     async fetchSearchResult() {
+        if (this.state.fetching) return;
+        this.state.fetching = true;
         const { code, data } = await getSearchResultByFilters(
             this.state.searchString,
             0,
@@ -44,15 +45,20 @@ class SearchPage extends Tarakan.Component {
             this.setState({
                 categories: data.categories.categories,
                 products: data.products.products,
-                productsOffset: this.state.productsOffset + data.products.products.length
+                productsOffset: this.state.productsOffset + data.products.products.length,
+                fetching: false,
             });
+        } else {
+            this.state.fetching = false;
         }
     }
 
     async fetchNext() {
+        if (this.state.fetching) return;
+        this.state.fetching = true;
         const { code, data } = await getSearchResultByFilters(
             this.state.searchString,
-            this.state.productsOffset,
+            this.state.products.length,
             this.state.showFilters
                 ? this.state.filters
                 : {}
@@ -60,8 +66,10 @@ class SearchPage extends Tarakan.Component {
         if (code === AJAXErrors.NoError) {
             this.setState({
                 products: [...this.state.products, ...data.products.products],
-                productsOffset: this.state.productsOffset + data.products.products.length
+                fetching: false,
             });
+        } else {
+            this.state.fetching = false;
         }
     }
 
@@ -76,7 +84,7 @@ class SearchPage extends Tarakan.Component {
                 maxPrice: this.app.queryParams.h ?? "",
                 sortType: this.app.queryParams.s ?? "default",
             },
-            productsOffset: 0,
+            fetching: false,
             products: [],
             categories: []
         }
@@ -106,6 +114,16 @@ class SearchPage extends Tarakan.Component {
         const sortType = app.queryParams.s ?? "default";
         const minPrice = app.queryParams.l ?? "";
         const maxPrice = app.queryParams.h ?? "";
+
+        let s = new Set();
+        for (let e of this.state.products) {
+            if (s.has(e.id)) {
+                // console.log("HAS", e.id)
+            } else {
+                // console.log(e.id)
+                s.add(e.id);
+            }
+        }
 
         return <div className="search-page">
             <Header />
@@ -161,6 +179,7 @@ class SearchPage extends Tarakan.Component {
                             title="0"
                             className="search-page__content__filters__min-price"
                             maxLength={7}
+                            min={0}
                             value={minPrice}
                             onChange={(ev: any) => this.setState({
                                 filters: {
@@ -176,6 +195,7 @@ class SearchPage extends Tarakan.Component {
                             className="search-page__content__filters__max-price"
                             maxLength={7}
                             value={maxPrice}
+                            min={0}
                             onChange={(ev: any) => this.setState({
                                 filters: {
                                     ...this.state.filters,

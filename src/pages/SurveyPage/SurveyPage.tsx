@@ -22,7 +22,7 @@ class SurveyPage extends Tarakan.Component {
     }
 
     async getSurvey() {
-        console.log(this.app.urlParams);
+        // console.log(this.app.urlParams);
         if (this.app.urlParams.id) {
             const { code, survey } = await getSurvey(this.app.urlParams.id);
             if (code === AJAXErrors.NoError) {

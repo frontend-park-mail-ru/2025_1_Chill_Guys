@@ -18,12 +18,14 @@ import StarIcon from "../../shared/images/star-ico.svg";
 import StarFilledIcon from "../../shared/images/star-filled-ico.svg";
 
 import "./styles.scss";
+import InfinityList from "../../components/InfinityList/InfinityList";
 
 export default class CategoryPage extends Tarakan.Component {
 
 
     init() {
         this.state = {
+            fetching: false,
             products: [],
             category: {
                 id: this.app.urlParams.id,
@@ -48,7 +50,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     update(newProps: any) {
-        console.log(newProps);
+        this.state.products = [];
         this.fetchCategory();
         this.fetchSearchResult();
     }
@@ -61,7 +63,7 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     handleSearch() {
-        console.log(this.state.searchString)
+        this.state.products = [];
         const request = {
             r: this.state.searchString,
         };
@@ -76,7 +78,10 @@ export default class CategoryPage extends Tarakan.Component {
     }
 
     async fetchSearchResult() {
+        if (this.state.fetching) return;
+        this.state.fetching = true;
         const { code, products } = await getSearchCategoryByFilters(
+            this.state.products.length,
             this.app.urlParams.id,
             this.state.searchString,
             this.state.showFilters
@@ -94,11 +99,14 @@ export default class CategoryPage extends Tarakan.Component {
             }
 
             this.setState({
-                products: products.map((item) => ({
+                products: [...this.state.products, ...products.map((item) => ({
                     ...item,
                     isInCart: basket.has(item.id),
-                }))
+                }))],
+                fetching: false,
             })
+        } else {
+            this.state.fetching = false;
         }
     }
 
@@ -173,6 +181,7 @@ export default class CategoryPage extends Tarakan.Component {
                             className="category-page__filters__min-price"
                             maxLength={7}
                             value={minPrice}
+                            min={0}
                             onChange={(ev: any) => this.setState({
                                 filters: {
                                     ...this.state.filters,
@@ -186,6 +195,7 @@ export default class CategoryPage extends Tarakan.Component {
                             title="&#8734;"
                             className="category-page__filters__max-price"
                             maxLength={7}
+                            min={0}
                             value={maxPrice}
                             onChange={(ev: any) => this.setState({
                                 filters: {
@@ -241,6 +251,9 @@ export default class CategoryPage extends Tarakan.Component {
                     />
                 </div>}
                 <hr className="category-page__sep" />
+                {
+                    this.state.products.length === 0 && "По вашему запросу не удалось найти товары :<("
+                }
                 <div className="category-page__cards-container">
                     {
                         this.state.products.map((item) =>
@@ -263,6 +276,7 @@ export default class CategoryPage extends Tarakan.Component {
                         )
                     }
                 </div>
+                <InfinityList onShow={() => this.fetchSearchResult()} />
             </main>
             <Footer />
         </div>

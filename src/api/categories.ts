@@ -75,7 +75,7 @@ export async function getSubCategories(categoryId: string): Promise<{ code: AJAX
     return { code: AJAXErrors.NoError, data: subCategories };
 }
 
-export async function getSearchCategoryByFilters(categoryId: string, searchString: string, filters: Filters): Promise<{ code: AJAXErrors, products?: any[] }> {
+export async function getSearchCategoryByFilters(offset: number, categoryId: string, searchString: string, filters: Filters): Promise<{ code: AJAXErrors, products?: any[] }> {
     const request = {};
 
     if (filters.sortType && filters.sortType !== "default") request["sort"] = filters.sortType;
@@ -87,12 +87,15 @@ export async function getSearchCategoryByFilters(categoryId: string, searchStrin
         `${K}=${encodeURIComponent(V as any)}`
     )).join("&");
 
-    const response = await ajax.get(`products/category/${categoryId}/0` + (query !== "?" ? query : ""));
+    const response = await ajax.post(`search/sort/` + offset + (query !== "?" ? query : ""), {
+        category_id: categoryId,
+        sub_string: searchString,
+    });
 
     if (response.error || !response.result.ok) {
         return { code: AJAXErrors.ServerError };
     }
 
     const data = await response.result.json();
-    return { code: AJAXErrors.NoError, products: data.products };
+    return { code: AJAXErrors.NoError, products: data.products.products };
 }

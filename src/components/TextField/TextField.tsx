@@ -29,6 +29,7 @@ class TextField extends Tarakan.Component {
 
     handleEnterFinish() {
         const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
+        // console.log(this.props.validType, this.state.value, dataOk);
         if (dataOk) {
             this.setState({ status: "success" });
         } else {
@@ -79,6 +80,8 @@ class TextField extends Tarakan.Component {
                         onEnd={(ev) => props.onEnter && props.onEnter(ev)}
                         maxLength={props.maxLength ?? "255"}
                         cols={props.cols}
+                        min={props.min}
+                        max={props.max}
                     />
                     {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                         <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
@@ -98,6 +101,8 @@ class TextField extends Tarakan.Component {
                     onEnd={(ev) => props.onEnter && props.onEnter(ev)}
                     maxLength={props.maxLength ?? "255"}
                     cols={props.cols}
+                    min={props.min}
+                    max={props.max}
                 />
                 {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
                     <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />

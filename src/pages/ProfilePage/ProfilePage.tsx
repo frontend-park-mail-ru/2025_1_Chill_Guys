@@ -297,26 +297,7 @@ export default class ProfilePage extends Tarakan.Component {
                         </div>
                     </div>
                 </div>
-
-                <div id='my-reviews' className={`tab`}>
-                    <h2 className={`h-reset header`}>Мои отзывы</h2>
-                    <p className={`help`}>Здесь будет отображаться список Ваших отзывов</p>
-                    <div></div>
-                </div>
-
-                <div id='my-saved' className={`tab`}>
-                    <h2 className={`h-reset header`}>Мои сохраненные</h2>
-                    <p className={`help`}>Здесь будет отображаться список Ваших сохраненных товаров</p>
-                    <div></div>
-                </div>
-
-                <div id='my-orders' className={`tab`}>
-                    <h2 className={`h-reset header`}>Мои заказы</h2>
-                    <p className={`help`}>Здесь будет отображаться список Ваших заказов</p>
-                    <div></div>
-                </div>
             </main >
-
             <Footer />
         </div >
     }

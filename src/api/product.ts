@@ -8,9 +8,16 @@ export interface Product {
     description: string,
     image: string,
     price: number,
-    discountPrice: number,
     reviewsCount: number,
-    rating: number
+    rating: number,
+    seller: {
+        title: string,
+        description: string,
+    },
+
+    discountPrice?: number,
+    quantity?: number
+    status?: string,
 }
 
 export interface SearchResultItem {
@@ -84,11 +91,11 @@ export async function getSearchResultItems(searchString: string): Promise<{ code
 export async function getSearchResultByFilters(searchString: string, offset: number, filters: Filters): Promise<{ code: AJAXErrors, data?: SearchFullResult }> {
     const request = {};
 
-    if (filters.sortType !== "default") request["sort"] = filters.sortType;
-    if (filters.minPrice !== "") request["min_price"] = filters.minPrice;
-    if (filters.minPrice !== "") request["max_price"] = filters.maxPrice;
+    if (filters.sortType !== "default" && filters.sortType) request["sort"] = filters.sortType;
+    if (filters.minPrice) request["min_price"] = filters.minPrice;
+    if (filters.minPrice) request["max_price"] = filters.maxPrice;
 
-    if (filters.minRating !== 0) request["min_rating"] = filters.minRating;
+    if (filters.minRating) request["min_rating"] = filters.minRating;
 
     const query = "?" + Object.entries(request).map((([K, V]) =>
         `${K}=${encodeURIComponent(V as any)}`
@@ -122,6 +129,7 @@ export async function getProductsByIds(productIDs: string[]): Promise<{ code: AJ
         discountPrice: product.discount_price,
         reviewsCount: product.reviews_count,
         rating: product.rating,
+        seller: product.seller,
     }));
 
     return { code: AJAXErrors.NoError, products: products };
@@ -152,6 +160,7 @@ export async function getProduct(productId: string): Promise<{ code: AJAXErrors,
         discountPrice: productRaw.price_discount,
         reviewsCount: productRaw.reviews_count,
         rating: productRaw.rating,
+        seller: productRaw.seller,
     };
     return { code: AJAXErrors.NoError, product: product };
 }
@@ -176,6 +185,7 @@ export async function getProductsByCategory(id: number): Promise<{ code: AJAXErr
         discountPrice: product.discount_price,
         reviewsCount: product.reviews_count,
         rating: product.rating,
+        seller: product.seller,
     }));
 
     return { code: AJAXErrors.NoError, products: products };

@@ -4,10 +4,11 @@ import Footer from "../../components/Footer/Footer";
 
 import "./styles.scss";
 import UserRequestModal from "../../components/UserRequestModal/UserRequestModal";
-import { getProductsRequests, getUserRequests, ProductRequest, sendUserRequestAnswer, UserRequest } from "../../api/admin";
+import { getProductsRequests, getUserRequests, ProductRequest, sendProductRequestAnswer, sendUserRequestAnswer, UserRequest } from "../../api/admin";
 import { AJAXErrors } from "../../api/errors";
 import InfinityList from "../../components/InfinityList/InfinityList";
 import ProductRequestModal from "../../components/ProductRequestModal/ProductRequestModal";
+import { getProduct } from "../../api/product";
 
 export function convertMoney(rawData: string | number) {
     const data = rawData.toString();
@@ -21,6 +22,9 @@ export function convertMoney(rawData: string | number) {
 class AdminPage extends Tarakan.Component {
     state = {
         tabOpened: "sellers",
+
+        productsFetch: false,
+        sellersFetch: false,
 
         sellerInfoModalRef: new Reference(),
         productInfoModalRef: new Reference(),
@@ -44,29 +48,43 @@ class AdminPage extends Tarakan.Component {
     }
 
     async fetchUserRequests() {
+        if (this.state.sellersFetch) return;
+        this.state.sellersFetch = true;
         const { code, requests } = await getUserRequests(this.state.sellers?.length ?? 0);
         if (code === AJAXErrors.NoError) {
-            this.setState({ sellers: [...this.state.sellers ?? [], ...requests], fetchDone: true });
+            this.setState({ sellers: [...this.state.sellers ?? [], ...requests], sellersFetch: false });
         } else {
             this.app.navigateTo("/");
         }
     }
 
     async fetchProductsRequests() {
+        if (this.state.productsFetch) return;
+        this.state.productsFetch = true;
         const { code, requests } = await getProductsRequests(this.state.products?.length ?? 0);
         if (code === AJAXErrors.NoError) {
-            this.setState({ products: [...this.state.products ?? [], ...requests], fetchDone: true });
+            this.setState({ products: [...this.state.products ?? [], ...requests], productsFetch: false });
         } else {
             this.app.navigateTo("/");
         }
     }
 
-    async sendAnswer(accepted: boolean) {
+    async sendUserAnswer(accepted: boolean) {
         const code = await sendUserRequestAnswer(this.state.selectedRequest.id, accepted);
         if (code === AJAXErrors.NoError) {
             this.state.sellerInfoModalRef.target.handleClose();
             this.setState({
                 sellers: this.state.sellers.filter((request) => request.id !== this.state.selectedRequest.id)
+            });
+        }
+    }
+
+    async sendProductAnswer(accepted: boolean) {
+        const code = await sendProductRequestAnswer(this.state.selectedProduct.id, accepted);
+        if (code === AJAXErrors.NoError) {
+            this.state.productInfoModalRef.target.handleClose();
+            this.setState({
+                products: this.state.products.filter((request) => request.id !== this.state.selectedProduct.id)
             });
         }
     }
@@ -80,6 +98,14 @@ class AdminPage extends Tarakan.Component {
             this.fetchProductsRequests();
         }
         this.setState({ tabOpened: newTab, fetchDone: false });
+    }
+
+    async handleShowProduct(request: ProductRequest) {
+        const { code, product } = await getProduct(request.id);
+        if (code === AJAXErrors.NoError) {
+            this.setState({ selectedProduct: product });
+            this.state.productInfoModalRef.target.handleOpen();
+        }
     }
 
     renderFinished() {
@@ -114,7 +140,7 @@ class AdminPage extends Tarakan.Component {
                                     <tr>
                                         <td>{request.sellerInfo.title}</td>
                                         <td>{request.sellerInfo.description}</td>
-                                        <td>{`${request.surname} ${request.name}`.trim()}</td>
+                                        <td>{`${request.surname ?? ""} ${request.name}`.trim()}</td>
                                         <td>{request.email}</td>
                                         <td className="link" onClick={() => {
                                             this.setState({ selectedRequest: request });
@@ -130,12 +156,12 @@ class AdminPage extends Tarakan.Component {
                             }
                         </tbody>
                     </table>
-                    <InfinityList onShow={() => this.state.fetchDone && this.fetchNextRequests()} />
+                    <InfinityList onShow={() => this.fetchNextRequests()} />
                     <UserRequestModal
                         ref={this.state.sellerInfoModalRef}
                         request={this.state.selectedRequest}
-                        onSuccess={() => this.sendAnswer(true)}
-                        onDenied={() => this.sendAnswer(false)}
+                        onSuccess={() => this.sendUserAnswer(true)}
+                        onDenied={() => this.sendUserAnswer(false)}
                     />
                 </div>
                 <div className="admin-page__content__products" hidden={this.state.tabOpened !== "products"}>
@@ -156,10 +182,7 @@ class AdminPage extends Tarakan.Component {
                                     <tr>
                                         <td>{request.name}</td>
                                         <td>{convertMoney(request.price)}</td>
-                                        <td className="link" onClick={() => {
-                                            this.setState({ selectedProduct: request });
-                                            this.state.productInfoModalRef.target.handleOpen();
-                                        }}>Подробнее</td>
+                                        <td className="link" onClick={() => this.handleShowProduct(request)}>Подробнее</td>
                                     </tr>
                                 )
                                 : <tr>
@@ -174,8 +197,8 @@ class AdminPage extends Tarakan.Component {
                     <ProductRequestModal
                         ref={this.state.productInfoModalRef}
                         request={this.state.selectedProduct}
-                        onSuccess={() => this.sendAnswer(true)}
-                        onDenied={() => this.sendAnswer(false)}
+                        onSuccess={() => this.sendProductAnswer(true)}
+                        onDenied={() => this.sendProductAnswer(false)}
                     />
                 </div>
             </main>

@@ -5,8 +5,10 @@ import "./styles.scss";
 import crossIcon from "../../shared/images/cross-ico.svg";
 import Button from "../Button/Button";
 import { ProductRequest, UserRequest } from "../../api/admin";
+import { Product } from "../../api/product";
+import { convertMoney } from "../../pages/AdminPage/AdminPage";
 
-class UserRequestModal extends Tarakan.Component {
+class ProductModal extends Tarakan.Component {
     state = {
         container: null,
         status: "closed"
@@ -25,14 +27,13 @@ class UserRequestModal extends Tarakan.Component {
     }
 
     render(props) {
-        // console.log(props);
-        const request: UserRequest = props.request;
+        const request: Product = props.product;
         return <div className="product-modal">
             <div className={"product-modal__tint " + this.state.status} onClick={() => this.handleClose()} />
             <div className={"product-modal__content " + this.state.status}>
                 <div className="product-modal__content__title">
                     <div className="product-modal__content__title__h">
-                        Заявка
+                        Информация о товаре
                     </div>
                     <div className="product-modal__content__title__close">
                         <img
@@ -42,46 +43,60 @@ class UserRequestModal extends Tarakan.Component {
                     </div>
                 </div>
                 <div className="product-modal__content__data">
+                    <div className="product-modal__content__data__icon">
+                        <img className="product-modal__content__data__icon__img" src={request?.image} />
+                    </div>
                     <div className="product-modal__content__data__item">
                         <div className="product-modal__content__data__item__name">
-                            Название продукта
+                            Название
                         </div>
                         <div className="product-modal__content__data__item__value">
-                            {request?.sellerInfo.title}
+                            {request?.name}
                         </div>
                     </div>
                     <div className="product-modal__content__data__item">
                         <div className="product-modal__content__data__item__name">
-                            Описание компании
+                            Описание
                         </div>
                         <div className="product-modal__content__data__item__value">
-                            {request?.sellerInfo.description}
+                            {request?.description}
                         </div>
                     </div>
                     <div className="product-modal__content__data__item">
                         <div className="product-modal__content__data__item__name">
-                            Владелец
+                            Цена
                         </div>
                         <div className="product-modal__content__data__item__value">
-                            {`${request?.surname ?? ""} ${request?.name}`.trim()}
+                            {convertMoney(request?.price ?? 0)}
                         </div>
                     </div>
                     <div className="product-modal__content__data__item">
                         <div className="product-modal__content__data__item__name">
-                            Email владельца
+                            Наличие
                         </div>
                         <div className="product-modal__content__data__item__value">
-                            {request?.email}
+                            {request?.quantity} шт
                         </div>
                     </div>
-                </div>
-                <div className="product-modal__content__actions">
-                    <Button title="Одобрить заявку" onClick={() => props.onSuccess()} />
-                    <Button title="Отказать" variant="text" onClick={() => props.onDenied()} />
+                    <div className="product-modal__content__data__item">
+                        <div className="product-modal__content__data__item__name">
+                            Статус
+                        </div>
+                        <div className="product-modal__content__data__item__value">
+                            <span className={"product-modal__content__data__item__value__status " + request?.status}>{
+                                {
+                                    "pending": "Ожидание одобрения",
+                                    "empty": "Товар закончился",
+                                    "approved": "В продаже",
+                                    "rejected": "Отказано"
+                                }[request?.status]
+                            }</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     }
 }
 
-export default UserRequestModal;
+export default ProductModal;
