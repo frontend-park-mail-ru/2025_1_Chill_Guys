@@ -17,7 +17,7 @@ https://github.com/go-park-mail-ru/2025_1_ChillGuys
 
 ## Ссылка на деплой
 
-http://90.156.217.63/
+https://bazaar-techpark.ru
 
 ## Инструкция по запуску
 
