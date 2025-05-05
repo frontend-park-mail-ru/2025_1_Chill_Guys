@@ -11,9 +11,6 @@ import CatalogButtonIcon from "../../shared/images/catalog-button-ico.svg";
 import HeaderOrders from "../../shared/images/header-orders-ico.svg";
 import HeaderOrdersHover from "../../shared/images/header-orders-ico-hover.svg";
 
-import HeaderSaved from "../../shared/images/header-saved-ico.svg";
-import HeaderSavedHover from "../../shared/images/header-saved-ico-hover.svg";
-
 import HeaderCart from "../../shared/images/header-cart-ico.svg";
 import HeaderCartHover from "../../shared/images/header-cart-ico-hover.svg"
 
@@ -25,6 +22,8 @@ import ToolIconHover from "../../shared/images/tool-ico-hover.svg";
 
 import MenuIcon from "../../shared/images/menu.svg";
 import CrossIcon from "../../shared/images/cross-ico.svg";
+
+import SearchIcon from "../../shared/images/search-ico.svg";
 
 import HeaderLogin from "../../shared/images/header-profile-enter-ico.svg";
 import HeaderLoginHover from "../../shared/images/header-profile-enter-ico-hover.svg";
@@ -73,13 +72,11 @@ class Header extends Tarakan.Component {
     }
 
     async fetchSubcategories(category: any) {
-        const { code, data } = await getSubCategories(category.id);
-        if (code === AJAXErrors.NoError) {
-            this.setState({
-                subcategories: data.subcategories,
-                selectedCategory: category,
-            });
-        }
+        const data = await this.app.store.products.sendAction("getSubCategories", category.id);
+        this.setState({
+            subcategories: data,
+            selectedCategory: category,
+        });
     }
 
     async fetchSearchResult(ev: any) {
@@ -332,6 +329,15 @@ class Header extends Tarakan.Component {
                                     />
                                     <span className="menu-modal__content__title__text">Меню</span>
                                 </div>
+                                <Button
+                                    title="Поиск"
+                                    iconSrc={SearchIcon}
+                                    variant="text"
+                                    className="menu-modal__content__button"
+                                    onClick={() => {
+                                        app.navigateTo('/search?r=');
+                                    }}
+                                />
                                 <Button
                                     title={this.state.authorized ? "Профиль" : "Войти"}
                                     iconSrc={this.state.authorized ? HeaderProfile : HeaderLogin}

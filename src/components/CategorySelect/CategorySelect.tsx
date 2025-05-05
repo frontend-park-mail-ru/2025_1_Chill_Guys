@@ -20,10 +20,8 @@ class CategorySelect extends Tarakan.Component {
     }
 
     async fetchSubCategories(category: any) {
-        const { code, data } = await getSubCategories(category.id);
-        if (code === AJAXErrors.NoError) {
-            this.setState({ subcategories: data.subcategories, selectCategory: category });
-        }
+        const data = await this.app.store.products.sendAction("getSubCategories", category.id);
+        this.setState({ subcategories: data, selectCategory: category });
     }
 
     init() {

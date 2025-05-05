@@ -1,9 +1,4 @@
 const assets = [
-    "/icons/favicon_32x32",
-    "/icons/favicon_64x64",
-    "/icons/favicon_128x128",
-    "/icons/favicon_256x256",
-    "/icons/favicon_512x512",
     "/font/124cdf7b53c7aa89dcbc.ttf",
     "/font/198d18913afd00221956.woff",
     "/font/55c4dfe8ffe5c0e46fd2.eot",
@@ -53,27 +48,29 @@ self.addEventListener("install", (event: any) => {
 });
 
 self.addEventListener("fetch", (event: any) => {
-    const url = new URL(event.request.url);
-    if (!url.pathname.includes("api")
-        && !url.pathname.includes("s3")
-        && !url.pathname.includes(".")
-        && !url.pathname.includes("ad")
-        && url.origin === "bazaar-techpark.ru") {
-        event.respondWith(caches.open("v1").then((cache) => cache.match("/index.html")));
-    } else {
-        event.respondWith(
-            caches.open("v1").then((cache) => {
-                return fetch(event.request)
-                    .then((networkResponse) => {
-                        if (!url.pathname.includes("auth") && !url.pathname.includes("ad") && event.request.method == "GET") {
-                            cache.put(event.request, networkResponse.clone());
-                        }
-                        return networkResponse;
-                    })
-                    .catch(() => {
-                        return cache.match(event.request);
-                    });
-            })
-        );
-    }
+    try {
+        const url = new URL(event.request.url);
+        if (!url.pathname.includes("api")
+            && !url.pathname.includes("s3")
+            && !url.pathname.includes(".")
+            && !url.pathname.includes("ad")
+            && url.origin === "bazaar-techpark.ru") {
+            event.respondWith(caches.open("v1").then((cache) => cache.match("/index.html")));
+        } else {
+            event.respondWith(
+                caches.open("v1").then((cache) => {
+                    return fetch(event.request)
+                        .then((networkResponse) => {
+                            if (!url.pathname.includes("auth") && !url.pathname.includes("ad") && event.request.method == "GET") {
+                                cache.put(event.request, networkResponse.clone());
+                            }
+                            return networkResponse;
+                        })
+                        .catch(() => {
+                            return cache.match(event.request);
+                        });
+                })
+            );
+        }
+    } catch { }
 });
