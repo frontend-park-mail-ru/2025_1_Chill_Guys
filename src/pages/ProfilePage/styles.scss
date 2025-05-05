@@ -1,7 +1,43 @@
+@media screen and (max-width: 720px) {
+  .profile-page {
+  padding: 12px;
+      flex-direction: column;
+    align-items: center;
+
+    .nav-column {
+      .menu {
+        align-items: center;
+      }
+    }
+    #personal-data {
+      .main-content {
+        .fields-wrapper {
+          grid-template-rows: repeat(2, 1fr);
+          grid-row-gap: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .profile-page {
+    padding: 24px 72px;
+
+    #personal-data {
+      .main-content {
+        .fields-wrapper {
+          grid-template-columns: repeat(2, 1fr);
+          grid-column-gap: 52px;
+        }
+      }
+    }
+  }
+}
+
 .profile-page {
   background-color: var(--background);
   border-radius: 12px;
-  padding: 24px 72px;
   margin: 24px 0;
   gap: 68px;
   font-size: 18px;
@@ -69,8 +105,6 @@
 
       .fields-wrapper {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 52px;
 
         .fields-column {
           display: grid;
