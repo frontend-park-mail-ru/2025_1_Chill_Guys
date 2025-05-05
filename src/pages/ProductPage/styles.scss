@@ -1,26 +1,81 @@
+@media screen and (max-width: 720px) {
+    .product-page {
+        margin-inline: 2px;
+
+        &__main {
+            padding: 2px;
+            row-gap: 24px;
+
+            &__card {
+                display: flex;
+                flex-direction: column;
+
+                &__details {
+                    &__title {
+                        font-size: 20px;
+                        font-weight: 700;
+                    }
+
+                    &__action {
+                        flex-direction: column;
+                        gap: 20px;
+                        &__buy {
+                            justify-content: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .product-page {
+        margin-inline: 24px;
+
+        &__main {
+            padding: 24px;
+            row-gap: 12px;
+
+        &__card {
+            column-gap: 24px;
+
+            &__image {
+
+            }
+
+            &__details {
+                &__action {
+                    &__buy {
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+        }
+    }
+}
+
 .product-page {
-    margin-inline: 24px;
     row-gap: 24px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 
     &__main {
-        padding: 24px;
-        background-color: white;
+        background-color: var(--background);
         border-radius: 20px;
         display: flex;
         flex-direction: column;
-        row-gap: 12px;
-        min-width: 75%;
-        max-width: 75%;
+        width: 100%;
         margin-inline: auto;
 
         &__card {
             display: flex;
-            column-gap: 24px;
 
             &__image {
+                display: flex;
+                justify-content: center;
                 line-height: 0;
 
                 img {
@@ -80,7 +135,6 @@
                     }
 
                     &__buy {
-                        margin-left: auto;
                         display: flex;
                         column-gap: 8px;
 
