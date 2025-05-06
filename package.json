@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Chill_Guys#readme",
   "dependencies": {
-    "bazaar-ajax": "^1.1.13",
+    "bazaar-ajax": "^1.2.0",
     "bazaar-tarakan": "^1.0.65",
     "bazaar-validation": "^1.2.6",
     "json5": "^2.2.3",

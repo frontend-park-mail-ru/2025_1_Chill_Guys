@@ -302,7 +302,7 @@ class ProductPage extends Tarakan.Component {
                     {
                         this.state.showComments
                             ? <InfinityList onShow={() => this.fetchReviews()} />
-                            : this.state.comments > 3 && <Button
+                            : this.state.comments.length > 3 && <Button
                                 variant="text"
                                 title="Показать все комментарии"
                                 className="product-page__main__reviews__content__more"
