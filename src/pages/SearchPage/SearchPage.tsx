@@ -118,9 +118,9 @@ class SearchPage extends Tarakan.Component {
         let s = new Set();
         for (let e of this.state.products) {
             if (s.has(e.id)) {
-                // console.log("HAS", e.id)
+                // // console.log("HAS", e.id)
             } else {
-                // console.log(e.id)
+                // // console.log(e.id)
                 s.add(e.id);
             }
         }

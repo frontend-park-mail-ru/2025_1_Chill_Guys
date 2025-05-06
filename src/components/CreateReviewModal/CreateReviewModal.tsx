@@ -20,7 +20,7 @@ class CreateReviewModal extends Tarakan.Component {
     }
 
     render(props) {
-        // console.log(this.state);
+        // // console.log(this.state);
         return <div className="review-modal">
             <div className="review-modal__tint" />
             <div className="review-modal__content">

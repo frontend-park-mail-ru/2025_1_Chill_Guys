@@ -3,8 +3,17 @@
         display: none !important;
 
         &__phone {
-            display: block !important;
+            display: flex !important;
         }
+    }
+
+    .header__nav__tf {
+        display: block !important;
+        z-index: 4;
+    }
+
+    .header__nav__row {
+        column-gap: 16px;
     }
 
     .header__nav__secondary {
@@ -150,6 +159,11 @@
             }
         }
 
+        &__tf {
+            display: none;
+            flex: 1 1 auto;
+        }
+
         &__row {
             width: 100%;
             display: flex;
@@ -167,6 +181,8 @@
                     &__phone {
                         display: none;
                         line-height: 0;
+                        flex: 0 1 auto;
+                        width: max-content;
 
                         &__button {
                             width: 48px;

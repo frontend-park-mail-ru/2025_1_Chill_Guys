@@ -65,9 +65,11 @@ self.addEventListener("fetch", (event: any) => {
                         }
                         return networkResponse;
                     })
-                    .catch(() => {
-                        return cache.match(event.request);
-                    });
+                    .catch(() => cache.match(event.request)).catch((e) => new Response("Network error happened", {
+                        status: 408,
+                        headers: { "Content-Type": "text/plain" },
+                    })
+                    );
             })
         );
     }
