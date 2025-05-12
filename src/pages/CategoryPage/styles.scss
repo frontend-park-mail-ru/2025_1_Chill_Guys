@@ -31,24 +31,20 @@
         grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
       }
     }
-
   }
 }
 
 @media screen and (max-width: 1280px) {
   .category-page {
-
     &__filters {
       flex-direction: column;
       gap: 20px;
     }
-
   }
 }
 
 @media screen and (min-width: 720px) {
   .category-page {
-
     &__search {
       display: flex;
     }
@@ -65,7 +61,6 @@
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       }
     }
-
   }
 }
 
