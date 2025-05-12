@@ -28,26 +28,41 @@ class Button extends Tarakan.Component {
         const iconPosition = props.iconPosition ?? ICON_POSITION.LEFT;
         const otherClasses = props.className ?? "";
 
-        return <button
-            type="button"
-            disabled={this.props.disabled}
-            className={`button button_${size}_size button_${variant} button_${iconPosition} ${otherClasses}`.trim()}
-            onClick={(event: any) => props.onClick ? props.onClick(event) : {}}
-            onMouseOver={(event: any) => props.onMouseOver ? props.onMouseOver(event) : {}}
-            onMouseLeave={(event: any) => props.onMouseLeave ? props.onMouseLeave(event) : {}}
-        >
-            {
-                props.icon
+        return (
+            <button
+                type="button"
+                disabled={this.props.disabled}
+                className={`button button_${size}_size button_${variant} button_${iconPosition} ${otherClasses}`.trim()}
+                onClick={(event: any) =>
+                    props.onClick ? props.onClick(event) : {}
+                }
+                onMouseOver={(event: any) =>
+                    props.onMouseOver ? props.onMouseOver(event) : {}
+                }
+                onMouseLeave={(event: any) =>
+                    props.onMouseLeave ? props.onMouseLeave(event) : {}
+                }
+            >
+                {props.icon
                     ? {
-                        ...props.icon, props: {
-                            ...props.icon.props,
-                            className: props.icon.props.className ?? "" + ` ${`icon icon_${size}_size`}`.trim()
-                        }
-                    }
-                    : props.iconSrc && <img alt={`${props.iconAlt}`} src={`${props.iconSrc}`} className={`icon icon_${size}_size`} />
-            }
-            {props.title && <span>{props.title}</span>}
-        </button>
+                          ...props.icon,
+                          props: {
+                              ...props.icon.props,
+                              className:
+                                  props.icon.props.className ??
+                                  "" + ` ${`icon icon_${size}_size`}`.trim(),
+                          },
+                      }
+                    : props.iconSrc && (
+                          <img
+                              alt={`${props.iconAlt}`}
+                              src={`${props.iconSrc}`}
+                              className={`icon icon_${size}_size`}
+                          />
+                      )}
+                {props.title && <span>{props.title}</span>}
+            </button>
+        );
     }
 }
 

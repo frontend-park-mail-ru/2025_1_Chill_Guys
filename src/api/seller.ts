@@ -3,16 +3,23 @@ import { AJAXErrors } from "./errors";
 import { Product } from "./product";
 
 export interface ProductForm {
-    name: string,
-    description: string,
-    price: number,
-    quantity: number,
-    sellerId: string,
-    category: string,
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    sellerId: string;
+    category: string;
 }
 
-export async function sendRequest(title: string, description: string): Promise<AJAXErrors> {
-    const response = await ajax.post("users/update-role", { title, description }, { setCSRF: true });
+export async function sendRequest(
+    title: string,
+    description: string,
+): Promise<AJAXErrors> {
+    const response = await ajax.post(
+        "users/update-role",
+        { title, description },
+        { setCSRF: true },
+    );
 
     if (response.error) {
         return AJAXErrors.ServerError;
@@ -25,7 +32,9 @@ export async function sendRequest(title: string, description: string): Promise<A
     return AJAXErrors.NoError;
 }
 
-export async function getSellerProducts(offset: number): Promise<{ code: AJAXErrors, products?: Product[] }> {
+export async function getSellerProducts(
+    offset: number,
+): Promise<{ code: AJAXErrors; products?: Product[] }> {
     const response = await ajax.get("seller/products/" + offset);
 
     if (response.error) {
@@ -45,21 +54,25 @@ export async function getSellerProducts(offset: number): Promise<{ code: AJAXErr
     }
 
     const rawData = await response.result.json();
-    const products: Product[] = (rawData.products ?? []).map((product: any) => ({
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        image: product.preview_image_url,
-        price: product.price,
-        reviewsCount: product.reviews_count,
-        rating: product.rating,
-        status: product.quantity > 0 ? product.status : "empty",
-        quantity: product.quantity,
-    }))
+    const products: Product[] = (rawData.products ?? []).map(
+        (product: any) => ({
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            image: product.preview_image_url,
+            price: product.price,
+            reviewsCount: product.reviews_count,
+            rating: product.rating,
+            status: product.quantity > 0 ? product.status : "empty",
+            quantity: product.quantity,
+        }),
+    );
     return { code: AJAXErrors.NoError, products };
 }
 
-export async function addProductInformation(product: ProductForm): Promise<{ code: AJAXErrors, productId?: string }> {
+export async function addProductInformation(
+    product: ProductForm,
+): Promise<{ code: AJAXErrors; productId?: string }> {
     const response = await ajax.post("seller/add-product", {
         name: product.name,
         description: product.description,
@@ -77,10 +90,15 @@ export async function addProductInformation(product: ProductForm): Promise<{ cod
     return { code: AJAXErrors.NoError, productId: rawData.id };
 }
 
-export async function addProductImage(imageId: string, productImage: any): Promise<AJAXErrors> {
+export async function addProductImage(
+    imageId: string,
+    productImage: any,
+): Promise<AJAXErrors> {
     const form = new FormData();
     form.append("file", productImage);
-    const response = await ajax.post("seller/add-image/" + imageId, form, { type: AJAXRequestContentType.FORM });
+    const response = await ajax.post("seller/add-image/" + imageId, form, {
+        type: AJAXRequestContentType.FORM,
+    });
 
     if (response.error) {
         return AJAXErrors.ServerError;

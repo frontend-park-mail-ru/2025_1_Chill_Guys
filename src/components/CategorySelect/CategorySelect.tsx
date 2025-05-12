@@ -1,6 +1,6 @@
 import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
-import { getAllCategories, getSubCategories } from "../../api/categories";
+import { getAllCategories } from "../../api/categories";
 import { AJAXErrors } from "../../api/errors";
 
 class CategorySelect extends Tarakan.Component {
@@ -10,7 +10,7 @@ class CategorySelect extends Tarakan.Component {
         selectCategory: null,
         subcategories: [],
         opened: false,
-    }
+    };
 
     async fetchCategories() {
         const { code, data } = await getAllCategories();
@@ -20,7 +20,10 @@ class CategorySelect extends Tarakan.Component {
     }
 
     async fetchSubCategories(category: any) {
-        const data = await this.app.store.products.sendAction("getSubCategories", category.id);
+        const data = await this.app.store.products.sendAction(
+            "getSubCategories",
+            category.id,
+        );
         this.setState({ subcategories: data, selectCategory: category });
     }
 
@@ -29,43 +32,50 @@ class CategorySelect extends Tarakan.Component {
     }
 
     render(props) {
-        return <div className={`category-select ${props.className ?? ""}`.trim()}>
-            <div className="category-select__text" onClick={() => this.setState({ opened: !this.state.opened })}>
-                {this.state.content}
+        return (
+            <div className={`category-select ${props.className ?? ""}`.trim()}>
+                <div
+                    className="category-select__text"
+                    onClick={() =>
+                        this.setState({ opened: !this.state.opened })
+                    }
+                >
+                    {this.state.content}
+                </div>
+                {this.state.opened && (
+                    <div className="category-select__popup">
+                        <div className="category-select__popup__categories">
+                            {this.state.categories.map((category) => (
+                                <div
+                                    className="category-select__popup__categories__item"
+                                    onMouseOver={() =>
+                                        this.fetchSubCategories(category)
+                                    }
+                                >
+                                    {category.name}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="category-select__popup__subcategories">
+                            {this.state.subcategories.map((subcategory) => (
+                                <div
+                                    className="category-select__popup__subcategories__item"
+                                    onClick={() => {
+                                        this.setState({
+                                            content: `${this.state.selectCategory.name} - ${subcategory.name}`,
+                                            opened: false,
+                                        });
+                                        props.onSelect(subcategory.id);
+                                    }}
+                                >
+                                    {subcategory.name}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
-            {this.state.opened && <div className="category-select__popup">
-                <div className="category-select__popup__categories">
-                    {
-                        this.state.categories.map((category) =>
-                            <div
-                                className="category-select__popup__categories__item"
-                                onMouseOver={() => this.fetchSubCategories(category)}
-                            >
-                                {category.name}
-                            </div>
-                        )
-                    }
-                </div>
-                <div className="category-select__popup__subcategories">
-                    {
-                        this.state.subcategories.map((subcategory) =>
-                            <div
-                                className="category-select__popup__subcategories__item"
-                                onClick={() => {
-                                    this.setState({
-                                        content: `${this.state.selectCategory.name} - ${subcategory.name}`,
-                                        opened: false,
-                                    });
-                                    props.onSelect(subcategory.id);
-                                }}
-                            >
-                                {subcategory.name}
-                            </div>
-                        )
-                    }
-                </div>
-            </div>}
-        </div>
+        );
     }
 }
 

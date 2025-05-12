@@ -2,8 +2,8 @@ import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
 
 import invalidIcon from "../../shared/images/textfield-invalid.svg";
-import successIcon from "../../shared/images/textfield-success.svg"
-import validate, { ValidTypes } from "bazaar-validation";
+import successIcon from "../../shared/images/textfield-success.svg";
+import validate from "bazaar-validation";
 
 export const TEXTFIELD_TYPES = {
     SEARCH: "search",
@@ -16,20 +16,22 @@ export const TEXTFIELD_TYPES = {
     TIME: "time",
     BUTTON: "button",
     HIDDEN: "hidden",
-}
+};
 
 class TextField extends Tarakan.Component {
-
     init(initProps: any) {
         this.state = {
             status: "default",
             value: initProps.value,
-        }
+        };
     }
 
     handleEnterFinish() {
-        const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
-        // console.log(this.props.validType, this.state.value, dataOk);
+        const dataOk =
+            this.props.validType !== undefined
+                ? validate(this.props.validType, this.state.value)
+                : true;
+        // // console.log(this.props.validType, this.state.value, dataOk);
         if (dataOk) {
             this.setState({ status: "success" });
         } else {
@@ -64,7 +66,7 @@ class TextField extends Tarakan.Component {
         const title = props.fieldName ?? "";
         const isDisabled = props.isDisabled ?? false;
 
-        return title ?
+        return title ? (
             <div className={`textField_title ${otherClasses}`.trim()}>
                 {title && <h3 className="textField_title__title">{title}</h3>}
                 <div className="textField">
@@ -83,12 +85,22 @@ class TextField extends Tarakan.Component {
                         min={props.min}
                         max={props.max}
                     />
-                    {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
-                        <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
-                    }
+                    {(props.validType !== undefined
+                        ? this.state.status
+                        : "default") !== "default" && (
+                        <img
+                            className="textField__mark"
+                            src={
+                                this.state.status === "success"
+                                    ? successIcon
+                                    : invalidIcon
+                            }
+                        />
+                    )}
                 </div>
             </div>
-            : <div className={`textField ${otherClasses}`.trim()}>
+        ) : (
+            <div className={`textField ${otherClasses}`.trim()}>
                 <input
                     className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
                     type={type}
@@ -104,11 +116,20 @@ class TextField extends Tarakan.Component {
                     min={props.min}
                     max={props.max}
                 />
-                {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
-                    <img className="textField__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
-                }
+                {(props.validType !== undefined
+                    ? this.state.status
+                    : "default") !== "default" && (
+                    <img
+                        className="textField__mark"
+                        src={
+                            this.state.status === "success"
+                                ? successIcon
+                                : invalidIcon
+                        }
+                    />
+                )}
             </div>
-
+        );
     }
 }
 
