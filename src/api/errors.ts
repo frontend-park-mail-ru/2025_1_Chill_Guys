@@ -17,5 +17,5 @@ export enum AJAXErrors {
 
     // Order
     NoOrder,
-    InvalidOrder
-};
+    InvalidOrder,
+}

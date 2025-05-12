@@ -2,23 +2,25 @@ import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
 
 class CSAT extends Tarakan.Component {
-
     state = {
-        frame: null
-    }
+        frame: null,
+    };
 
     renderFinished(iframeContainer: HTMLIFrameElement) {
         iframeContainer.onload = () => {
-            const survey = iframeContainer.contentWindow.document.body.querySelector(".survey");
+            const survey =
+                iframeContainer.contentWindow.document.body.querySelector(
+                    ".survey",
+                );
             const onResize = () => {
-                iframeContainer.style.height = survey.scrollHeight + 'px';
-                iframeContainer.style.width = survey.scrollWidth + 'px';
-            }
-            new ResizeObserver(() => onResize()).observe(survey)
+                iframeContainer.style.height = survey.scrollHeight + "px";
+                iframeContainer.style.width = survey.scrollWidth + "px";
+            };
+            new ResizeObserver(() => onResize()).observe(survey);
             onResize();
-        }
+        };
 
-        window.addEventListener('message', (event: any) => {
+        window.addEventListener("message", (event: any) => {
             // // console.log(event);
             if (event.data === "finish") {
                 iframeContainer.style.display = "none";
@@ -35,7 +37,7 @@ class CSAT extends Tarakan.Component {
     }
 
     render(props) {
-        return <iframe src={`/csat/${props.id}`} />
+        return <iframe src={`/csat/${props.id}`} />;
     }
 }
 

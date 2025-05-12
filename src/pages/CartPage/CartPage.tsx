@@ -12,18 +12,21 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
 import { AJAXErrors } from "../../api/errors";
-import { getBasket, removeFromBasket, updateProductQuantity } from "../../api/basket";
+import {
+    getBasket,
+    removeFromBasket,
+    updateProductQuantity,
+} from "../../api/basket";
 import { saveOrderLocal } from "../../api/order";
 import CSAT from "../CSAT/CSAT";
 
 class CartPage extends Tarakan.Component {
-
     state: any = {
         items: [],
         total: 0,
         discount: 0,
         csatString: "",
-    }
+    };
 
     async fetchBasket() {
         const response = await getBasket();
@@ -50,14 +53,18 @@ class CartPage extends Tarakan.Component {
             return;
         }
 
-        const response = await updateProductQuantity(product.productId, product.quantity + countOffset);
+        const response = await updateProductQuantity(
+            product.productId,
+            product.quantity + countOffset,
+        );
 
         if (response.code === AJAXErrors.NoError) {
             product.quantity = product.quantity + countOffset;
             product.remainQuantity = response.remainQuantity;
             this.setState({
                 total: this.state.total + product.productPrice * countOffset,
-                discount: this.state.discount + product.priceDiscount * countOffset,
+                discount:
+                    this.state.discount + product.priceDiscount * countOffset,
             });
         }
     }
@@ -70,10 +77,13 @@ class CartPage extends Tarakan.Component {
             this.setState({
                 items: [
                     ...this.state.items.slice(0, productIndex),
-                    ...this.state.items.slice(productIndex + 1)
+                    ...this.state.items.slice(productIndex + 1),
                 ],
-                total: this.state.total - product.productPrice * product.quantity,
-                discount: this.state.discount - product.priceDiscount * product.quantity,
+                total:
+                    this.state.total - product.productPrice * product.quantity,
+                discount:
+                    this.state.discount -
+                    product.priceDiscount * product.quantity,
             });
         }
     }
@@ -81,14 +91,16 @@ class CartPage extends Tarakan.Component {
     async handleSaveFullBasket() {
         const code = await saveOrderLocal(this.state.items);
         if (code === AJAXErrors.NoError) {
-            this.app.navigateTo("/place-order")
+            this.app.navigateTo("/place-order");
         }
     }
 
     async handleSaveOneProductToBasket(index: any) {
-        const code = await saveOrderLocal([{ ...this.state.items[index], quantity: 1 }]);
+        const code = await saveOrderLocal([
+            { ...this.state.items[index], quantity: 1 },
+        ]);
         if (code === AJAXErrors.NoError) {
-            this.app.navigateTo("/place-order")
+            this.app.navigateTo("/place-order");
         }
     }
 
@@ -98,98 +110,158 @@ class CartPage extends Tarakan.Component {
     }
 
     render() {
-        return <div className="cart-page">
-            <Header />
-            <main>
-                {this.state.csatString && <CSAT id="Cart" />}
-                <h1>Моя корзина</h1>
-                <div className="content">
-                    <div className="content__list">
-                        {this.state.items.map((item, index) =>
-                            <article className={`content__list__item ${item.remainQuantity < 0 ? "content__list__item_ignore" : ""}`.trim()}>
-                                <img className="content__list__item__cover" src={item.productImage} />
-                                <div className="content__list__item__description">
-                                    <div className="content__list__item__description__title">
-                                        <div className="content__list__item__description__title__name">{item.productName}</div>
-                                        <div className={`content__list__item__description__title__price${(item.productPrice - item.priceDiscount) != 0 ? " content__list__item__description__title__price_discount" : ""}`}>
-                                            <span className="">{item.priceDiscount}&nbsp;₽</span>
-                                            {(item.productPrice - item.priceDiscount) != 0 && <span className="content__list__item__description__title__price_discount">
-                                                ({-parseInt(`${(item.productPrice - item.priceDiscount) / item.productPrice * 100}`)}%)
-                                            </span>}
+        return (
+            <div className="cart-page">
+                <Header />
+                <main>
+                    {this.state.csatString && <CSAT id="Cart" />}
+                    <h1>Моя корзина</h1>
+                    <div className="content">
+                        <div className="content__list">
+                            {this.state.items.map((item, index) => (
+                                <article
+                                    className={`content__list__item ${item.remainQuantity < 0 ? "content__list__item_ignore" : ""}`.trim()}
+                                >
+                                    <img
+                                        className="content__list__item__cover"
+                                        src={item.productImage}
+                                    />
+                                    <div className="content__list__item__description">
+                                        <div className="content__list__item__description__title">
+                                            <div className="content__list__item__description__title__name">
+                                                {item.productName}
+                                            </div>
+                                            <div
+                                                className={`content__list__item__description__title__price${item.productPrice - item.priceDiscount != 0 ? " content__list__item__description__title__price_discount" : ""}`}
+                                            >
+                                                <span className="">
+                                                    {item.priceDiscount}&nbsp;₽
+                                                </span>
+                                                {item.productPrice -
+                                                    item.priceDiscount !=
+                                                    0 && (
+                                                    <span className="content__list__item__description__title__price_discount">
+                                                        (
+                                                        {
+                                                            -parseInt(
+                                                                `${((item.productPrice - item.priceDiscount) / item.productPrice) * 100}`,
+                                                            )
+                                                        }
+                                                        %)
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="content__list__item__description__title__actions">
+                                                <Button
+                                                    disabled={
+                                                        item.remainQuantity < 0
+                                                    }
+                                                    size="s"
+                                                    iconSrc={cartSubIcon}
+                                                    onClick={() =>
+                                                        this.handleUpdateQuantity(
+                                                            index,
+                                                            -1,
+                                                        )
+                                                    }
+                                                    className="content__list__item__description__title__actions__hidden"
+                                                />
+                                                <span className="content__list__item__description__title__actions__count">
+                                                    {item.remainQuantity < 0
+                                                        ? 0
+                                                        : item.quantity}
+                                                </span>
+                                                <Button
+                                                    disabled={
+                                                        item.remainQuantity ===
+                                                            0 ||
+                                                        item.remainQuantity < 0
+                                                    }
+                                                    size="s"
+                                                    iconSrc={cartAddIcon}
+                                                    onClick={() =>
+                                                        this.handleUpdateQuantity(
+                                                            index,
+                                                            1,
+                                                        )
+                                                    }
+                                                    className="content__list__item__description__title__actions__hidden"
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="content__list__item__description__title__actions">
+                                        <div className="content__list__item__description__manage">
                                             <Button
-                                                disabled={item.remainQuantity < 0}
+                                                className="content__list__item__description__manage__icon-btn"
                                                 size="s"
-                                                iconSrc={cartSubIcon}
-                                                onClick={() => this.handleUpdateQuantity(index, -1)}
-                                                className="content__list__item__description__title__actions__hidden"
+                                                iconSrc={cartRemoveIcon}
+                                                onClick={() =>
+                                                    this.handleDelete(index)
+                                                }
                                             />
-                                            <span className="content__list__item__description__title__actions__count">
-                                                {item.remainQuantity < 0 ? 0 : item.quantity}
-                                            </span>
                                             <Button
-                                                disabled={item.remainQuantity === 0 || item.remainQuantity < 0}
+                                                className="content__list__item__description__manage__btn"
+                                                title="Купить"
                                                 size="s"
-                                                iconSrc={cartAddIcon}
-                                                onClick={() => this.handleUpdateQuantity(index, 1)}
-                                                className="content__list__item__description__title__actions__hidden"
+                                                iconSrc={cartBuyIcon}
+                                                disabled={
+                                                    item.remainQuantity < 0
+                                                }
+                                                onClick={() =>
+                                                    this.handleSaveOneProductToBasket(
+                                                        index,
+                                                    )
+                                                }
                                             />
+                                            <div className="content__list__item__description__manage__remainCount">
+                                                {item.remainQuantity >= 0
+                                                    ? `Осталось ${item.remainQuantity} шт`
+                                                    : "Закончились"}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="content__list__item__description__manage">
-                                        <Button
-                                            className="content__list__item__description__manage__icon-btn"
-                                            size="s"
-                                            iconSrc={cartRemoveIcon}
-                                            onClick={() => this.handleDelete(index)}
-                                        />
-                                        <Button
-                                            className="content__list__item__description__manage__btn"
-                                            title="Купить"
-                                            size="s"
-                                            iconSrc={cartBuyIcon}
-                                            disabled={item.remainQuantity < 0}
-                                            onClick={() => this.handleSaveOneProductToBasket(index)} />
-                                        <div className="content__list__item__description__manage__remainCount">
-                                            {item.remainQuantity >= 0
-                                                ? `Осталось ${item.remainQuantity} шт`
-                                                : "Закончились"
-                                            }
-                                        </div>
-                                    </div>
+                                </article>
+                            ))}
+                            {this.state.items.length === 0 && (
+                                <div className="empty-cart">
+                                    <i>Вы пока ничего не добавили в корзину</i>
+                                    &#128521;
                                 </div>
-                            </article>
-                        )}
-                        {
-                            this.state.items.length === 0 && <div className="empty-cart">
-                                <i>Вы пока ничего не добавили в корзину</i>&#128521;
+                            )}
+                        </div>
+                        <div className="content__total">
+                            <Button
+                                className="content__total__make-order"
+                                title="Оформление заказа"
+                                onClick={() => this.handleSaveFullBasket()}
+                                disabled={
+                                    this.state.items.filter(
+                                        (basketItem) =>
+                                            basketItem.remainQuantity >= 0,
+                                    ).length == 0
+                                }
+                            />
+                            <div className="content__total__comment">
+                                Способы оплаты и доставки будут доступны на
+                                следующем шаге
                             </div>
-                        }
-                    </div>
-                    <div className="content__total">
-                        <Button
-                            className="content__total__make-order"
-                            title="Оформление заказа"
-                            onClick={() => this.handleSaveFullBasket()}
-                            disabled={this.state.items.filter((basketItem) => basketItem.remainQuantity >= 0).length == 0}
-                        />
-                        <div className="content__total__comment">
-                            Способы оплаты и доставки будут доступны на следующем шаге
-                        </div>
-                        <div className="content__total__discount">
-                            <span>Скидка:</span>
-                            <span className="content__total__discount__cost">{this.state.total - this.state.discount} ₽</span>
-                        </div>
-                        <div className="content__total__sum-cost">
-                            <span>Итог:</span>
-                            <span className="content__total__discount__cost">{this.state.discount} ₽</span>
+                            <div className="content__total__discount">
+                                <span>Скидка:</span>
+                                <span className="content__total__discount__cost">
+                                    {this.state.total - this.state.discount} ₽
+                                </span>
+                            </div>
+                            <div className="content__total__sum-cost">
+                                <span>Итог:</span>
+                                <span className="content__total__discount__cost">
+                                    {this.state.discount} ₽
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main>
-            <Footer />
-        </div>
+                </main>
+                <Footer />
+            </div>
+        );
     }
 }
 

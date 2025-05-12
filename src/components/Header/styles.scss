@@ -261,9 +261,15 @@
                                             padding-block: 4px;
                                             cursor: pointer;
 
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 2;
+                                            line-clamp: 2;
+                                            -webkit-box-orient: vertical;
+
                                             &:hover {
                                                 color: var(--secondary-color);
-                                                font-weight: 900;
                                             }
                                         }
                                     }

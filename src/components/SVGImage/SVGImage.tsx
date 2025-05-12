@@ -4,7 +4,7 @@ import "./styles.scss";
 class SVGImage extends Tarakan.Component {
     state = {
         container: null,
-    }
+    };
 
     async renderFinished(container) {
         const res = await fetch(this.props.src);
@@ -17,15 +17,16 @@ class SVGImage extends Tarakan.Component {
         this.setState({ container: newContainer }, false);
     }
 
-    async update(newProps: any) {
+    async update() {
         const res = await fetch(this.props.src);
-        const newContainer = (this.state.container.outerHTML = await res.text());
+        const newContainer = (this.state.container.outerHTML =
+            await res.text());
         // newContainer.className = this.props.className;
         this.setDOM(newContainer);
         this.state.container.className = `${this.state.container.className} ${this.props.className}`;
     }
 
-    render(props) {
+    render() {
         return <div />;
     }
 }

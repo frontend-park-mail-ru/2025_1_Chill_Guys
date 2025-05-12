@@ -6,10 +6,10 @@ import { getAllCategories, getSubCategories } from "../api/categories";
 const initValue = {
     products: null,
     categories: null,
-    subcategories: {}
+    subcategories: {},
 };
 
-const initAction = (store: Store) => { }
+const initAction = () => {};
 
 const ProductsStore = new Store(initValue, initAction);
 
@@ -30,10 +30,15 @@ ProductsStore.addAction("all", async (store: Store) => {
 ProductsStore.addAction("categoryList", async (store: Store) => {
     const { code, data } = await getAllCategories();
     if (code === AJAXErrors.NoError) {
-        const categories = Object.fromEntries(data.categories.map((category) => [category.id, {
-            id: category.id,
-            name: category.name,
-        }]));
+        const categories = Object.fromEntries(
+            data.categories.map((category) => [
+                category.id,
+                {
+                    id: category.id,
+                    name: category.name,
+                },
+            ]),
+        );
         store.sendAction("categoriesUpdated", {
             ...store.value,
             categories,
