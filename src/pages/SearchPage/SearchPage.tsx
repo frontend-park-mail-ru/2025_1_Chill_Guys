@@ -165,8 +165,8 @@ class SearchPage extends Tarakan.Component {
                             { key: "default", name: "Не сортировать" },
                             { key: "price_asc", name: "Сначала дешёвые" },
                             { key: "price_desc", name: "Сначала дорогие" },
-                            { key: "rating_asc", name: "Сначала менее популярные" },
-                            { key: "rating_desc", name: "Сначала популярные" },
+                            { key: "rating_asc", name: "Сначала c высоким рейтингом" },
+                            { key: "rating_desc", name: "Сначала с низким рейтингом" },
                         ]} />
                     </div>
 

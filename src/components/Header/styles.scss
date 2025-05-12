@@ -21,9 +21,13 @@
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 930px) {
     .header__nav__row_main__search-field-wrapper {
         display: none !important;
+    }
+
+    .header__nav__row_main__icons-wrapper__phone__button.s {
+        visibility: visible !important;
     }
 }
 
@@ -190,6 +194,10 @@
                             padding: 12px;
                             border-radius: 12px;
 
+                            &.s {
+                                visibility: hidden;
+                            }
+
                             &:hover {
                                 background-color: whitesmoke;
                             }
@@ -254,7 +262,7 @@
                                             cursor: pointer;
 
                                             &:hover {
-                                                color: rgb(80, 80, 80);
+                                                color: var(--secondary-color);
                                                 font-weight: 900;
                                             }
                                         }

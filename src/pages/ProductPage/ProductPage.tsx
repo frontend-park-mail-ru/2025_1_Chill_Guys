@@ -25,7 +25,10 @@ class ProductPage extends Tarakan.Component {
         commentsOffset: 0,
         comments: [],
         addReviewModal: false,
+
         showNotAuthAlert: false,
+        showNotAuthAlertCart: false,
+
         showComments: false,
         fetching: false,
     }
@@ -197,7 +200,13 @@ class ProductPage extends Tarakan.Component {
                                     size="m"
                                     iconSrc={cartSubIcon}
                                     className="no-text"
-                                    onClick={() => this.handleRemoveProduct()}
+                                    onClick={() => {
+                                        if (!app.store.user.value.login) {
+                                            this.setState({ showNotAuthAlertCart: true })
+                                        } else {
+                                            this.handleRemoveProduct();
+                                        }
+                                    }}
                                 />
                                 <Button
                                     disabled={this.state.product.remainQuantity ?? 0 < 0}
@@ -212,14 +221,26 @@ class ProductPage extends Tarakan.Component {
                                             ? "product-page__main__card__details__action__buy__in-cart"
                                             : "product-page__main__card__details__action__buy"
                                     }
-                                    onClick={() => this.handleAddProduct()}
+                                    onClick={() => {
+                                        if (!app.store.user.value.login) {
+                                            this.setState({ showNotAuthAlertCart: true })
+                                        } else {
+                                            this.handleAddProduct()
+                                        }
+                                    }}
                                 />
                                 <Button
                                     disabled={this.state.product.remainQuantity === 0 || this.state.product.remainQuantity < 0}
                                     size="m"
                                     iconSrc={cartAddIcon}
                                     className="no-text"
-                                    onClick={() => this.handleAddProduct()}
+                                    onClick={() => {
+                                        if (!app.store.user.value.login) {
+                                            this.setState({ showNotAuthAlertCart: true })
+                                        } else {
+                                            this.handleAddProduct()
+                                        }
+                                    }}
                                 />
                             </div>
                         </div>}
@@ -244,10 +265,17 @@ class ProductPage extends Tarakan.Component {
                             onSuccess={() => app.navigateTo("/signin")}
                             onClose={() => this.setState({ showNotAuthAlert: false })}
                         />}
+                        {this.state.showNotAuthAlertCart && <Alert
+                            title="Необходимо войти"
+                            content="Чтобы изменить продукты в корзине, надо сначала войти в профиль."
+                            successButtonTitle="Войти"
+                            onSuccess={() => app.navigateTo("/signin")}
+                            onClose={() => this.setState({ showNotAuthAlertCart: false })}
+                        />}
                         {this.state.addReviewModal &&
                             <CreateReviewModal onSend={(D: any, R: any) => this.sendReview(D, R)}
                                 onClose={() => this.setState({ addReviewModal: false })} />}
-                        <Button
+                        {this.state.comments.length !== 0 && <Button
                             className="product-page__main__reviews__title__action"
                             title="Оставить отзыв"
                             variant="text"
@@ -258,11 +286,26 @@ class ProductPage extends Tarakan.Component {
                                     this.setState({ showNotAuthAlert: true })
                                 }
                             }}
-                        />
+                        />}
                     </div>
                     <div className="product-page__main__reviews__content">
                         {this.state.comments.length === 0
-                            ? "У данного товара пока нет отзывов"
+                            ? <div style="display: flex; column-gap: 8px; align-items: center">
+                                <span>Будьте первым, кто оставит отзыв на этот товар!</span>
+                                <Button
+                                    variant="text"
+                                    title="Оставить отзыв"
+                                    size="s"
+                                    className="product-page__main__reviews__content__add-product"
+                                    onClick={() => {
+                                        if (app.store.user.value.login) {
+                                            this.setState({ addReviewModal: true })
+                                        } else {
+                                            this.setState({ showNotAuthAlert: true })
+                                        }
+                                    }}
+                                />
+                            </div>
                             : (this.state.showComments ? this.state.comments : this.state.comments.slice(0, 3)).map((comment: any) =>
                                 <div className="product-page__main__reviews__content__comment">
                                     <div className="product-page__main__reviews__content__comment__info">

@@ -35,7 +35,7 @@ class CreateReviewModal extends Tarakan.Component {
                 <div className="review-modal__content__form">
                     <div className="review-modal__content__form__rating">
                         <div className="review-modal__content__form__rating__title">
-                            Отзыв:
+                            Рейтинг:
                         </div>
                         <div className="review-modal__content__form__rating__value">
                             {

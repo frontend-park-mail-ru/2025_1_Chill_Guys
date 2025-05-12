@@ -203,6 +203,13 @@
                 flex-direction: column;
                 row-gap: 12px;
 
+                &__add-product {
+                    width: fit-content;
+                    height: fit-content;
+                    padding: 0;
+                    font-size: 16px;
+                }
+
                 &__comment {
                     border: 1px solid lightgray;
                     padding: 12px;
