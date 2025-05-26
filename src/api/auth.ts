@@ -1,14 +1,25 @@
 import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 
-export async function signIn(email: string, password: string): Promise<AJAXErrors> {
-    const response = await ajax.post("auth/login", { email, password }, { setCSRF: true });
+export async function signIn(
+    email: string,
+    password: string,
+): Promise<AJAXErrors> {
+    const response = await ajax.post(
+        "auth/login",
+        { email, password },
+        { setCSRF: true },
+    );
 
     if (response.error) {
         return AJAXErrors.ServerError;
     }
 
-    if (response.result.status == 400 || response.result.status == 401 || response.result.status == 404) {
+    if (
+        response.result.status == 400 ||
+        response.result.status == 401 ||
+        response.result.status == 404
+    ) {
         return AJAXErrors.NoUser;
     }
 
@@ -19,8 +30,17 @@ export async function signIn(email: string, password: string): Promise<AJAXError
     return AJAXErrors.NoError;
 }
 
-export async function signUp(name: string, surname: string, email: string, password: string): Promise<AJAXErrors> {
-    const response = await ajax.post("auth/register", { name, surname, email, password }, { setCSRF: true });
+export async function signUp(
+    name: string,
+    surname: string,
+    email: string,
+    password: string,
+): Promise<AJAXErrors> {
+    const response = await ajax.post(
+        "auth/register",
+        { name, surname, email, password },
+        { setCSRF: true },
+    );
 
     if (response.error) {
         return AJAXErrors.ServerError;

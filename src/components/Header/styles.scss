@@ -3,8 +3,17 @@
         display: none !important;
 
         &__phone {
-            display: block !important;
+            display: flex !important;
         }
+    }
+
+    .header__nav__tf {
+        display: block !important;
+        z-index: 4;
+    }
+
+    .header__nav__row {
+        column-gap: 16px;
     }
 
     .header__nav__secondary {
@@ -12,9 +21,13 @@
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 930px) {
     .header__nav__row_main__search-field-wrapper {
         display: none !important;
+    }
+
+    .header__nav__row_main__icons-wrapper__phone__button.s {
+        visibility: visible !important;
     }
 }
 
@@ -42,6 +55,10 @@
 
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 
     &_light {
         --border-radius: 20px;
@@ -150,6 +167,11 @@
             }
         }
 
+        &__tf {
+            display: none;
+            flex: 1 1 auto;
+        }
+
         &__row {
             width: 100%;
             display: flex;
@@ -167,12 +189,18 @@
                     &__phone {
                         display: none;
                         line-height: 0;
+                        flex: 0 1 auto;
+                        width: max-content;
 
                         &__button {
                             width: 48px;
                             height: 48px;
                             padding: 12px;
                             border-radius: 12px;
+
+                            &.s {
+                                visibility: hidden;
+                            }
 
                             &:hover {
                                 background-color: whitesmoke;
@@ -237,9 +265,15 @@
                                             padding-block: 4px;
                                             cursor: pointer;
 
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 2;
+                                            line-clamp: 2;
+                                            -webkit-box-orient: vertical;
+
                                             &:hover {
-                                                color: rgb(80, 80, 80);
-                                                font-weight: 900;
+                                                color: var(--secondary-color);
                                             }
                                         }
                                     }

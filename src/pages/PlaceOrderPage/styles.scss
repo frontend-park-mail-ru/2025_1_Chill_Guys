@@ -1,6 +1,7 @@
 @media screen and (max-width: 720px) {
     .place-order-page {
         margin-inline: 4px;
+
         main {
             .content {
                 flex-direction: column;
@@ -18,6 +19,7 @@
 @media screen and (min-width: 720px) {
     .place-order-page {
         margin-inline: 24px;
+
         main {
             .content {
                 &__total {
@@ -93,6 +95,24 @@
                     flex-direction: column;
                     row-gap: 12px;
                 }
+
+                &__promocode {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 12px;
+                    margin-top: 20px;
+
+                    &__value {
+                        display: flex;
+                        column-gap: 16px;
+                        align-items: center;
+
+                        &__loading {
+                            height: 30px;
+                            animation: loading-animation 1s linear infinite;
+                        }
+                    }
+                }
             }
 
             &__total {
@@ -103,6 +123,7 @@
 
                 &__make-order {
                     width: 100%;
+                    margin-bottom: 16px;
                 }
 
                 &__comment {
@@ -115,9 +136,20 @@
                 &__discount {
                     display: flex;
                     justify-content: space-between;
-                    margin-top: 16px;
                     margin-bottom: 8px;
                     color: var(--positive);
+
+                    &_cost {
+                        font-size: 16px;
+                    }
+                }
+
+                &__promocode {
+                    display: flex;
+                    justify-content: space-between;
+
+                    margin-bottom: 8px;
+                    color: var(--secondary-color);
 
                     &_cost {
                         font-size: 16px;

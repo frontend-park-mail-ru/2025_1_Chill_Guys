@@ -21,26 +21,33 @@ import UserStore from "./stores/UserStore";
 
 import "./styles/style.scss";
 import SellerPage from "./pages/SellerPage/SellerPage";
+import NofiticationsPage from "./pages/NotificationsPage/NotificationsPage";
+import WarehousePage from "./pages/WarehousePage/WarehousePage";
+import TestPage from "./pages/TestPage/TestPage";
 
 const root = document.getElementById("root");
 
 // Создания приложения и настройка страниц
 const app = new Tarakan.Application({
-  "/": IndexPage,
-  "/product/<productId>": ProductPage,
-  "/signup": RegisterPage,
-  "/signin": LoginPage,
-  "/cart": CartPage,
-  "/orders": OrdersPage,
-  "/place-order": PlaceOrderPage,
-  "/profile": ProfilePage,
-  "/category/<id>": CategoryPage,
-  "/search": SearchPage,
-  "/stats": StatisticsPage,
-  "/seller-form": SellerFormPage,
-  "/csat/<id>": SurveyPage,
-  "/admin/<tab>": AdminPage,
-  "/seller": SellerPage,
+    "/": IndexPage,
+    "/product/<productId>": ProductPage,
+    "/signup": RegisterPage,
+    "/signin": LoginPage,
+    "/cart": CartPage,
+    "/orders": OrdersPage,
+    "/place-order": PlaceOrderPage,
+    "/profile": ProfilePage,
+    "/category/<id>": CategoryPage,
+    "/search": SearchPage,
+    "/stats": StatisticsPage,
+    "/seller-form": SellerFormPage,
+    "/csat/<id>": SurveyPage,
+    "/notifications": NofiticationsPage,
+
+    "/admin/<tab>": AdminPage,
+    "/seller": SellerPage,
+    "/warehouse": WarehousePage,
+    "/test": TestPage,
 });
 
 // Регистрация хранилищ глобального состояния
@@ -50,9 +57,9 @@ app.addStore("csat", CSATStore);
 
 // SW
 async function setupSW() {
-  if ("serviceWorker" in navigator) {
-    await navigator.serviceWorker.register("/sw.js", { scope: "/" });
-  }
+    if ("serviceWorker" in navigator) {
+        await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    }
 }
 
 setupSW();

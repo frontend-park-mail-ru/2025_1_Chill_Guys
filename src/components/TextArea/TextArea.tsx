@@ -2,8 +2,8 @@ import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
 
 import invalidIcon from "../../shared/images/textfield-invalid.svg";
-import successIcon from "../../shared/images/textfield-success.svg"
-import validate, { ValidTypes } from "bazaar-validation";
+import successIcon from "../../shared/images/textfield-success.svg";
+import validate from "bazaar-validation";
 
 export const TEXTFIELD_TYPES = {
     SEARCH: "search",
@@ -16,19 +16,21 @@ export const TEXTFIELD_TYPES = {
     TIME: "time",
     BUTTON: "button",
     HIDDEN: "hidden",
-}
+};
 
 class TextArea extends Tarakan.Component {
-
     init(initProps: any) {
         this.state = {
             status: "default",
             value: initProps.value,
-        }
+        };
     }
 
     handleEnterFinish() {
-        const dataOk = this.props.validType !== undefined ? validate(this.props.validType, this.state.value) : true;
+        const dataOk =
+            this.props.validType !== undefined
+                ? validate(this.props.validType, this.state.value)
+                : true;
         if (dataOk) {
             this.setState({ status: "success" });
         } else {
@@ -56,14 +58,13 @@ class TextArea extends Tarakan.Component {
     }
 
     render(props: any) {
-        const type = props.type ?? TEXTFIELD_TYPES.TEXT;
         const placeholder = props.title ?? "Поле ввода";
         const defaultValue = props.value ?? "";
         const otherClasses = props.className ?? "";
         const title = props.fieldName ?? "";
         const isDisabled = props.isDisabled ?? false;
 
-        return title ?
+        return title ? (
             <div className={`textArea_title ${otherClasses}`.trim()}>
                 {title && <h3 className="textArea_title__title">{title}</h3>}
                 <div className="textArea">
@@ -77,12 +78,22 @@ class TextArea extends Tarakan.Component {
                         onBlur={() => this.handleEnterFinish()}
                         rows={props.rows}
                     />
-                    {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
-                        <img className="textArea__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
-                    }
+                    {(props.validType !== undefined
+                        ? this.state.status
+                        : "default") !== "default" && (
+                        <img
+                            className="textArea__mark"
+                            src={
+                                this.state.status === "success"
+                                    ? successIcon
+                                    : invalidIcon
+                            }
+                        />
+                    )}
                 </div>
             </div>
-            : <div className={`textArea ${otherClasses}`.trim()}>
+        ) : (
+            <div className={`textArea ${otherClasses}`.trim()}>
                 <textarea
                     className={`textArea__input textArea__input_${props.validType !== undefined ? this.state.status : "default"}`}
                     placeholder={placeholder}
@@ -93,11 +104,20 @@ class TextArea extends Tarakan.Component {
                     onBlur={() => this.handleEnterFinish()}
                     rows={props.rows}
                 />
-                {(props.validType !== undefined ? this.state.status : "default") !== "default" &&
-                    <img className="textArea__mark" src={this.state.status === "success" ? successIcon : invalidIcon} />
-                }
+                {(props.validType !== undefined
+                    ? this.state.status
+                    : "default") !== "default" && (
+                    <img
+                        className="textArea__mark"
+                        src={
+                            this.state.status === "success"
+                                ? successIcon
+                                : invalidIcon
+                        }
+                    />
+                )}
             </div>
-
+        );
     }
 }
 

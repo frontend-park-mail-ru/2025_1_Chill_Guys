@@ -5,7 +5,11 @@ import Footer from "../../components/Footer/Footer";
 import "./styles.scss";
 import { Product } from "../../api/product";
 import InfinityList from "../../components/InfinityList/InfinityList";
-import { addProductImage, addProductInformation, getSellerProducts } from "../../api/seller";
+import {
+    addProductImage,
+    addProductInformation,
+    getSellerProducts,
+} from "../../api/seller";
 import { AJAXErrors } from "../../api/errors";
 import { convertMoney } from "../AdminPage/AdminPage";
 import ProductModal from "../../components/ProductModal/ProductModal";
@@ -14,7 +18,6 @@ import TextField from "../../components/TextField/TextField";
 import TextArea from "../../components/TextArea/TextArea";
 import { ValidTypes } from "bazaar-validation";
 import CategorySelect from "../../components/CategorySelect/CategorySelect";
-import { sendOrder } from "../../api/order";
 
 class SellerPage extends Tarakan.Component {
     state = {
@@ -35,14 +38,16 @@ class SellerPage extends Tarakan.Component {
             category: "",
             image: null,
             imageFile: null,
-        }
-    }
+        },
+    };
 
     async fetchProducts() {
         if (this.state.fetching) return;
         this.state.fetching = true;
 
-        const { code, products } = await getSellerProducts(this.state.products.length);
+        const { code, products } = await getSellerProducts(
+            this.state.products.length,
+        );
         if (code === AJAXErrors.NoError) {
             this.setState({
                 products: [...this.state.products, ...products],
@@ -58,10 +63,10 @@ class SellerPage extends Tarakan.Component {
                 productForm: {
                     ...this.state.productForm,
                     image: reader.result,
-                    imageFile: ev.target.files[0]
-                }
-            })
-        }
+                    imageFile: ev.target.files[0],
+                },
+            });
+        };
         reader.readAsDataURL(ev.target.files[0]);
     }
 
@@ -73,12 +78,16 @@ class SellerPage extends Tarakan.Component {
         }
 
         if (Number.isInteger(form.quantity) && parseInt(form.quantity) > 0) {
-            this.setState({ error: "Количество товаров не может быть отрицательной" });
+            this.setState({
+                error: "Количество товаров не может быть отрицательной",
+            });
             return;
         }
 
         if (!form.name || !form.description || !form.image || !form.category) {
-            this.setState({ error: "Заполните все поля формы, выберите категорию и приложите фото" });
+            this.setState({
+                error: "Заполните все поля формы, выберите категорию и приложите фото",
+            });
             return;
         }
 
@@ -102,177 +111,255 @@ class SellerPage extends Tarakan.Component {
     }
 
     render() {
-        return <div className="seller-page">
-            <SellerHeader />
-            <main className="seller-page__content">
-                {!this.state.addProduct
-                    ? <div className="seller-page__content__products">
-                        <div className="seller-page__content__products__title">
-                            <h1 className="seller-page__content__products__title__h">
-                                Товары на продаже
-                            </h1>
-                            <Button title="Добавить товар" onClick={() => this.setState({ addProduct: true })} />
-                        </div>
+        return (
+            <div className="seller-page">
+                <SellerHeader />
+                <main className="seller-page__content">
+                    {!this.state.addProduct ? (
+                        <div className="seller-page__content__products">
+                            <div className="seller-page__content__products__title">
+                                <h1 className="seller-page__content__products__title__h">
+                                    Товары на продаже
+                                </h1>
+                                <Button
+                                    title="Добавить товар"
+                                    onClick={() =>
+                                        this.setState({ addProduct: true })
+                                    }
+                                />
+                            </div>
 
-                        <table className="seller-page__content__products__table">
-                            <thead>
-                                <tr>
-                                    <th width="25%">Название</th>
-                                    <th width="35%">Описание</th>
-                                    <th width="10%">Цена</th>
-                                    <th width="10%">В наличии</th>
-                                    <th width="10%">Статус</th>
-                                    <th width="10%"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.products !== null && this.state.products.length
-                                    ? this.state.products.map((product: Product) =>
-                                        <tr>
-                                            <td className="ellipsis">
-                                                <span>{product.name}</span>
-                                            </td>
-                                            <td className="ellipsis">
-                                                <span>{product.description}</span>
-                                            </td>
-                                            <td style="max-width: 10%">{convertMoney(product.price)}</td>
-                                            <td style="max-width: 10%">{product.quantity} шт</td>
-                                            <td style="max-width: 10%" className={"status " + product.status}>
-                                                <span>{
-                                                    {
-                                                        "pending": "Ожидание",
-                                                        "empty": "Закончился",
-                                                        "approved": "В продаже",
-                                                        "rejected": "Отказано"
-                                                    }[product.status]
-                                                }</span>
-                                            </td>
-                                            <td style="max-width: 10%" className="link" onClick={() => {
-                                                this.setState({ selectedProduct: product });
-                                                this.state.productModal.target.handleOpen();
-                                            }}>Подробнее</td>
-                                        </tr>
-                                    )
-                                    : <tr>
-                                        <td colSpan="6">
-                                            Пока вы не выложили товар на продажу
-                                        </td>
+                            <table className="seller-page__content__products__table">
+                                <thead>
+                                    <tr>
+                                        <th width="25%">Название</th>
+                                        <th width="35%">Описание</th>
+                                        <th width="10%">Цена</th>
+                                        <th width="10%">В наличии</th>
+                                        <th width="10%">Статус</th>
+                                        <th width="10%"></th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <ProductModal ref={this.state.productModal} product={this.state.selectedProduct} />
-                        <InfinityList onShow={() => this.fetchProducts()} />
-                    </div>
-
-                    : <div className="seller-page__content__new-product">
-                        <h1 className="seller-page__content__new-product__h">Добавить товар</h1>
-                        <div className="seller-page__content__new-product__options">
-                            <div className="seller-page__content__new-product__options__description">
-                                <h3>Информация</h3>
-                                <TextField
-                                    title="Название"
-                                    validType={ValidTypes.NotNullValid}
-                                    onChange={(ev: any) => this.setState({
-                                        productForm: {
-                                            ...this.state.productForm,
-                                            name: ev.target.value,
-                                        }
-                                    })}
-                                />
-                                <TextArea
-                                    className="seller-page__content__new-product__options__description__desc"
-                                    title="Описание"
-                                    validType={ValidTypes.NotNullValid}
-                                    onChange={(ev: any) => this.setState({
-                                        productForm: {
-                                            ...this.state.productForm,
-                                            description: ev.target.value,
-                                        }
-                                    })}
-                                />
-                                <div className="seller-page__content__new-product__options__description__count">
+                                </thead>
+                                <tbody>
+                                    {this.state.products !== null &&
+                                    this.state.products.length ? (
+                                        this.state.products.map(
+                                            (product: Product) => (
+                                                <tr>
+                                                    <td className="ellipsis">
+                                                        <span>
+                                                            {product.name}
+                                                        </span>
+                                                    </td>
+                                                    <td className="ellipsis">
+                                                        <span>
+                                                            {
+                                                                product.description
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                    <td style="max-width: 10%">
+                                                        {convertMoney(
+                                                            product.price,
+                                                        )}
+                                                    </td>
+                                                    <td style="max-width: 10%">
+                                                        {product.quantity} шт
+                                                    </td>
+                                                    <td
+                                                        style="max-width: 10%"
+                                                        className={
+                                                            "status " +
+                                                            product.status
+                                                        }
+                                                    >
+                                                        <span>
+                                                            {
+                                                                {
+                                                                    pending:
+                                                                        "Ожидание",
+                                                                    empty: "Закончился",
+                                                                    approved:
+                                                                        "В продаже",
+                                                                    rejected:
+                                                                        "Отказано",
+                                                                }[
+                                                                    product
+                                                                        .status
+                                                                ]
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        style="max-width: 10%"
+                                                        className="link"
+                                                        onClick={() => {
+                                                            this.setState({
+                                                                selectedProduct:
+                                                                    product,
+                                                            });
+                                                            this.state.productModal.target.handleOpen();
+                                                        }}
+                                                    >
+                                                        Подробнее
+                                                    </td>
+                                                </tr>
+                                            ),
+                                        )
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="6">
+                                                Пока вы не выложили товар на
+                                                продажу
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                            <ProductModal
+                                ref={this.state.productModal}
+                                product={this.state.selectedProduct}
+                            />
+                            <InfinityList onShow={() => this.fetchProducts()} />
+                        </div>
+                    ) : (
+                        <div className="seller-page__content__new-product">
+                            <h1 className="seller-page__content__new-product__h">
+                                Добавить товар
+                            </h1>
+                            <div className="seller-page__content__new-product__options">
+                                <div className="seller-page__content__new-product__options__description">
+                                    <h3>Информация</h3>
                                     <TextField
-                                        type="number"
-                                        title="Цена товара"
+                                        title="Название"
                                         validType={ValidTypes.NotNullValid}
-                                        onChange={(ev: any) => this.setState({
-                                            productForm: {
-                                                ...this.state.productForm,
-                                                price: ev.target.value,
-                                            }
-                                        })}
+                                        onChange={(ev: any) =>
+                                            this.setState({
+                                                productForm: {
+                                                    ...this.state.productForm,
+                                                    name: ev.target.value,
+                                                },
+                                            })
+                                        }
                                     />
-                                    <TextField
-                                        type="number"
-                                        title="Доступное количество"
+                                    <TextArea
+                                        className="seller-page__content__new-product__options__description__desc"
+                                        title="Описание"
                                         validType={ValidTypes.NotNullValid}
-                                        onChange={(ev: any) => this.setState({
-                                            productForm: {
-                                                ...this.state.productForm,
-                                                quantity: ev.target.value,
+                                        onChange={(ev: any) =>
+                                            this.setState({
+                                                productForm: {
+                                                    ...this.state.productForm,
+                                                    description:
+                                                        ev.target.value,
+                                                },
+                                            })
+                                        }
+                                    />
+                                    <div className="seller-page__content__new-product__options__description__count">
+                                        <TextField
+                                            type="number"
+                                            title="Цена товара"
+                                            validType={ValidTypes.NotNullValid}
+                                            onChange={(ev: any) =>
+                                                this.setState({
+                                                    productForm: {
+                                                        ...this.state
+                                                            .productForm,
+                                                        price: ev.target.value,
+                                                    },
+                                                })
                                             }
-                                        })}
+                                        />
+                                        <TextField
+                                            type="number"
+                                            title="Доступное количество"
+                                            validType={ValidTypes.NotNullValid}
+                                            onChange={(ev: any) =>
+                                                this.setState({
+                                                    productForm: {
+                                                        ...this.state
+                                                            .productForm,
+                                                        quantity:
+                                                            ev.target.value,
+                                                    },
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div className="seller-page__content__new-product__options__image">
+                                    <h3>Изображение</h3>
+                                    <label
+                                        className="seller-page__content__new-product__options__image__ico"
+                                        style={
+                                            this.state.productForm.image
+                                                ? "border: none"
+                                                : ""
+                                        }
+                                    >
+                                        <input
+                                            type="file"
+                                            accept=".jpg,.png"
+                                            style="display:none"
+                                            onChange={(ev) =>
+                                                this.handleUploadImage(ev)
+                                            }
+                                        />
+                                        {this.state.productForm.image ? (
+                                            <img
+                                                className="seller-page__content__new-product__options__image__ico__img"
+                                                src={
+                                                    this.state.productForm.image
+                                                }
+                                            />
+                                        ) : (
+                                            <div className="seller-page__content__new-product__options__image__ico__title">
+                                                Загрузите
+                                                <br />
+                                                изображение
+                                                <br />
+                                                товара
+                                            </div>
+                                        )}
+                                    </label>
+                                    <CategorySelect
+                                        className="seller-page__content__new-product__options__image__category"
+                                        onSelect={(id) =>
+                                            this.setState({
+                                                productForm: {
+                                                    ...this.state.productForm,
+                                                    category: id,
+                                                },
+                                            })
+                                        }
                                     />
                                 </div>
                             </div>
-                            <div className="seller-page__content__new-product__options__image">
-                                <h3>Изображение</h3>
-                                <label
-                                    className="seller-page__content__new-product__options__image__ico"
-                                    style={this.state.productForm.image ? "border: none" : ""}
-                                >
-                                    <input
-                                        type="file"
-                                        accept=".jpg,.png"
-                                        style="display:none"
-                                        onChange={(ev) => this.handleUploadImage(ev)}
-                                    />
-                                    {this.state.productForm.image
-                                        ?
-                                        <img
-                                            className="seller-page__content__new-product__options__image__ico__img"
-                                            src={this.state.productForm.image}
-                                        />
-                                        : <div className="seller-page__content__new-product__options__image__ico__title">
-                                            Загрузите<br />изображение<br />товара
-                                        </div>
+                            <div className="seller-page__content__new-product__actions">
+                                <Button
+                                    className="seller-page__content__new-product__actions__btn"
+                                    title="Выставить товар на продажу"
+                                    disabled={
+                                        !this.state.productForm.name ||
+                                        !this.state.productForm.description ||
+                                        !this.state.productForm.price ||
+                                        !this.state.productForm.quantity ||
+                                        !this.state.productForm.image ||
+                                        !this.state.productForm.category
                                     }
-                                </label>
-                                <CategorySelect
-                                    className="seller-page__content__new-product__options__image__category"
-                                    onSelect={(id) => this.setState({
-                                        productForm: {
-                                            ...this.state.productForm,
-                                            category: id,
-                                        }
-                                    })}
+                                    onClick={() => this.handleSendProduct()}
                                 />
+                                <span className="seller-page__content__new-product__actions__error">
+                                    {this.state.error}
+                                </span>
                             </div>
                         </div>
-                        <div className="seller-page__content__new-product__actions">
-                            <Button
-                                className="seller-page__content__new-product__actions__btn"
-                                title="Выставить товар на продажу"
-                                disabled={
-                                    !this.state.productForm.name ||
-                                    !this.state.productForm.description ||
-                                    !this.state.productForm.price ||
-                                    !this.state.productForm.quantity ||
-                                    !this.state.productForm.image ||
-                                    !this.state.productForm.category
-                                }
-                                onClick={() => this.handleSendProduct()}
-                            />
-                            <span className="seller-page__content__new-product__actions__error">
-                                {this.state.error}
-                            </span>
-                        </div>
-                    </div>
-                }
-            </main >
-            <Footer />
-        </div >
+                    )}
+                </main>
+                <Footer />
+            </div>
+        );
     }
 }
 

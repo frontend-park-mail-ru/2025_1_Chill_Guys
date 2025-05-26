@@ -161,6 +161,17 @@
             }
         }
 
+        &__recommendations {
+            display: flex;
+            overflow-x: auto;
+            column-gap: 16px;
+
+            &>* {
+                min-width: max(250px, 20%);
+                max-width: max(250px, 20%);
+            }
+        }
+
         &__details {
             margin-top: 12px;
         }
@@ -202,6 +213,13 @@
                 display: flex;
                 flex-direction: column;
                 row-gap: 12px;
+
+                &__add-product {
+                    width: fit-content;
+                    height: fit-content;
+                    padding: 0;
+                    font-size: 16px;
+                }
 
                 &__comment {
                     border: 1px solid lightgray;

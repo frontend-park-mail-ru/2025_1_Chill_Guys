@@ -1,0 +1,11 @@
+.infinity-list {
+    display: grid;
+    row-gap: 16px;
+    column-gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.wtf_1 {
+    min-height: 300px;
+    background-color: blue;
+}

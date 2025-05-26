@@ -2,24 +2,27 @@ import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 
 export interface Basket {
-    total: number,
-    totalPrice: number,
-    totalPriceDiscount: number,
-    products: BasketItem[],
+    total: number;
+    totalPrice: number;
+    totalPriceDiscount: number;
+    products: BasketItem[];
 }
 
 export interface BasketItem {
-    id: string,
-    productId: string,
-    productName: string,
-    productPrice: number,
-    productImage: string,
-    priceDiscount: number,
-    quantity: number,
-    remainQuantity: number,
+    id: string;
+    productId: string;
+    productName: string;
+    productPrice: number;
+    productImage: string;
+    priceDiscount: number;
+    quantity: number;
+    remainQuantity: number;
 }
 
-export async function getBasket(): Promise<{ code: AJAXErrors, data?: Basket }> {
+export async function getBasket(): Promise<{
+    code: AJAXErrors;
+    data?: Basket;
+}> {
     const response = await ajax.get("basket");
 
     if (response.error) {
@@ -48,7 +51,7 @@ export async function getBasket(): Promise<{ code: AJAXErrors, data?: Basket }> 
             priceDiscount: product.price_discount || product.product_price,
             quantity: product.quantity,
             remainQuantity: product.remain_quantity,
-        }))
+        })),
     };
 
     return { code: AJAXErrors.NoError, data: basket };
@@ -72,11 +75,12 @@ export async function addToBasket(productId: string): Promise<AJAXErrors> {
     return AJAXErrors.NoError;
 }
 
-export async function updateProductQuantity(productId: string, newQuantity: number)
-    : Promise<{ code: AJAXErrors, remainQuantity?: boolean }> {
-
+export async function updateProductQuantity(
+    productId: string,
+    newQuantity: number,
+): Promise<{ code: AJAXErrors; remainQuantity?: boolean }> {
     const response = await ajax.patch(`basket/${productId}`, {
-        quantity: newQuantity
+        quantity: newQuantity,
     });
 
     if (response.error) {
@@ -96,7 +100,10 @@ export async function updateProductQuantity(productId: string, newQuantity: numb
     }
 
     const rawData = await response.result.json();
-    return { code: AJAXErrors.NoError, remainQuantity: rawData.item.remain_quantity };
+    return {
+        code: AJAXErrors.NoError,
+        remainQuantity: rawData.item.remain_quantity,
+    };
 }
 
 export async function removeFromBasket(productId: string): Promise<AJAXErrors> {

@@ -2,15 +2,15 @@ import ajax, { AJAXRequestContentType } from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 
 export interface UserData {
-    id: string,
-    email: string,
-    name: string,
-    surname: string,
-    imageURL: string,
-    phoneNumber: string,
+    id: string;
+    email: string;
+    name: string;
+    surname: string;
+    imageURL: string;
+    phoneNumber: string;
 }
 
-export async function getMe(): Promise<{ code: AJAXErrors, data?: UserData }> {
+export async function getMe(): Promise<{ code: AJAXErrors; data?: UserData }> {
     const response = await ajax.get("users/me", { setCSRF: true });
 
     if (response.error) {
@@ -28,9 +28,15 @@ export async function getMe(): Promise<{ code: AJAXErrors, data?: UserData }> {
     return { code: AJAXErrors.NoError, data: await response.result.json() };
 }
 
-export async function updateMe(name: string, surname: string, phoneNumber: string): Promise<AJAXErrors> {
+export async function updateMe(
+    name: string,
+    surname: string,
+    phoneNumber: string,
+): Promise<AJAXErrors> {
     const response = await ajax.post("users/update-profile", {
-        name, surname, phoneNumber
+        name,
+        surname,
+        phoneNumber,
     });
 
     if (response.error || !response.result.ok) {
@@ -40,7 +46,10 @@ export async function updateMe(name: string, surname: string, phoneNumber: strin
     return AJAXErrors.NoError;
 }
 
-export async function updatePassword(oldPassword: string, newPassword: string): Promise<AJAXErrors> {
+export async function updatePassword(
+    oldPassword: string,
+    newPassword: string,
+): Promise<AJAXErrors> {
     const response = await ajax.post("users/update-password", {
         NewPassword: newPassword,
         oldPassword: oldPassword,
@@ -61,10 +70,14 @@ export async function updatePassword(oldPassword: string, newPassword: string): 
     return AJAXErrors.NoError;
 }
 
-export async function uploadAvatar(avatarFile: any): Promise<{ code: AJAXErrors, url?: string }> {
+export async function uploadAvatar(
+    avatarFile: any,
+): Promise<{ code: AJAXErrors; url?: string }> {
     const form = new FormData();
     form.append("file", avatarFile);
-    const response = await ajax.post("users/upload-avatar", form, { type: AJAXRequestContentType.FORM });
+    const response = await ajax.post("users/upload-avatar", form, {
+        type: AJAXRequestContentType.FORM,
+    });
 
     if (response.error) {
         return { code: AJAXErrors.ServerError };
