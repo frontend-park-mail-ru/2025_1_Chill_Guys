@@ -24,6 +24,14 @@ export interface ProductRequest {
     };
 }
 
+export interface Promocode {
+    id: string;
+    code: string;
+    percent: number;
+    startDate: Date;
+    endDate: Date;
+}
+
 export async function getUserRequests(
     offset: number,
 ): Promise<{ code: AJAXErrors; requests?: UserRequest[] }> {
@@ -127,7 +135,7 @@ export async function sendProductRequestAnswer(
     });
 
     if (response.error) {
-        return AJAXErrors.NoError;
+        return AJAXErrors.ServerError;
     }
 
     if (response.result.status == 401) {
@@ -143,4 +151,61 @@ export async function sendProductRequestAnswer(
     }
 
     return AJAXErrors.NoError;
+}
+
+export async function createPromocode(name: string, percent: any, start: Date, end: Date): Promise<AJAXErrors> {
+    const response = await ajax.post("promo/", {
+        "code": name,
+        "percent": parseInt(percent),
+        "start_date": start.toISOString(),
+        "end_date": end.toISOString()
+    });
+
+    if (response.error) {
+        return AJAXErrors.ServerError;
+    }
+
+    if (response.result.status == 401) {
+        return AJAXErrors.Unauthorized;
+    }
+
+    if (response.result.status == 403) {
+        return AJAXErrors.PermissionsDenied;
+    }
+
+    if (!response.result.ok) {
+        return AJAXErrors.NoError;
+    }
+
+    return AJAXErrors.NoError;
+}
+
+export async function getPromocodes(offset: number): Promise<{ code: AJAXErrors, data?: Promocode[] }> {
+    const response = await ajax.get("promo/" + offset);
+
+    if (response.error) {
+        return { code: AJAXErrors.ServerError }
+    }
+
+    if (response.result.status == 401) {
+        return { code: AJAXErrors.Unauthorized };
+    }
+
+    if (response.result.status == 403) {
+        return { code: AJAXErrors.PermissionsDenied };
+    }
+
+    if (!response.result.ok) {
+        return { code: AJAXErrors.NoError };
+    }
+
+    const rawData = await response.result.json();
+    const promocodes: Promocode[] = rawData.promos.map((promo) => ({
+        id: promo.id,
+        code: promo.code,
+        percent: promo.percent,
+        startDate: promo.start_date,
+        endDate: promo.end_date,
+    }));
+    return { code: AJAXErrors.NoError, data: promocodes };
 }

@@ -1,6 +1,11 @@
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
 import path, { dirname } from "path";
+import proxy from "express-http-proxy";
+import TerserPlugin from "terser-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import ImageMinimizerPlugin from "image-minimizer-webpack-plugin";
 
 const __dirname = dirname("./");
 
@@ -21,7 +26,16 @@ export default {
                 { from: "./public/icons", to: "./icons" },
             ],
         }),
+        new MiniCssExtractPlugin(),
     ],
+
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin(),
+            new CssMinimizerPlugin(),
+        ],
+    },
 
     output: {
         path: path.resolve(__dirname, './build'),
@@ -60,7 +74,10 @@ export default {
             },
             {
                 test: /\.(s(a|c)ss)$/,
-                use: ['css-loader', 'sass-loader']
+                use: [
+                    { loader: 'css-loader', options: { sourceMap: false } },
+                    { loader: 'sass-loader', options: { sourceMap: false } },
+                ]
             },
             {
                 test: /\.css$/,
@@ -83,28 +100,50 @@ export default {
         extensions: ['.tsx', '.jsx', '.ts', '.js'],
     },
 
-
-
     devServer: {
         static: {
             directory: path.join(__dirname, 'public'),
             serveIndex: true,
         },
-        proxy: [
-            {
-                context: ['/api'],
-                target: 'http://localhost:8080',
-            }
-        ],
         setupMiddlewares: (middlewares, devServer) => {
             middlewares.unshift({
-                name: "p",
+                name: "default-image",
                 path: '/media/product-default',
                 middleware: (req, res) => {
                     res.sendFile("./src/shared/images/cover.jpeg", {
                         root: path.join(__dirname)
                     });
                 },
+            });
+            middlewares.unshift({
+                name: "ad",
+                path: '/ad/',
+                middleware: proxy("https://re-target.ru", {
+                    proxyReqPathResolver: (req) => {
+                        return "https://re-target.ru/api/v1" + req.url;
+                    },
+                }),
+            });
+            middlewares.unshift({
+                name: "api",
+                path: '/api/',
+                middleware: proxy("http://localhost:8080", {
+                    proxyReqPathResolver: (req) => {
+                        return "http://localhost:8080/api" + req.url;
+                    },
+                }),
+            });
+            middlewares.unshift({
+                name: "ad-api",
+                path: '/api/',
+                middleware: proxy("https://re-target.ru", {
+                    filter: (req) => {
+                        return req.headers.referer.includes("/ad/");
+                    },
+                    proxyReqPathResolver: (req) => {
+                        return "https://re-target.ru/api" + req.url;
+                    },
+                }),
             });
             return middlewares;
         },

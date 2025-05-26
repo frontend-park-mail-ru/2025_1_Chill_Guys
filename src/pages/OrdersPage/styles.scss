@@ -67,6 +67,10 @@
                                 color: white;
                                 border-radius: 10px;
                                 margin-right: 8px;
+
+                                &.placed {
+                                    background-color: orange;
+                                }
                             }
                         }
                     }
@@ -78,6 +82,7 @@
                         border-radius: 10px;
 
                         &__img {
+                            cursor: pointer;
                             width: 100px;
                             height: 100px;
                             object-fit: contain;

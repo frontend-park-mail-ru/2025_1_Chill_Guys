@@ -2,6 +2,10 @@ import Tarakan from "bazaar-tarakan";
 import "./styles.scss";
 
 class AdBanner extends Tarakan.Component {
+    state = {
+        link: null,
+    }
+
     renderFinished(container: HTMLDivElement) {
         new ResizeObserver(() => {
             const iframe: HTMLIFrameElement =
@@ -9,11 +13,18 @@ class AdBanner extends Tarakan.Component {
             iframe.style.scale = `${container.clientWidth / 300}`;
             iframe.style.marginBottom = `${container.clientWidth - 300}px`;
         }).observe(container);
+
+        const iframe: HTMLIFrameElement =
+            container.firstChild as HTMLIFrameElement;
+        iframe.addEventListener("load", () => {
+            const link: any = iframe.contentWindow.document.querySelectorAll("a[href]").item(0);
+            this.state.link = link;
+        });
     }
 
     render(props) {
         return (
-            <div className="ad">
+            <div className="ad" onClick={() => window.open(this.state.link)}>
                 <iframe src={props.url} width="300px" height="300px" />
                 <div className="ad__text">Реклама</div>
             </div>

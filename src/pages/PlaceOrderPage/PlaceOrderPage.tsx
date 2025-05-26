@@ -1,4 +1,4 @@
-import Tarakan from "bazaar-tarakan";
+import Tarakan, { Reference } from "bazaar-tarakan";
 import Button from "../../components/Button/Button";
 
 import "./styles.scss";
@@ -9,6 +9,8 @@ import PaymentType from "../../components/PaymentType/PaymentType";
 
 import spbIcon from "../../shared/images/cbp-ico.svg";
 import moneyIcon from "../../shared/images/money-ico.svg";
+import loadingIcon from "../../shared/images/loading-ico.svg";
+
 import AddressCard from "../../components/AddressCard/AddressCard";
 import AddressModal from "../../components/AddressModal/AddressModal";
 
@@ -16,6 +18,9 @@ import { AJAXErrors } from "../../api/errors";
 import { calculateOrderParams, sendOrder } from "../../api/order";
 import { getUserAddresses } from "../../api/address";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import TextField from "../../components/TextField/TextField";
+
+import { checkPromocode } from "../../api/promocode";
 
 class PlaceOrderPage extends Tarakan.Component {
     state = {
@@ -25,6 +30,11 @@ class PlaceOrderPage extends Tarakan.Component {
         addAddressModalOpened: false,
         addresses: [],
         successMessageOpened: false,
+
+        promocode: "",
+        promocodePercent: null,
+        promocodeTextField: new Reference(),
+        promocodeSuccessStatus: 0,
     };
 
     async fetchOrder() {
@@ -55,13 +65,41 @@ class PlaceOrderPage extends Tarakan.Component {
         const code = await sendOrder({
             payType: "money",
             address: this.state.activeAddress,
+            promocode: this.state.promocode,
         });
 
         if (code === AJAXErrors.NoError) {
             this.setState({
                 successMessageOpened: true,
             });
+            this.app.store.user.sendAction("getNofitications");
         }
+    }
+
+    async handleCheckPromocode() {
+        this.state.promocodeTextField.target.changeStatus("default");
+        this.setState({ promocodeSuccessStatus: 1 });
+        const { code, data } = await checkPromocode(this.state.promocode);
+        if (code === AJAXErrors.NoError) {
+            if (data.valid) {
+                this.state.promocodeTextField.target.changeStatus("success");
+                this.setState({
+                    promocodeSuccessStatus: 3,
+                    promocodePercent: data.percent,
+                });
+            } else {
+                this.state.promocodeTextField.target.changeStatus("invalid");
+                this.setState({
+                    promocodeSuccessStatus: 2,
+                    promocodePercent: null,
+                });
+            }
+        }
+    }
+
+    async handleChangePromocode(newPromocode) {
+        this.state.promocodeTextField.target.changeStatus("default");
+        this.setState({ promocodeSuccessStatus: 0, promocode: newPromocode });
     }
 
     init() {
@@ -90,6 +128,27 @@ class PlaceOrderPage extends Tarakan.Component {
                                     name="СПБ"
                                     disabled={true}
                                 />
+                            </div>
+                            <div className="content__settings__promocode">
+                                <h2>Промокод</h2>
+                                <div className="content__settings__promocode__value">
+                                    <TextField
+                                        ref={this.state.promocodeTextField}
+                                        title="Промокод"
+                                        onChange={(v) => this.handleChangePromocode(v.target.value)}
+                                    />
+                                    <Button
+                                        title="Проверить"
+                                        disabled={this.state.promocodeSuccessStatus % 2 !== 0 || this.state.promocode == ""}
+                                        onClick={() => this.handleCheckPromocode()}
+                                    />
+                                    {this.state.promocodeSuccessStatus === 1 &&
+                                        <img className="content__settings__promocode__value__loading" src={loadingIcon} />
+                                    }
+                                </div>
+                                {this.state.promocodeSuccessStatus === 2 &&
+                                    <div style="color: red">Промокод не найден или недействителен</div>
+                                }
                             </div>
                             <div className="content__settings__address-title">
                                 <h2>Адрес доставки</h2>
@@ -156,23 +215,29 @@ class PlaceOrderPage extends Tarakan.Component {
                                 disabled={this.state.activeAddress === ""}
                                 onClick={() => this.handlePlaceOrder()}
                             />
-                            <div className="content__total__discount">
+                            {this.state.total != this.state.discount && <div className="content__total__discount">
                                 <span>Скидка:</span>
                                 <span className="content__total__discount_cost">
                                     {this.state.total - this.state.discount} ₽
                                 </span>
-                            </div>
+                            </div>}
+                            {this.state.promocodePercent && <div className="content__total__promocode">
+                                <span>Промокод:</span>
+                                <span className="content__total__promocode_cost">
+                                    -{this.state.promocodePercent} %
+                                </span>
+                            </div>}
                             <div className="content__total__sum-cost">
                                 <span>Итог:</span>
                                 <span className="content__total__sum-cost_cost">
-                                    {this.state.discount} ₽
+                                    {parseInt(this.state.discount * (100 - (this.state.promocodePercent ?? 0)) / 100 + "")} ₽
                                 </span>
                             </div>
                         </div>
                     </div>
-                </main>
+                </main >
                 <Footer />
-            </div>
+            </div >
         );
     }
 }

@@ -5,7 +5,9 @@ import Footer from "../../components/Footer/Footer";
 import "./styles.scss";
 import UserRequestModal from "../../components/UserRequestModal/UserRequestModal";
 import {
+    createPromocode,
     getProductsRequests,
+    getPromocodes,
     getUserRequests,
     ProductRequest,
     sendProductRequestAnswer,
@@ -16,6 +18,8 @@ import { AJAXErrors } from "../../api/errors";
 import InfinityList from "../../components/InfinityList/InfinityList";
 import ProductRequestModal from "../../components/ProductRequestModal/ProductRequestModal";
 import { getProduct } from "../../api/product";
+import Button from "../../components/Button/Button";
+import PromocodeModal from "../../components/PromocodeModal/PromocodeModal";
 
 export function convertMoney(rawData: string | number) {
     const data = rawData.toString();
@@ -44,6 +48,10 @@ class AdminPage extends Tarakan.Component {
         selectedProduct: null,
 
         fetchDone: false,
+
+        createPromocode: false,
+        promocodes: null,
+        promocodesFetch: false,
     };
 
     fetchNextRequests() {
@@ -52,6 +60,9 @@ class AdminPage extends Tarakan.Component {
         }
         if (this.state.tabOpened === "products") {
             this.fetchUserRequests();
+        }
+        if (this.state.tabOpened === "promocode") {
+            this.fetchPromocodes(true);
         }
     }
 
@@ -125,6 +136,9 @@ class AdminPage extends Tarakan.Component {
         if (newTab === "products" && !this.state.products) {
             this.fetchProductsRequests();
         }
+        if (newTab === "promocode" && !this.state.promocodes) {
+            this.fetchPromocodes(true);
+        }
         this.setState({ tabOpened: newTab, fetchDone: false });
     }
 
@@ -133,6 +147,24 @@ class AdminPage extends Tarakan.Component {
         if (code === AJAXErrors.NoError) {
             this.setState({ selectedProduct: product });
             this.state.productInfoModalRef.target.handleOpen();
+        }
+    }
+
+    async handleCreatePromocode(form) {
+        const code = await createPromocode(form.name, form.percent, form.start, form.end);
+        if (code === AJAXErrors.NoError) {
+            this.setState({ createPromocode: false });
+            this.fetchPromocodes(true);
+        }
+    }
+
+    async fetchPromocodes(start: boolean = false) {
+        if (this.state.promocodesFetch) return;
+        this.state.promocodesFetch = true;
+        const { code, data } = await getPromocodes(start ? 0 : this.state.promocodes.length);
+        console.log(data);
+        if (code === AJAXErrors.NoError) {
+            this.setState({ promocodes: start ? data : [...this.state.promocodes ?? [], ...data], promocodesFetch: false });
         }
     }
 
@@ -168,7 +200,7 @@ class AdminPage extends Tarakan.Component {
                             </thead>
                             <tbody>
                                 {this.state.sellers &&
-                                this.state.sellers.length ? (
+                                    this.state.sellers.length ? (
                                     this.state.sellers.map(
                                         (request: UserRequest) => (
                                             <tr>
@@ -278,6 +310,40 @@ class AdminPage extends Tarakan.Component {
                             onSuccess={() => this.sendProductAnswer(true)}
                             onDenied={() => this.sendProductAnswer(false)}
                         />
+                    </div>
+                    <div
+                        className="admin-page__content__promocode"
+                        hidden={this.state.tabOpened !== "promocode"}
+                    >
+                        <h1 className="admin-page__content__promocode__h">
+                            Промокоды
+                            <Button title="Создать промокод" onClick={() => this.setState({ createPromocode: true })} />
+                        </h1>
+                        <div className="admin-page__content__promocode__promocodes">
+                            {(this.state.promocodes ?? []).map((promocode, i) =>
+                                <div className="admin-page__content__promocode__promocodes__item">
+                                    <div className="admin-page__content__promocode__promocodes__item__percent">
+                                        {promocode.percent} %
+                                    </div>
+                                    <div className="admin-page__content__promocode__promocodes__item__code">
+                                        {promocode.code}
+                                    </div>
+                                    <div className="admin-page__content__promocode__promocodes__item__date">
+                                        <span className="t">Действителен с</span>
+                                        <span className="v">{new Date(promocode.startDate).toLocaleString()}</span>
+                                        <span className="t">по</span>
+                                        <span className="v">{new Date(promocode.endDate).toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        <InfinityList onShow={() => this.fetchPromocodes()} />
+                        {this.state.createPromocode && <PromocodeModal
+                            onFinish={(form) => {
+                                this.handleCreatePromocode(form);
+                            }}
+                            onClose={() => this.setState({ createPromocode: false })}
+                        />}
                     </div>
                 </main>
                 <Footer />
