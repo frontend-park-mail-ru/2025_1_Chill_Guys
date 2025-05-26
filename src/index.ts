@@ -21,6 +21,8 @@ import UserStore from "./stores/UserStore";
 
 import "./styles/style.scss";
 import SellerPage from "./pages/SellerPage/SellerPage";
+import NofiticationsPage from "./pages/NotificationsPage/NotificationsPage";
+import WarehousePage from "./pages/WarehousePage/WarehousePage";
 
 const root = document.getElementById("root");
 
@@ -39,8 +41,11 @@ const app = new Tarakan.Application({
     "/stats": StatisticsPage,
     "/seller-form": SellerFormPage,
     "/csat/<id>": SurveyPage,
+    "/notifications": NofiticationsPage,
+
     "/admin/<tab>": AdminPage,
     "/seller": SellerPage,
+    "/warehouse": WarehousePage,
 });
 
 // Регистрация хранилищ глобального состояния

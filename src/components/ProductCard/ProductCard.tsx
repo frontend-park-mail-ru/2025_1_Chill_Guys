@@ -93,104 +93,77 @@ class ProductCard extends Tarakan.Component {
         return (
             <article className={`product-card flex column`}>
                 <div
-                    className={`product-card__carousel-images`}
+                    className="product-card__body"
                     onClick={() => router.navigateTo(`/product/${props.id}`)}
                 >
-                    <div
-                        className={`product-card__carousel-images__active-image-wrapper`}
-                    >
-                        <img
-                            className={`product-card__carousel-images__active-image-wrapper__card-image`}
-                            alt={`${props.mainImageAlt}`}
-                            src={`${props.mainImageSrc}`}
-                        />
-                    </div>
-
-                    <div
-                        className={`product-card__carousel-images__controls`}
-                    ></div>
-                </div>
-
-                <div className={`product-card__prices full-wide`}>
-                    <div
-                        className={`product-card__prices__sell-price${props.discountPrice != 0 ? " discount" : ""}`}
-                    >
-                        {props.discountPrice || props.price} ₽
-                    </div>
-                    {props.discountPrice != 0 && (
-                        <div className={`product-card__prices__old-price`}>
-                            {props.price} ₽
-                        </div>
-                    )}
-                    {props.discountPrice != 0 && (
+                    <div className={`product-card__carousel-images`}>
                         <div
-                            className={`product-card__prices__sale-percentage`}
+                            className={`product-card__carousel-images__active-image-wrapper`}
                         >
-                            {`${-parseInt(`${((props.price - props.discountPrice) / props.price) * 100}`)}`}
-                            %
+                            <img
+                                className={`product-card__carousel-images__active-image-wrapper__card-image`}
+                                alt={`${props.mainImageAlt}`}
+                                src={`${props.mainImageSrc}`}
+                            />
+                        </div>
+
+                        <div
+                            className={`product-card__carousel-images__controls`}
+                        ></div>
+                    </div>
+
+                    <div className={`product-card__prices full-wide`}>
+                        <div
+                            className={`product-card__prices__sell-price${props.discountPrice != 0 ? " discount" : ""}`}
+                        >
+                            {props.discountPrice || props.price} ₽
+                        </div>
+                        {props.discountPrice != 0 && (
+                            <div className={`product-card__prices__old-price`}>
+                                {props.price} ₽
+                            </div>
+                        )}
+                        {props.discountPrice != 0 && (
+                            <div
+                                className={`product-card__prices__sale-percentage`}
+                            >
+                                {`${-parseInt(`${((props.price - props.discountPrice) / props.price) * 100}`)}`}
+                                %
+                            </div>
+                        )}
+                    </div>
+
+                    {props.brand && (
+                        <div className={`product-card__brand full-wide`}>
+                            {props.brand}
                         </div>
                     )}
-                </div>
 
-                {props.brand && (
-                    <div className={`product-card__brand full-wide`}>
-                        {props.brand}
+                    <div className={`product-card__product-title full-wide`}>
+                        {props.title}
                     </div>
-                )}
 
-                <div className={`product-card__product-title full-wide`}>
-                    {props.title}
-                </div>
-
-                <div className={`product-card__reviews flex full-wide`}>
-                    <div className={`product-card__reviews__star-block flex`}>
-                        <img
-                            className={`product-card__reviews__star-block__star-text`}
-                            src={StarIcon}
-                        />
-                        <span>{parseFloat(props.rating).toFixed(2)}</span>
-                    </div>
-                    <div
-                        className={`product-card__reviews__star-block__count-block`}
-                    >
-                        {props.reviewsCount} отзывов
+                    <div className={`product-card__reviews flex full-wide`}>
+                        <div
+                            className={`product-card__reviews__star-block flex`}
+                        >
+                            <img
+                                className={`product-card__reviews__star-block__star-text`}
+                                src={StarIcon}
+                            />
+                            <span>{parseFloat(props.rating).toFixed(2)}</span>
+                        </div>
+                        <div
+                            className={`product-card__reviews__star-block__count-block`}
+                        >
+                            {props.reviewsCount} отзывов
+                        </div>
                     </div>
                 </div>
 
                 <div
                     className={`product-card__reviews__star-block__product-manip full-wide`}
                 >
-                    {/* <div className="product-page__main__card__details__action__buy">
-                    <Button
-                        disabled={this.props.quantity === 0}
-                        size="m"
-                        iconSrc={cartSubIcon}
-                        className="no-text"
-                        onClick={() => this.handleRemoveProduct()}
-                    />
-                    <Button
-                        disabled={this.props.remainQuantity ?? 0 < 0}
-                        size="m"
-                        title={
-                            this.props.quantity === 0
-                                ? "Добавить в корзину"
-                                : `Добавлено ${this.props.quantity} шт`
-                        }
-                        className={
-                            this.props.quantity !== 0
-                                ? "product-page__main__card__details__action__buy__in-cart"
-                                : "product-page__main__card__details__action__buy"
-                        }
-                        onClick={() => this.handleAddProduct()}
-                    />
-                    <Button
-                        disabled={this.props.remainQuantity === 0 || this.props.remainQuantity < 0}
-                        size="m"
-                        iconSrc={cartAddIcon}
-                        className="no-text"
-                        onClick={() => this.handleAddProduct()}
-                    />
-                </div> */}
                     <Button
                         size={`${BUTTON_SIZE.L}`}
                         variant={`${BUTTON_VARIANT.PRIMARY}`}

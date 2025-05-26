@@ -13,7 +13,15 @@
 .product-card {
   align-items: center;
   justify-content: space-between;
-  row-gap: 8px;
+  cursor: pointer;
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
 
   &__product-manip {
     &__in-cart-btn {

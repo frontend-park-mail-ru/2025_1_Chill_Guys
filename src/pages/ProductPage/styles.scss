@@ -161,6 +161,17 @@
             }
         }
 
+        &__recommendations {
+            display: flex;
+            overflow-x: auto;
+            column-gap: 16px;
+
+            &>* {
+                min-width: max(250px, 20%);
+                max-width: max(250px, 20%);
+            }
+        }
+
         &__details {
             margin-top: 12px;
         }

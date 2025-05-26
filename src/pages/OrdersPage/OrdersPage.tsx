@@ -39,8 +39,19 @@ class OrdersPage extends Tarakan.Component {
                                     <div className="orders-page__main__content__list__item__title">
                                         <h2>Заказ #{index + 1}</h2>
                                         <span className="orders-page__main__content__list__item__title__statuses">
-                                            <span className="orders-page__main__content__list__item__title__statuses__status">
-                                                Ожидает подтверждение
+                                            <span
+                                                className={
+                                                    "orders-page__main__content__list__item__title__statuses__status " +
+                                                    item.status
+                                                }
+                                            >
+                                                {
+                                                    {
+                                                        placed: "Оформлен",
+                                                        in_transit:
+                                                            "В доставке",
+                                                    }[item.status]
+                                                }
                                             </span>
                                             <span className="orders-page__main__content__list__item__title__statuses__date">
                                                 Привезём через 5 рабочих дней
@@ -48,10 +59,16 @@ class OrdersPage extends Tarakan.Component {
                                         </span>
                                     </div>
                                     <div className="orders-page__main__content__list__item__images">
-                                        {item.products.map((image: string) => (
+                                        {item.products.map((product: any) => (
                                             <img
                                                 className="orders-page__main__content__list__item__images__img"
-                                                src={image}
+                                                src={product.img}
+                                                onClick={() =>
+                                                    window.open(
+                                                        "/product/" +
+                                                            product.id,
+                                                    )
+                                                }
                                             />
                                         ))}
                                     </div>

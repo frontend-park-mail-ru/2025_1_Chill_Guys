@@ -10,6 +10,7 @@ import { AJAXErrors } from "../../api/errors";
 import Alert from "../../components/Alert/Alert";
 import InfinityList from "../../components/InfinityList/InfinityList";
 import AdBanner from "../../components/AdBanner/AdBanner";
+import { AD_LINK } from "../../settings";
 
 class IndexPage extends Tarakan.Component {
     state = {
@@ -29,7 +30,7 @@ class IndexPage extends Tarakan.Component {
             ...newProducts.slice(0, i),
             {
                 ad: true,
-                url: "https://bazaar-techpark.ru/ad/banner/uniq_link/60",
+                url: AD_LINK,
             },
             ...newProducts.slice(i),
         ];

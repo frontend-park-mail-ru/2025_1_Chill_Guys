@@ -54,11 +54,18 @@ class Button extends Tarakan.Component {
                           },
                       }
                     : props.iconSrc && (
-                          <img
-                              alt={`${props.iconAlt}`}
-                              src={`${props.iconSrc}`}
-                              className={`icon icon_${size}_size`}
-                          />
+                          <div style="position: relative; line-height: 1">
+                              <img
+                                  alt={`${props.iconAlt}`}
+                                  src={`${props.iconSrc}`}
+                                  className={`icon icon_${size}_size`}
+                              />
+                              {props.badgeTitle && (
+                                  <span className="badge">
+                                      {props.badgeTitle}
+                                  </span>
+                              )}
+                          </div>
                       )}
                 {props.title && <span>{props.title}</span>}
             </button>
