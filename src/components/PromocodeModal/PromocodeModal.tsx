@@ -17,9 +17,9 @@ class PromocodeModal extends Tarakan.Component {
             name: "",
             percent: "",
             startDate: "",
-            endDate: ""
+            endDate: "",
         },
-    }
+    };
 
     handleUpdateForm(name, value) {
         this.setState({
@@ -67,9 +67,7 @@ class PromocodeModal extends Tarakan.Component {
                                 this.handleUpdateForm("percent", value)
                             }
                         />
-                        <div style="font-weight: bold">
-                            Срок действия:
-                        </div>
+                        <div style="font-weight: bold">Срок действия:</div>
                         <TextField
                             type="datetime-local"
                             className="address-modal__modal-content__description__name"
@@ -93,17 +91,33 @@ class PromocodeModal extends Tarakan.Component {
                         <Button
                             className="promocode-modal__modal__actions__save"
                             title="Добавить промокод"
-                            disabled={!(this.state.form.name && this.state.form.percent && this.state.form.startDate && this.state.form.endDate)}
+                            disabled={
+                                !(
+                                    this.state.form.name &&
+                                    this.state.form.percent &&
+                                    this.state.form.startDate &&
+                                    this.state.form.endDate
+                                )
+                            }
                             onClick={() => {
-                                if (this.state.form.name && this.state.form.percent && this.state.form.startDate && this.state.form.endDate) {
-                                    const dt1 = new Date(this.state.form.startDate);
-                                    const dt2 = new Date(this.state.form.endDate);
+                                if (
+                                    this.state.form.name &&
+                                    this.state.form.percent &&
+                                    this.state.form.startDate &&
+                                    this.state.form.endDate
+                                ) {
+                                    const dt1 = new Date(
+                                        this.state.form.startDate,
+                                    );
+                                    const dt2 = new Date(
+                                        this.state.form.endDate,
+                                    );
                                     if (dt1.getTime() < dt2.getTime()) {
                                         props.onFinish({
                                             name: this.state.form.name,
                                             percent: this.state.form.percent,
                                             start: dt1,
-                                            end: dt2
+                                            end: dt2,
                                         });
                                     }
                                 }

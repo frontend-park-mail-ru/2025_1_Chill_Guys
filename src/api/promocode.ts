@@ -6,13 +6,15 @@ export interface PromocodeCheck {
     percent?: number;
 }
 
-export async function checkPromocode(code: string): Promise<{ code: AJAXErrors, data?: PromocodeCheck }> {
+export async function checkPromocode(
+    code: string,
+): Promise<{ code: AJAXErrors; data?: PromocodeCheck }> {
     const response = await ajax.post("promo/check", {
         code: code,
     });
 
     if (response.error) {
-        return { code: AJAXErrors.ServerError }
+        return { code: AJAXErrors.ServerError };
     }
 
     if (response.result.status == 401) {
@@ -31,6 +33,6 @@ export async function checkPromocode(code: string): Promise<{ code: AJAXErrors, 
     const promocodeCheck: PromocodeCheck = {
         valid: rawData.is_valid,
         percent: rawData.percent,
-    }
+    };
     return { code: AJAXErrors.NoError, data: promocodeCheck };
 }

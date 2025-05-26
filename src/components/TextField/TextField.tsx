@@ -43,7 +43,6 @@ class TextField extends Tarakan.Component {
         } else {
             if (this.props.onEnd) this.props.onEnd(true, this.state.value);
         }
-
     }
 
     handleChange(event: any) {
@@ -85,7 +84,7 @@ class TextField extends Tarakan.Component {
                 {title && <h3 className="textField_title__title">{title}</h3>}
                 <div className="textField">
                     <input
-                        className={`textField__input textField__input_${(props.validType !== undefined || this.state.manuallyChanged) ? this.state.status : "default"}`}
+                        className={`textField__input textField__input_${props.validType !== undefined || this.state.manuallyChanged ? this.state.status : "default"}`}
                         type={type}
                         placeholder={placeholder}
                         value={defaultValue}
@@ -99,24 +98,25 @@ class TextField extends Tarakan.Component {
                         min={props.min}
                         max={props.max}
                     />
-                    {((props.validType !== undefined || this.state.manuallyChanged)
+                    {(props.validType !== undefined ||
+                    this.state.manuallyChanged
                         ? this.state.status
                         : "default") !== "default" && (
-                            <img
-                                className="textField__mark"
-                                src={
-                                    this.state.status === "success"
-                                        ? successIcon
-                                        : invalidIcon
-                                }
-                            />
-                        )}
+                        <img
+                            className="textField__mark"
+                            src={
+                                this.state.status === "success"
+                                    ? successIcon
+                                    : invalidIcon
+                            }
+                        />
+                    )}
                 </div>
             </div>
         ) : (
             <div className={`textField ${otherClasses}`.trim()}>
                 <input
-                    className={`textField__input textField__input_${(props.validType !== undefined || this.state.manuallyChanged) ? this.state.status : "default"}`}
+                    className={`textField__input textField__input_${props.validType !== undefined || this.state.manuallyChanged ? this.state.status : "default"}`}
                     type={type}
                     placeholder={placeholder}
                     value={defaultValue}
@@ -130,18 +130,18 @@ class TextField extends Tarakan.Component {
                     min={props.min}
                     max={props.max}
                 />
-                {((props.validType !== undefined || this.state.manuallyChanged)
+                {(props.validType !== undefined || this.state.manuallyChanged
                     ? this.state.status
                     : "default") !== "default" && (
-                        <img
-                            className="textField__mark"
-                            src={
-                                this.state.status === "success"
-                                    ? successIcon
-                                    : invalidIcon
-                            }
-                        />
-                    )}
+                    <img
+                        className="textField__mark"
+                        src={
+                            this.state.status === "success"
+                                ? successIcon
+                                : invalidIcon
+                        }
+                    />
+                )}
             </div>
         );
     }

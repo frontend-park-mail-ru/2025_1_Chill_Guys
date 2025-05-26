@@ -135,20 +135,36 @@ class PlaceOrderPage extends Tarakan.Component {
                                     <TextField
                                         ref={this.state.promocodeTextField}
                                         title="Промокод"
-                                        onChange={(v) => this.handleChangePromocode(v.target.value)}
+                                        onChange={(v) =>
+                                            this.handleChangePromocode(
+                                                v.target.value,
+                                            )
+                                        }
                                     />
                                     <Button
                                         title="Проверить"
-                                        disabled={this.state.promocodeSuccessStatus % 2 !== 0 || this.state.promocode == ""}
-                                        onClick={() => this.handleCheckPromocode()}
+                                        disabled={
+                                            this.state.promocodeSuccessStatus %
+                                                2 !==
+                                                0 || this.state.promocode == ""
+                                        }
+                                        onClick={() =>
+                                            this.handleCheckPromocode()
+                                        }
                                     />
-                                    {this.state.promocodeSuccessStatus === 1 &&
-                                        <img className="content__settings__promocode__value__loading" src={loadingIcon} />
-                                    }
+                                    {this.state.promocodeSuccessStatus ===
+                                        1 && (
+                                        <img
+                                            className="content__settings__promocode__value__loading"
+                                            src={loadingIcon}
+                                        />
+                                    )}
                                 </div>
-                                {this.state.promocodeSuccessStatus === 2 &&
-                                    <div style="color: red">Промокод не найден или недействителен</div>
-                                }
+                                {this.state.promocodeSuccessStatus === 2 && (
+                                    <div style="color: red">
+                                        Промокод не найден или недействителен
+                                    </div>
+                                )}
                             </div>
                             <div className="content__settings__address-title">
                                 <h2>Адрес доставки</h2>
@@ -215,29 +231,42 @@ class PlaceOrderPage extends Tarakan.Component {
                                 disabled={this.state.activeAddress === ""}
                                 onClick={() => this.handlePlaceOrder()}
                             />
-                            {this.state.total != this.state.discount && <div className="content__total__discount">
-                                <span>Скидка:</span>
-                                <span className="content__total__discount_cost">
-                                    {this.state.total - this.state.discount} ₽
-                                </span>
-                            </div>}
-                            {this.state.promocodePercent && <div className="content__total__promocode">
-                                <span>Промокод:</span>
-                                <span className="content__total__promocode_cost">
-                                    -{this.state.promocodePercent} %
-                                </span>
-                            </div>}
+                            {this.state.total != this.state.discount && (
+                                <div className="content__total__discount">
+                                    <span>Скидка:</span>
+                                    <span className="content__total__discount_cost">
+                                        {this.state.total - this.state.discount}{" "}
+                                        ₽
+                                    </span>
+                                </div>
+                            )}
+                            {this.state.promocodePercent && (
+                                <div className="content__total__promocode">
+                                    <span>Промокод:</span>
+                                    <span className="content__total__promocode_cost">
+                                        -{this.state.promocodePercent} %
+                                    </span>
+                                </div>
+                            )}
                             <div className="content__total__sum-cost">
                                 <span>Итог:</span>
                                 <span className="content__total__sum-cost_cost">
-                                    {parseInt(this.state.discount * (100 - (this.state.promocodePercent ?? 0)) / 100 + "")} ₽
+                                    {parseInt(
+                                        (this.state.discount *
+                                            (100 -
+                                                (this.state.promocodePercent ??
+                                                    0))) /
+                                            100 +
+                                            "",
+                                    )}{" "}
+                                    ₽
                                 </span>
                             </div>
                         </div>
                     </div>
-                </main >
+                </main>
                 <Footer />
-            </div >
+            </div>
         );
     }
 }

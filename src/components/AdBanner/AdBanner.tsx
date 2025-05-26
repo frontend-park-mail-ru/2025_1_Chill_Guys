@@ -4,7 +4,7 @@ import "./styles.scss";
 class AdBanner extends Tarakan.Component {
     state = {
         link: null,
-    }
+    };
 
     renderFinished(container: HTMLDivElement) {
         new ResizeObserver(() => {
@@ -17,7 +17,9 @@ class AdBanner extends Tarakan.Component {
         const iframe: HTMLIFrameElement =
             container.firstChild as HTMLIFrameElement;
         iframe.addEventListener("load", () => {
-            const link: any = iframe.contentWindow.document.querySelectorAll("a[href]").item(0);
+            const link: any = iframe.contentWindow.document
+                .querySelectorAll("a[href]")
+                .item(0);
             this.state.link = link;
         });
     }

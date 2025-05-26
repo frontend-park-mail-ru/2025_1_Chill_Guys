@@ -153,12 +153,17 @@ export async function sendProductRequestAnswer(
     return AJAXErrors.NoError;
 }
 
-export async function createPromocode(name: string, percent: any, start: Date, end: Date): Promise<AJAXErrors> {
+export async function createPromocode(
+    name: string,
+    percent: any,
+    start: Date,
+    end: Date,
+): Promise<AJAXErrors> {
     const response = await ajax.post("promo/", {
-        "code": name,
-        "percent": parseInt(percent),
-        "start_date": start.toISOString(),
-        "end_date": end.toISOString()
+        code: name,
+        percent: parseInt(percent),
+        start_date: start.toISOString(),
+        end_date: end.toISOString(),
     });
 
     if (response.error) {
@@ -180,11 +185,13 @@ export async function createPromocode(name: string, percent: any, start: Date, e
     return AJAXErrors.NoError;
 }
 
-export async function getPromocodes(offset: number): Promise<{ code: AJAXErrors, data?: Promocode[] }> {
+export async function getPromocodes(
+    offset: number,
+): Promise<{ code: AJAXErrors; data?: Promocode[] }> {
     const response = await ajax.get("promo/" + offset);
 
     if (response.error) {
-        return { code: AJAXErrors.ServerError }
+        return { code: AJAXErrors.ServerError };
     }
 
     if (response.result.status == 401) {

@@ -2,7 +2,9 @@ import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 import { Product } from "./product";
 
-export async function getRecommendations(product: number): Promise<{ code: AJAXErrors; products?: Product[] }> {
+export async function getRecommendations(
+    product: number,
+): Promise<{ code: AJAXErrors; products?: Product[] }> {
     const response = await ajax.get("recommendation/" + product);
 
     if (response.error || !response.result.ok) {

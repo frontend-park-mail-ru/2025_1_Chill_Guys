@@ -92,10 +92,11 @@ class ProductCard extends Tarakan.Component {
     render(props: any, router: any) {
         return (
             <article className={`product-card flex column`}>
-                <div className="product-card__body" onClick={() => router.navigateTo(`/product/${props.id}`)}>
-                    <div
-                        className={`product-card__carousel-images`}
-                    >
+                <div
+                    className="product-card__body"
+                    onClick={() => router.navigateTo(`/product/${props.id}`)}
+                >
+                    <div className={`product-card__carousel-images`}>
                         <div
                             className={`product-card__carousel-images__active-image-wrapper`}
                         >
@@ -143,7 +144,9 @@ class ProductCard extends Tarakan.Component {
                     </div>
 
                     <div className={`product-card__reviews flex full-wide`}>
-                        <div className={`product-card__reviews__star-block flex`}>
+                        <div
+                            className={`product-card__reviews__star-block flex`}
+                        >
                             <img
                                 className={`product-card__reviews__star-block__star-text`}
                                 src={StarIcon}

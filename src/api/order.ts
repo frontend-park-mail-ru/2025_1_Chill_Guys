@@ -106,7 +106,7 @@ export async function getAllOrders(): Promise<{
         price: order.totalDiscountPrice,
         products: order.products.map((product: any) => ({
             id: product.product_id,
-            img: product.ProductImageURL
+            img: product.ProductImageURL,
         })),
         addressName: order.address.AddressString,
     }));
@@ -133,7 +133,7 @@ export async function sendOrder(
     const response = await ajax.post("orders", {
         addressId: parametres.address,
         items: order,
-        promoCode: parametres.promocode ?? undefined
+        promoCode: parametres.promocode ?? undefined,
     });
 
     if (response.error || !response.result.ok) {

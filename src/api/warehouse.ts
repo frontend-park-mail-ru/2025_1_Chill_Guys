@@ -1,7 +1,5 @@
-import ajax, { AJAXRequestContentType } from "bazaar-ajax";
+import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
-import { Product } from "./product";
-
 export interface WarehouseOrderProduct {
     id: string;
     name: string;
@@ -14,10 +12,13 @@ export interface WarehouseOrder {
     status: string;
     addressString: number;
     addressCoordinates: string;
-    products: WarehouseOrderProduct[]
+    products: WarehouseOrderProduct[];
 }
 
-export async function getWarehouseOrders(): Promise<{ code: AJAXErrors, data?: WarehouseOrder[] }> {
+export async function getWarehouseOrders(): Promise<{
+    code: AJAXErrors;
+    data?: WarehouseOrder[];
+}> {
     const response = await ajax.get("warehouse/get");
 
     if (response.error) {
@@ -43,14 +44,14 @@ export async function getWarehouseOrders(): Promise<{ code: AJAXErrors, data?: W
             name: product.product_name,
             imageUrl: product.ProductImageURL,
             quantity: product.ProductQuantity,
-        }))
+        })),
     }));
     return { code: AJAXErrors.NoError, data: orders };
 }
 
 export async function sendWarehouseOrder(id: string): Promise<AJAXErrors> {
     const response = await ajax.post("warehouse/update", {
-        orderID: id
+        orderID: id,
     });
 
     if (response.error) {

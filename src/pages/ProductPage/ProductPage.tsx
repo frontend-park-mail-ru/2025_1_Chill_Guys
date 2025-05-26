@@ -74,7 +74,7 @@ class ProductPage extends Tarakan.Component {
         if (code === AJAXErrors.NoError) {
             this.setState({
                 recommendations: products,
-            })
+            });
         }
     }
 
@@ -228,7 +228,7 @@ class ProductPage extends Tarakan.Component {
                                     >
                                         {convertMoney(
                                             this.state.product.discountPrice ||
-                                            this.state.product.price,
+                                                this.state.product.price,
                                         )}
                                     </span>
                                     {this.state.product.discountPrice !== 0 && (
@@ -270,13 +270,13 @@ class ProductPage extends Tarakan.Component {
                                             size="m"
                                             title={
                                                 this.state.product.quantity ===
-                                                    0
+                                                0
                                                     ? "Добавить в корзину"
                                                     : `Добавлено ${this.state.product.quantity} шт`
                                             }
                                             className={
                                                 this.state.product.quantity !==
-                                                    0
+                                                0
                                                     ? "product-page__main__card__details__action__buy__in-cart"
                                                     : "product-page__main__card__details__action__buy"
                                             }
@@ -448,7 +448,7 @@ class ProductPage extends Tarakan.Component {
                                                                 className="product-page__main__reviews__content__comment__info__review__rating__star"
                                                                 src={
                                                                     comment.rating >
-                                                                        I
+                                                                    I
                                                                         ? StarFilledIcon
                                                                         : StarIcon
                                                                 }
@@ -482,30 +482,30 @@ class ProductPage extends Tarakan.Component {
                             )
                         )}
                     </div>
-                    {this.state.recommendations.length > 0 && <h2>Возможно, Вам понравится</h2>}
+                    {this.state.recommendations.length > 0 && (
+                        <h2>Возможно, Вам понравится</h2>
+                    )}
                     <div className={`product-page__main__recommendations`}>
-                        {
-                            this.state.recommendations.map((item: any) =>
-                                <ProductCard
-                                    id={`${item.id}`}
-                                    inCart={item.isInCart}
-                                    price={`${item.price}`}
-                                    discountPrice={item.discountPrice}
-                                    title={`${item.name}`}
-                                    rating={`${item.rating}`}
-                                    reviewsCount={`${item.reviewsCount}`}
-                                    mainImageAlt={`Изображение товара ${item.name}`}
-                                    mainImageSrc={item.image}
-                                    onError={(err) => {
-                                        if (err === AJAXErrors.Unauthorized) {
-                                            this.setState({
-                                                showNotAuthAlert: true,
-                                            });
-                                        }
-                                    }}
-                                />
-                            )
-                        }
+                        {this.state.recommendations.map((item: any) => (
+                            <ProductCard
+                                id={`${item.id}`}
+                                inCart={item.isInCart}
+                                price={`${item.price}`}
+                                discountPrice={item.discountPrice}
+                                title={`${item.name}`}
+                                rating={`${item.rating}`}
+                                reviewsCount={`${item.reviewsCount}`}
+                                mainImageAlt={`Изображение товара ${item.name}`}
+                                mainImageSrc={item.image}
+                                onError={(err) => {
+                                    if (err === AJAXErrors.Unauthorized) {
+                                        this.setState({
+                                            showNotAuthAlert: true,
+                                        });
+                                    }
+                                }}
+                            />
+                        ))}
                     </div>
                 </main>
                 <Footer />

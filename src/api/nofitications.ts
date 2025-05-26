@@ -1,4 +1,4 @@
-import ajax, { AJAXRequestContentType } from "bazaar-ajax";
+import ajax from "bazaar-ajax";
 import { AJAXErrors } from "./errors";
 
 export interface Nofitication {
@@ -9,7 +9,10 @@ export interface Nofitication {
     updatedAt: string;
 }
 
-export async function getNofiticationsCount(): Promise<{ code: AJAXErrors; data?: number }> {
+export async function getNofiticationsCount(): Promise<{
+    code: AJAXErrors;
+    data?: number;
+}> {
     const response = await ajax.get("notification/count");
 
     if (response.error) {
@@ -28,7 +31,10 @@ export async function getNofiticationsCount(): Promise<{ code: AJAXErrors; data?
     return { code: AJAXErrors.NoError, data: rawData.unread_count };
 }
 
-export async function getNofitications(offset: number = 0): Promise<{ code: AJAXErrors; data?: { unread_count: number, nots: Nofitication[] } }> {
+export async function getNofitications(offset: number = 0): Promise<{
+    code: AJAXErrors;
+    data?: { unread_count: number; nots: Nofitication[] };
+}> {
     const response = await ajax.get("notification/" + offset);
 
     if (response.error) {
@@ -49,18 +55,20 @@ export async function getNofitications(offset: number = 0): Promise<{ code: AJAX
         title: notification.title,
         text: notification.text,
         isRead: notification.is_read,
-        updatedAt: notification.updated_at
+        updatedAt: notification.updated_at,
     }));
     return {
         code: AJAXErrors.NoError,
         data: {
             unread_count: rawData.unread_count,
-            nots: nots
-        }
+            nots: nots,
+        },
     };
 }
 
-export async function setVisibleNofitication(notificationId: string): Promise<AJAXErrors> {
+export async function setVisibleNofitication(
+    notificationId: string,
+): Promise<AJAXErrors> {
     const response = await ajax.patch("notification/" + notificationId, {});
 
     if (response.error) {

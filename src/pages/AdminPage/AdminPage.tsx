@@ -151,7 +151,12 @@ class AdminPage extends Tarakan.Component {
     }
 
     async handleCreatePromocode(form) {
-        const code = await createPromocode(form.name, form.percent, form.start, form.end);
+        const code = await createPromocode(
+            form.name,
+            form.percent,
+            form.start,
+            form.end,
+        );
         if (code === AJAXErrors.NoError) {
             this.setState({ createPromocode: false });
             this.fetchPromocodes(true);
@@ -161,10 +166,17 @@ class AdminPage extends Tarakan.Component {
     async fetchPromocodes(start: boolean = false) {
         if (this.state.promocodesFetch) return;
         this.state.promocodesFetch = true;
-        const { code, data } = await getPromocodes(start ? 0 : this.state.promocodes.length);
+        const { code, data } = await getPromocodes(
+            start ? 0 : this.state.promocodes.length,
+        );
         console.log(data);
         if (code === AJAXErrors.NoError) {
-            this.setState({ promocodes: start ? data : [...this.state.promocodes ?? [], ...data], promocodesFetch: false });
+            this.setState({
+                promocodes: start
+                    ? data
+                    : [...(this.state.promocodes ?? []), ...data],
+                promocodesFetch: false,
+            });
         }
     }
 
@@ -200,7 +212,7 @@ class AdminPage extends Tarakan.Component {
                             </thead>
                             <tbody>
                                 {this.state.sellers &&
-                                    this.state.sellers.length ? (
+                                this.state.sellers.length ? (
                                     this.state.sellers.map(
                                         (request: UserRequest) => (
                                             <tr>
@@ -317,10 +329,15 @@ class AdminPage extends Tarakan.Component {
                     >
                         <h1 className="admin-page__content__promocode__h">
                             Промокоды
-                            <Button title="Создать промокод" onClick={() => this.setState({ createPromocode: true })} />
+                            <Button
+                                title="Создать промокод"
+                                onClick={() =>
+                                    this.setState({ createPromocode: true })
+                                }
+                            />
                         </h1>
                         <div className="admin-page__content__promocode__promocodes">
-                            {(this.state.promocodes ?? []).map((promocode, i) =>
+                            {(this.state.promocodes ?? []).map((promocode) => (
                                 <div className="admin-page__content__promocode__promocodes__item">
                                     <div className="admin-page__content__promocode__promocodes__item__percent">
                                         {promocode.percent} %
@@ -329,21 +346,35 @@ class AdminPage extends Tarakan.Component {
                                         {promocode.code}
                                     </div>
                                     <div className="admin-page__content__promocode__promocodes__item__date">
-                                        <span className="t">Действителен с</span>
-                                        <span className="v">{new Date(promocode.startDate).toLocaleString()}</span>
+                                        <span className="t">
+                                            Действителен с
+                                        </span>
+                                        <span className="v">
+                                            {new Date(
+                                                promocode.startDate,
+                                            ).toLocaleString()}
+                                        </span>
                                         <span className="t">по</span>
-                                        <span className="v">{new Date(promocode.endDate).toLocaleString()}</span>
+                                        <span className="v">
+                                            {new Date(
+                                                promocode.endDate,
+                                            ).toLocaleString()}
+                                        </span>
                                     </div>
                                 </div>
-                            )}
+                            ))}
                         </div>
                         <InfinityList onShow={() => this.fetchPromocodes()} />
-                        {this.state.createPromocode && <PromocodeModal
-                            onFinish={(form) => {
-                                this.handleCreatePromocode(form);
-                            }}
-                            onClose={() => this.setState({ createPromocode: false })}
-                        />}
+                        {this.state.createPromocode && (
+                            <PromocodeModal
+                                onFinish={(form) => {
+                                    this.handleCreatePromocode(form);
+                                }}
+                                onClose={() =>
+                                    this.setState({ createPromocode: false })
+                                }
+                            />
+                        )}
                     </div>
                 </main>
                 <Footer />

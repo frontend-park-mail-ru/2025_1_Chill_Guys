@@ -2,7 +2,12 @@ import { Store } from "bazaar-tarakan";
 import { signIn, signUp } from "../api/auth";
 import { AJAXErrors } from "../api/errors";
 import { getMe } from "../api/user";
-import { Nofitication, getNofitications, getNofiticationsCount, setVisibleNofitication } from "../api/nofitications";
+import {
+    Nofitication,
+    getNofitications,
+    getNofiticationsCount,
+    setVisibleNofitication,
+} from "../api/nofitications";
 
 const initValue = {};
 const initAction = (store) => store.sendAction("me");
@@ -57,7 +62,7 @@ UserStore.addAction("nofitications", async (store) => {
         if (code === AJAXErrors.NoError) {
             store.sendAction("nots_count", {
                 ...store.value,
-                unread_count: data
+                unread_count: data,
             });
         }
     }
@@ -69,7 +74,7 @@ UserStore.addAction("getNofitications", async (store) => {
         if (code === AJAXErrors.NoError) {
             store.sendAction("nots_count", {
                 ...store.value,
-                unread_count: data.unread_count
+                unread_count: data.unread_count,
             });
             store.sendAction("nots", {
                 ...store.value,
@@ -81,11 +86,13 @@ UserStore.addAction("getNofitications", async (store) => {
 
 UserStore.addAction("nextNofitications", async (store) => {
     if (store.value.login) {
-        const { code, data } = await getNofitications(store.value.notifications.length);
+        const { code, data } = await getNofitications(
+            store.value.notifications.length,
+        );
         if (code === AJAXErrors.NoError) {
             store.sendAction("nots_count", {
                 ...store.value,
-                unread_count: data.unread_count
+                unread_count: data.unread_count,
             });
             store.sendAction("nots", {
                 ...store.value,
@@ -101,14 +108,15 @@ UserStore.addAction("setVisibleNofitication", async (store, id) => {
         if (code === AJAXErrors.NoError) {
             store.sendAction("nots_count", {
                 ...store.value,
-                unread_count: store.value.unread_count - 1
+                unread_count: store.value.unread_count - 1,
             });
             store.sendAction("nots", {
                 ...store.value,
-                notifications: store.value.notifications.map((notification: Nofitication) =>
-                    notification.id === id
-                        ? { ...notification, isRead: true }
-                        : notification
+                notifications: store.value.notifications.map(
+                    (notification: Nofitication) =>
+                        notification.id === id
+                            ? { ...notification, isRead: true }
+                            : notification,
                 ),
             });
         }
