@@ -35,7 +35,7 @@
 }
 
 .footer {
-  padding: 22px 60px;
+  padding: 24px 24px;
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
 
@@ -51,9 +51,10 @@
 
   &__ico-column {
 
+    line-height: 1;
+
     &__logo {
-      height: 48px;
-      width: 123px;
+      height: 30px;
 
       &:hover {
         cursor: pointer;
@@ -98,7 +99,3 @@
 
   }
 }
-
-
-
-

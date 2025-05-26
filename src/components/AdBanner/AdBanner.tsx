@@ -4,10 +4,12 @@ import "./styles.scss";
 class AdBanner extends Tarakan.Component {
     state = {
         link: null,
+        error: false,
     };
 
     renderFinished(container: HTMLDivElement) {
         new ResizeObserver(() => {
+            if (this.state.error) return;
             const iframe: HTMLIFrameElement =
                 container.firstChild as HTMLIFrameElement;
             iframe.style.scale = `${container.clientWidth / 300}`;
@@ -22,13 +24,29 @@ class AdBanner extends Tarakan.Component {
                 .item(0);
             this.state.link = link;
         });
+        iframe.addEventListener("error", () => {
+            this.setState({
+                error: true,
+            });
+        });
     }
 
     render(props) {
         return (
-            <div className="ad" onClick={() => window.open(this.state.link)}>
-                <iframe src={props.url} width="300px" height="300px" />
+            <div className="ad">
+                {!this.state.error ? (
+                    <iframe src={props.url} width="300px" height="300px" />
+                ) : (
+                    <div className="ad__no_ad">
+                        <div>Здесь могла быть ваша реклама</div>
+                        <div>Звоните +7 (999)-999-99-99</div>
+                    </div>
+                )}
                 <div className="ad__text">Реклама</div>
+                <div
+                    className="ad__click"
+                    onClick={() => window.open(this.state.link)}
+                ></div>
             </div>
         );
     }
