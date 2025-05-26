@@ -24,6 +24,9 @@ import HeaderProfileHover from "../../shared/images/header-profile-ico-hover.svg
 import ToolIcon from "../../shared/images/tool-ico.svg";
 import ToolIconHover from "../../shared/images/tool-ico-hover.svg";
 
+import BellIcon from "../../shared/images/bell-ico.svg";
+import BellIconHover from "../../shared/images/bell-ico-hover.svg";
+
 import MenuIcon from "../../shared/images/menu.svg";
 import CrossIcon from "../../shared/images/cross-ico.svg";
 
@@ -48,6 +51,7 @@ class Header extends Tarakan.Component {
             profileIcon: this.app.store.user.value.login
                 ? HeaderProfile
                 : HeaderLogin,
+            bellIcon: BellIcon,
             authorized: this.app.store.user.value.login,
             role: this.app.store.user.value.role,
             popUpDisplayed: false,
@@ -70,6 +74,9 @@ class Header extends Tarakan.Component {
                     authorized: newValue.login,
                     role: newValue.role,
                 });
+            }
+            if (name === "nots_count") {
+                this.updateDOM();
             }
         });
     }
@@ -146,8 +153,6 @@ class Header extends Tarakan.Component {
     }
 
     render(props: any, app: any) {
-        // // console.log(this.state.role);
-
         return (
             <header className="header header_light">
                 {this.state.csatString && (
@@ -210,7 +215,6 @@ class Header extends Tarakan.Component {
                                                         .map((e, I) => (
                                                             <li
                                                                 onClick={() => {
-                                                                    // console.log("ERROR");
                                                                     this.openCategory(
                                                                         I,
                                                                     );
@@ -427,7 +431,8 @@ class Header extends Tarakan.Component {
                         <div className="header__nav__row_main__icons-wrapper">
                             {this.state.authorized &&
                                 (this.state.role === "admin" ||
-                                    this.state.role === "seller") && (
+                                    this.state.role === "seller" ||
+                                    this.state.role === "warehouseman") && (
                                     <Button
                                         size={`${BUTTON_SIZE.L}`}
                                         iconPosition={`${ICON_POSITION.TOP}`}
@@ -450,14 +455,48 @@ class Header extends Tarakan.Component {
                                             });
                                         }}
                                         onClick={() => {
-                                            if (this.state.role === "seller") {
-                                                app.navigateTo("/seller");
-                                            } else {
-                                                app.navigateTo("/admin");
+                                            switch (this.state.role) {
+                                                case "admin":
+                                                    app.navigateTo("/admin");
+                                                    break;
+                                                case "seller":
+                                                    app.navigateTo("/seller");
+                                                    break;
+                                                case "warehouseman":
+                                                    app.navigateTo(
+                                                        "/warehouse",
+                                                    );
+                                                    break;
                                             }
                                         }}
                                     />
                                 )}
+                            {this.state.authorized && (
+                                <Button
+                                    size={`${BUTTON_SIZE.L}`}
+                                    iconPosition={`${ICON_POSITION.TOP}`}
+                                    variant={`${BUTTON_VARIANT.TRANSPARENT}`}
+                                    title="Уведомления"
+                                    iconSrc={`${this.state.bellIcon}`}
+                                    iconAlt="Уведомления"
+                                    badgeTitle={
+                                        app.store.user.value.unread_count || ""
+                                    }
+                                    onMouseOver={() => {
+                                        this.setState({
+                                            bellIcon: BellIconHover,
+                                        });
+                                    }}
+                                    onMouseLeave={() => {
+                                        this.setState({
+                                            bellIcon: BellIcon,
+                                        });
+                                    }}
+                                    onClick={() => {
+                                        app.navigateTo("/notifications");
+                                    }}
+                                />
+                            )}
                             {this.state.authorized && (
                                 <Button
                                     size={`${BUTTON_SIZE.L}`}
@@ -591,6 +630,23 @@ class Header extends Tarakan.Component {
                                             app.navigateTo("/search?r=");
                                         }}
                                     />
+                                    {this.state.authorized && (
+                                        <Button
+                                            title="Уведомления"
+                                            badgeTitle={
+                                                app.store.user.value
+                                                    .unread_count || ""
+                                            }
+                                            iconSrc={BellIcon}
+                                            variant="text"
+                                            className="menu-modal__content__button"
+                                            onClick={() => {
+                                                app.navigateTo(
+                                                    "/notifications",
+                                                );
+                                            }}
+                                        />
+                                    )}
                                     <Button
                                         title={
                                             this.state.authorized
@@ -641,7 +697,9 @@ class Header extends Tarakan.Component {
                                     )}
                                     {this.state.authorized &&
                                         (this.state.role === "admin" ||
-                                            this.state.role === "seller") && (
+                                            this.state.role === "seller" ||
+                                            this.state.role ===
+                                                "warehouseman") && (
                                             <Button
                                                 title={
                                                     this.state.role === "seller"
@@ -652,17 +710,22 @@ class Header extends Tarakan.Component {
                                                 className="menu-modal__content__button"
                                                 iconSrc={ToolIcon}
                                                 onClick={() => {
-                                                    if (
-                                                        this.state.role ===
-                                                        "seller"
-                                                    ) {
-                                                        app.navigateTo(
-                                                            "/seller",
-                                                        );
-                                                    } else {
-                                                        app.navigateTo(
-                                                            "/admin",
-                                                        );
+                                                    switch (this.state.role) {
+                                                        case "admin":
+                                                            app.navigateTo(
+                                                                "/admin",
+                                                            );
+                                                            break;
+                                                        case "seller":
+                                                            app.navigateTo(
+                                                                "/seller",
+                                                            );
+                                                            break;
+                                                        case "warehouseman":
+                                                            app.navigateTo(
+                                                                "/warehouse",
+                                                            );
+                                                            break;
                                                     }
                                                 }}
                                             />

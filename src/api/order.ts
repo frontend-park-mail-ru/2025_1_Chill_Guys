@@ -11,6 +11,7 @@ interface OrderParametres {
 interface OrderPlacingParametres {
     address: string;
     payType: string;
+    promocode?: string;
 }
 
 interface OrderItem {
@@ -103,7 +104,10 @@ export async function getAllOrders(): Promise<{
         id: order.id,
         status: order.status,
         price: order.totalDiscountPrice,
-        products: order.products.map((product: any) => product.ProductImageURL),
+        products: order.products.map((product: any) => ({
+            id: product.product_id,
+            img: product.ProductImageURL,
+        })),
         addressName: order.address.AddressString,
     }));
 
@@ -129,6 +133,7 @@ export async function sendOrder(
     const response = await ajax.post("orders", {
         addressId: parametres.address,
         items: order,
+        promoCode: parametres.promocode ?? undefined,
     });
 
     if (response.error || !response.result.ok) {

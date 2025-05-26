@@ -23,21 +23,26 @@ class TextField extends Tarakan.Component {
         this.state = {
             status: "default",
             value: initProps.value,
+            manuallyChanged: true,
         };
     }
 
     handleEnterFinish() {
-        const dataOk =
-            this.props.validType !== undefined
-                ? validate(this.props.validType, this.state.value)
-                : true;
-        // // console.log(this.props.validType, this.state.value, dataOk);
-        if (dataOk) {
-            this.setState({ status: "success" });
+        if (this.props.validType !== undefined) {
+            const dataOk =
+                this.props.validType !== undefined
+                    ? validate(this.props.validType, this.state.value)
+                    : true;
+            // // console.log(this.props.validType, this.state.value, dataOk);
+            if (dataOk) {
+                this.setState({ status: "success" });
+            } else {
+                this.setState({ status: "invalid" });
+            }
+            if (this.props.onEnd) this.props.onEnd(dataOk, this.state.value);
         } else {
-            this.setState({ status: "invalid" });
+            if (this.props.onEnd) this.props.onEnd(true, this.state.value);
         }
-        if (this.props.onEnd) this.props.onEnd(dataOk, this.state.value);
     }
 
     handleChange(event: any) {
@@ -46,7 +51,9 @@ class TextField extends Tarakan.Component {
     }
 
     handleFocus() {
-        if (this.props.onFocus) this.props.onFocus();
+        if (this.props.onFocus) {
+            this.props.onFocus();
+        }
     }
 
     update(props: any) {
@@ -58,6 +65,10 @@ class TextField extends Tarakan.Component {
         }
     }
 
+    changeStatus(newStatus: string) {
+        this.setState({ status: newStatus });
+    }
+
     render(props: any) {
         const type = props.type ?? TEXTFIELD_TYPES.TEXT;
         const placeholder = props.title ?? "Поле ввода";
@@ -66,12 +77,14 @@ class TextField extends Tarakan.Component {
         const title = props.fieldName ?? "";
         const isDisabled = props.isDisabled ?? false;
 
+        console.log(this.state);
+
         return title ? (
             <div className={`textField_title ${otherClasses}`.trim()}>
                 {title && <h3 className="textField_title__title">{title}</h3>}
                 <div className="textField">
                     <input
-                        className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
+                        className={`textField__input textField__input_${props.validType !== undefined || this.state.manuallyChanged ? this.state.status : "default"}`}
                         type={type}
                         placeholder={placeholder}
                         value={defaultValue}
@@ -85,7 +98,8 @@ class TextField extends Tarakan.Component {
                         min={props.min}
                         max={props.max}
                     />
-                    {(props.validType !== undefined
+                    {(props.validType !== undefined ||
+                    this.state.manuallyChanged
                         ? this.state.status
                         : "default") !== "default" && (
                         <img
@@ -102,7 +116,7 @@ class TextField extends Tarakan.Component {
         ) : (
             <div className={`textField ${otherClasses}`.trim()}>
                 <input
-                    className={`textField__input textField__input_${props.validType !== undefined ? this.state.status : "default"}`}
+                    className={`textField__input textField__input_${props.validType !== undefined || this.state.manuallyChanged ? this.state.status : "default"}`}
                     type={type}
                     placeholder={placeholder}
                     value={defaultValue}
@@ -116,7 +130,7 @@ class TextField extends Tarakan.Component {
                     min={props.min}
                     max={props.max}
                 />
-                {(props.validType !== undefined
+                {(props.validType !== undefined || this.state.manuallyChanged
                     ? this.state.status
                     : "default") !== "default" && (
                     <img
