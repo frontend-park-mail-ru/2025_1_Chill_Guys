@@ -77,8 +77,6 @@ class TextField extends Tarakan.Component {
         const title = props.fieldName ?? "";
         const isDisabled = props.isDisabled ?? false;
 
-        console.log(this.state);
-
         return title ? (
             <div className={`textField_title ${otherClasses}`.trim()}>
                 {title && <h3 className="textField_title__title">{title}</h3>}

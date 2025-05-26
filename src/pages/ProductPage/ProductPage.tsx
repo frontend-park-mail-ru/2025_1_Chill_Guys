@@ -215,9 +215,12 @@ class ProductPage extends Tarakan.Component {
                             <img src={`${this.state.product?.image}`} />
                         </div>
                         <div className="product-page__main__card__details">
-                            <h1 className="product-page__main__card__details__title">
+                            <h2
+                                className="product-page__main__card__details__title"
+                                style="font-weight: normal"
+                            >
                                 {this.state.product?.name}
-                            </h1>
+                            </h2>
                             <div className="product-page__main__card__details__buyer">
                                 {this.state.product?.seller.title}
                             </div>
