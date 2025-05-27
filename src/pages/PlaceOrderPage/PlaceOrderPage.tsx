@@ -206,7 +206,7 @@ class PlaceOrderPage extends Tarakan.Component {
                                 )}
                             </div>
                             <div className="content__settings__date">
-                                <h2>Срок доставки:</h2>5 рабочик дней
+                                <h2>Срок доставки:</h2>5 рабочих дней
                             </div>
                             {this.state.addAddressModalOpened && (
                                 <AddressModal
