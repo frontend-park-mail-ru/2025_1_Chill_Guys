@@ -60,7 +60,10 @@ class PlaceOrderPage extends Tarakan.Component {
             this.setState({
                 addAddressModalOpened: false,
                 addresses: addresses,
-                activeAddress: addresses.length === 1 ? addresses[0].id : this.state.activeAddress
+                activeAddress:
+                    addresses.length === 1
+                        ? addresses[0].id
+                        : this.state.activeAddress,
             });
         } else {
             this.app.navigateTo("/signin");
@@ -151,8 +154,8 @@ class PlaceOrderPage extends Tarakan.Component {
                                         title="Проверить"
                                         disabled={
                                             this.state.promocodeSuccessStatus %
-                                            2 !==
-                                            0 || this.state.promocode == ""
+                                                2 !==
+                                                0 || this.state.promocode == ""
                                         }
                                         onClick={() =>
                                             this.handleCheckPromocode()
@@ -160,11 +163,11 @@ class PlaceOrderPage extends Tarakan.Component {
                                     />
                                     {this.state.promocodeSuccessStatus ===
                                         1 && (
-                                            <img
-                                                className="content__settings__promocode__value__loading"
-                                                src={loadingIcon}
-                                            />
-                                        )}
+                                        <img
+                                            className="content__settings__promocode__value__loading"
+                                            src={loadingIcon}
+                                        />
+                                    )}
                                 </div>
                                 {this.state.promocodeSuccessStatus === 2 && (
                                     <div style="color: red">
@@ -243,7 +246,7 @@ class PlaceOrderPage extends Tarakan.Component {
                                     <span className="content__total__discount_cost">
                                         {this.showBeautifulNumber(
                                             this.state.total -
-                                            this.state.discount,
+                                                this.state.discount,
                                         )}
                                         &nbsp;₽
                                     </span>
@@ -267,8 +270,8 @@ class PlaceOrderPage extends Tarakan.Component {
                                                     (this.state
                                                         .promocodePercent ??
                                                         0))) /
-                                            100 +
-                                            "",
+                                                100 +
+                                                "",
                                         ),
                                     )}
                                     &nbsp;₽

@@ -31,16 +31,16 @@ class AddressModal extends Tarakan.Component {
     async handleCheckAddress(address) {
         const res = await ajax.get(
             "v1/geocode/search?" +
-            Object.entries({
-                lang: "ru",
-                apiKey: GEOPIFY_KEY,
-                country: "Russia",
-                city: address.city,
-                street: address.street,
-                housenumber: address.house,
-            })
-                .map(([K, E]) => `${K}=${encodeURIComponent(E)}`)
-                .join("&"),
+                Object.entries({
+                    lang: "ru",
+                    apiKey: GEOPIFY_KEY,
+                    country: "Russia",
+                    city: address.city,
+                    street: address.street,
+                    housenumber: address.house,
+                })
+                    .map(([K, E]) => `${K}=${encodeURIComponent(E)}`)
+                    .join("&"),
             { origin: "https://api.geoapify.com", noCredentials: true },
         );
 
@@ -86,9 +86,8 @@ class AddressModal extends Tarakan.Component {
     }
 
     async handleSave() {
-
         this.setState({
-            sended: true
+            sended: true,
         });
 
         const address = this.state.searchResult[this.state.selectedResult];
@@ -96,7 +95,7 @@ class AddressModal extends Tarakan.Component {
             address.rawData.state,
             address.rawData.city,
             (this.state.form.flat ? `кв. ${this.state.form.flat}, ` : "") +
-            address.address,
+                address.address,
             `${address.lat},${address.log}`,
             this.state.form.name,
         );
@@ -106,7 +105,7 @@ class AddressModal extends Tarakan.Component {
         }
 
         this.setState({
-            sended: false
+            sended: false,
         });
     }
 

@@ -13,7 +13,11 @@ class AddressCard extends Tarakan.Component {
                 <img className="address-card__icon" src={homeIcon} />
                 <div className="address-card__description">
                     <div className="address-card__title">
-                        {props.name ? props.name : <span style="color:gray">Без названия</span>}
+                        {props.name ? (
+                            props.name
+                        ) : (
+                            <span style="color:gray">Без названия</span>
+                        )}
                     </div>
                     <div className="address-card__address">{props.address}</div>
                 </div>
