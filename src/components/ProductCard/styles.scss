@@ -42,7 +42,9 @@
 
   &__carousel-images {
     min-width: 100%;
+    border-radius: 12px;
 
+    background-color: var(--site-background);
     &__active-image-wrapper {
       min-width: 100%;
       border-radius: 12px;
