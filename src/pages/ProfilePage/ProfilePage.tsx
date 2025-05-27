@@ -59,6 +59,7 @@ export default class ProfilePage extends Tarakan.Component {
         const response = await getMe();
 
         if (response.code === AJAXErrors.NoError) {
+            console.log(response.data);
             this.setState({
                 name: response.data.name,
                 surname: response.data.surname ?? "",
@@ -72,7 +73,7 @@ export default class ProfilePage extends Tarakan.Component {
     }
 
     handleChange(key: any, ok: any, v: any) {
-        if (key === "phoneNumber" && v === "") {
+        if (key === "phoneNumber" && !v) {
             return;
         }
 
@@ -210,7 +211,12 @@ export default class ProfilePage extends Tarakan.Component {
 
                     <div id="personal-data" className={`tab active`}>
                         <div>
-                            <h2 className={`h-reset header`}>Мои данные</h2>
+                            <h2
+                                className={`h-reset`}
+                                style="margin-bottom: 8px"
+                            >
+                                Мои данные
+                            </h2>
                             <p className={`help`}>
                                 Здесь Вы можете изменить свои персональные
                                 данные. Они будут использоваться при создании
@@ -223,38 +229,56 @@ export default class ProfilePage extends Tarakan.Component {
                                 <div className={`fields-column`}>
                                     <TextField
                                         fieldName="Имя"
-                                        value={`${this.state.name}`}
-                                        onEnd={(ok, v) =>
-                                            this.handleChange("name", ok, v)
-                                        }
+                                        value={this.state.name}
+                                        onEnd={(ok, v) => {
+                                            if (v) {
+                                                this.handleChange(
+                                                    "name",
+                                                    ok,
+                                                    v,
+                                                );
+                                            }
+                                        }}
                                         validType={ValidTypes.NameValid}
                                         maxLength={"20"}
                                     />
 
                                     <TextField
                                         fieldName="Фамилия"
-                                        value={`${this.state.surname}`}
-                                        onEnd={(ok: any, v: any) =>
-                                            this.handleChange("surname", ok, v)
-                                        }
+                                        value={this.state.surname}
+                                        onEnd={(ok: any, v: any) => {
+                                            if (v !== undefined && v !== null) {
+                                                this.handleChange(
+                                                    "surname",
+                                                    ok,
+                                                    v,
+                                                );
+                                            }
+                                        }}
                                         validType={ValidTypes.SurnameValid}
                                         maxLength={20}
                                     />
 
                                     <TextField
+                                        type="tel"
                                         fieldName="Телефон"
-                                        value={`${this.state.phoneNumber ?? ""}`}
+                                        value={this.state.phoneNumber}
                                         disabled={"disabled"}
-                                        onEnd={(ok: any, v: any) =>
-                                            this.handleChange(
-                                                "phoneNumber",
-                                                ok,
-                                                v,
-                                            )
-                                        }
+                                        onEnd={(ok: any, v: any) => {
+                                            if (v) {
+                                                this.handleChange(
+                                                    "phoneNumber",
+                                                    ok,
+                                                    v,
+                                                );
+                                            }
+                                        }}
                                         validType={ValidTypes.TelephoneValid}
                                         title="Введите номер телефона"
                                         maxLength={20}
+                                        min={10000000000}
+                                        max={99999999999}
+                                        canEmpty={true}
                                     />
                                     <div style="display: flex; justify-content: space-between; align-items: center">
                                         <div>
@@ -285,7 +309,7 @@ export default class ProfilePage extends Tarakan.Component {
                                         title={""}
                                         type="password"
                                         validType={ValidTypes.NotNullValid}
-                                        value={`${this.state.oldPassword}`}
+                                        value={this.state.oldPassword}
                                         onEnd={(ok: any, v: any) =>
                                             this.handleChange(
                                                 "oldPassword",
@@ -300,7 +324,7 @@ export default class ProfilePage extends Tarakan.Component {
                                         title={""}
                                         validType={ValidTypes.PasswordValid}
                                         type="password"
-                                        value={`${this.state.password}`}
+                                        value={this.state.password}
                                         onEnd={(ok: any, v: any) =>
                                             this.handleChange("password", ok, v)
                                         }
@@ -310,7 +334,7 @@ export default class ProfilePage extends Tarakan.Component {
                                         title={""}
                                         validType={ValidTypes.PasswordValid}
                                         type="password"
-                                        value={`${this.state.repeatPassword}`}
+                                        value={this.state.repeatPassword}
                                         onEnd={(ok: any, v: any) =>
                                             this.handleChange(
                                                 "repeatPassword",

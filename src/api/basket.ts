@@ -64,7 +64,7 @@ export async function addToBasket(productId: string): Promise<AJAXErrors> {
         return AJAXErrors.ServerError;
     }
 
-    if (response.result.status == 401) {
+    if (response.result.status == 401 || response.result.status == 403) {
         return AJAXErrors.Unauthorized;
     }
 
@@ -87,7 +87,7 @@ export async function updateProductQuantity(
         return { code: AJAXErrors.ServerError };
     }
 
-    if (response.result.status == 401) {
+    if (response.result.status == 401 || response.result.status == 403) {
         return { code: AJAXErrors.Unauthorized };
     }
 
@@ -113,7 +113,7 @@ export async function removeFromBasket(productId: string): Promise<AJAXErrors> {
         return AJAXErrors.ServerError;
     }
 
-    if (response.result.status == 401) {
+    if (response.result.status == 401 || response.result.status == 403) {
         return AJAXErrors.Unauthorized;
     }
 
@@ -131,7 +131,7 @@ export async function clearBasket(): Promise<AJAXErrors> {
         return AJAXErrors.ServerError;
     }
 
-    if (response.result.status == 401) {
+    if (response.result.status == 401 || response.result.status == 403) {
         return AJAXErrors.Unauthorized;
     }
 

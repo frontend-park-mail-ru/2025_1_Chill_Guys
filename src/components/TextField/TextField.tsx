@@ -22,18 +22,24 @@ class TextField extends Tarakan.Component {
     init(initProps: any) {
         this.state = {
             status: "default",
-            value: initProps.value,
+            value: initProps.value ?? "",
             manuallyChanged: true,
         };
     }
 
     handleEnterFinish() {
         if (this.props.validType !== undefined) {
-            const dataOk =
+            let dataOk =
                 this.props.validType !== undefined
                     ? validate(this.props.validType, this.state.value)
                     : true;
             // // console.log(this.props.validType, this.state.value, dataOk);
+
+            if (this.props.canEmpty && !this.state.value) {
+                dataOk = true;
+                return;
+            }
+
             if (dataOk) {
                 this.setState({ status: "success" });
             } else {
@@ -58,7 +64,7 @@ class TextField extends Tarakan.Component {
 
     update(props: any) {
         if (props.value) {
-            this.setState({ value: props.value }, true);
+            this.setState({ value: props.value ?? "" }, true);
         }
         if (props.status) {
             this.setState({ status: props.status }, true);

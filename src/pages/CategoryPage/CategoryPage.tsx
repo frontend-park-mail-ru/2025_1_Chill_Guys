@@ -131,7 +131,7 @@ export default class CategoryPage extends Tarakan.Component {
                     {this.state.showNotAuthAlert && (
                         <Alert
                             title="Необходимо войти"
-                            content="Для добавления товаров в корзину, надо сначала войти в профиль."
+                            content="Для добавления товаров в корзину, надо сначала войти в профиль"
                             successButtonTitle="Войти"
                             onSuccess={() => router.navigateTo("/signin")}
                             onClose={() =>

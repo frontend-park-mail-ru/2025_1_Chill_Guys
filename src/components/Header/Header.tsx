@@ -181,7 +181,10 @@ class Header extends Tarakan.Component {
                                     this.fetchSearchResult(ev)
                                 }
                                 onFocus={() =>
-                                    this.setState({ searchMenuOpened: true })
+                                    this.setState({
+                                        searchMenuOpened: true,
+                                        selectedCategory: null,
+                                    })
                                 }
                                 onEnd={() => {
                                     if (this.state.searchResult === "") {
@@ -316,6 +319,7 @@ class Header extends Tarakan.Component {
                                     onFocus={() =>
                                         this.setState({
                                             searchMenuOpened: true,
+                                            selectedCategory: null,
                                         })
                                     }
                                 />
@@ -756,61 +760,63 @@ class Header extends Tarakan.Component {
                         <div className={`categories-wrapper`}>
                             {this.state.categories &&
                                 this.state.categories.map((category: any) => (
-                                    <span
-                                        className="categories-wrapper__item"
-                                        onMouseOver={() => {
-                                            if (
-                                                !this.state.selectedCategory ||
-                                                category.id !==
-                                                    this.state.selectedCategory
-                                                        .id
-                                            ) {
-                                                this.fetchSubcategories(
-                                                    category,
-                                                );
-                                            }
+                                    <div
+                                        onMouseLeave={() => {
+                                            this.setState({
+                                                selectedCategory: null,
+                                            });
+                                            // // console.log("leave");
                                         }}
                                     >
-                                        <span className="categories-wrapper__item__value">
-                                            {category.name}
-                                        </span>
-                                        {this.state.selectedCategory?.id ===
-                                            category.id && (
-                                            <div
-                                                className="subcategories-modal"
-                                                onMouseLeave={() => {
-                                                    this.setState({
-                                                        selectedCategory: null,
-                                                    });
-                                                    // // console.log("leave");
-                                                }}
-                                            >
-                                                <div className="subcategories-modal__items">
-                                                    {this.state.subcategories.map(
-                                                        (E) => (
-                                                            <span
-                                                                className="subcategories-modal__items__item"
-                                                                onClick={() => {
-                                                                    this.setState(
-                                                                        {
-                                                                            selectedCategory:
-                                                                                null,
-                                                                        },
-                                                                    );
-                                                                    app.navigateTo(
-                                                                        "/category/" +
-                                                                            E.id,
-                                                                    );
-                                                                }}
-                                                            >
-                                                                {E.name}
-                                                            </span>
-                                                        ),
-                                                    )}
+                                        <span
+                                            className="categories-wrapper__item"
+                                            onMouseOver={() => {
+                                                if (
+                                                    !this.state
+                                                        .selectedCategory ||
+                                                    category.id !==
+                                                        this.state
+                                                            .selectedCategory.id
+                                                ) {
+                                                    this.fetchSubcategories(
+                                                        category,
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <span className="categories-wrapper__item__value">
+                                                {category.name}
+                                            </span>
+                                            {this.state.selectedCategory?.id ===
+                                                category.id && (
+                                                <div className="subcategories-modal">
+                                                    <div className="subcategories-modal__items">
+                                                        {this.state.subcategories.map(
+                                                            (E) => (
+                                                                <span
+                                                                    className="subcategories-modal__items__item"
+                                                                    onClick={() => {
+                                                                        this.setState(
+                                                                            {
+                                                                                selectedCategory:
+                                                                                    null,
+                                                                            },
+                                                                        );
+                                                                        app.navigateTo(
+                                                                            "/category/" +
+                                                                                E.id,
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    {E.name}
+                                                                </span>
+                                                            ),
+                                                        )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
-                                    </span>
+                                            )}
+                                        </span>
+                                    </div>
                                 ))}
                         </div>
                         {this.state.role === "buyer" && (

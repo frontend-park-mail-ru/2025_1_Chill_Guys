@@ -346,7 +346,7 @@ class ProductPage extends Tarakan.Component {
                             {this.state.showNotAuthAlert && (
                                 <Alert
                                     title="Необходимо войти"
-                                    content="Чтобы оставить отзыв, надо сначала войти в профиль."
+                                    content="Чтобы оставить отзыв, надо сначала войти в профиль"
                                     successButtonTitle="Войти"
                                     onSuccess={() => app.navigateTo("/signin")}
                                     onClose={() =>
@@ -359,7 +359,7 @@ class ProductPage extends Tarakan.Component {
                             {this.state.showNotAuthAlertCart && (
                                 <Alert
                                     title="Необходимо войти"
-                                    content="Чтобы изменить продукты в корзине, надо сначала войти в профиль."
+                                    content="Чтобы изменить продукты в корзине, надо сначала войти в профиль"
                                     successButtonTitle="Войти"
                                     onSuccess={() => app.navigateTo("/signin")}
                                     onClose={() =>
@@ -503,7 +503,7 @@ class ProductPage extends Tarakan.Component {
                                 onError={(err) => {
                                     if (err === AJAXErrors.Unauthorized) {
                                         this.setState({
-                                            showNotAuthAlert: true,
+                                            showNotAuthAlertCart: true,
                                         });
                                     }
                                 }}
