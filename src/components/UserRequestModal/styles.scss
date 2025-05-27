@@ -19,6 +19,9 @@
 }
 
 .product-modal {
+    position: relative;
+    z-index: 2;
+
     &__tint {
         position: fixed;
         top: 0;
@@ -48,6 +51,7 @@
         background-color: white;
         display: flex;
         flex-direction: column;
+        z-index: 2;
 
         transition: transform 0.2s;
 

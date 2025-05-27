@@ -19,7 +19,7 @@ class SuccessModal extends Tarakan.Component {
                 <div className="success-modal__modal-content">
                     <h2>Заказ успешно оформлен</h2>
                     <Button
-                        title="Вернутся на главную страницу"
+                        title="На главную"
                         onClick={() => app.navigateTo("/")}
                     />
                 </div>

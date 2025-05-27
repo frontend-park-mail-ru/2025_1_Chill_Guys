@@ -72,8 +72,9 @@ class LoginPage extends Tarakan.Component {
 
                                             wrongPassword: (
                                                 <div className="login-page__content__title__input-comment__error">
-                                                    Указан неверный пароль.
-                                                    Пожалуйста, повторите ввод.
+                                                    Указана неверная почта или
+                                                    пароль. Пожалуйста,
+                                                    повторите ввод.
                                                 </div>
                                             ),
 

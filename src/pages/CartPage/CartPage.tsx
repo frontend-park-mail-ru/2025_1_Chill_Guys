@@ -28,6 +28,10 @@ class CartPage extends Tarakan.Component {
         csatString: "",
     };
 
+    showBeautifulNumber(value: number) {
+        return value.toLocaleString("ru");
+    }
+
     async fetchBasket() {
         const response = await getBasket();
 
@@ -135,7 +139,10 @@ class CartPage extends Tarakan.Component {
                                                 className={`content__list__item__description__title__price${item.productPrice - item.priceDiscount != 0 ? " content__list__item__description__title__price_discount" : ""}`}
                                             >
                                                 <span className="">
-                                                    {item.priceDiscount}&nbsp;₽
+                                                    {this.showBeautifulNumber(
+                                                        item.priceDiscount,
+                                                    )}
+                                                    &nbsp;₽
                                                 </span>
                                                 {item.productPrice -
                                                     item.priceDiscount !=
@@ -214,7 +221,7 @@ class CartPage extends Tarakan.Component {
                                             />
                                             <div className="content__list__item__description__manage__remainCount">
                                                 {item.remainQuantity >= 0
-                                                    ? `Осталось ${item.remainQuantity} шт`
+                                                    ? `Осталось ${this.showBeautifulNumber(item.remainQuantity)} шт`
                                                     : "Закончились"}
                                             </div>
                                         </div>
@@ -247,13 +254,19 @@ class CartPage extends Tarakan.Component {
                             <div className="content__total__discount">
                                 <span>Скидка:</span>
                                 <span className="content__total__discount__cost">
-                                    {this.state.total - this.state.discount} ₽
+                                    {this.showBeautifulNumber(
+                                        this.state.total - this.state.discount,
+                                    )}
+                                    &nbsp;₽
                                 </span>
                             </div>
                             <div className="content__total__sum-cost">
                                 <span>Итог:</span>
                                 <span className="content__total__discount__cost">
-                                    {this.state.discount} ₽
+                                    {this.showBeautifulNumber(
+                                        this.state.discount,
+                                    )}
+                                    &nbsp;₽
                                 </span>
                             </div>
                         </div>
