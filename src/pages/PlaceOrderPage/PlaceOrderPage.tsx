@@ -37,6 +37,10 @@ class PlaceOrderPage extends Tarakan.Component {
         promocodeSuccessStatus: 0,
     };
 
+    showBeautifulNumber(value: number) {
+        return (value).toLocaleString('ru');
+    }
+
     async fetchOrder() {
         const { code, parametres } = await calculateOrderParams();
         if (code === AJAXErrors.NoError) {
@@ -235,8 +239,7 @@ class PlaceOrderPage extends Tarakan.Component {
                                 <div className="content__total__discount">
                                     <span>Скидка:</span>
                                     <span className="content__total__discount_cost">
-                                        {this.state.total - this.state.discount}{" "}
-                                        ₽
+                                        {this.showBeautifulNumber(this.state.total - this.state.discount)}&nbsp;₽
                                     </span>
                                 </div>
                             )}
@@ -251,15 +254,14 @@ class PlaceOrderPage extends Tarakan.Component {
                             <div className="content__total__sum-cost">
                                 <span>Итог:</span>
                                 <span className="content__total__sum-cost_cost">
-                                    {parseInt(
+                                    {this.showBeautifulNumber(parseInt(
                                         (this.state.discount *
                                             (100 -
                                                 (this.state.promocodePercent ??
                                                     0))) /
                                             100 +
                                             "",
-                                    )}{" "}
-                                    ₽
+                                    ))}&nbsp;₽
                                 </span>
                             </div>
                         </div>
