@@ -191,6 +191,10 @@ class ProductPage extends Tarakan.Component {
 
     update() {
         if (this.app.urlParams.productId) {
+            window.scroll({
+                top: 0,
+                behavior: "smooth",
+            });
             this.fetchProduct();
         } else {
             this.app.navigateTo("/");

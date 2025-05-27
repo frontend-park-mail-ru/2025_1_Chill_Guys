@@ -56,9 +56,14 @@ class PlaceOrderPage extends Tarakan.Component {
     async fetchAddresses() {
         const { code, addresses } = await getUserAddresses();
         if (code === AJAXErrors.NoError) {
+            console.log(addresses);
             this.setState({
                 addAddressModalOpened: false,
                 addresses: addresses,
+                activeAddress:
+                    addresses.length === 1
+                        ? addresses[0].id
+                        : this.state.activeAddress,
             });
         } else {
             this.app.navigateTo("/signin");

@@ -76,6 +76,7 @@
     main {
         flex: 1 1 auto;
         min-width: 75%;
+        max-width: 75%;
 
         .content {
             margin-top: 20px;
@@ -206,6 +207,10 @@
 
                 &__make-order {
                     width: 100%;
+
+                    span {
+                        min-width: max-content;
+                    }
                 }
 
                 &__comment {
