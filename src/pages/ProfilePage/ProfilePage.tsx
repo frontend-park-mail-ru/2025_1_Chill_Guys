@@ -255,6 +255,8 @@ export default class ProfilePage extends Tarakan.Component {
                                         validType={ValidTypes.TelephoneValid}
                                         title="Введите номер телефона"
                                         maxLength={20}
+                                        min={10000000000}
+                                        max={99999999999}
                                     />
                                     <div style="display: flex; justify-content: space-between; align-items: center">
                                         <div>
