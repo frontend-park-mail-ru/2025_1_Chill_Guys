@@ -18,6 +18,7 @@ class AddressModal extends Tarakan.Component {
         searching: false,
         searchResult: null,
         selectedResult: -1,
+        sended: false,
         form: {
             name: "",
             city: "",
@@ -57,7 +58,7 @@ class AddressModal extends Tarakan.Component {
                     )
                     .map((E) => ({
                         lat: E.properties.lat,
-                        log: E.properties.log,
+                        log: E.properties.lng,
                         addressName: E.properties.address_line1,
                         addressSurname: E.properties.address_line2,
                         address: E.properties.formatted,
@@ -85,6 +86,10 @@ class AddressModal extends Tarakan.Component {
     }
 
     async handleSave() {
+        this.setState({
+            sended: true,
+        });
+
         const address = this.state.searchResult[this.state.selectedResult];
         const code = await saveAddress(
             address.rawData.state,
@@ -97,9 +102,11 @@ class AddressModal extends Tarakan.Component {
 
         if (code === AJAXErrors.NoError) {
             this.props.onEnd(true);
-        } else {
-            this.props.onEnd(false);
         }
+
+        this.setState({
+            sended: false,
+        });
     }
 
     update(newPropes) {
@@ -246,6 +253,7 @@ class AddressModal extends Tarakan.Component {
                                     className="edit"
                                     title="Сохранить"
                                     onClick={() => this.handleSave()}
+                                    disabled={this.state.sended}
                                 />
                             )}
                         </div>
