@@ -260,9 +260,9 @@
                                         list-style-type: none;
                                         display: flex;
                                         flex-direction: column;
+                                        gap: 8px;
 
                                         li {
-                                            padding-block: 4px;
                                             cursor: pointer;
 
                                             overflow: hidden;
