@@ -1,6 +1,7 @@
 @media screen and (max-width: 720px) {
     .cart-page {
         margin-inline: 4px;
+
         main {
             .content {
                 flex-direction: column-reverse;
@@ -14,12 +15,14 @@
                         &__description {
                             &__title {
                                 gap: 4px;
+
                                 &__price {
                                     span {
                                         font-size: 14px;
                                         width: auto;
                                     }
                                 }
+
                                 &__actions {
                                     &__hidden {
                                         display: none;
@@ -49,6 +52,7 @@
 
                     width: 300px;
                 }
+
                 &__list {
                     &__item {
                         &__description {
@@ -107,6 +111,9 @@
 
                     &__cover {
                         width: 100px;
+                        min-width: 100px;
+                        max-width: 100px;
+                        object-fit: contain;
                         height: 100px;
                         border-radius: 12px;
                     }

@@ -110,6 +110,10 @@ class SellerPage extends Tarakan.Component {
         }
     }
 
+    init() {
+        this.fetchProducts();
+    }
+
     render() {
         return (
             <div className="seller-page">

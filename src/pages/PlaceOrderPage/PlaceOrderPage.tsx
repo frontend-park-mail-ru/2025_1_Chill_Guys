@@ -38,7 +38,7 @@ class PlaceOrderPage extends Tarakan.Component {
     };
 
     showBeautifulNumber(value: number) {
-        return (value).toLocaleString('ru');
+        return value.toLocaleString("ru");
     }
 
     async fetchOrder() {
@@ -239,7 +239,11 @@ class PlaceOrderPage extends Tarakan.Component {
                                 <div className="content__total__discount">
                                     <span>Скидка:</span>
                                     <span className="content__total__discount_cost">
-                                        {this.showBeautifulNumber(this.state.total - this.state.discount)}&nbsp;₽
+                                        {this.showBeautifulNumber(
+                                            this.state.total -
+                                                this.state.discount,
+                                        )}
+                                        &nbsp;₽
                                     </span>
                                 </div>
                             )}
@@ -254,14 +258,18 @@ class PlaceOrderPage extends Tarakan.Component {
                             <div className="content__total__sum-cost">
                                 <span>Итог:</span>
                                 <span className="content__total__sum-cost_cost">
-                                    {this.showBeautifulNumber(parseInt(
-                                        (this.state.discount *
-                                            (100 -
-                                                (this.state.promocodePercent ??
-                                                    0))) /
-                                            100 +
-                                            "",
-                                    ))}&nbsp;₽
+                                    {this.showBeautifulNumber(
+                                        parseInt(
+                                            (this.state.discount *
+                                                (100 -
+                                                    (this.state
+                                                        .promocodePercent ??
+                                                        0))) /
+                                                100 +
+                                                "",
+                                        ),
+                                    )}
+                                    &nbsp;₽
                                 </span>
                             </div>
                         </div>

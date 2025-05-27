@@ -9,7 +9,7 @@ class SuccessModal extends Tarakan.Component {
     };
 
     update(newPropes: any) {
-        this.setState({opened: newPropes.opened});
+        this.setState({ opened: newPropes.opened });
     }
 
     render(props: any, app: any) {

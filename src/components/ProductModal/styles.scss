@@ -19,6 +19,9 @@
 }
 
 .product-modal {
+    position: relative;
+    z-index: 2;
+
     &__tint {
         position: fixed;
         top: 0;
