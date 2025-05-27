@@ -18,6 +18,7 @@ class AddressModal extends Tarakan.Component {
         searching: false,
         searchResult: null,
         selectedResult: -1,
+        sended: false,
         form: {
             name: "",
             city: "",
@@ -30,16 +31,16 @@ class AddressModal extends Tarakan.Component {
     async handleCheckAddress(address) {
         const res = await ajax.get(
             "v1/geocode/search?" +
-                Object.entries({
-                    lang: "ru",
-                    apiKey: GEOPIFY_KEY,
-                    country: "Russia",
-                    city: address.city,
-                    street: address.street,
-                    housenumber: address.house,
-                })
-                    .map(([K, E]) => `${K}=${encodeURIComponent(E)}`)
-                    .join("&"),
+            Object.entries({
+                lang: "ru",
+                apiKey: GEOPIFY_KEY,
+                country: "Russia",
+                city: address.city,
+                street: address.street,
+                housenumber: address.house,
+            })
+                .map(([K, E]) => `${K}=${encodeURIComponent(E)}`)
+                .join("&"),
             { origin: "https://api.geoapify.com", noCredentials: true },
         );
 
@@ -57,7 +58,7 @@ class AddressModal extends Tarakan.Component {
                     )
                     .map((E) => ({
                         lat: E.properties.lat,
-                        log: E.properties.log,
+                        log: E.properties.lng,
                         addressName: E.properties.address_line1,
                         addressSurname: E.properties.address_line2,
                         address: E.properties.formatted,
@@ -85,21 +86,28 @@ class AddressModal extends Tarakan.Component {
     }
 
     async handleSave() {
+
+        this.setState({
+            sended: true
+        });
+
         const address = this.state.searchResult[this.state.selectedResult];
         const code = await saveAddress(
             address.rawData.state,
             address.rawData.city,
             (this.state.form.flat ? `кв. ${this.state.form.flat}, ` : "") +
-                address.address,
+            address.address,
             `${address.lat},${address.log}`,
             this.state.form.name,
         );
 
         if (code === AJAXErrors.NoError) {
             this.props.onEnd(true);
-        } else {
-            this.props.onEnd(false);
         }
+
+        this.setState({
+            sended: false
+        });
     }
 
     update(newPropes) {
@@ -246,6 +254,7 @@ class AddressModal extends Tarakan.Component {
                                     className="edit"
                                     title="Сохранить"
                                     onClick={() => this.handleSave()}
+                                    disabled={this.state.sended}
                                 />
                             )}
                         </div>
