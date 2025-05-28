@@ -131,7 +131,7 @@ export async function sendOrder(
     }
 
     const response = await ajax.post("orders", {
-        addressId: parametres.address,
+        addressID: parametres.address,
         items: order,
         promoCode: parametres.promocode ?? undefined,
     });
