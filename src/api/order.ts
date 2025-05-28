@@ -132,7 +132,7 @@ export async function sendOrder(
 
     const response = await ajax.post("orders", {
         addressID: parametres.address,
-        items: order,
+        items: order.map((E) => ({ ...E, productID: E.productId })),
         promoCode: parametres.promocode ?? undefined,
     });
 
