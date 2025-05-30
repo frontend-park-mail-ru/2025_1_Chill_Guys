@@ -250,6 +250,12 @@ class Header extends Tarakan.Component {
                                                             size="m"
                                                             variant="text"
                                                             onClick={() => {
+                                                                this.setState({
+                                                                    showSearchMobile:
+                                                                        false,
+                                                                    searchMenuOpened:
+                                                                        false,
+                                                                });
                                                                 app.navigateTo(
                                                                     "/search",
                                                                     {
@@ -379,6 +385,14 @@ class Header extends Tarakan.Component {
                                                                     size="m"
                                                                     variant="text"
                                                                     onClick={() => {
+                                                                        this.setState(
+                                                                            {
+                                                                                showSearchMobile:
+                                                                                    false,
+                                                                                searchMenuOpened:
+                                                                                    false,
+                                                                            },
+                                                                        );
                                                                         app.navigateTo(
                                                                             "/search",
                                                                             {
