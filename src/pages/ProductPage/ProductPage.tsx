@@ -45,6 +45,7 @@ class ProductPage extends Tarakan.Component {
         const productId = this.app.urlParams.productId;
         const { code: basketCode, data } = await getBasket();
         let quantity = 0;
+        const basket = new Set();
 
         if (basketCode === AJAXErrors.NoError) {
             for (const item of data.products) {
@@ -53,10 +54,11 @@ class ProductPage extends Tarakan.Component {
                     break;
                 }
             }
+
+            data.products.forEach((product) => basket.add(product.productId));
         }
 
         const { code: productCode, product } = await getProduct(productId);
-
         if (productCode === AJAXErrors.NoError) {
             this.setState({
                 product: {
@@ -73,7 +75,10 @@ class ProductPage extends Tarakan.Component {
         const { code, products } = await getRecommendations(productId);
         if (code === AJAXErrors.NoError) {
             this.setState({
-                recommendations: products,
+                recommendations: products.map((E) => ({
+                    ...E,
+                    isInCart: basket.has(E.id),
+                })),
             });
         }
     }
