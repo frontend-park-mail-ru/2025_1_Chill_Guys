@@ -168,7 +168,6 @@ class ProductPage extends Tarakan.Component {
         );
 
         if (code === AJAXErrors.NoError) {
-            // // console.log(this.app.store);
             this.setState({
                 comments: [
                     {

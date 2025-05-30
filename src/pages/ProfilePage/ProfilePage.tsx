@@ -59,7 +59,6 @@ export default class ProfilePage extends Tarakan.Component {
         const response = await getMe();
 
         if (response.code === AJAXErrors.NoError) {
-            console.log(response.data);
             this.setState({
                 name: response.data.name,
                 surname: response.data.surname ?? "",

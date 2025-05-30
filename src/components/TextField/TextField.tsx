@@ -33,7 +33,6 @@ class TextField extends Tarakan.Component {
                 this.props.validType !== undefined
                     ? validate(this.props.validType, this.state.value)
                     : true;
-            // // console.log(this.props.validType, this.state.value, dataOk);
 
             if (this.props.canEmpty && !this.state.value) {
                 dataOk = true;
@@ -97,6 +96,13 @@ class TextField extends Tarakan.Component {
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
                         onEnd={(ev) => props.onEnter && props.onEnter(ev)}
+                        onkeydown={(ev) => {
+                            if (ev.key === "Enter") {
+                                if (props.onKeyEnter) {
+                                    props.onKeyEnter();
+                                }
+                            }
+                        }}
                         maxLength={props.maxLength ?? "255"}
                         cols={props.cols}
                         min={props.min}
@@ -129,6 +135,13 @@ class TextField extends Tarakan.Component {
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
                     onEnd={(ev) => props.onEnter && props.onEnter(ev)}
+                    onkeydown={(ev) => {
+                        if (ev.key === "Enter") {
+                            if (props.onKeyEnter) {
+                                props.onKeyEnter();
+                            }
+                        }
+                    }}
                     maxLength={props.maxLength ?? "255"}
                     cols={props.cols}
                     min={props.min}

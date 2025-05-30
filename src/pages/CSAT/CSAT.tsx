@@ -21,7 +21,6 @@ class CSAT extends Tarakan.Component {
         };
 
         window.addEventListener("message", (event: any) => {
-            // // console.log(event);
             if (event.data === "finish") {
                 iframeContainer.style.display = "none";
                 if (this.props.onEnd) this.props.onEnd();

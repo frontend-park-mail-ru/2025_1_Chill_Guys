@@ -169,7 +169,6 @@ class AdminPage extends Tarakan.Component {
         const { code, data } = await getPromocodes(
             start ? 0 : this.state.promocodes.length,
         );
-        console.log(data);
         if (code === AJAXErrors.NoError) {
             this.setState({
                 promocodes: start

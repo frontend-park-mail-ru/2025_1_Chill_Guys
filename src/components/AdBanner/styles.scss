@@ -8,6 +8,7 @@
     cursor: pointer;
     box-shadow: 0px 0px 10px lightgray;
     position: relative;
+    padding-bottom: 12px;
 
     iframe {
         transform-origin: 0 0;
@@ -19,6 +20,7 @@
     &__text {
         color: red;
         text-align: center;
+        line-height: 2;
     }
 
     &__no_ad {

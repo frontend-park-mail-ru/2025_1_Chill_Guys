@@ -25,7 +25,6 @@ class UserRequestModal extends Tarakan.Component {
     }
 
     render(props) {
-        // // console.log(props);
         const request: UserRequest = props.request;
         return (
             <div className="product-modal">
