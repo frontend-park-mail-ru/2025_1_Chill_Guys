@@ -54,7 +54,7 @@ class Button extends Tarakan.Component {
                           },
                       }
                     : props.iconSrc && (
-                          <div style="position: relative; line-height: 1">
+                          <div style="position: relative; display: flex">
                               <img
                                   alt={`${props.iconAlt}`}
                                   src={`${props.iconSrc}`}

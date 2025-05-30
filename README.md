@@ -17,7 +17,7 @@ https://github.com/go-park-mail-ru/2025_1_ChillGuys
 
 ## Ссылка на деплой
 
-http://90.156.217.63/
+https://bazaar-techpark.ru
 
 ## Инструкция по запуску
 
@@ -34,7 +34,3 @@ npx webpack serve
 
 > [!WARNING]  
 > Не забудьте поднять контейнер с бэком. Сделать это можно через docker-compose.yaml, который находится на ветке develop в репозитории https://github.com/go-park-mail-ru/2025_1_ChillGuys 
-
-## Документация
-
-http://90.156.217.63:8081/api/swagger/index.html
