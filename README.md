@@ -33,4 +33,5 @@ npx webpack serve
 > Порт 7500 можно изменить в файле webpack.config.js в самом низу.
 
 > [!WARNING]  
+
 > Не забудьте поднять контейнер с бэком. Сделать это можно через docker-compose.yaml, который находится на ветке develop в репозитории https://github.com/go-park-mail-ru/2025_1_ChillGuys 
