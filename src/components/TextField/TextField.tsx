@@ -100,7 +100,7 @@ class TextField extends Tarakan.Component {
                         onkeydown={(ev) => {
                             if (ev.key === "Enter") {
                                 if (props.onKeyEnter) {
-                                    props.onKeyEnter()
+                                    props.onKeyEnter();
                                 }
                             }
                         }}
@@ -110,18 +110,18 @@ class TextField extends Tarakan.Component {
                         max={props.max}
                     />
                     {(props.validType !== undefined ||
-                        this.state.manuallyChanged
+                    this.state.manuallyChanged
                         ? this.state.status
                         : "default") !== "default" && (
-                            <img
-                                className="textField__mark"
-                                src={
-                                    this.state.status === "success"
-                                        ? successIcon
-                                        : invalidIcon
-                                }
-                            />
-                        )}
+                        <img
+                            className="textField__mark"
+                            src={
+                                this.state.status === "success"
+                                    ? successIcon
+                                    : invalidIcon
+                            }
+                        />
+                    )}
                 </div>
             </div>
         ) : (
@@ -140,7 +140,7 @@ class TextField extends Tarakan.Component {
                         console.log(ev);
                         if (ev.key === "Enter") {
                             if (props.onKeyEnter) {
-                                props.onKeyEnter()
+                                props.onKeyEnter();
                             }
                         }
                     }}
@@ -152,15 +152,15 @@ class TextField extends Tarakan.Component {
                 {(props.validType !== undefined || this.state.manuallyChanged
                     ? this.state.status
                     : "default") !== "default" && (
-                        <img
-                            className="textField__mark"
-                            src={
-                                this.state.status === "success"
-                                    ? successIcon
-                                    : invalidIcon
-                            }
-                        />
-                    )}
+                    <img
+                        className="textField__mark"
+                        src={
+                            this.state.status === "success"
+                                ? successIcon
+                                : invalidIcon
+                        }
+                    />
+                )}
             </div>
         );
     }
