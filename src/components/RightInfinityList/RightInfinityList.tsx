@@ -89,7 +89,6 @@ class RightInfinityList extends Tarakan.Component {
             container.style.marginBottom =
                 (parseInt(container.style.marginBottom) || 0) + height + "px";
         }
-        // console.log(this.state.startIndex, this.state.endIndex)
     }
 
     renderFinished(container: HTMLDivElement): void {
@@ -129,12 +128,9 @@ class RightInfinityList extends Tarakan.Component {
         this.state.blocked = true;
         const addCount = count;
         count -= this.state.items.length - this.state.endIndex;
-        // console.log(addCount, count, this.state.items.length, this.state.endIndex);
         if (count > 0) {
-            // // console.log("YES", this.state.endIndex)
             const items = [];
             while (count > 0) {
-                // console.log("LOAD", this.state.endIndex + items.length)
                 const newItems = await this.props.onLoad(
                     this.state.items.length + items.length,
                 );
@@ -144,7 +140,6 @@ class RightInfinityList extends Tarakan.Component {
                 items.push(...newItems);
                 count = Math.max(count - newItems.length, 0);
             }
-            // console.log("--", items, addCount, this.state.endIndex);
             this.setState({
                 items: [...this.state.items, ...items],
                 endIndex:
@@ -156,7 +151,6 @@ class RightInfinityList extends Tarakan.Component {
             });
             return Math.min(items.length, addCount);
         }
-        // console.log("NO");
         this.setState({
             endIndex: this.state.endIndex + addCount,
             blocked: false,

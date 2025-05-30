@@ -169,7 +169,6 @@ class AdminPage extends Tarakan.Component {
         const { code, data } = await getPromocodes(
             start ? 0 : this.state.promocodes.length,
         );
-        console.log(data);
         if (code === AJAXErrors.NoError) {
             this.setState({
                 promocodes: start
@@ -212,7 +211,7 @@ class AdminPage extends Tarakan.Component {
                             </thead>
                             <tbody>
                                 {this.state.sellers &&
-                                this.state.sellers.length ? (
+                                    this.state.sellers.length ? (
                                     this.state.sellers.map(
                                         (request: UserRequest) => (
                                             <tr>

@@ -20,5 +20,4 @@ app.get('/*', (req, res) => {
 
 const port = process.env.npm_config_port || 8001;
 app.listen(port, () => {
-    //// // console.log(`server started at port ${port}`);
 });
