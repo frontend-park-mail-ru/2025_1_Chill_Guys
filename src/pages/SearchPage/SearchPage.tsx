@@ -122,9 +122,7 @@ class SearchPage extends Tarakan.Component {
         const s = new Set();
         for (const e of this.state.products) {
             if (s.has(e.id)) {
-                // // console.log("HAS", e.id)
             } else {
-                // // console.log(e.id)
                 s.add(e.id);
             }
         }
@@ -276,18 +274,18 @@ class SearchPage extends Tarakan.Component {
                                                 className={
                                                     this.state.filters
                                                         .starsHover !== 0 &&
-                                                    this.state.filters
-                                                        .starsHover <= I &&
-                                                    this.state.filters
-                                                        .minRating > I
+                                                        this.state.filters
+                                                            .starsHover <= I &&
+                                                        this.state.filters
+                                                            .minRating > I
                                                         ? "review-modal__content__form__rating__value__star removed"
                                                         : "review-modal__content__form__rating__value__star"
                                                 }
                                                 src={
                                                     this.state.filters
                                                         .starsHover > I ||
-                                                    this.state.filters
-                                                        .minRating > I
+                                                        this.state.filters
+                                                            .minRating > I
                                                         ? StarFilledIcon
                                                         : StarIcon
                                                 }

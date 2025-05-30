@@ -59,6 +59,7 @@ class Header extends Tarakan.Component {
             selectedCategory: null,
             subcategories: null,
             showSearchMobile: false,
+            mode: "comp",
         };
 
         this.fetchCategories();
@@ -100,42 +101,24 @@ class Header extends Tarakan.Component {
         const searchValue = ev.target.value;
         const { code, data } = await getSearchResult(searchValue);
         if (code === AJAXErrors.NoError) {
-            this.setState({ searchResult: data, searchValue });
+            this.setState({
+                searchResult: data,
+                searchValue,
+                showSearchMobile: this.state.mode === "phone",
+                searchMenuOpened: this.state.mode !== "phone",
+            });
         }
     }
 
     async openProduct(product: any) {
+        this.setState({
+            showSearchMobile: false,
+            searchMenuOpened: false,
+        });
+
         this.app.navigateTo(`/search`, {
             r: product.name,
         });
-
-        // this.setState({ searchMenuOpened: false });
-        // let offset = 0;
-        // while (true) {
-        //     const { code, products } = await getProducts(offset);
-        //     if (code === AJAXErrors.NoError) {
-        //         for (const E of products) {
-        //             if (E.name === product.name) {
-        //                 this.app.navigateTo(`/product/${E.id}`);
-        //             }
-        //         }
-        //         if (products.length === 0) {
-        //             break;
-        //         }
-        //         offset += products.length;
-        //     } else {
-        //         break;
-        //     }
-        // }
-        // const { code, data } = await getSearchResultItems(this.state.searchValue);
-        // if (code === AJAXErrors.NoError) {
-        //     data.products.products.forEach((E) => {
-        //         // console.log(E);
-        //         if (E.name === product.name) {
-        //             this.app.navigateTo(`/product/${E.id}`);
-        //         }
-        //     })
-        // }
     }
 
     async openCategory(cat: number) {
@@ -145,7 +128,6 @@ class Header extends Tarakan.Component {
             this.state.searchValue,
         );
         if (code === AJAXErrors.NoError) {
-            console.log(data.categories.categories[cat]);
             this.app.navigateTo(
                 `/category/${data.categories.categories[cat].id}`,
             );
@@ -184,17 +166,27 @@ class Header extends Tarakan.Component {
                                 className="header__nav__tf"
                                 type={`${TEXTFIELD_TYPES.SEARCH}`}
                                 title="Введите"
-                                onChange={(ev: any) =>
-                                    this.fetchSearchResult(ev)
-                                }
+                                onChange={(ev: any) => {
+                                    this.fetchSearchResult(ev);
+                                }}
                                 onFocus={() =>
                                     this.setState({
                                         searchMenuOpened: true,
+                                        mode: "phone",
                                         selectedCategory: null,
                                     })
                                 }
+                                onKeyEnter={() => {
+                                    this.setState({
+                                        showSearchMobile: false,
+                                        searchMenuOpened: false,
+                                    });
+                                    app.navigateTo("/search", {
+                                        r: this.state.searchValue,
+                                    });
+                                }}
                                 onEnd={() => {
-                                    if (this.state.searchResult === "") {
+                                    if (this.state.searchValue === "") {
                                         this.setState({
                                             searchMenuOpened: false,
                                         });
@@ -207,8 +199,7 @@ class Header extends Tarakan.Component {
                             />
                         )}
 
-                        {this.state.searchMenuOpened &&
-                            this.state.showSearchMobile &&
+                        {this.state.showSearchMobile &&
                             this.state.searchResult && (
                                 <div className="header__nav__row_main__search-field-wrapper__body__modal">
                                     <div
@@ -222,41 +213,54 @@ class Header extends Tarakan.Component {
                                     <div className="header__nav__row_main__search-field-wrapper__body__modal_content">
                                         {this.state.searchResult.products && (
                                             <div className="header__nav__row_main__search-field-wrapper__body__modal_content__item">
-                                                <h3>Найденные товары</h3>
-                                                <ul>
-                                                    {this.state.searchResult.products
-                                                        .slice(0, 5)
-                                                        .map((e) => (
-                                                            <li
-                                                                onClick={() =>
-                                                                    this.openProduct(
-                                                                        e,
-                                                                    )
-                                                                }
-                                                            >
-                                                                {e.name}
-                                                            </li>
-                                                        ))}
-                                                </ul>
-                                                {this.state.searchResult
-                                                    .products.length > 3 && (
-                                                    <Button
-                                                        className="header__nav__row_main__search-field-wrapper__body__modal_content__item__link"
-                                                        title={`Все найденные товары (${this.state.searchResult.products.length})`}
-                                                        size="m"
-                                                        variant="text"
-                                                        onClick={() => {
-                                                            app.navigateTo(
-                                                                "/search",
-                                                                {
-                                                                    r: this
-                                                                        .state
-                                                                        .searchValue,
-                                                                },
-                                                            );
-                                                        }}
-                                                    />
+                                                {this.state.searchValue !==
+                                                    "" && (
+                                                        <h3>Найденные товары</h3>
+                                                    )}
+                                                {this.state.searchValue ===
+                                                    "" ? (
+                                                    <div style="font-style: italic">
+                                                        Введите что-нибудь для
+                                                        поиска товаров
+                                                    </div>
+                                                ) : (
+                                                    <ul>
+                                                        {this.state.searchResult.products
+                                                            .slice(0, 5)
+                                                            .map((e) => (
+                                                                <li
+                                                                    onClick={() =>
+                                                                        this.openProduct(
+                                                                            e,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    {e.name}
+                                                                </li>
+                                                            ))}
+                                                    </ul>
                                                 )}
+                                                {this.state.searchResult
+                                                    .products.length > 3 &&
+                                                    this.state.searchValue !==
+                                                    "" && (
+                                                        <Button
+                                                            className="header__nav__row_main__search-field-wrapper__body__modal_content__item__link"
+                                                            title={`Все найденные товары (${this.state.searchResult.products.length})`}
+                                                            size="m"
+                                                            variant="text"
+                                                            onClick={() => {
+                                                                app.navigateTo(
+                                                                    "/search",
+                                                                    {
+                                                                        r: this
+                                                                            .state
+                                                                            .searchValue,
+                                                                    },
+                                                                );
+                                                            }}
+                                                        />
+                                                    )}
                                             </div>
                                         )}
                                         {!this.state.searchResult.categories &&
@@ -285,25 +289,31 @@ class Header extends Tarakan.Component {
                                     type={`${TEXTFIELD_TYPES.SEARCH}`}
                                     title="Ищите что угодно на Bazaar"
                                     className={`width header__nav__row_main__search-field-wrapper__body__field`}
-                                    onChange={(ev: any) =>
-                                        this.fetchSearchResult(ev)
-                                    }
+                                    onChange={(ev: any) => {
+                                        this.fetchSearchResult(ev);
+                                    }}
                                     onFocus={() =>
                                         this.setState({
+                                            mode: "comp",
                                             searchMenuOpened: true,
                                             selectedCategory: null,
                                         })
                                     }
                                     onEnd={() => {
-                                        if (this.state.searchResult === "") {
+                                        if (this.state.searchValue === "") {
                                             this.setState({
                                                 searchMenuOpened: false,
                                             });
-                                        } else {
-                                            app.navigateTo("/search", {
-                                                r: this.state.searchResult,
-                                            });
                                         }
+                                    }}
+                                    onKeyEnter={() => {
+                                        this.setState({
+                                            showSearchMobile: false,
+                                            searchMenuOpened: false,
+                                        });
+                                        app.navigateTo("/search", {
+                                            r: this.state.searchValue,
+                                        });
                                     }}
                                 />
                                 {this.state.searchMenuOpened &&
@@ -320,47 +330,68 @@ class Header extends Tarakan.Component {
                                             <div className="header__nav__row_main__search-field-wrapper__body__modal_content">
                                                 {this.state.searchResult
                                                     .products && (
-                                                    <div className="header__nav__row_main__search-field-wrapper__body__modal_content__item">
-                                                        <h3>
-                                                            Найденные товары
-                                                        </h3>
-                                                        <ul>
-                                                            {this.state.searchResult.products
-                                                                .slice(0, 5)
-                                                                .map((e) => (
-                                                                    <li
-                                                                        onClick={() =>
-                                                                            this.openProduct(
-                                                                                e,
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        {e.name}
-                                                                    </li>
-                                                                ))}
-                                                        </ul>
-                                                        {this.state.searchResult
-                                                            .products.length >
-                                                            3 && (
-                                                            <Button
-                                                                className="header__nav__row_main__search-field-wrapper__body__modal_content__item__link"
-                                                                title={`Все найденные товары (${this.state.searchResult.products.length})`}
-                                                                size="m"
-                                                                variant="text"
-                                                                onClick={() => {
-                                                                    app.navigateTo(
-                                                                        "/search",
-                                                                        {
-                                                                            r: this
-                                                                                .state
-                                                                                .searchValue,
-                                                                        },
-                                                                    );
-                                                                }}
-                                                            />
-                                                        )}
-                                                    </div>
-                                                )}
+                                                        <div className="header__nav__row_main__search-field-wrapper__body__modal_content__item">
+                                                            {this.state
+                                                                .searchValue !==
+                                                                "" && (
+                                                                    <h3>
+                                                                        Найденные товары
+                                                                    </h3>
+                                                                )}
+                                                            {this.state
+                                                                .searchValue ===
+                                                                "" ? (
+                                                                <div style="font-style: italic">
+                                                                    Введите
+                                                                    что-нибудь для
+                                                                    поиска товаров
+                                                                </div>
+                                                            ) : (
+                                                                <ul>
+                                                                    {this.state.searchResult.products
+                                                                        .slice(0, 5)
+                                                                        .map(
+                                                                            (e) => (
+                                                                                <li
+                                                                                    onClick={() =>
+                                                                                        this.openProduct(
+                                                                                            e,
+                                                                                        )
+                                                                                    }
+                                                                                >
+                                                                                    {
+                                                                                        e.name
+                                                                                    }
+                                                                                </li>
+                                                                            ),
+                                                                        )}
+                                                                </ul>
+                                                            )}
+                                                            {this.state.searchResult
+                                                                .products.length >
+                                                                3 &&
+                                                                this.state
+                                                                    .searchValue !==
+                                                                "" && (
+                                                                    <Button
+                                                                        className="header__nav__row_main__search-field-wrapper__body__modal_content__item__link"
+                                                                        title={`Все найденные товары (${this.state.searchResult.products.length})`}
+                                                                        size="m"
+                                                                        variant="text"
+                                                                        onClick={() => {
+                                                                            app.navigateTo(
+                                                                                "/search",
+                                                                                {
+                                                                                    r: this
+                                                                                        .state
+                                                                                        .searchValue,
+                                                                                },
+                                                                            );
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                        </div>
+                                                    )}
                                                 {!this.state.searchResult
                                                     .categories &&
                                                     !this.state.searchResult
@@ -533,6 +564,7 @@ class Header extends Tarakan.Component {
                                     this.setState({
                                         showSearchMobile:
                                             !this.state.showSearchMobile,
+                                        mode: "phone",
                                     })
                                 }
                             />
@@ -646,7 +678,7 @@ class Header extends Tarakan.Component {
                                         (this.state.role === "admin" ||
                                             this.state.role === "seller" ||
                                             this.state.role ===
-                                                "warehouseman") && (
+                                            "warehouseman") && (
                                             <Button
                                                 title={
                                                     this.state.role === "seller"
@@ -708,7 +740,6 @@ class Header extends Tarakan.Component {
                                             this.setState({
                                                 selectedCategory: null,
                                             });
-                                            // // console.log("leave");
                                         }}
                                     >
                                         <span
@@ -718,8 +749,8 @@ class Header extends Tarakan.Component {
                                                     !this.state
                                                         .selectedCategory ||
                                                     category.id !==
-                                                        this.state
-                                                            .selectedCategory.id
+                                                    this.state
+                                                        .selectedCategory.id
                                                 ) {
                                                     this.fetchSubcategories(
                                                         category,
@@ -732,32 +763,32 @@ class Header extends Tarakan.Component {
                                             </span>
                                             {this.state.selectedCategory?.id ===
                                                 category.id && (
-                                                <div className="subcategories-modal">
-                                                    <div className="subcategories-modal__items">
-                                                        {this.state.subcategories.map(
-                                                            (E) => (
-                                                                <span
-                                                                    className="subcategories-modal__items__item"
-                                                                    onClick={() => {
-                                                                        this.setState(
-                                                                            {
-                                                                                selectedCategory:
-                                                                                    null,
-                                                                            },
-                                                                        );
-                                                                        app.navigateTo(
-                                                                            "/category/" +
+                                                    <div className="subcategories-modal">
+                                                        <div className="subcategories-modal__items">
+                                                            {this.state.subcategories.map(
+                                                                (E) => (
+                                                                    <span
+                                                                        className="subcategories-modal__items__item"
+                                                                        onClick={() => {
+                                                                            this.setState(
+                                                                                {
+                                                                                    selectedCategory:
+                                                                                        null,
+                                                                                },
+                                                                            );
+                                                                            app.navigateTo(
+                                                                                "/category/" +
                                                                                 E.id,
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    {E.name}
-                                                                </span>
-                                                            ),
-                                                        )}
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {E.name}
+                                                                    </span>
+                                                                ),
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            )}
+                                                )}
                                         </span>
                                     </div>
                                 ))}
@@ -792,7 +823,7 @@ class Header extends Tarakan.Component {
                                         if (
                                             !this.state.selectedCategory ||
                                             item.id !==
-                                                this.state.selectedCategory.id
+                                            this.state.selectedCategory.id
                                         ) {
                                             this.fetchSubcategories(item);
                                         }
