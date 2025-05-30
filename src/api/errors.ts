@@ -18,4 +18,6 @@ export enum AJAXErrors {
     // Order
     NoOrder,
     InvalidOrder,
+
+    TwiceReview,
 }
