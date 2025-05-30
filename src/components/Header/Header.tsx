@@ -98,8 +98,6 @@ class Header extends Tarakan.Component {
     }
 
     async fetchSearchResult(ev: any) {
-        console.log(this.state);
-
         const searchValue = ev.target.value;
         const { code, data } = await getSearchResult(searchValue);
         if (code === AJAXErrors.NoError) {
