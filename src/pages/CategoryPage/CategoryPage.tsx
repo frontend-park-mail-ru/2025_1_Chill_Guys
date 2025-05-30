@@ -354,7 +354,7 @@ export default class CategoryPage extends Tarakan.Component {
                                 discountPrice={item.discount_price}
                                 title={`${item.name}`}
                                 rating={`${item.rating}`}
-                                reviewsCouxnt={`${item.reviews_count}`}
+                                reviewsCount={`${item.reviews_count}`}
                                 mainImageAlt={`Изображение товара ${item.name}`}
                                 mainImageSrc={item.image}
                                 onError={(err: any) => {
