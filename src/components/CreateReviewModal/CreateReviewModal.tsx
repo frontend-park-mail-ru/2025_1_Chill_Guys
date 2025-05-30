@@ -49,14 +49,14 @@ class CreateReviewModal extends Tarakan.Component {
                                         <img
                                             className={
                                                 this.state.starsHover !== 0 &&
-                                                    this.state.starsHover <= I &&
-                                                    this.state.starsSelected > I
+                                                this.state.starsHover <= I &&
+                                                this.state.starsSelected > I
                                                     ? "review-modal__content__form__rating__value__star removed"
                                                     : "review-modal__content__form__rating__value__star"
                                             }
                                             src={
                                                 this.state.starsHover > I ||
-                                                    this.state.starsSelected > I
+                                                this.state.starsSelected > I
                                                     ? StarFilledIcon
                                                     : StarIcon
                                             }

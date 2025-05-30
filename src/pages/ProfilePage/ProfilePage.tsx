@@ -346,16 +346,16 @@ export default class ProfilePage extends Tarakan.Component {
                                         <div>
                                             {this.state.errors
                                                 .notRepeatPassword && (
-                                                    <span style="color: red">
-                                                        Пароли не совпадают!
-                                                    </span>
-                                                )}
+                                                <span style="color: red">
+                                                    Пароли не совпадают!
+                                                </span>
+                                            )}
                                             {this.state.errors
                                                 .wrongPassword && (
-                                                    <span style="color: red">
-                                                        Неверный старый пароль!
-                                                    </span>
-                                                )}
+                                                <span style="color: red">
+                                                    Неверный старый пароль!
+                                                </span>
+                                            )}
                                             {this.state.successPassword && (
                                                 <span style="color: green">
                                                     Пароль обновлен
