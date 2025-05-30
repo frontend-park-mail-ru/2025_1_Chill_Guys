@@ -18,7 +18,7 @@ class AdBanner extends Tarakan.Component {
 
         const iframe: HTMLIFrameElement =
             container.firstChild as HTMLIFrameElement;
-        iframe.addEventListener("load", (e) => {
+        iframe.addEventListener("load", () => {
             if (this.state.error) return;
             const link: any = iframe.contentWindow?.document
                 .querySelectorAll("a[href]")
@@ -42,7 +42,10 @@ class AdBanner extends Tarakan.Component {
 
     render(props) {
         return (
-            <div className="ad" style={this.state.error ? "cursor: default;" : ""}>
+            <div
+                className="ad"
+                style={this.state.error ? "cursor: default;" : ""}
+            >
                 {!this.state.error ? (
                     <iframe src={props.url} width="300px" height="300px" />
                 ) : (
@@ -54,7 +57,9 @@ class AdBanner extends Tarakan.Component {
                 <div className="ad__text">Реклама</div>
                 <div
                     className="ad__click"
-                    onClick={() => this.state.link && window.open(this.state.link)}
+                    onClick={() =>
+                        this.state.link && window.open(this.state.link)
+                    }
                 ></div>
             </div>
         );
