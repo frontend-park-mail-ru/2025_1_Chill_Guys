@@ -190,6 +190,10 @@ class Header extends Tarakan.Component {
                                         this.setState({
                                             searchMenuOpened: false,
                                         });
+                                    } else {
+                                        app.navigateTo("/search", {
+                                            r: this.state.searchResult,
+                                        });
                                     }
                                 }}
                             />
