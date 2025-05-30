@@ -530,7 +530,10 @@ class Header extends Tarakan.Component {
                                 className="header__nav__row_main__icons-wrapper__phone__button s"
                                 src={SearchIcon}
                                 onClick={() =>
-                                    this.setState({ showSearchMobile: true })
+                                    this.setState({
+                                        showSearchMobile:
+                                            !this.state.showSearchMobile,
+                                    })
                                 }
                             />
                             <img
