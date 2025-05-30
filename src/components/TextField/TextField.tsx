@@ -97,24 +97,31 @@ class TextField extends Tarakan.Component {
                         onChange={(event: any) => this.handleChange(event)}
                         onBlur={() => this.handleEnterFinish()}
                         onEnd={(ev) => props.onEnter && props.onEnter(ev)}
+                        onkeydown={(ev) => {
+                            if (ev.key === "Enter") {
+                                if (props.onKeyEnter) {
+                                    props.onKeyEnter()
+                                }
+                            }
+                        }}
                         maxLength={props.maxLength ?? "255"}
                         cols={props.cols}
                         min={props.min}
                         max={props.max}
                     />
                     {(props.validType !== undefined ||
-                    this.state.manuallyChanged
+                        this.state.manuallyChanged
                         ? this.state.status
                         : "default") !== "default" && (
-                        <img
-                            className="textField__mark"
-                            src={
-                                this.state.status === "success"
-                                    ? successIcon
-                                    : invalidIcon
-                            }
-                        />
-                    )}
+                            <img
+                                className="textField__mark"
+                                src={
+                                    this.state.status === "success"
+                                        ? successIcon
+                                        : invalidIcon
+                                }
+                            />
+                        )}
                 </div>
             </div>
         ) : (
@@ -129,6 +136,14 @@ class TextField extends Tarakan.Component {
                     onChange={(event: any) => this.handleChange(event)}
                     onBlur={() => this.handleEnterFinish()}
                     onEnd={(ev) => props.onEnter && props.onEnter(ev)}
+                    onkeydown={(ev) => {
+                        console.log(ev);
+                        if (ev.key === "Enter") {
+                            if (props.onKeyEnter) {
+                                props.onKeyEnter()
+                            }
+                        }
+                    }}
                     maxLength={props.maxLength ?? "255"}
                     cols={props.cols}
                     min={props.min}
@@ -137,15 +152,15 @@ class TextField extends Tarakan.Component {
                 {(props.validType !== undefined || this.state.manuallyChanged
                     ? this.state.status
                     : "default") !== "default" && (
-                    <img
-                        className="textField__mark"
-                        src={
-                            this.state.status === "success"
-                                ? successIcon
-                                : invalidIcon
-                        }
-                    />
-                )}
+                        <img
+                            className="textField__mark"
+                            src={
+                                this.state.status === "success"
+                                    ? successIcon
+                                    : invalidIcon
+                            }
+                        />
+                    )}
             </div>
         );
     }
