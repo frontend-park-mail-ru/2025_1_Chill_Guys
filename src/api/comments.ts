@@ -54,6 +54,10 @@ export async function sendComment(
         return AJAXErrors.Unauthorized;
     }
 
+    if (response.result.status === 409) {
+        return AJAXErrors.TwiceReview;
+    }
+
     if (!response.result.ok) {
         return AJAXErrors.ServerError;
     }

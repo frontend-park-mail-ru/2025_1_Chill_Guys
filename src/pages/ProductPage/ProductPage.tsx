@@ -161,6 +161,7 @@ class ProductPage extends Tarakan.Component {
             rating,
             description,
         );
+
         if (code === AJAXErrors.NoError) {
             // // console.log(this.app.store);
             this.setState({
@@ -184,6 +185,13 @@ class ProductPage extends Tarakan.Component {
                             rating) /
                         (this.state.product.reviewsCount + 1),
                 },
+                addReviewModal: false,
+            });
+        }
+
+        if (code == AJAXErrors.TwiceReview) {
+            this.setState({
+                twiceReview: true,
                 addReviewModal: false,
             });
         }
@@ -369,6 +377,23 @@ class ProductPage extends Tarakan.Component {
                                     onClose={() =>
                                         this.setState({
                                             showNotAuthAlertCart: false,
+                                        })
+                                    }
+                                />
+                            )}
+                            {this.state.twiceReview && (
+                                <Alert
+                                    title="Вы уже оставили отзыв"
+                                    content="Вы уже оставили свой отзыв на данный продукт"
+                                    successButtonTitle="ОК"
+                                    onSuccess={() => {
+                                        this.setState({
+                                            twiceReview: false,
+                                        });
+                                    }}
+                                    onClose={() =>
+                                        this.setState({
+                                            twiceReview: false,
                                         })
                                     }
                                 />
