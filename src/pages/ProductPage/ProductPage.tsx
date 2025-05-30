@@ -161,6 +161,7 @@ class ProductPage extends Tarakan.Component {
             rating,
             description,
         );
+
         if (code === AJAXErrors.NoError) {
             // // console.log(this.app.store);
             this.setState({
@@ -187,6 +188,14 @@ class ProductPage extends Tarakan.Component {
                 addReviewModal: false,
             });
         }
+
+        if (code == AJAXErrors.TwiceReview) {
+            this.setState({
+                twiceReview: true,
+                addReviewModal: false,
+            })
+        }
+
     }
 
     update() {
@@ -235,7 +244,7 @@ class ProductPage extends Tarakan.Component {
                                     >
                                         {convertMoney(
                                             this.state.product.discountPrice ||
-                                                this.state.product.price,
+                                            this.state.product.price,
                                         )}
                                     </span>
                                     {this.state.product.discountPrice !== 0 && (
@@ -277,13 +286,13 @@ class ProductPage extends Tarakan.Component {
                                             size="m"
                                             title={
                                                 this.state.product.quantity ===
-                                                0
+                                                    0
                                                     ? "Добавить в корзину"
                                                     : `Добавлено ${this.state.product.quantity} шт`
                                             }
                                             className={
                                                 this.state.product.quantity !==
-                                                0
+                                                    0
                                                     ? "product-page__main__card__details__action__buy__in-cart"
                                                     : "product-page__main__card__details__action__buy"
                                             }
@@ -373,6 +382,23 @@ class ProductPage extends Tarakan.Component {
                                     }
                                 />
                             )}
+                            {this.state.twiceReview && (
+                                <Alert
+                                    title="Вы уже оставили отзыв"
+                                    content="Вы уже оставили свой отзыв на данный продукт"
+                                    successButtonTitle="ОК"
+                                    onSuccess={() => {
+                                        this.setState({
+                                            twiceReview: false,
+                                        })
+                                    }}
+                                    onClose={() =>
+                                        this.setState({
+                                            twiceReview: false,
+                                        })
+                                    }
+                                />
+                            )}
                             {this.state.addReviewModal && (
                                 <CreateReviewModal
                                     onSend={(D: any, R: any) =>
@@ -455,7 +481,7 @@ class ProductPage extends Tarakan.Component {
                                                                 className="product-page__main__reviews__content__comment__info__review__rating__star"
                                                                 src={
                                                                     comment.rating >
-                                                                    I
+                                                                        I
                                                                         ? StarFilledIcon
                                                                         : StarIcon
                                                                 }

@@ -18,22 +18,31 @@ class AdBanner extends Tarakan.Component {
 
         const iframe: HTMLIFrameElement =
             container.firstChild as HTMLIFrameElement;
-        iframe.addEventListener("load", () => {
-            const link: any = iframe.contentWindow.document
+        iframe.addEventListener("load", (e) => {
+            if (this.state.error) return;
+            const link: any = iframe.contentWindow?.document
                 .querySelectorAll("a[href]")
                 .item(0);
             this.state.link = link;
+            if (link === null) {
+                this.setState({
+                    error: true,
+                });
+            }
         });
-        iframe.addEventListener("error", () => {
-            this.setState({
-                error: true,
-            });
-        });
+
+        setTimeout(() => {
+            if (!this.state.link) {
+                this.setState({
+                    error: true,
+                });
+            }
+        }, 5000);
     }
 
     render(props) {
         return (
-            <div className="ad">
+            <div className="ad" style={this.state.error ? "cursor: default;" : ""}>
                 {!this.state.error ? (
                     <iframe src={props.url} width="300px" height="300px" />
                 ) : (
@@ -45,7 +54,7 @@ class AdBanner extends Tarakan.Component {
                 <div className="ad__text">Реклама</div>
                 <div
                     className="ad__click"
-                    onClick={() => window.open(this.state.link)}
+                    onClick={() => this.state.link && window.open(this.state.link)}
                 ></div>
             </div>
         );
